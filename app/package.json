@@ -1,0 +1,25 @@
+{
+  "name": "embedded-banking",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Our goal is to demonstrate how embedded banking APIs could be integrated",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/embedded-banking.git"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "rimraf": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "concurrently": "7.0.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.15",
+    "prettier": "2.3.2"
+  },
+  "license": "LICENSE"
+}

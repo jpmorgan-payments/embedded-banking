@@ -1,0 +1,38 @@
+
+# Dependencies
+node_modules
+.npmrc
+
+# Testing
+/coverage
+
+# Misc
+.DS_Store
+.eslintcache
+/.pnp
+.pnp.js
+.env.*
+.env
+certs
+
+# Editors
+.idea
+*.iml
+.vscode
+*.icloud
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# production
+build/
+dist/
+client/build/
+
+# generated api models
+/src/generated-api-models/*
+app/mock-api-server/static
+app/mock-api-server/manifest.yml
+app/client/src/generated-api-models

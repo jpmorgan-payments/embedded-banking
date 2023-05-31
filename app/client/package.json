@@ -1,0 +1,81 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@mantine/core": "^6.0.4",
+    "@mantine/dates": "^6.0.4",
+    "@mantine/form": "^6.0.4",
+    "@mantine/hooks": "^6.0.4",
+    "@mantine/modals": "^6.0.4",
+    "@mantine/prism": "^6.0.4",
+    "@tabler/icons": "^1.83.1",
+    "@tanstack/react-query": "^4.29.7",
+    "@types/jest": "^28.1.7",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.2",
+    "jsdom": "^21.1.0",
+    "jwt-decode": "^3.1.2",
+    "mermaid": "^8.14.0",
+    "msw": "^1.2.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-number-format": "^4.9.2",
+    "react-router-dom": "^6.3.0",
+    "remeda": "^1.0.1",
+    "typescript": "^4.4.2",
+    "usa-states": "^0.0.6",
+    "web-vitals": "^2.1.0",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": " cross-env REACT_APP_API_URL='' vite --port 3000",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+    "test": "vitest watch",
+    "test:no-watch": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "generate-api-models": "rm -rf ./src/generated-api-models && yarn openapi --exportSchemas true --exportServices false --exportCore false --input ./embedded-banking-api-external.yml --output ./src/generated-api-models",
+    "postinstall": "yarn run generate-api-models"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@vitejs/plugin-react": "^3.0.1",
+    "c8": "^7.12.0",
+    "cross-env": "^7.0.3",
+    "openapi-typescript-codegen": "^0.20.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "string.prototype.replaceall": "^1.0.6",
+    "vite": "^4.0.4",
+    "vite-plugin-svgr": "^2.4.0",
+    "vite-tsconfig-paths": "^4.0.5",
+    "vitest": "^0.28.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
