@@ -39,7 +39,7 @@ Such capabilities include:
 - Adding a recipient. A recipient is someone you can make a payment to.
 - Checking an account balance.
 
-Check out the [features](./client/src/features/) directory to explore the the components and hooks that explore these features.
+Check out the [features](./app/client/src/features/) directory to explore the the components and hooks that explore these features.
 
 ### [API-Server](./server/)
 
