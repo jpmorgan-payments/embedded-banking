@@ -1,4 +1,4 @@
-# Embedded Banking
+# Embedded Banking - TESTING AMPLIFY
 
 Embedded Banking allows you to add a full range of banking features to your online experience. This means making payments, running balances in a J.P. Morgan business bank account, and a range of other banking actions. This showcase is a collection of code samples highlighting how to connect and use Embedded Banking APIs.
 
