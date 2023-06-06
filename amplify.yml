@@ -8,6 +8,7 @@ frontend:
     build:
       commands:
         - cd client
+        - yarn install
         - yarn run build
   artifacts:
     # IMPORTANT - Please verify your build output directory
