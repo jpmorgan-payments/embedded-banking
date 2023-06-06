@@ -16,7 +16,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { NavbarLinks } from './NavbarLinks/NavbarLinks';
 import {
   ThemeSelectMenu,
-  ThemeSelectMenuProps,
+  type ThemeSelectMenuProps,
 } from './ThemeSelectMenu/ThemeSelectMenu';
 
 interface LayoutProps {

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import {
   Badge,
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Code,
   Group,
@@ -80,14 +80,14 @@ export const TableWithJsonDisplay = ({
           <tbody>
             {isLoading
               ? Array(2)
-                  .fill(0)
-                  .map((_, index) => (
-                    <tr key={index}>
-                      <td colSpan={100}>
-                        <Skeleton h={22} />
-                      </td>
-                    </tr>
-                  ))
+                .fill(0)
+                .map((_, index) => (
+                  <tr key={index}>
+                    <td colSpan={100}>
+                      <Skeleton h={22} />
+                    </td>
+                  </tr>
+                ))
               : rows}
           </tbody>
         </Table>

@@ -1,4 +1,4 @@
-import { Link, LinkProps, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link, type LinkProps, useMatch, useResolvedPath } from 'react-router-dom';
 import { UnstyledButton } from '@mantine/core';
 import {
   IconCreditCard,

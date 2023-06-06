@@ -2,10 +2,10 @@ import {
   LoadingOverlay,
   MantineProvider,
   Paper,
-  PaperProps,
+  type PaperProps,
   Tabs,
 } from '@mantine/core';
-import { Prism, PrismProps } from '@mantine/prism';
+import { Prism, type PrismProps } from '@mantine/prism';
 
 export interface ObjectDisplayProps extends PaperProps {
   request?: object;

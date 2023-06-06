@@ -18,7 +18,7 @@ import { Panel } from 'components';
 
 import {
   EntityTypeForm,
-  EntityTypeFormValues,
+  type EntityTypeFormValues,
 } from './EntityTypeForm/EntityTypeForm';
 
 import { StepsLLC, StepsSP } from './Steps';

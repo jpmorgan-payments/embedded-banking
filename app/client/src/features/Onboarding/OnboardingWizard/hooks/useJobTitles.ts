@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { API_URL, CLIENT_TOKEN } from 'data/constants';
 
 import type { JobTitles } from 'generated-api-models';

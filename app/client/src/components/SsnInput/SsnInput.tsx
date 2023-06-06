@@ -1,5 +1,5 @@
-import { TextInput, TextInputProps } from '@mantine/core';
-import NumberFormat, { NumberFormatProps } from 'react-number-format';
+import { TextInput, type TextInputProps } from '@mantine/core';
+import NumberFormat, { type NumberFormatProps } from 'react-number-format';
 
 type SsnInputProps = Omit<TextInputProps, 'placeholder'> &
   Omit<NumberFormatProps, 'customInput' | 'placeholder'>;

@@ -5,7 +5,7 @@ import {
   Button,
   Group,
   Stack,
-  StackProps,
+  type StackProps,
   Title,
   useMantineTheme,
 } from '@mantine/core';

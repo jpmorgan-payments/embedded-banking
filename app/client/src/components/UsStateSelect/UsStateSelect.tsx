@@ -1,4 +1,4 @@
-import { NativeSelect, NativeSelectProps, SelectItem } from '@mantine/core';
+import { NativeSelect, type NativeSelectProps, type SelectItem } from '@mantine/core';
 import { UsaStates } from 'usa-states';
 
 const usStates = new UsaStates();

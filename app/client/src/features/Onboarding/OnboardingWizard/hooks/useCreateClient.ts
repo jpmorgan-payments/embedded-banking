@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { API_URL, PLATFORM_ID, CLIENT_TOKEN } from 'data/constants';
 
 import type {

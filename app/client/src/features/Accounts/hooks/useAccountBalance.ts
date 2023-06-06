@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQueries, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { API_URL, CLIENT_ID, CLIENT_TOKEN } from 'data/constants';
 
 import type { AccountBalanceResponse } from 'generated-api-models';

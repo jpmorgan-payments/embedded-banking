@@ -7,7 +7,7 @@ import {
   Group,
   MediaQuery,
   Paper,
-  PaperProps,
+  type PaperProps,
   Title,
 } from '@mantine/core';
 import { ObjectDisplay } from 'components';

@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import matchers, {
-  TestingLibraryMatchers,
+  type TestingLibraryMatchers,
 } from '@testing-library/jest-dom/matchers';
 //@ts-ignore
 import replaceAllInserter from 'string.prototype.replaceall';
