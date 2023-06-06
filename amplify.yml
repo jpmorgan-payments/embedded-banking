@@ -8,7 +8,6 @@ frontend:
     build:
       commands:
         - cd client
-        - REACT_APP_API_URL=${REACT_APP_API_URL}
         - yarn install
         - yarn run build
   artifacts:
