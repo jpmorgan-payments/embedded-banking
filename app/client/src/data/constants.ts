@@ -1,5 +1,5 @@
 export const API_URL =
-  import.meta.env.REACT_APP_API_URL || 'http://localhost:8081';
+  import.meta.env.VITE_API_URL || 'http://localhost:8081';
 
 // Unique Client Identifier (C2)
 export const CLIENT_ID = import.meta.env.CLIENT_ID || '1234567890';
