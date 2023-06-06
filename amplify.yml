@@ -4,6 +4,7 @@ frontend:
     preBuild:
       commands:
         - cd app
+        - yarn add -g typescript
         - yarn install
     build:
       commands:
