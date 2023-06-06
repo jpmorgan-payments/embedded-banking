@@ -11,7 +11,7 @@ export const CasesPage = () => {
       githubLink={`${GITHUB_REPO}/tree/main/app/client/src/features/Cases`}
     >
       <div>
-        Create a new case with the <Badge>POST /cases</Badge> call.
+        If your client needs support with their Embedded Banking experience, you can send a request for help using the <Badge>Cases</Badge> resource. Create a new case with the <Badge>POST /cases</Badge> call.
         <Space h="xs" />
         Update a specific case with the <Badge>POST /cases/{'{id}'}</Badge>call.
         <Space h="xs" />

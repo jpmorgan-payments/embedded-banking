@@ -14,8 +14,8 @@ export const TransactionsPage = () => {
       githubLink={`${GITHUB_REPO}/tree/main/app/client/src/features/Transactions`}
     >
       <div>
-        The <Badge>POST /transactions</Badge> call requires the data of the
-        recipient and the account the funds are being drawn from. You can fetch
+        To make a payment in Embedded Banking, you send a <Badge>POST /transactions</Badge> request. The payload in this request must contain the data of the
+        recipient being paid, along with the account details the funds are being drawn from. You can fetch
         this data with <Badge>GET /recipients</Badge> and{' '}
         <Badge>GET /accounts</Badge> respectively.
         <Space h="xs" />
