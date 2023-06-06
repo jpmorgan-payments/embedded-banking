@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": " cross-env REACT_APP_API_URL='' vite --port 3000",
-    "build": "tsc && vite build",
+    "build": "node_modules/typescript/bin/tsc && vite build",
     "serve": "vite preview",
     "test": "vitest watch",
     "test:no-watch": "vitest run",
