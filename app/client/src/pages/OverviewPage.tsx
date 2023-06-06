@@ -11,7 +11,7 @@ export const OverviewPage = () => {
         place them directly into your own platform.
       </Text>
       <Title order={2} mt="xs">
-        What is this showcase?
+        In this showcase
       </Title>
       <div>
         <Text>

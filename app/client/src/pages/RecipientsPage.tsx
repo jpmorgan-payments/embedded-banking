@@ -16,8 +16,8 @@ export const RecipientsPage = () => {
           before a payment can be made.
         </Text>
         <Text>
-          You can use the recipients API to allow users to view and manage their
-          list of recipients.
+          You can use the recipients API to allow users to create and manage their
+          recipients.
         </Text>
       </Box>
       <CreateRecipientForm />
