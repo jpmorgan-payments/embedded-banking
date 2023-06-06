@@ -28,7 +28,7 @@ To use the Postman collection, import the collection file to Postman and follow 
 
 ## Included in the App project folders
 
-### [Client](./client/)
+### [Client](./app/client/)
 
 This is the core UI application written in TS/JS with the React framework. This application illustrates the various capabilities of Embedded Banking, using mocked responses stored within the codebase.
 
@@ -39,9 +39,9 @@ Such capabilities include:
 - Adding a recipient. A recipient is someone you can make a payment to.
 - Checking an account balance.
 
-Check out the [features](./client/src/features/) directory to explore the the components and hooks that explore these features.
+Check out the [features](./app/client/src/features/) directory to explore the the components and hooks that explore these features.
 
-### [API-Server](./server/)
+### [API-Server](./app/server/)
 
 If you would like to hit the API's using your own credentials you will need to run this codebase following the instructions within the readme. This code allows you to hit JP Morgan UAT APIs.
 
