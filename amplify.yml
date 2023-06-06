@@ -5,6 +5,7 @@ frontend:
       commands:
         - cd app
         - yarn install
+        - yarn global add typescript
     build:
       commands:
         - cd client
