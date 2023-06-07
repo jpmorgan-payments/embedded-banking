@@ -70,7 +70,7 @@
     "openapi-typescript-codegen": "^0.20.1",
     "resize-observer-polyfill": "^1.5.1",
     "string.prototype.replaceall": "^1.0.6",
-    "vite": "^4.0.4",
+    "vite": "^4.1.5",
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.28.2"
