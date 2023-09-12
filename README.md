@@ -114,3 +114,73 @@ yarn start
 ```
 
 You can now send API calls to the Embedded Banking UAT environment.
+
+## Stateless Mock Server
+
+You could start Mockoon stateless mock server by runnint [a simple cli command](https://www.npmjs.com/package/@mockoon/cli)
+```
+$ npx @mockoon/cli start -d mockoon-data-file.json
+Need to install the following packages:
+  @mockoon/cli@4.0.0
+Ok to proceed? (y) y
+{"app":"mockoon-server","environmentName":"Embedded Banking API","environmentUUID":"eb800c06-f054-4112-9b1f-c8fbf2f66941","level":"info","message":"Server starte
+d on port 3001","timestamp":"2023-09-12T21:27:43.709Z"}
+
+```
+
+API resources and operations could be explored and sample solutions could be developed
+by trigerring local API operations
+
+e.g.
+
+```
+curl --location 'http://localhost:3001/api/v1/eb/recipients'
+```
+
+with response similar to the below one
+
+```json
+{
+    "page": 1,
+    "limit": 30,
+    "total_items": 1,
+    "recipients": [
+        {
+            "partyDetails": {
+                "address": {
+                    "addressLine1": "90 Bedford Street",
+                    "addressLine2": "Apt 2E",
+                    "addressLine3": " ",
+                    "city": "New York",
+                    "countryCode": "US",
+                    "state": "NY",
+                    "zip": "10014"
+                },
+                "type": "INDIVIDUAL",
+                "firstName": "Monica",
+                "lastName": "Gellar",
+                "businessName": "Central Park Getaways",
+                "contacts": [
+                    {
+                        "contactType": "PHONE",
+                        "countryCode": "+1",
+                        "value": "6316215110"
+                    }
+                ]
+            },
+            "account": {
+                "number": "0182119492",
+                "type": "CHECKING",
+                "routingCodeType": "USABA",
+                "routingNumber": "322270521",
+                "countryCode": "US"
+            },
+            "id": "616d93a1-ce53-4c71-b03b-02a11396db28",
+            "recipientType": "LINKED_ACCOUNT",
+        }
+    ]
+}
+```
+
+Mockoon desktop application could also be installed on any major OS with further import of `mockoon-data-file.json` file
+https://mockoon.com/download/#download-section

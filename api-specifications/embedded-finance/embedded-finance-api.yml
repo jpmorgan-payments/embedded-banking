@@ -33,6 +33,7 @@ paths:
       operationId: getAllClients
       parameters:
         - $ref: "#/components/parameters/token"
+        - $ref: "#/components/parameters/platformId"
         - $ref: "#/components/parameters/pageSize"
         - $ref: "#/components/parameters/pageNo"
       responses:
@@ -1455,6 +1456,9 @@ paths:
       parameters:
         - $ref: "#/components/parameters/token"
         - $ref: "#/components/parameters/clientIdHeader"
+        - $ref: "#/components/parameters/platformId"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/pageNo1"
       tags:
         - Accounts
       responses:
@@ -2147,7 +2151,7 @@ components:
           type: string
           example: ADD
           description: |
-            The action like ADD, UPDATE, REMOVE 
+            The action like ADD, UPDATE, REMOVE
     UpdatePartyDetailCommon:
       type: object
       properties:
@@ -2338,7 +2342,7 @@ components:
               type: string
               example: ADD
               description: |
-                The action like ADD, UPDATE, REMOVE 
+                The action like ADD, UPDATE, REMOVE
     UpdateClientRequest:
       type: object
       allOf:
@@ -4746,7 +4750,7 @@ components:
       in: header
       description: Unique client identifier
       example: "0030000131"
-      required: true
+      required: false
       schema:
         type: string
         pattern: ^\d{10}$
@@ -4758,6 +4762,13 @@ components:
         type: string
       required: true
       example: dc2eda9084bf40b7a1d8baa8c5e0ea0ax
+    pageNo1:
+      name: page
+      in: query
+      description: Page Number
+      schema:
+        type: integer
+        default: 0
     parameters-pageSize:
       name: limit
       in: query
