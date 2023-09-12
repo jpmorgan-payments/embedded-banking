@@ -117,7 +117,8 @@ You can now send API calls to the Embedded Banking UAT environment.
 
 ## Stateless Mock Server
 
-You could start Mockoon stateless mock server by runnint [a simple cli command](https://www.npmjs.com/package/@mockoon/cli)
+You could start Mockoon stateless mock server by running [a simple cli command](https://www.npmjs.com/package/@mockoon/cli)
+from `api-specifications/embedded-finance`
 ```
 $ npx @mockoon/cli start -d mockoon-data-file.json
 Need to install the following packages:
