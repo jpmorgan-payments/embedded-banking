@@ -45,7 +45,7 @@ Check out the [features](./app/client/src/features/) directory to explore the th
 
 ### [API-Server](./app/server/)
 
-If you would like to hit the API's using your own credentials you will need to run this codebase following the instructions within the readme. This code allows you to hit JP Morgan UAT APIs.
+If you would like to hit the API's using your own credentials you will need to run this codebase following the instructions within the readme. This code allows you to hit J.P. Morgan UAT APIs.
 
 ## Run the Showcase Application locally
 
