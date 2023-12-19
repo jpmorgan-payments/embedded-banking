@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import type { TestingLibraryMatchers } from '@testing-library/jest-dom/matchers';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
 //@ts-ignore
