@@ -1,7 +1,6 @@
 import { vi } from 'vitest';
-import matchers, {
-  TestingLibraryMatchers,
-} from '@testing-library/jest-dom/matchers';
+import * as matchers from '@testing-library/jest-dom/matchers';
+
 //@ts-ignore
 import replaceAllInserter from 'string.prototype.replaceall';
 import mockedResizeObserver from 'resize-observer-polyfill';
