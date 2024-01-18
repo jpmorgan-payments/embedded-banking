@@ -7,6 +7,7 @@ import { ModalsProvider } from '@mantine/modals';
 import { Layout } from 'components';
 import {
   AccountsPage,
+  AuthenticationPage,
   CasesPage,
   DebitCardsPage,
   NotFoundErrorPage,
@@ -17,6 +18,12 @@ import {
 } from 'pages';
 
 import { themes } from 'themes';
+import {
+  ForgeRockCallback,
+  ForgeRockProtectedRoutes,
+  Login,
+  SecureContent,
+} from 'features/Authentication';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +52,15 @@ const App = () => {
             >
               <Routes>
                 <Route path="*" element={<NotFoundErrorPage />} />
+                <Route element={<AuthenticationPage />}>
+                  <Route path="login">
+                    <Route path="" element={<Login />} />
+                    <Route path="callback" element={<ForgeRockCallback />} />
+                  </Route>
+                  <Route element={<ForgeRockProtectedRoutes />}>
+                    <Route path="loggedIn" element={<SecureContent />} />
+                  </Route>
+                </Route>
                 <Route path="overview" element={<OverviewPage />} />
                 <Route path="onboarding" element={<OnboardingPage />} />
                 <Route path="accounts" element={<AccountsPage />} />

@@ -1,4 +1,5 @@
 export { AccountsPage } from './AccountsPage';
+export { AuthenticationPage } from './AuthenticationPage';
 export { CasesPage } from './CasesPage';
 export { DebitCardsPage } from './DebitCardsPage';
 export { NotFoundErrorPage } from './NotFoundErrorPage';

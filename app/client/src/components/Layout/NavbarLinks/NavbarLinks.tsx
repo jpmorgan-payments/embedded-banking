@@ -8,11 +8,13 @@ import {
   IconZoomMoney,
   IconHome,
   IconUsers,
+  IconLock,
 } from '@tabler/icons';
 
 import useStyles from './NavbarLinks.styles';
 
 const links = [
+  { link: 'login', label: 'Authentication', icon: IconLock },
   { link: 'overview', label: 'Overview', icon: IconHome },
   { link: 'onboarding', label: 'Onboarding Clients', icon: IconUserPlus },
   { link: 'accounts', label: 'Managing Accounts', icon: IconZoomMoney },
