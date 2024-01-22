@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",
+    "@forgerock/javascript-sdk": "^4.2.0",
     "@mantine/core": "^6.0.4",
     "@mantine/dates": "^6.0.4",
     "@mantine/form": "^6.0.4",
@@ -33,7 +34,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": " cross-env REACT_APP_API_URL='' vite --port 3000",
+    "start": " cross-env VITE_API_URL='' vite --port 3000",
     "build": "node_modules/typescript/bin/tsc && vite build",
     "serve": "vite preview",
     "test": "vitest watch",
