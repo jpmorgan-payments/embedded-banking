@@ -20,7 +20,7 @@ export const Login = () => {
         onClick={redirectToLogin}
         loading={isRedirecting}
       >
-        Log in with ForgeRock
+        Log in with Payments Identity
       </Button>
     </Panel>
   );
