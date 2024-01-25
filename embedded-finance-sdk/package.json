@@ -1,7 +1,7 @@
 {
   "name": "embedded-finance-sdk",
   "version": "2.1.4",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "LICENSE",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
