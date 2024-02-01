@@ -3,9 +3,8 @@
 
 name: Release SDK to npm
 on:
-  push:
-    branches:
-      - "npm-publish"
+  workflow_dispatch:
+
 jobs:
   build:
     defaults:
