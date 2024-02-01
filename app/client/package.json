@@ -80,5 +80,9 @@
   },
   "resolutions": {
     "graphql": "16.6.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
