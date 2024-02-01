@@ -20,5 +20,5 @@
     "cross-env": "^7.0.3",
     "prettier": "2.3.2"
   },
-  "license": "LICENSE"
+  "license": "UNLICENSED"
 }

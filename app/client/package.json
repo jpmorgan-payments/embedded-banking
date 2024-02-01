@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@forgerock/javascript-sdk": "^4.2.0",
