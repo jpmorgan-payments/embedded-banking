@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@jpmorgan-payments/embedded-banking-client",
   "version": "0.1.0",
   "dependencies": {
     "@emotion/react": "^11.9.3",
