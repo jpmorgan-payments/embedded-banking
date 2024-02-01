@@ -21,6 +21,7 @@ jobs:
             registry-url: 'https://registry.npmjs.org'
             scope: '@jpmorgan-payments'
         - run: yarn install --frozen-lockfile
+        - run: npm config set access public
         - run: yarn publish --dry-run
           env:
             NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
