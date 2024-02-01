@@ -1,5 +1,5 @@
 {
-  "name": "embedded-finance-sdk",
+  "name": "@jpmorgan-payments/embedded-finance-sdk",
   "version": "2.1.4",
   "license": "Apache-2.0",
   "main": "dist/index.js",
