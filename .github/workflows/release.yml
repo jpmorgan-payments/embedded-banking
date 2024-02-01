@@ -3,25 +3,25 @@
 
 name: Release to npm
 on:
-    push:
-      branches:
-        - 'test-npm'
+  push:
+    branches:
+      - "test-npm"
 jobs:
-    build:
-        defaults:
-            run:
-              working-directory: "./app/client"
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v4
-        # Setup .npmrc file to publish to npm
-        - uses: actions/setup-node@v3
-          with:
-            node-version: '20.x'
-            registry-url: 'https://registry.npmjs.org'
-            scope: '@jpmorgan-payments'
-        - run: yarn install --frozen-lockfile
-        - run: npm config set access public
-        - run: yarn publish --dry-run
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
+  build:
+    defaults:
+      run:
+        working-directory: "./app/client"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+          scope: "@jpmorgan-payments"
+      - run: yarn install --frozen-lockfile
+      - run: npm config set access public
+      - run: npm unpublish @jpmorgan-payments/embedded-banking-client -f
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
