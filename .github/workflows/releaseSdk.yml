@@ -25,8 +25,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn run build
           yarn run test
-          npm unpublish embedded-finance-sdk -force
       - name: Publish
-        run: npm publish
+        run: npm unpublish embedded-finance-sdk -force
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
