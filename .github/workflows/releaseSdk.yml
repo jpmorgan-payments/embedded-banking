@@ -26,6 +26,6 @@ jobs:
           yarn run build
           yarn run test
       - name: Publish
-        run: npm unpublish embedded-finance-sdk -force
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
