@@ -26,6 +26,6 @@ jobs:
           yarn run build
           yarn run test
       - name: Publish
-        run: npm publish
+        run: npm unpublish @jpmorgan-payments/embedded-finance-sdk -f
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_JPMC_PUBLISHER }}
