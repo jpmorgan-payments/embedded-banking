@@ -1,7 +1,7 @@
 {
-  "name": "embedded-finance-sdk",
-  "version": "2.1.4",
-  "license": "LICENSE",
+  "name": "@jpmorgan-payments/embedded-finance-sdk",
+  "version": "0.1.1",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -57,5 +57,9 @@
     "jest-environment-jsdom": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
