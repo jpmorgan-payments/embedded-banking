@@ -1,6 +1,6 @@
 {
   "name": "@jpmorgan-payments/embedded-finance-sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,6 @@
     "generate-field-definitions": "node scripts/generatePlaceholders.js && tsc && node scripts/generateFieldDefinitions.js",
     "prepare": "yarn generate-field-definitions",
     "build": "tsc",
-    "prepublishOnly": "yarn prepare && yarn build",
-    "pretest": "yarn generate-field-definitions",
     "test": "jest"
   },
   "jest": {
