@@ -58,5 +58,11 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorgan-payments/embedded-banking",
+    "directory": "embedded-finance-sdk"
+  },
+  "homepage": "https://github.com/jpmorgan-payments/embedded-banking/blob/main/embedded-finance-sdk/README.md"
 }
