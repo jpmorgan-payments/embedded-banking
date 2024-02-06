@@ -15,6 +15,8 @@ The SDK provides a custom React hook and standalone functions for validations an
 
 ## Usage
 
+[.demo](./.demo) contains simple applications for demo purposes.
+
 ### In React Applications
 
 Import and use the `usePaymentForm` hook in your React component:
