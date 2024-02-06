@@ -15,13 +15,15 @@ The SDK provides a custom React hook and standalone functions for validations an
 
 ## Usage
 
+[.demo](./.demo) contains simple applications for demo purposes.
+
 ### In React Applications
 
 Import and use the `usePaymentForm` hook in your React component:
 
 ```tsx
 import React from "react";
-import { usePaymentValidation } from "embedded-finance-sdk";
+import { usePaymentValidation } from "@jpmorgan-payments/embedded-finance-sdk";
 
 const PaymentForm = () => {
   const country = "UK" // This should be dynamically set based on user selection
@@ -69,7 +71,10 @@ const PaymentForm = () => {
 You can use the SDK's standalone functions to perform validations and retrieve field definitions:
 
 ```javascript
-import { validatePayment, getFieldDefinitions } from "embedded-finance-sdk";
+import {
+  validatePayment,
+  getFieldDefinitions,
+} from "@jpmorgan-payments/embedded-finance-sdk";
 
 const country = "UK"; // Should be determined by your application's context
 
