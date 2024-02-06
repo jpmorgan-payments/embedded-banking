@@ -30,8 +30,6 @@ function App() {
     validateInputOnBlur: true,
   });
 
-  console.log(fieldDefinitionsUK);
-
   return (
     <MantineProvider theme={theme}>
       <Container size="lg" mt="xl" mb="xl">
