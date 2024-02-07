@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jpmorganchase/embedded-banking.git"
+    "url": "https://github.com/jpmorganchase/embedded-banking.git"
   },
   "dependencies": {
     "dotenv": "^16.0.0",
