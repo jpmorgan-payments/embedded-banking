@@ -1,10 +1,16 @@
 {
-  "name": "mantine-vite-template",
+  "name": "embedded-banking-components",
   "private": true,
   "version": "0.0.0",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "npm run lint:eslint && npm run lint:stylelint",
@@ -16,16 +22,19 @@
     "vitest:watch": "vitest",
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "generate-api": "openapi-generator-cli generate -i api-specs/embedded-banking-api-external.yml -g typescript-axios -o src/api"
   },
   "dependencies": {
     "@mantine/core": "7.5.1",
+    "@mantine/form": "^7.5.2",
     "@mantine/hooks": "7.5.1",
+    "@tanstack/react-query": "^5.20.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.9.0",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
@@ -63,6 +72,7 @@
     "stylelint-config-standard-scss": "^12.0.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.2",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
   },
