@@ -1,12 +1,12 @@
 import { useForm, yupResolver } from '@mantine/form';
-import { TextInput, Button, Box, Text, Radio, Group, Stack, MantineProvider } from '@mantine/core';
-import { theme } from '../../theme';
+import { TextInput, Button, Box, Text, Radio, Group, Stack } from '@mantine/core';
+import { EBThemeWrapper } from '@/shared/EBThemeWrapper';
 
 export const LinkAccountForm = () => {
   const form = useForm();
 
   return (
-    <MantineProvider theme={theme}>
+    <EBThemeWrapper>
       <Box>
         <form onSubmit={undefined}>
           <Stack>
@@ -27,13 +27,13 @@ export const LinkAccountForm = () => {
               </Group>
             </Radio.Group>
             <TextInput label="Account number" required />
-            <TextInput label="Routing Number name" required />
+            <TextInput label="Routing number" required />
             <Group align="right" mt="xs">
               <Button type="submit">Submit</Button>
             </Group>
           </Stack>
         </form>
       </Box>
-    </MantineProvider>
+    </EBThemeWrapper>
   );
 };

@@ -7,6 +7,17 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+        '': 'never',
+      },
+    ],
   },
   ignorePatterns: ['*.js', '*.cjs', '*.mjs', '*.d.ts', '*.d.mts', 'vite.config.ts'],
 };
