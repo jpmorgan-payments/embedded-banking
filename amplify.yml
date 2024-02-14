@@ -6,6 +6,9 @@ frontend:
         - nvm use 18
         - cd app
         - yarn install
+        - cd ../embedded-components
+        - yarn install
+        - yarn build
     build:
       commands:
         - cd client
