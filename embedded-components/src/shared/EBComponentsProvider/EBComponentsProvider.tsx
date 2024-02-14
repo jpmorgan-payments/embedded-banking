@@ -1,5 +1,5 @@
 import { createContext, useContext, ReactNode } from 'react';
-import { MantineThemeOverride, createTheme, DEFAULT_THEME } from '@mantine/core';
+import { MantineThemeOverride, createTheme, DEFAULT_THEME, MantineTheme } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export interface EBComponentsProviderProps {
@@ -8,7 +8,7 @@ export interface EBComponentsProviderProps {
   theme: MantineThemeOverride;
 }
 
-const EBThemeContext = createContext<MantineThemeOverride | null>(null);
+const EBThemeContext = createContext<MantineTheme | null>(null);
 
 export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
@@ -21,7 +21,7 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   const customTheme = createTheme({
     ...DEFAULT_THEME,
     ...theme,
-  });
+  }) as MantineTheme;
 
   return (
     <QueryClientProvider client={queryClient}>
