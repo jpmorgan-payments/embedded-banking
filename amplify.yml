@@ -4,11 +4,11 @@ frontend:
     preBuild:
       commands:
         - nvm use 18
-        - cd app
-        - yarn install
-        - cd ../embedded-components
+        - cd embedded-components
         - yarn install
         - yarn build
+        - cd ../app
+        - yarn install
     build:
       commands:
         - cd client
