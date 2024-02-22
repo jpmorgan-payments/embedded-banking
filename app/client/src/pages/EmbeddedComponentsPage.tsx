@@ -19,6 +19,8 @@ import {
   LinkAccountForm,
   EBComponentsProvider,
 } from 'embedded-banking-components';
+import { PayOutForm } from 'embedded-banking-components';
+import { PaymentDetails } from 'embedded-banking-components';
 
 export const EmbeddedComponentsPage = () => {
   const defaultTheme = {
@@ -84,8 +86,8 @@ export const YourReactApplication = () => {
       <LinkAccountForm />
       {/* The rest of your application */}
     </EBComponentsProvider>
-    )
-  }
+  )
+}
 `}
       >
         <Text size="lg" mb="sm">
@@ -221,7 +223,16 @@ export const YourReactApplication = () => {
           </Badge>
         }
       >
-        <Text size="lg">Under construction</Text>
+        <Text mb="md">
+          This component allows your client to make payments to recipients that
+          they have added via Embedded Banking.
+        </Text>
+        <Card maw={300} shadow="lg" radius={0} withBorder>
+          {/* @ts-ignore */}
+          <EBComponentsProvider theme={defaultTheme}>
+            <PayOutForm />
+          </EBComponentsProvider>
+        </Card>
       </Panel>
       <Panel
         title="Payment Details"
@@ -231,7 +242,16 @@ export const YourReactApplication = () => {
           </Badge>
         }
       >
-        <Text size="lg">Under construction</Text>
+        <Text mb="md">
+          This component allows your client to view details of a payment made
+          through Embedded Banking.
+        </Text>
+        <Card maw={300} shadow="lg" radius={0} withBorder>
+          {/* @ts-ignore */}
+          <EBComponentsProvider theme={defaultTheme}>
+            <PaymentDetails />
+          </EBComponentsProvider>
+        </Card>
       </Panel>
       <Panel
         title="Onboarding"
