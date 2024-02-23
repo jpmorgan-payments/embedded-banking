@@ -2,12 +2,19 @@
   "name": "embedded-banking-components",
   "private": true,
   "version": "0.0.0",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
+  "main": "./dist/EBComponents.umd.cjs",
+  "module": "./dist/EBComponents.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/EBComponents.js",
+      "require": "./dist/EBComponents.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "rm -rf dist && vite build",
@@ -62,7 +69,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^23.0.1",
-    "openapi-typescript-codegen": "^0.25.0",
     "postcss": "^8.4.32",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "^7.0.1",
@@ -75,6 +81,7 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.2",
+    "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
   }
