@@ -25,7 +25,6 @@ import {
   SecureContent,
 } from 'features/Authentication';
 import { EmbeddedComponentsPage } from 'pages/EmbeddedComponentsPage';
-import 'embedded-banking-components/dist/style.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
