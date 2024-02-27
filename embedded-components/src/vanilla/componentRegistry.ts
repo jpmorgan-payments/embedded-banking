@@ -1,4 +1,4 @@
-import { LinkAccountForm } from '@/components/LinkAccountForm/LinkAccountForm';
+import { LinkAccountForm } from '@/core/LinkAccountForm/LinkAccountForm';
 
 export const componentRegistry = {
   LinkAccountForm,
