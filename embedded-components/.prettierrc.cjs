@@ -1,1 +1,6 @@
-module.exports = require('eslint-config-mantine/.prettierrc.js');
+/** @type {import('prettier').Config} */
+module.exports = {
+  printWidth: 80,
+  singleQuote: true,
+  trailingComma: 'es5',
+};

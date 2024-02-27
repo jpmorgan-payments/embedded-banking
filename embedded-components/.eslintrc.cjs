@@ -19,5 +19,12 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['*.js', '*.cjs', '*.mjs', '*.d.ts', '*.d.mts', 'vite.config.ts'],
+  ignorePatterns: [
+    '*.js',
+    '*.cjs',
+    '*.mjs',
+    '*.d.ts',
+    '*.d.mts',
+    'vite.config.ts',
+  ],
 };
