@@ -63,14 +63,15 @@ export const EmbeddedComponentsPage = () => {
 
   return (
     <PageWrapper title="Embedded Components">
-      <Text size="xl">
-        Seamlessly integrate sophisticated UI components into your existing
-        applications with Embedded Components, offering a plug-and-play solution
-        for Embedded Banking features.
-      </Text>
-      <Panel
-        title="Getting started"
-        sampleCode={`
+      <EBComponentsProvider theme={parseTheme()}>
+        <Text size="xl">
+          Seamlessly integrate sophisticated UI components into your existing
+          applications with Embedded Components, offering a plug-and-play
+          solution for Embedded Banking features.
+        </Text>
+        <Panel
+          title="Getting started"
+          sampleCode={`
 import {
   EBComponentsProvider,
   LinkAccountForm
@@ -89,180 +90,175 @@ export const YourReactApplication = () => {
   )
 }
 `}
-      >
-        <Text size="lg" mb="sm">
-          Integrating Embedded Components just takes a few simple steps.
-        </Text>
-        <List type="ordered">
-          <List.Item>
-            <b>Initialize with EBComponentsProvider</b>: Begin by importing{' '}
-            <Code>EBComponentsProvider</Code> and use it to wrap your
-            application.
-          </List.Item>
-          <List.Item>
-            <b>Configuration</b>: Configure <Code>EBComponentsProvider</Code> by
-            providing your Embedded Banking API URL. Additionally, you'll need
-            to supply your client's token.
-          </List.Item>
-          <List.Item>
-            <b>Embed Components</b>: After setting up the provider, you can
-            start embedding the components within your application. These
-            components are designed to integrate smoothly with your existing UI.
-          </List.Item>
-          <List.Item>
-            <b>Customize to Your Brand</b>: If desired, you can customize the
-            look of the components to match your application's design. This is
-            done by providing a <Code>theme</Code> object to{' '}
-            <Code>EBComponentsProvider</Code>.
-          </List.Item>
-        </List>
-      </Panel>
-      <Panel
-        title="Linked Account"
-        customBadge={
-          <Badge variant="filled" color="jpmc" radius="xs">
-            Component
-          </Badge>
-        }
-      >
-        <Grid>
-          <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => (
-              <>
-                <Grid.Col xs={12} lg="auto">
-                  <Text mb="md">
-                    With this component, your client will be able to see the
-                    status of their linked account. If they do not have a linked
-                    account yet, they will be able to link an account via this
-                    component.
-                  </Text>
-                  <Text size="xs" color="red">
-                    <b>Theme error: </b>
-                    {error.message}
-                  </Text>
-                  <Card maw={300} shadow="lg" radius={0} withBorder>
-                    {/* @ts-ignore */}
-                    <EBComponentsProvider theme={defaultTheme}>
-                      <LinkAccountForm />
-                    </EBComponentsProvider>
-                  </Card>
-                </Grid.Col>
-                <Grid.Col xs={12} lg="content">
-                  <Box miw={450}>
-                    <JsonInput
-                      label="Try customizing the theme"
-                      validationError="Invalid JSON"
-                      formatOnBlur
-                      minRows={20}
-                      value={theme}
-                      onChange={(value) => {
-                        setTheme(value);
-                        resetErrorBoundary();
-                      }}
-                    />
-                    <Group mt="sm">
-                      <Button size="xs" onClick={saveTheme}>
-                        Save theme
-                      </Button>
-                      <Button
-                        size="xs"
-                        onClick={() => {
-                          resetTheme();
+        >
+          <Text size="lg" mb="sm">
+            Integrating Embedded Components just takes a few simple steps.
+          </Text>
+          <List type="ordered">
+            <List.Item>
+              <b>Initialize with EBComponentsProvider</b>: Begin by importing{' '}
+              <Code>EBComponentsProvider</Code> and use it to wrap your
+              application.
+            </List.Item>
+            <List.Item>
+              <b>Configuration</b>: Configure <Code>EBComponentsProvider</Code>{' '}
+              by providing your Embedded Banking API URL. Additionally, you'll
+              need to supply your client's token.
+            </List.Item>
+            <List.Item>
+              <b>Embed Components</b>: After setting up the provider, you can
+              start embedding the components within your application. These
+              components are designed to integrate smoothly with your existing
+              UI.
+            </List.Item>
+            <List.Item>
+              <b>Customize to Your Brand</b>: If desired, you can customize the
+              look of the components to match your application's design. This is
+              done by providing a <Code>theme</Code> object to{' '}
+              <Code>EBComponentsProvider</Code>.
+            </List.Item>
+          </List>
+        </Panel>
+        <Panel
+          title="Linked Account"
+          customBadge={
+            <Badge variant="filled" color="jpmc" radius="xs">
+              Component
+            </Badge>
+          }
+        >
+          <Grid>
+            <ErrorBoundary
+              fallbackRender={({ error, resetErrorBoundary }) => (
+                <>
+                  <Grid.Col xs={12} lg="auto">
+                    <Text mb="md">
+                      With this component, your client will be able to see the
+                      status of their linked account. If they do not have a
+                      linked account yet, they will be able to link an account
+                      via this component.
+                    </Text>
+                    <Text size="xs" color="red">
+                      <b>Theme error: </b>
+                      {error.message}
+                    </Text>
+                    <Card maw={300} shadow="lg" radius={0} withBorder>
+                      {/* @ts-ignore */}
+                      <EBComponentsProvider theme={defaultTheme}>
+                        <LinkAccountForm />
+                      </EBComponentsProvider>
+                    </Card>
+                  </Grid.Col>
+                  <Grid.Col xs={12} lg="content">
+                    <Box miw={450}>
+                      <JsonInput
+                        label="Try customizing the theme"
+                        validationError="Invalid JSON"
+                        formatOnBlur
+                        minRows={20}
+                        value={theme}
+                        onChange={(value) => {
+                          setTheme(value);
                           resetErrorBoundary();
                         }}
-                        variant="default"
-                      >
-                        Reset theme
-                      </Button>
-                    </Group>
-                  </Box>
-                </Grid.Col>
-              </>
-            )}
-          >
-            <Grid.Col xs={12} lg="auto">
-              <Text mb="md">
-                With this component, your client will be able to see the status
-                of their linked account. If they do not have a linked account
-                yet, they will be able to link an account via this component.
-              </Text>
-              <Card maw={300} shadow="lg" radius={0} withBorder>
-                <EBComponentsProvider theme={parseTheme()}>
+                      />
+                      <Group mt="sm">
+                        <Button size="xs" onClick={saveTheme}>
+                          Save theme
+                        </Button>
+                        <Button
+                          size="xs"
+                          onClick={() => {
+                            resetTheme();
+                            resetErrorBoundary();
+                          }}
+                          variant="default"
+                        >
+                          Reset theme
+                        </Button>
+                      </Group>
+                    </Box>
+                  </Grid.Col>
+                </>
+              )}
+            >
+              <Grid.Col xs={12} lg="auto">
+                <Text mb="md">
+                  With this component, your client will be able to see the
+                  status of their linked account. If they do not have a linked
+                  account yet, they will be able to link an account via this
+                  component.
+                </Text>
+                <Card maw={300} shadow="lg" radius={0} withBorder>
                   <LinkAccountForm />
-                </EBComponentsProvider>
-              </Card>
-            </Grid.Col>
-            <Grid.Col xs={12} lg="content">
-              <Box miw={450}>
-                <JsonInput
-                  label="Try customizing the theme"
-                  validationError="Invalid JSON"
-                  formatOnBlur
-                  minRows={20}
-                  value={theme}
-                  onChange={setTheme}
-                />
-                <Group mt="sm">
-                  <Button size="xs" onClick={saveTheme}>
-                    Save theme
-                  </Button>
-                  <Button size="xs" onClick={resetTheme} variant="default">
-                    Reset theme
-                  </Button>
-                </Group>
-              </Box>
-            </Grid.Col>
-          </ErrorBoundary>
-        </Grid>
-      </Panel>
-      <Panel
-        title="Pay Out"
-        customBadge={
-          <Badge variant="filled" color="jpmc" radius="xs">
-            Component
-          </Badge>
-        }
-      >
-        <Text mb="md">
-          This component allows your client to make payments to recipients that
-          they have added via Embedded Banking.
-        </Text>
-        <Card maw={300} shadow="lg" radius={0} withBorder>
-          {/* @ts-ignore */}
-          <EBComponentsProvider theme={defaultTheme}>
+                </Card>
+              </Grid.Col>
+              <Grid.Col xs={12} lg="content">
+                <Box miw={450}>
+                  <JsonInput
+                    label="Try customizing the theme"
+                    validationError="Invalid JSON"
+                    formatOnBlur
+                    minRows={20}
+                    value={theme}
+                    onChange={setTheme}
+                  />
+                  <Group mt="sm">
+                    <Button size="xs" onClick={saveTheme}>
+                      Save theme
+                    </Button>
+                    <Button size="xs" onClick={resetTheme} variant="default">
+                      Reset theme
+                    </Button>
+                  </Group>
+                </Box>
+              </Grid.Col>
+            </ErrorBoundary>
+          </Grid>
+        </Panel>
+        <Panel
+          title="Pay Out"
+          customBadge={
+            <Badge variant="filled" color="jpmc" radius="xs">
+              Component
+            </Badge>
+          }
+        >
+          <Text mb="md">
+            This component allows your client to make payments to recipients
+            that they have added via Embedded Banking.
+          </Text>
+          <Card maw={300} shadow="lg" radius={0} withBorder>
             <PayOutForm />
-          </EBComponentsProvider>
-        </Card>
-      </Panel>
-      <Panel
-        title="Payment Details"
-        customBadge={
-          <Badge variant="filled" color="jpmc" radius="xs">
-            Component
-          </Badge>
-        }
-      >
-        <Text mb="md">
-          This component allows your client to view details of a payment made
-          through Embedded Banking.
-        </Text>
-        <Card maw={300} shadow="lg" radius={0} withBorder>
-          {/* @ts-ignore */}
-          <EBComponentsProvider theme={defaultTheme}>
+          </Card>
+        </Panel>
+        <Panel
+          title="Payment Details"
+          customBadge={
+            <Badge variant="filled" color="jpmc" radius="xs">
+              Component
+            </Badge>
+          }
+        >
+          <Text mb="md">
+            This component allows your client to view details of a payment made
+            through Embedded Banking.
+          </Text>
+          <Card maw={300} shadow="lg" radius={0} withBorder>
             <PaymentDetails />
-          </EBComponentsProvider>
-        </Card>
-      </Panel>
-      <Panel
-        title="Onboarding"
-        customBadge={
-          <Badge variant="filled" color="jpmc" radius="xs">
-            Component
-          </Badge>
-        }
-      >
-        <Text size="lg">Under construction</Text>
-      </Panel>
+          </Card>
+        </Panel>
+        <Panel
+          title="Onboarding"
+          customBadge={
+            <Badge variant="filled" color="jpmc" radius="xs">
+              Component
+            </Badge>
+          }
+        >
+          <Text size="lg">Under construction</Text>
+        </Panel>
+      </EBComponentsProvider>
     </PageWrapper>
   );
 };
