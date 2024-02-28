@@ -1,0 +1,13 @@
+{
+    "name": "signing-app",
+    "version": "1.0.0",
+    "description": "App for signing payloads",
+    "main": "sign.js",
+    "scripts": {
+      "start": "node sign.js"
+    },
+    "dependencies": {
+      "fs": "^0.0.1-security",
+      "jsrsasign": "^10.1.0"
+    }
+  }
