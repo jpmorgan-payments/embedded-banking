@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "34e1cbed-52de-4a2d-bcdc-edbf7675d5b4",
+		"_postman_id": "cebfb092-e0b7-41a3-aa33-fb2ea949472e",
 		"name": "Embedded Banking - Core API Requests",
-		"description": "# Setup\n\n## Set up Postman\n\n1. Install Postman either from: [https://www.postman.com/downloads/](https://www.postman.com/downloads/) OR from your organization's trusted source.\n2. To Import the JPMC API Collections , select File -> Import (or click on the \"Import\" button). Upload the postman collection file and follow the instructions.\n    \n\n### Set up Transport Certificates and Key\n\n1. Have the Transport Certificates downloaded (refer to Getting Started on the API Portal to generate certifcates).\n2. In File -> Settings -> Certificates, click \"Add Certificate\".\n3. Configure the Host:\n    1. For CAT : apigatewaycat.jpmorgan.com\n    2. For production : apigateway.jpmorgan.com\n4. Add the location of the CRT file: This is the Transport Certificate file.\n5. Add the location of the transport certificate KEY file: You get this file when you create the CSR while uploading to “Certification Authority”\n6. Click “Add” to add the certificate.\n7. Make sure to turn off “SSL certificates verification” in the “General” tab.\n    \n\n## Configure Postman Variables\n\nThis Postman Collection uses the CAT Digital Private Certificate .key to encode payloads. To set this up, select File -> New -> Environment. You may rename \"New Environment\" to a preferred name, e.g. \"CAT Environment\".\n\nSetup the following Postman Environment Variables:\n\n1. signature_cert_private_key - a full copy-paste of your signature private key file content. Open the Digital Private Certificate .key file that you got during the CSR signing phase in a text editor and copy the contents entirely without missing any characters (Ctrl-C). Please note, this is a second private key that was generated along with digital certificates.\n2. signed_request - a variable to hold signed POST payload between requests. You can leave this empty.\n3. idp_token_header - IDP token with \"Bearer \" prefix.\n4. client_id_header - client_id which will be used in API calls\n    \n\nTo enable this newly created Postman environment, click on the top right section where it says \"No Environment\" and set it to your new environment.\n\nThere is also a collection level variable api-url which is set to the Client Testing / CAT environment by default.\n\n## How to run POST API Requests\n\nEvery POST API payload should be signed with a signature certificate which have been uploaded to the Developer Portal. We've created a utility API request \"Sign JSON Payload for POST requests\" (located in the root of this Collection) which should help you to generate a signed payload from the JSON one. It is not invoking any real server API but assigning a signed payload value from the request body to the Postman Environmental variable.\n\n\"Sign JSON Payload for POST requests\" has a number of examples representing EB common POST API requests.\n\nEach POST API request in this collection is using {{signed_request_body}} variable as a request body",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2705907"
+		"description": "# Setup\n\n## Set up Postman\n\n1. Install Postman either from: [https://www.postman.com/downloads/](https://www.postman.com/downloads/) OR from your organization's trusted source.\n2. To Import the JPMC API Collections , select File -> Import (or click on the \"Import\" button). Upload the postman collection file and follow the instructions.\n    \n\n### Set up Transport Certificates and Key\n\n1. Have the Transport Certificates downloaded (refer to Getting Started on the API Portal to generate certificates).\n2. In File -> Settings -> Certificates, click \"Add Certificate\".\n3. Configure the Host:\n    1. For CAT : apigatewaycat.jpmorgan.com\n    2. For production : apigateway.jpmorgan.com\n4. Add the location of the CRT file: This is the Transport Certificate file.\n5. Add the location of the transport certificate KEY file: You get this file when you create the CSR while uploading to “Certification Authority”\n6. Click “Add” to add the certificate.\n7. Make sure to turn off “SSL certificates verification” in the “General” tab.\n    \n\n## Configure Postman Variables\n\nThis Postman Collection uses the CAT Digital Private Certificate .key to encode payloads. To set this up, select File -> New -> Environment. You may rename \"New Environment\" to a preferred name, e.g. \"CAT Environment\".\n\nSetup the following Postman Environment Variables:\n\n1. signature_cert_private_key - a full copy-paste of your signature private key file content. Open the Digital Private Certificate .key file that you got during the CSR signing phase in a text editor and copy the contents entirely without missing any characters (Ctrl-C). Please note, this is a second private key that was generated along with digital certificates.\n2. idp_token_header - IDP token with \"Bearer \" prefix.\n3. platform_id_header (will be required only for a couple of API operations) - platform /C1 ID\n    \n\nTo enable this newly created Postman environment, click on the top right section where it says \"No Environment\" and set it to your new environment.\n\nThere is also a collection level variable api-url which is set to the Client Testing / CAT environment by default.\n\n## POST API Requests specifics\n\nEvery POST API payload should be signed with a signature certificate which have been uploaded to the Developer Portal. We've created a utility JavaScript script which is defined inside Postman Collection variable \"sign_script\" and being executed before every POST request and updating + encoding raw value of each POST request. You don't need to perform any additional steps to sign POST payloads\n\n## Sample curl request using the mTLS certs\n\n`curl --ssl --location https://apigatewaycat.jpmorgan.com/tsapi/ef/v1/clients --cert .\\path-to-the-certs\\JPM_Transport_CAT-public.crt --key .\\path-to-the-certs\\JPM_Transport_CAT-private.key --pass password`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -12,17 +11,23 @@
 			"item": [
 				{
 					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -31,7 +36,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}"
+							"raw": "{\r\n    \"type\": \"ACH\",\r\n    \"originatingAccount\": \"017ef611f6df40ff894248426da39bd5\",\r\n    \"recipient\": {\r\n        \"partyDetails\": {\r\n            \"address\": {\r\n                \"addressLine1\": \"23 Broadway st\",\r\n                \"addressLine2\": null,\r\n                \"addressLine3\": null,\r\n                \"city\": \"New York\",\r\n                \"countryCode\": \"US\",\r\n                \"state\": \"NY\",\r\n                \"zip\": \"10001\"\r\n            },\r\n            \"type\": \"INDIVIDUAL\",\r\n            \"firstName\": \"John\",\r\n            \"lastName\": \"Wick\",\r\n            \"businessName\": null,\r\n            \"contacts\": [\r\n                {\r\n                    \"contactType\": \"EMAIL\",\r\n                    \"countryCode\": null,\r\n                    \"value\": \"john.wick@xyz.com\"\r\n                },\r\n                {\r\n                    \"contactType\": \"PHONE\",\r\n                    \"countryCode\": \"+1\",\r\n                    \"value\": \"1201774504\"\r\n                }\r\n            ]\r\n        },\r\n        \"account\": {\r\n            \"number\": \"123456789\",\r\n            \"type\": \"CHECKING\",\r\n            \"routingCodeType\": \"USABA\",\r\n            \"routingNumber\": \"123456789\",\r\n            \"countryCode\": \"US\"\r\n        },\r\n        \"id\": \"9880705e-fcb3-4c2e-b7be-f688c10dfb23\"\r\n    },\r\n    \"amount\": 17,\r\n    \"currency\": \"USD\",\r\n    \"memo\": \"Test Memo\",\r\n    \"paymentDate\": \"2023-05-24T19:52:41.256Z\"\r\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/transactions",
@@ -50,11 +55,6 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -83,64 +83,14 @@
 				{
 					"name": "List",
 					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
-								"key": "token",
-								"value": "{{idp_token_header}}",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{{signed_request_body}}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_url}}/transactions/search",
-							"host": [
-								"{{api_url}}"
-							],
-							"path": [
-								"transactions",
-								"search"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{api_url}}/transactions",
 							"host": [
@@ -148,6 +98,73 @@
 							],
 							"path": [
 								"transactions"
+							],
+							"query": [
+								{
+									"key": "transactionType",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "accountNumber",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "amountEquals",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "amountGreaterThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "amountLessThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "dateEquals",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "dateGreaterThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "dateLessThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "dateTimeGreaterThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "dateTimeLessThan",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "recipientAccount",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "transactionId",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -164,11 +181,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -181,6 +193,18 @@
 							],
 							"path": [
 								"accounts"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -191,11 +215,6 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -226,11 +245,6 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -274,11 +288,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -300,7 +309,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "9880705e-fcb3-4c2e-b7be-f688c10dfb23"
+									"value": ""
 								}
 							]
 						}
@@ -316,11 +325,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -333,6 +337,24 @@
 							],
 							"path": [
 								"recipients"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "RECIPIENT",
+									"description": "Enum: \"RECIPIENT\" \"LINKED_ACCOUNT\"\nExample: type=RECIPIENT\nRecipient type to return",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -345,7 +367,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"eval(pm.collectionVariables.get('sign_script'))"
 								],
 								"type": "text/javascript"
 							}
@@ -358,17 +380,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/xml",
-								"type": "text"
-							},
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -376,10 +387,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}",
+							"raw": "{\r\n    \"partyDetails\": {\r\n        \"address\": {\r\n            \"addressLine1\": \"23 Broadway st\",\r\n            \"city\": \"New York\",\r\n            \"countryCode\": \"US\",\r\n            \"state\": \"NY\",\r\n            \"zip\": \"10001\"\r\n        },\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Wick\",\r\n        \"type\": \"INDIVIDUAL\",\r\n        \"contacts\": [\r\n            {\r\n                \"contactType\": \"PHONE\",\r\n                \"countryCode\": \"+1\",\r\n                \"value\": \"1201774504\"\r\n            },\r\n            {\r\n                \"contactType\": \"EMAIL\",\r\n                \"value\": \"john.wick@xyz.com\"\r\n            }\r\n        ]\r\n    },\r\n    \"account\": {\r\n        \"number\": \"123456333\",\r\n        \"type\": \"CHECKING\",\r\n        \"routingCodeType\": \"USABA\",\r\n        \"routingNumber\": \"123456789\",\r\n        \"countryCode\": \"US\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
-									"language": "xml"
+									"language": "text"
 								}
 							}
 						},
@@ -402,70 +413,137 @@
 			"item": [
 				{
 					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "platform_id",
-								"value": "1956149012",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "ClientDN",
-								"value": "OBTSTSTCL1_DN",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"products\": [\r\n        \"EB\"\r\n    ],\r\n    \"businessType\": \"Business\",\r\n    \"legalStructure\": \"Corporate\",\r\n    \"industryCategory\": \"Retail\",\r\n    \"industryType\": \"Correspondence Schools\",\r\n    \"significantOwnership\": true,\r\n    \"entitiesInOwnership\": false,\r\n    \"businessName\": \"Rob's Golf Shop\",\r\n    \"businessAliasName\": \"Golf Shop of Robert\",\r\n    \"parentProfileId\": \"0005191231\",\r\n    \"identities\": [\r\n        {\r\n            \"idType\": \"EIN\",\r\n            \"idDescription\": \"EIN\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"1666656090\"\r\n        }\r\n    ],\r\n    \"businessDescription\": \"A shop which does not sell Golf kits\",\r\n    \"address\": {\r\n        \"addressType\": \"Principal place of business\",\r\n        \"addressLine1\": \"123 Maryland\",\r\n        \"addressLine2\": \"Land of Maries\",\r\n        \"addressLine3\": \"Mary Gold lane\",\r\n        \"city\": \"Chicago\",\r\n        \"state\": \"CA\",\r\n        \"postalCode\": \"77777\",\r\n        \"countryCode\": \"US\"\r\n    },\r\n    \"email\": \"rgs@rgs.com\",\r\n    \"phone\": {\r\n        \"countryCode\": \"+1\",\r\n        \"phoneNumber\": \"2020304567\"\r\n    },\r\n    \"websiteAvailable\": true,\r\n    \"website\": \"https://www.robsgolfshop.com\",\r\n    \"countryOfFormation\": \"US\",\r\n    \"yearOfFormation\": \"2022\",\r\n    \"relatedParties\": [\r\n        {\r\n            \"partyType\": \"Individual\",\r\n            \"partyRole\": \"CONTROLLER\",\r\n            \"prefix\": \"Mr\",\r\n            \"firstName\": \"Alex\",\r\n            \"middleName\": \"X\",\r\n            \"lastName\": \"Singh\",\r\n            \"suffix\": \"dsuza\",\r\n            \"jobTitle\": \"CEO\",\r\n            \"address\": {\r\n                \"addressType\": \"string\",\r\n                \"addressLine1\": \"456 Rose Garden\",\r\n                \"addressLine2\": \"Rose Lane\",\r\n                \"addressLine3\": \"Rose House\",\r\n                \"city\": \"Newyork\",\r\n                \"state\": \"NY\",\r\n                \"postalCode\": \"88888\",\r\n                \"countryCode\": \"US\"\r\n            },\r\n            \"birthDate\": \"1990-01-01\",\r\n            \"identities\": [\r\n                {\r\n                    \"idType\": \"SSN\",\r\n                    \"idDescription\": \"SSN\",\r\n                    \"idIssuer\": \"US\",\r\n                    \"idValue\": \"999999999\"\r\n                }\r\n            ],\r\n            \"email\": \"Alex.singh@rgs.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"345345345\"\r\n            }\r\n        },\r\n        {\r\n            \"partyType\": \"Individual\",\r\n            \"partyRole\": \"OWNER\",\r\n            \"prefix\": \"Mr\",\r\n            \"firstName\": \"Felix\",\r\n            \"middleName\": \"X\",\r\n            \"lastName\": \"Raj\",\r\n            \"suffix\": \"d'suza\",\r\n            \"address\": {\r\n                \"addressType\": \"\",\r\n                \"addressLine1\": \"5 Papaya Lane\",\r\n                \"addressLine2\": \"Papaya Centre\",\r\n                \"addressLine3\": \"Papaya Garden\",\r\n                \"city\": \"Manhatten\",\r\n                \"state\": \"MA\",\r\n                \"postalCode\": \"88373\",\r\n                \"countryCode\": \"US\"\r\n            },\r\n            \"identities\": [\r\n                {\r\n                    \"idType\": \"SSN\",\r\n                    \"idDescription\": \"SSN\",\r\n                    \"idIssuer\": \"US\",\r\n                    \"idValue\": \"999999989\"\r\n                }\r\n            ],\r\n            \"email\": \"felix.raj@rgs.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"1237653894\"\r\n            },\r\n            \"natureOfOwnership\": \"Direct\",\r\n            \"percentageOfOwnership\": \"100\",\r\n            \"sourceOfWealth\": \"String\",\r\n            \"sourceOfWealthDescription\": \"Inheritance\"\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"businessName\": \"John Shop\",\r\n    \"identities\": [\r\n        {\r\n            \"idType\": \"WEPAY_LEGAL_ENTITY_ID\",\r\n            \"idValue\": \"10bd6494-8502-4e2f-84d2-f184f1f86b72\",\r\n            \"idIssuer\": \"WEPAY\",\r\n            \"idDescription\": \"WEPAY_LEGAL_ENTITY_ID\"\r\n        }\r\n    ],\r\n    \"relatedParties\": [\r\n        {\r\n            \"firstName\": \"John\",\r\n            \"middleName\": \"\",\r\n            \"lastName\": \"Doe\",\r\n            \"email\": \"john.doe@jpmorgan.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"1234567890\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{ExternalUAT}}/clients",
+							"raw": "{{api_url}}/clients",
 							"host": [
-								"{{ExternalUAT}}"
+								"{{api_url}}"
 							],
 							"path": [
 								"clients"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "with wepay legal entity id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "platform_id",
+										"value": "{{platform_id_header}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"businessName\": \"John Shop\",\r\n    \"identities\": [\r\n        {\r\n            \"idType\": \"WEPAY_LEGAL_ENTITY_ID\",\r\n            \"idValue\": \"10bd6494-8502-4e2f-84d2-f184f1f86b72\",\r\n            \"idIssuer\": \"WEPAY\",\r\n            \"idDescription\": \"WEPAY_LEGAL_ENTITY_ID\"\r\n        }\r\n    ],\r\n    \"relatedParties\": [\r\n        {\r\n            \"firstName\": \"John\",\r\n            \"middleName\": \"\",\r\n            \"lastName\": \"Doe\",\r\n            \"email\": \"john.doe@jpmorgan.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"1234567890\"\r\n            }\r\n        }\r\n    ]\r\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/clients",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"clients"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "minimal",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "platform_id",
+										"value": "{{platform_id_header}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"businessName\":\"John Shop\",\r\n    \"relatedParties\": [\r\n        {\r\n            \"firstName\": \"John\",\r\n            \"lastName\": \"Doe\",\r\n            \"email\": \"john.doe@jpmorgan.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"1231234123\"\r\n            }\r\n        }\r\n    ]\r\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/clients",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"clients"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
-								"key": "platform_id",
-								"type": "text",
-								"value": "0030000132"
-							},
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "ClientDN",
-								"type": "text",
-								"value": "OBTSTSTCL1_DN"
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"0030000135\",\r\n    \"businessName\": \"The Soup Kitchen\",\r\n    \"businessType\": \"Business\",\r\n    \"industryType\": \"Accommodation and Food Serv12\",\r\n    \"businessDescription\": \"Accommodation and Food Services\",\r\n    \"websiteAvailable\": false,\r\n    \"legalStructure\": \"Partnership\",\r\n    \"significantOwnership\": false,\r\n    \"entitiesInOwnership\": false,\r\n    \"phone\": {\r\n        \"countryCode\": \"001\",\r\n        \"phoneNumber\": \"2127773888\"\r\n    },\r\n    \"identities\": [\r\n        {\r\n            \"idType\": \"ECID\",\r\n            \"idDescription\": \"ECID\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"111200302\"\r\n        },\r\n        {\r\n            \"idType\": \"EIN\",\r\n            \"idDescription\": \"Employer identification number\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"555443211\"\r\n        }\r\n    ],\r\n    \"address\": {\r\n        \"addressLine1\": \"205 E Houston St12345\",\r\n        \"city\": \"New York City\",\r\n        \"state\": \"NY\",\r\n        \"postalCode\": \"10056\",\r\n        \"country\": \"United States of America\",\r\n        \"countryCode\": \"US\",\r\n        \"source\": \"EB\",\r\n        \"addressType\": \"Principal place of business\"\r\n    }\r\n}"
+							"raw": "{\r\n    \"id\": \"1000011220\",\r\n    \"address\": {\r\n        \"addressType\": \"\",\r\n        \"addressLine1\": \"123 Home Street\",\r\n        \"city\": \"Hometown\",\r\n        \"state\": \"NJ\",\r\n        \"postalCode\": \"12345\",\r\n        \"countryCode\": \"US\"\r\n    },\r\n    \"phone\": {\r\n        \"countryCode\": \"+1\",\r\n        \"phoneNumber\": \"1234567890\"\r\n    },\r\n    \"businessType\": \"Sole Proprietorship\",\r\n    \"legalStructure\": \"Sole Proprietorship\",\r\n    \"industryCategory\": \"Accommodation and Food Services\",\r\n    \"industryType\": \"Caterers\",\r\n    \"significantOwnership\": false,\r\n    \"entitiesInOwnership\": false,\r\n    \"businessName\": \"Sole Proprietor Business\",\r\n    \"businessDescription\": \"We do stuff.\",\r\n    \"websiteAvailable\": true,\r\n    \"website\": \"https://www.mybusiness.com\",\r\n    \"countryOfFormation\": \"US\",\r\n    \"yearOfFormation\": \"2020\",\r\n    \"identities\": [\r\n        {\r\n            \"action\": \"ADD\",\r\n            \"idType\": \"SSN\",\r\n            \"idDescription\": \"Social Security Number\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"123456789\"\r\n        }\r\n    ],\r\n    \"products\": [\r\n        \"EB\"\r\n    ],\r\n    \"relatedParties\": [\r\n        {\r\n            \"action\": \"UPDATE\",\r\n            \"id\": \"e9f08f14-f929-48a6-a6b7-2096ab41d94a\",\r\n            \"address\": {\r\n                \"addressType\": \"\",\r\n                \"addressLine1\": \"123 Home Street\",\r\n                \"city\": \"Hometown\",\r\n                \"state\": \"NJ\",\r\n                \"postalCode\": \"12345\",\r\n                \"countryCode\": \"US\"\r\n            },\r\n            \"email\": \"john.doe@test.com\",\r\n            \"phone\": {\r\n                \"countryCode\": \"+1\",\r\n                \"phoneNumber\": \"9876543210\"\r\n            },\r\n            \"identities\": [\r\n                {\r\n                    \"action\": \"ADD\",\r\n                    \"idType\": \"SSN\",\r\n                    \"idIssuer\": \"US\",\r\n                    \"idValue\": \"123456789\"\r\n                }\r\n            ],\r\n            \"firstName\": \"John\",\r\n            \"middleName\": \"\",\r\n            \"lastName\": \"Doe\",\r\n            \"jobTitle\": \"CEO\",\r\n            \"birthDate\": \"1984-07-23\",\r\n            \"natureOfOwnership\": \"Direct\",\r\n            \"partyType\": \"Individual\",\r\n            \"partyRole\": [\r\n                \"CONTROLLER\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{ExternalUAT}}/clients/:id",
+							"raw": "{{api_url}}/clients/:id",
 							"host": [
-								"{{ExternalUAT}}"
+								"{{api_url}}"
 							],
 							"path": [
 								"clients",
@@ -474,7 +552,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "test"
+									"value": "1000010445"
 								}
 							]
 						}
@@ -487,26 +565,15 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"type": "text",
-								"value": "0030000132"
-							},
-							{
-								"key": "ClientDN",
-								"type": "text",
-								"value": "OBTSTSTCL1_DN"
-							},
-							{
-								"key": "platform_id",
-								"value": "0030000132",
-								"type": "text",
-								"disabled": true
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
 							}
 						],
 						"url": {
-							"raw": "{{ExternalUAT}}/clients/:id",
+							"raw": "{{api_url}}/clients/:id",
 							"host": [
-								"{{ExternalUAT}}"
+								"{{api_url}}"
 							],
 							"path": [
 								"clients",
@@ -515,7 +582,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1956149012"
+									"value": "1000010445"
 								}
 							]
 						}
@@ -528,26 +595,15 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"type": "text",
-								"value": "0030000132"
-							},
-							{
-								"key": "ClientDN",
-								"type": "text",
-								"value": "OBTSTSTCL1_DN"
-							},
-							{
-								"key": "platform_id",
-								"value": "0030000132",
-								"type": "text",
-								"disabled": true
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
 							}
 						],
 						"url": {
-							"raw": "{{ExternalUAT}}/clients",
+							"raw": "{{api_url}}/clients",
 							"host": [
-								"{{ExternalUAT}}"
+								"{{api_url}}"
 							],
 							"path": [
 								"clients"
@@ -557,35 +613,31 @@
 					"response": []
 				},
 				{
-					"name": "Verification",
+					"name": "Get Verifications",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
-								"key": "ClientDN",
-								"type": "text",
-								"value": "OBTSTSTCL1_DN"
-							},
-							{
-								"key": "platform_id",
-								"value": "0030000132",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"0030000135\",\r\n    \"businessName\": \"The Soup Kitchen\",\r\n    \"businessType\": \"Business\",\r\n    \"industryType\": \"Accommodation and Food Serv12\",\r\n    \"businessDescription\": \"Accommodation and Food Services\",\r\n    \"websiteAvailable\": false,\r\n    \"legalStructure\": \"Partnership\",\r\n    \"significantOwnership\": false,\r\n    \"entitiesInOwnership\": false,\r\n    \"phone\": {\r\n        \"countryCode\": \"001\",\r\n        \"phoneNumber\": \"2127773888\"\r\n    },\r\n    \"identities\": [\r\n        {\r\n            \"idType\": \"ECID\",\r\n            \"idDescription\": \"ECID\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"111200302\"\r\n        },\r\n        {\r\n            \"idType\": \"EIN\",\r\n            \"idDescription\": \"Employer identification number\",\r\n            \"idIssuer\": \"US\",\r\n            \"idValue\": \"555443211\"\r\n        }\r\n    ],\r\n    \"address\": {\r\n        \"addressLine1\": \"205 E Houston St12345\",\r\n        \"city\": \"New York City\",\r\n        \"state\": \"NY\",\r\n        \"postalCode\": \"10056\",\r\n        \"country\": \"United States of America\",\r\n        \"countryCode\": \"US\",\r\n        \"source\": \"EB\",\r\n        \"addressType\": \"Principal place of business\"\r\n    }\r\n}"
-						},
 						"url": {
-							"raw": "{{ExternalUAT}}/clients/:id/verifications",
+							"raw": "{{api_url}}/clients/:id/verifications",
 							"host": [
-								"{{ExternalUAT}}"
+								"{{api_url}}"
 							],
 							"path": [
 								"clients",
@@ -595,7 +647,58 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "test"
+									"value": "1000010445"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verification",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"verifications\": [\r\n        {\r\n            \"verification\": {\r\n                \"id\": \"A00033\"\r\n            },\r\n            \"response\": {\r\n                \"values\": [\r\n                    \"FALSE\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"verification\": {\r\n                \"id\": \"A00043\"\r\n            },\r\n            \"response\": {\r\n                \"values\": [\r\n                    \"FALSE\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"verification\": {\r\n                \"id\": \"A01021\"\r\n            },\r\n            \"response\": {\r\n                \"values\": [\r\n                    \"FALSE\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"verification\": {\r\n                \"id\": \"A01023\"\r\n            },\r\n            \"response\": {\r\n                \"values\": [\r\n                    \"FALSE\"\r\n                ]\r\n            }\r\n        }\r\n    ],\r\n    \"attestations\": [\r\n        {\r\n            \"documentId\": \"51bab9bf-441f-444b-b6aa-d7904f49b3e2\",\r\n            \"fullName\": \"John Doe\",\r\n            \"ipAddress\": \"192.0.0.1\"\r\n        },\r\n        {\r\n            \"documentId\": \"3a450301-8f2f-4cf7-8d9d-82152bebd878\",\r\n            \"fullName\": \"John Doe\",\r\n            \"ipAddress\": \"192.0.0.1\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/clients/:id/verifications",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"clients",
+								":id",
+								"verifications"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1000010445"
 								}
 							]
 						}
@@ -609,14 +712,20 @@
 			"item": [
 				{
 					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -625,7 +734,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}"
+							"raw": "{\r\n    \"type\": \"ACCOUNT\",\r\n    \"subject\": \"Test\",\r\n    \"description\": \"Test\"\r\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/cases",
@@ -641,14 +750,20 @@
 				},
 				{
 					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -657,7 +772,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}"
+							"raw": "{\r\n    \"type\": \"ACCOUNT\",\r\n    \"subject\": \"Test\",\r\n    \"description\": \"Test\"\r\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/cases/:id",
@@ -683,11 +798,6 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -719,11 +829,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -736,6 +841,18 @@
 							],
 							"path": [
 								"cases"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -748,14 +865,20 @@
 			"item": [
 				{
 					"name": "Update Change PIN",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "default"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -764,7 +887,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}"
+							"raw": "{\r\n    \"pin\": \"1234\"\r\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/debit-cards/:id",
@@ -790,11 +913,6 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -826,11 +944,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "text"
-							},
-							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
 								"type": "default"
@@ -850,14 +963,20 @@
 				},
 				{
 					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "client_id",
-								"value": "{{client_id_header}}",
-								"type": "default"
-							},
 							{
 								"key": "token",
 								"value": "{{idp_token_header}}",
@@ -866,7 +985,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{{signed_request_body}}"
+							"raw": "{\r\n    \"accountId\": \"017ef611f6df40ff894248426da39bd5\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"birthDate\": \"2001-01-09\",\r\n    \"citizenshipCountry\": \"US\",\r\n    \"email\": \"john.doe@jpmorgan.com\",\r\n    \"mobilePhone\": {\r\n        \"contactNumber\": \"1231231233\",\r\n        \"countryCode\": \"840\"\r\n    },\r\n    \"mailingAddress\": {\r\n        \"address1\": \"25 Broadway\",\r\n        \"city\": \"New York\",\r\n        \"state\": \"NY\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"10001\"\r\n    },\r\n    \"relatedPartyId\": \"ac8231fb-fc2a-4548-bf37-1b6b179ecc84\"\r\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/debit-cards",
@@ -883,178 +1002,608 @@
 			]
 		},
 		{
-			"name": "Sign JSON Payload for POST requests",
-			"event": [
+			"name": "Statements",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"        const navigator = {} //fake a navigator object for the lib\r",
-							"        const window = {} //fake a window object for the lib\r",
-							"\r",
-							"        pm.sendRequest(\"https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js\", (error, response) => {\r",
-							"            if (error || response.code !== 200) {\r",
-							"                pm.expect.fail('Could not load external library');\r",
-							"            }\r",
-							"            eval(response.text());\r",
-							"\r",
-							"            var requestData = JSON.stringify(pm.request.body.raw);\r",
-							"            \r",
-							"            requestData = requestData.replace(/\\\\n/g,\"\").replace(/\\\\r/g,\"\").replace(/\\\\/g,\"\").slice(1, -1);\r",
-							"\r",
-							"            var header = {\"alg\" : \"RS256\"};\r",
-							"            var sHeader = JSON.stringify(header);          \r",
-							"\r",
-							"            var requestBodyJWT = KJUR.jws.JWS.sign(header.alg, sHeader, requestData, pm.environment.get(\"signature_cert_private_key\").replace(/^\\s+|\\s+$/g, ''));\r",
-							"\r",
-							"            console.log(requestBodyJWT)\r",
-							"\r",
-							"            pm.environment.set(\"signed_request_body\",requestBodyJWT);\r",
-							"\r",
-							"        })"
+					"name": "Get Statement",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"url": {
+							"raw": "{{api_url}}/statements/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"statements",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ZjNjMTJjOTctZTQyNy00MWI5LWJmNDAtMDMzYzZiNjliNWJl"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Statements Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{idp_token_header}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/statements/search?dateFrom=2022-12-31&dateTo=2023-12-31",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"statements",
+								"search"
+							],
+							"query": [
+								{
+									"key": "dateFrom",
+									"value": "2022-12-31"
+								},
+								{
+									"key": "dateTo",
+									"value": "2023-12-31"
+								},
+								{
+									"key": "accountIds",
+									"value": "dc2eda9084bf40b7a1d8baa8c5e0ea0ax",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"pin\": \"1234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "https://postman-echo.com/get",
-					"protocol": "https",
-					"host": [
-						"postman-echo",
-						"com"
 					],
-					"path": [
-						"get"
-					]
-				},
-				"description": "The JPMC Postman sample collections uses the \"Jsrassign\" Open Source JavaScript library (https://kjur.github.io/jsrsasign) to create JSON Web Tokens (JWT). You can see this in “GET” requests as mentioned in below screenshot. Please note, this is needed for any POST request that CREATE/MODIFY data in JPMC."
-			},
-			"response": [
-				{
-					"name": "Create Recipient",
-					"originalRequest": {
-						"method": "GET",
+					"request": {
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"1000014759\",\r\n  \"relatedPartyId\": \"d68935ee-6eaa-481b-b9b0-90b475a13633\",\r\n  \"emailAddress\": \"john.doe@email.com\",\r\n}"
+						},
 						"url": {
-							"raw": "https://postman-echo.com/get",
-							"protocol": "https",
+							"raw": "{{api_url}}/users",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{api_url}}"
 							],
 							"path": [
-								"get"
+								"users"
 							]
 						}
 					},
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				},
 				{
-					"name": "Create ACH Transaction",
-					"originalRequest": {
-						"method": "GET",
+					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(pm.collectionVariables.get('sign_script'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"1000014759\",\r\n  \"relatedPartyId\": \"d68935ee-6eaa-481b-b9b0-90b475a13633\",\r\n  \"emailAddress\": \"john.doe@email.com\",\r\n}"
+						},
 						"url": {
-							"raw": "https://postman-echo.com/get",
-							"protocol": "https",
+							"raw": "{{api_url}}/users",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{api_url}}"
 							],
 							"path": [
-								"get"
+								"users"
 							]
 						}
 					},
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": [],
-					"body": ""
-				},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reference Data",
+			"item": [
 				{
-					"name": "Create Debit Card",
-					"originalRequest": {
+					"name": "FAQ",
+					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
 						"url": {
-							"raw": "https://postman-echo.com/get",
-							"protocol": "https",
+							"raw": "{{api_url}}/faqs?tags&clientId",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{api_url}}"
 							],
 							"path": [
-								"get"
+								"faqs"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": null
+								},
+								{
+									"key": "clientId",
+									"value": null
+								}
 							]
-						}
+						},
+						"description": "Returns a list of legal structures of a business. To be used when onboarding business clients."
 					},
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				},
 				{
-					"name": "Update Debit Card PIN",
-					"originalRequest": {
+					"name": "List available countries and country codes",
+					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							}
+						],
 						"url": {
-							"raw": "https://postman-echo.com/get",
-							"protocol": "https",
+							"raw": "{{api_url}}/countries",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{api_url}}"
 							],
 							"path": [
-								"get"
+								"countries"
 							]
-						}
+						},
+						"description": "Retrieves a list of countries with their ISO 2-character codes."
 					},
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				},
 				{
-					"name": "Create a Support Case",
-					"originalRequest": {
+					"name": "List available country subdivisions",
+					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							}
+						],
 						"url": {
-							"raw": "https://postman-echo.com/get",
-							"protocol": "https",
+							"raw": "{{api_url}}/country-subdivision?countryCode=US&limit=25&page=0",
 							"host": [
-								"postman-echo",
-								"com"
+								"{{api_url}}"
 							],
 							"path": [
-								"get"
+								"country-subdivision"
+							],
+							"query": [
+								{
+									"key": "countryCode",
+									"value": "US",
+									"description": "Two-letter ISO code for a country, such as US for USA."
+								},
+								{
+									"key": "limit",
+									"value": "25",
+									"description": "Number of records per page."
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page Number"
+								}
 							]
-						}
+						},
+						"description": "Retrieves a list of subdivisions within a country. For example, the states of the USA."
 					},
-					"_postman_previewlanguage": "Text",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
+				},
+				{
+					"name": "List legal structures",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/legal-structures",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"legal-structures"
+							]
+						},
+						"description": "Returns a list of legal structures of a business. To be used when onboarding business clients."
+					},
+					"response": []
+				},
+				{
+					"name": "List supporting document-types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/document-types?countryCode=US&documentCategory=IDENTITY_VERIFICATION&legalStructure=cillum do velit&limit=25&page=0",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"document-types"
+							],
+							"query": [
+								{
+									"key": "countryCode",
+									"value": "US",
+									"description": "Two-letter ISO code for a country, such as US for USA."
+								},
+								{
+									"key": "documentCategory",
+									"value": "IDENTITY_VERIFICATION",
+									"description": "Document category type."
+								},
+								{
+									"key": "legalStructure",
+									"value": "cillum do velit",
+									"description": "url encoded legalStructure type."
+								},
+								{
+									"key": "limit",
+									"value": "25",
+									"description": "Number of records per page."
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page Number"
+								}
+							]
+						},
+						"description": "Returns a list of supporting documents that may be required during onboarding and ongoing checks."
+					},
+					"response": []
+				},
+				{
+					"name": "List industry categories and industry types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/industry-categories?limit=25&page=0",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"industry-categories"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "25",
+									"description": "Number of records per page."
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page Number"
+								}
+							]
+						},
+						"description": "Returns a list of all industry categories and industry types for business clients. To be used in onboarding and other client checks."
+					},
+					"response": []
+				},
+				{
+					"name": "List acceptable ID types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/id-types",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"id-types"
+							]
+						},
+						"description": "Returns a list of acceptable types of ID that can be submitted for onboarding or other client checks."
+					},
+					"response": []
+				},
+				{
+					"name": "List Embedded Finance products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/products",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Returns a list of all available Embedded Finance products."
+					},
+					"response": []
+				},
+				{
+					"name": "List business types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/business-types",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"business-types"
+							]
+						},
+						"description": "Returns a list of business types that can be used for client onboarding processes."
+					},
+					"response": []
+				},
+				{
+					"name": "List job titles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/job-titles",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"job-titles"
+							]
+						},
+						"description": "Returns a list of job titles that can be used for client onboarding."
+					},
+					"response": []
+				},
+				{
+					"name": "List Nature Of Ownership values",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/nature-of-ownerships",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"nature-of-ownerships"
+							]
+						},
+						"description": "Returns a list of accepted Nature Of Ownership values."
+					},
+					"response": []
+				},
+				{
+					"name": "List party types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/party-types",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"party-types"
+							]
+						},
+						"description": "Returns a list of accepted party types."
+					},
+					"response": []
+				},
+				{
+					"name": "List party roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/party-roles",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"party-roles"
+							]
+						},
+						"description": "Returns a list of accepted party roles."
+					},
+					"response": []
+				},
+				{
+					"name": "List address types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "JWT Client token",
+								"key": "token",
+								"value": "{{idp_token_header}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/address-types",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"address-types"
+							]
+						},
+						"description": "Returns a list of accepted address types."
+					},
+					"response": []
 				}
 			]
 		}
@@ -1082,8 +1631,13 @@
 	"variable": [
 		{
 			"key": "api_url",
-			"value": "https://apigatewaycat.jpmorgan.com/tsapi/v1/eb/",
+			"value": "https://apigatewaycat.jpmorgan.com/tsapi/ef/v1",
 			"type": "string"
+		},
+		{
+			"key": "sign_script",
+			"value": "const navigator = {} //fake a navigator object for the lib\nconst window = {} //fake a window object for the lib\npm.sendRequest(\"https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js\", (error, response) => {\n    if (error || response.code !== 200) {\n        pm.expect.fail('Could not load external library');\n    }\n    eval(response.text());\n    var requestData = JSON.stringify(pm.request.body.raw);\n    \n    requestData = requestData.replace(/\\\\n/g,\"\").replace(/\\\\r/g,\"\").replace(/\\\\/g,\"\").slice(1, -1);\n    var header = {\"alg\" : \"RS256\"};\n    var sHeader = JSON.stringify(header);          \n    var requestBodyJWT = KJUR.jws.JWS.sign(header.alg, sHeader, requestData, pm.environment.get(\"signature_cert_private_key\").replace(/^\\s+|\\s+$/g, ''));\n    console.log(requestBodyJWT)\n    pm.request.body.raw = requestBodyJWT;\n})",
+			"type": "default"
 		}
 	]
 }
