@@ -61,6 +61,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
@@ -81,8 +82,17 @@
     "eslint": "^8.53.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-mantine": "3.0.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-config-auto": "^0.9.0",
+    "eslint-config-mantine": "^3.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-chai-expect": "^3.0.0",
+    "eslint-plugin-chai-friendly": "^0.7.4",
+    "eslint-plugin-const-case": "^1.2.2",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-html": "^8.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest-dom": "^5.1.0",
+    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.7.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -104,5 +114,8 @@
     "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
+  },
+  "resolutions": {
+    "strip-ansi": "6.0.1"
   }
 }

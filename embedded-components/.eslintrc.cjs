@@ -1,13 +1,15 @@
 module.exports = {
-  extends: ['mantine'],
+  extends: ['mantine', 'plugin:tailwindcss/recommended'],
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
+  plugins: ['tailwindcss'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 'off',
     'arrow-body-style': 'off',
+    'tailwindcss/classnames-order': 'error',
     'import/extensions': [
       'error',
       'ignorePackages',
