@@ -1,0 +1,255 @@
+openapi: 3.0.3
+info:
+  title: Embedded Finance API
+  version: 0.1.1
+  description: Embedded Finance services from J.P. Morgan
+paths:
+  /ef/v1/recipients:
+    post:
+      summary: Create recipient
+      description: Creates a new recipient.
+      operationId: createRecipient
+      tags:
+      - Recipients
+      parameters:
+      - name: token
+        in: header
+        description: JWT Client token
+        required: false
+        schema:
+          type: string
+      - name: client_id
+        in: header
+        description: Unique identifier for a client.
+        required: true
+        example: '0030000131'
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              - partyDetails
+              properties:
+                partyDetails:
+                  type: object
+                  required:
+                  - type
+                  properties:
+                    address:
+                      type: object
+                      description: Recipient's postal address. Always required for
+                        RTP payment type.
+                      required:
+                      - addressLine1
+                      - city
+                      - countryCode
+                      - state
+                      - zip
+                      properties:
+                        addressLine1:
+                          type: string
+                          nullable: false
+                          maxLength: 70
+                          pattern: ^(.|\s)*\S(.|\s)*$
+                          description: The building number and street name of the
+                            address. Must start with a number. Cannot be a PO box.
+                          example: 345 Wouda St
+                        addressLine2:
+                          type: string
+                          maxLength: 70
+                          description: Information to complete the street address,
+                            such as apartment number or the name of a building.
+                          example: Malibu Point
+                        addressLine3:
+                          type: string
+                          maxLength: 70
+                          description: Further information about an address, such
+                            as a locally known area.
+                          example: Greater Woking
+                        city:
+                          type: string
+                          nullable: false
+                          minLength: 1
+                          maxLength: 35
+                          pattern: ^(.|\s)*\S(.|\s)*$
+                          description: Whole name of the city or town of the address.
+                          example: Springfield
+                        countryCode:
+                          type: string
+                          enum:
+                          - US
+                          description: Two letter country code based on ISO 3166 standard.
+                            Only US is supported in this version of Embedded Banking.
+                          example: US
+                        state:
+                          type: string
+                          nullable: false
+                          minLength: 1
+                          maxLength: 35
+                          pattern: ^(.|\s)*\S(.|\s)*$
+                          description: State code in alpla-2 format. State is mandatory
+                            for countries divided into states, such as USA.
+                          example: ND
+                        zip:
+                          type: string
+                          nullable: false
+                          minLength: 1
+                          maxLength: 16
+                          pattern: ^(.|\s)*\S(.|\s)*$
+                          description: The postal code, such as a ZIP code in the
+                            USA, for the address.
+                          example: '58008'
+                    type:
+                      type: string
+                      enum:
+                      - INDIVIDUAL
+                      - ORGANIZATION
+                      nullable: false
+                      example: INDIVIDUAL
+                    firstName:
+                      type: string
+                      maxLength: 70
+                      pattern: ^(.|\s)*\S(.|\s)*$
+                      description: Recipient's first name. Mandatory for recipient
+                        type INDIVIDUAL.
+                      example: Jon
+                    lastName:
+                      type: string
+                      maxLength: 70
+                      pattern: ^(.|\s)*\S(.|\s)*$
+                      description: Recipient's last name. Mandatory for recipient
+                        type INDIVIDUAL.
+                      example: Smith
+                    businessName:
+                      type: string
+                      maxLength: 140
+                      pattern: ^(.|\s)*\S(.|\s)*$
+                      description: Recipient company name. Mandatory for recipient
+                        type ORGANIZATION.
+                      example: Widget Co.
+                    contacts:
+                      type: array
+                      description: Contact details for the recipient.
+                      items:
+                        type: object
+                        required:
+                        - contactType
+                        - value
+                        properties:
+                          contactType:
+                            type: string
+                            nullable: false
+                            enum:
+                            - EMAIL
+                            - WEBSITE
+                            - PHONE
+                            description: Type of contact information being provided
+                            example: PHONE
+                          countryCode:
+                            type: string
+                            pattern: ^\+[1-9]\d{0,2}$
+                            description: 'E.164 format compatible telephone country
+                              code
+
+                              Mandatory for contactType PHONE'
+                            example: '+44'
+                          value:
+                            type: string
+                            nullable: false
+                            minLength: 1
+                            maxLength: 2048
+                            pattern: ^(.|\s)*\S(.|\s)*$
+                            description: "Contact information corresponding to contactType:\
+                              \ \nPHONE - E.164-compliant telephone number (excluding\
+                              \ country code).\nEMAIL - Email address (addr-spec in\
+                              \ Section 3.4 of RFC 5322).\nWEBSITE - URL starting\
+                              \ with http:// or https://."
+                            example: '5343245789'
+                account:
+                  type: object
+                  required:
+                  - number
+                  - routingCodeType
+                  - routingNumber
+                  - countryCode
+                  description: Bank account details of the recipient.
+                  properties:
+                    number:
+                      type: string
+                      nullable: false
+                      pattern: ^\d{1,35}$
+                      description: Payment Routing Number or Demand Deposit Account
+                        number.
+                      example: '021000021'
+                    type:
+                      type: string
+                      nullable: false
+                      enum:
+                      - CHECKING
+                      - SAVINGS
+                      description: Type of bank account, either CHECKING or SAVINGS.
+                        Only required for ACH payments. Exclude field from payload
+                        completely if not needed.
+                      example: CHECKING
+                    routingCodeType:
+                      type: string
+                      nullable: false
+                      enum:
+                      - USABA
+                      description: Type of routing code. Only USABA is supported in
+                        this version of Embedded Banking.
+                      example: USABA
+                    routingNumber:
+                      type: string
+                      nullable: false
+                      pattern: ^\d{9}$
+                      description: Routing number corresponding to the routing code
+                        type (currently only USABA compliant routing numbers are supported)
+                      example: '021000021'
+                    countryCode:
+                      type: string
+                      enum:
+                      - US
+                      description: Two letter country code based on ISO 3166 standard.
+                        Only US is supported in this version of Embedded Banking.
+                      example: US
+                recipientType:
+                  type: string
+                  enum:
+                  - RECIPIENT
+                  - LINKED_ACCOUNT
+                  nullable: false
+                  example: RECIPIENT
+                  default: RECIPIENT
+            examples:
+              CreateRecipientReq:
+                summary: Create Recipient - Sole Prop
+                description: Create Recipient - Sole Prop
+                value:
+                  account:
+                    number: 0182119492
+                    type: CHECKING
+                    countryCode: US
+                    routingCodeType: USABA
+                    routingNumber: '322270521'
+                  partyDetails:
+                    contacts:
+                    - contactType: PHONE
+                      countryCode: '+1'
+                      value: '6316215110'
+                    address:
+                      addressLine1: 90 Bedford Street
+                      addressLine2: Apt 2E
+                      city: New York
+                      country: US
+                      countryCode: US
+                      state: NY
+                      zip: '10014'
+                    firstName: Monica
+                    lastName: Gellar
+                    type: INDIVIDUAL
+                  recipientType: LINKED_ACCOUNT
