@@ -42,3 +42,8 @@ handle errors
   ↓
 end
 ```
+
+### OAS refinement approach
+
+OAS should be de-referenced and minimized for LLM processing.
+A number of CLI tools or/and https://editor-next.swagger.io/ could be used to do this.
