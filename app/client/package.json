@@ -19,7 +19,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^1.6.0",
     "dayjs": "^1.11.2",
-    "embedded-banking-components": "../../embedded-components",
+    "embedded-banking-components": "../../embedded-components/",
     "jsdom": "^21.1.0",
     "jwt-decode": "^3.1.2",
     "mermaid": "10.6.1",

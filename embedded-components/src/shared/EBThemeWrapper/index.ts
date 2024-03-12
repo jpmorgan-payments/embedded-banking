@@ -1,1 +1,0 @@
-export { EBThemeWrapper } from './EBThemeWrapper';

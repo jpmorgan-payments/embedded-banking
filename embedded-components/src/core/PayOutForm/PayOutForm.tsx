@@ -1,7 +1,14 @@
-import * as yup from 'yup';
+import {
+  Button,
+  Group,
+  NumberInput,
+  Radio,
+  Select,
+  Stack,
+  TextInput,
+} from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { TextInput, Button, Radio, Group, Stack, Select, NumberInput } from '@mantine/core';
-import { EBThemeWrapper } from '@/shared/EBThemeWrapper';
+import * as yup from 'yup';
 
 const validationSchema = yup.object({
   recipient: yup.string().default('').required('Recipient is required'),
@@ -25,7 +32,7 @@ export const PayOutForm = () => {
   });
 
   return (
-    <EBThemeWrapper>
+    <>
       <form
         onSubmit={form.onSubmit(() => {
           // form.reset();
@@ -80,6 +87,6 @@ export const PayOutForm = () => {
           </Group>
         </Stack>
       </form>
-    </EBThemeWrapper>
+    </>
   );
 };

@@ -22,13 +22,17 @@ type FormFieldContextValue<
   name: TName;
 };
 
-const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue
+);
 
 type FormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
+);
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
@@ -66,17 +70,18 @@ const useFormField = () => {
   };
 };
 
-const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const id = React.useId();
+const FormItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const id = React.useId();
 
-    return (
-      <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('eb-space-y-2', className)} {...props} />
-      </FormItemContext.Provider>
-    );
-  }
-);
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} className={cn('eb-space-y-2', className)} {...props} />
+    </FormItemContext.Provider>
+  );
+});
 FormItem.displayName = 'FormItem';
 
 const FormLabel = React.forwardRef<
@@ -100,13 +105,18 @@ const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
 
   return (
     <Slot
       ref={ref}
       id={formItemId}
-      aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+      aria-describedby={
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
+      }
       aria-invalid={!!error}
       {...props}
     />
@@ -146,7 +156,10 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('eb-text-sm eb-font-medium eb-text-destructive', className)}
+      className={cn(
+        'eb-text-[0.8rem] eb-font-medium eb-text-destructive',
+        className
+      )}
       {...props}
     >
       {body}

@@ -1,36 +1,52 @@
-import { createContext, useContext, ReactNode } from 'react';
-import {
-  MantineThemeOverride,
-  createTheme,
-  DEFAULT_THEME,
-  MantineTheme,
-  mergeMantineTheme,
-} from '@mantine/core';
+import { createContext, ReactNode, useContext, useEffect } from 'react';
+import { EBConfig, EBTheme, EBThemeVariables } from '@/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export interface EBComponentsProviderProps {
+export interface EBComponentsProviderProps extends EBConfig {
   children: ReactNode;
-  apiConfig?: { apiKey: string };
-  theme: MantineThemeOverride;
 }
 
-const EBThemeContext = createContext<MantineTheme | null>(null);
+const variableKeyMap: Record<keyof EBThemeVariables, string> = {
+  colorPrimary: 'primary',
+};
+
+const defaultTheme: EBTheme = {
+  colorScheme: 'system',
+  variables: {},
+};
 
 export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
-  apiConfig,
-  theme,
+  apiBaseUrl,
+  theme = defaultTheme,
 }) => {
   const queryClient = new QueryClient();
   // TODO: set up api instance
 
-  const customTheme = mergeMantineTheme(DEFAULT_THEME, theme);
+  useEffect(() => {
+    Object.entries(theme.variables ?? {}).forEach(([key, value]) => {
+      const variableKey: keyof EBThemeVariables = key as keyof EBThemeVariables;
+      window.document.documentElement.style.setProperty(
+        `--${variableKeyMap[variableKey]}`,
+        value
+      );
+    });
+  }, [theme.variables]);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('eb-dark');
+
+    if (
+      theme.colorScheme === 'dark' ||
+      (theme.colorScheme === 'system' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    )
+      window.document.documentElement.classList.add('eb-dark');
+    else document.documentElement.classList.remove('eb-dark');
+  }, [theme.colorScheme]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <EBThemeContext.Provider value={customTheme}>{children}</EBThemeContext.Provider>
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
-
-export const useEBTheme = () => useContext(EBThemeContext);

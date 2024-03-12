@@ -19,7 +19,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'eb-fixed eb-inset-0 eb-z-50 eb-bg-black/80 eb- data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0',
+      'eb-fixed eb-inset-0 eb-z-[100] eb-bg-black/80 eb- data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0',
       className
     )}
     {...props}
@@ -36,7 +36,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'eb-fixed eb-left-[50%] eb-top-[50%] eb-z-50 eb-grid eb-w-full eb-max-w-lg eb-translate-x-[-50%] eb-translate-y-[-50%] eb-gap-4 eb-border eb-bg-background eb-p-6 eb-shadow-lg eb-duration-200 data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[state=closed]:eb-slide-out-to-left-1/2 data-[state=closed]:eb-slide-out-to-top-[48%] data-[state=open]:eb-slide-in-from-left-1/2 data-[state=open]:eb-slide-in-from-top-[48%] sm:eb-rounded-lg',
+        'eb-fixed eb-left-[50%] eb-top-[50%] eb-z-[100] eb-grid eb-w-full eb-max-w-lg eb-translate-x-[-50%] eb-translate-y-[-50%] eb-gap-4 eb-border eb-bg-background eb-p-6 eb-shadow-lg eb-duration-200 data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[state=closed]:eb-slide-out-to-left-1/2 data-[state=closed]:eb-slide-out-to-top-[48%] data-[state=open]:eb-slide-in-from-left-1/2 data-[state=open]:eb-slide-in-from-top-[48%] sm:eb-rounded-lg',
         className
       )}
       {...props}
@@ -51,15 +51,24 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('eb-flex eb-flex-col eb-space-y-1.5 eb-text-center sm:eb-text-left', className)}
+    className={cn(
+      'eb-flex eb-flex-col eb-space-y-1.5 eb-text-center sm:eb-text-left',
+      className
+    )}
     {...props}
   />
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
       'eb-flex eb-flex-col-reverse sm:eb-flex-row sm:eb-justify-end sm:eb-space-x-2',
@@ -76,7 +85,10 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('eb-text-lg eb-font-semibold eb-leading-none eb-tracking-tight', className)}
+    className={cn(
+      'eb-text-lg eb-font-semibold eb-leading-none eb-tracking-tight',
+      className
+    )}
     {...props}
   />
 ));

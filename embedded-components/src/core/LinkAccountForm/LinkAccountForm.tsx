@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import * as yup from 'yup';
+import {
+  Box,
+  Button,
+  Group,
+  Modal,
+  Radio,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { TextInput, Button, Box, Text, Radio, Group, Stack, Modal } from '@mantine/core';
-import { EBThemeWrapper } from '@/shared/EBThemeWrapper';
+import * as yup from 'yup';
 
 const validationSchema = yup.object({
   routingNumber: yup
@@ -47,8 +55,13 @@ export const LinkAccountForm = () => {
   const [opened, setOpened] = useState(false);
 
   return (
-    <EBThemeWrapper>
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Link a bank account" size="md">
+    <>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Link a bank account"
+        size="md"
+      >
         <form
           onSubmit={form.onSubmit(() => {
             setOpened(false);
@@ -63,7 +76,11 @@ export const LinkAccountForm = () => {
                 data-autofocus
                 {...form.getInputProps('firstName')}
               />
-              <TextInput label="Last name" required {...form.getInputProps('lastName')} />
+              <TextInput
+                label="Last name"
+                required
+                {...form.getInputProps('lastName')}
+              />
             </Group>
             <Radio.Group
               label="Account type"
@@ -80,8 +97,16 @@ export const LinkAccountForm = () => {
                 <Radio value="SAVINGS" label="Savings" />
               </Group>
             </Radio.Group>
-            <TextInput label="Routing number" required {...form.getInputProps('routingNumber')} />
-            <TextInput label="Account number" required {...form.getInputProps('accountNumber')} />
+            <TextInput
+              label="Routing number"
+              required
+              {...form.getInputProps('routingNumber')}
+            />
+            <TextInput
+              label="Account number"
+              required
+              {...form.getInputProps('accountNumber')}
+            />
             <Group justify="flex-end" mt="xs">
               <Button type="submit">Submit</Button>
             </Group>
@@ -96,6 +121,6 @@ export const LinkAccountForm = () => {
           Link an account
         </Button>
       </Box>
-    </EBThemeWrapper>
+    </>
   );
 };
