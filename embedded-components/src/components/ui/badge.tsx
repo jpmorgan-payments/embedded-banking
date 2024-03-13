@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'eb-inline-flex eb-items-center eb-rounded-full eb-border eb-px-2.5 eb-py-0.5 eb-text-xs eb-font-semibold eb-transition-colors focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2',
+  'eb-inline-flex eb-items-center eb-rounded-full eb-border eb-border-border eb-px-2.5 eb-py-0.5 eb-text-xs eb-font-semibold eb-transition-colors focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2',
   {
     variants: {
       variant: {

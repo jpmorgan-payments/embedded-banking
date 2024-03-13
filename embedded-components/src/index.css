@@ -32,8 +32,7 @@
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
 
-    /* --border: hsl(240 5.9% 90%); */
-    --border: red;
+    --border: hsl(240 5.9% 90%);
     --input: hsl(240 5.9% 90%);
     --ring: hsl(240 10% 3.9%);
   }
@@ -60,7 +59,7 @@
     --accent: hsl(240 3.7% 15.9%);
     --accent-foreground: hsl(0 0% 98%);
 
-    --destructive: hsl(0 62.8% 30.6%);
+    --destructive: hsl(0 74% 54%);
     --destructive-foreground: hsl(0 0% 98%);
 
     --border: hsl(240 3.7% 15.9%);

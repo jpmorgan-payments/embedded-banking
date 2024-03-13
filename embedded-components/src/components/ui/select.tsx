@@ -17,7 +17,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'eb-flex eb-h-10 eb-w-full eb-items-center eb-justify-between eb-rounded-md eb-border eb-border-input eb-bg-background eb-px-3 eb-py-2 eb-text-foreground eb-text-sm eb-ring-offset-background placeholder:eb-text-muted-foreground focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2 disabled:eb-cursor-not-allowed disabled:eb-opacity-50 [&>span]:eb-line-clamp-1',
+      'eb-flex eb-h-10 eb-w-full eb-items-center eb-justify-between eb-rounded-md eb-border eb-border-border eb-border-input eb-bg-background eb-px-3 eb-py-2 eb-text-foreground eb-text-sm eb-ring-offset-background placeholder:eb-text-muted-foreground focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2 disabled:eb-cursor-not-allowed disabled:eb-opacity-50 [&>span]:eb-line-clamp-1',
       className
     )}
     {...props}
@@ -73,7 +73,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'eb-relative eb-z-[100] eb-max-h-96 eb-min-w-[8rem] eb-overflow-hidden eb-rounded-md eb-border eb-bg-popover eb-text-popover-foreground eb-shadow-md data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[side=bottom]:eb-slide-in-from-top-2 data-[side=left]:eb-slide-in-from-right-2 data-[side=right]:eb-slide-in-from-left-2 data-[side=top]:eb-slide-in-from-bottom-2',
+        'eb-relative eb-z-[100] eb-max-h-96 eb-min-w-[8rem] eb-overflow-hidden eb-rounded-md eb-border eb-border-border eb-bg-popover eb-text-popover-foreground eb-shadow-md data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[side=bottom]:eb-slide-in-from-top-2 data-[side=left]:eb-slide-in-from-right-2 data-[side=right]:eb-slide-in-from-left-2 data-[side=top]:eb-slide-in-from-bottom-2',
         position === 'popper' &&
           'data-[side=bottom]:eb-translate-y-1 data-[side=left]:eb--translate-x-1 data-[side=right]:eb-translate-x-1 data-[side=top]:eb--translate-y-1',
         className
