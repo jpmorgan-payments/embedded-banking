@@ -130,11 +130,12 @@ export const YourReactApplication = () => {
               their linked account. If they do not have a linked account yet,
               they will be able to link an account via this component.
             </Text>
-            <Card maw={300} shadow="lg" radius={0} withBorder>
+            <Card maw={300}>
               <EBComponentsProvider
+                apiBaseUrl=""
                 theme={{
-                  colorScheme: 'light',
-                  variables: {},
+                  colorScheme: 'dark',
+                  variables: { colorPrimary: 'hsl(0 50% 75%)' },
                 }}
               >
                 <LinkedAccountWidget />

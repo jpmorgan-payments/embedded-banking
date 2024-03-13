@@ -1,37 +1,26 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
-import { EBConfig, EBTheme, EBThemeVariables } from '@/types';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { EBConfig, EBThemeVariables } from './config.types';
+import { convertThemeToCssString } from './convert-theme-to-css-variables';
 
 export interface EBComponentsProviderProps extends EBConfig {
   children: ReactNode;
 }
 
-const variableKeyMap: Record<keyof EBThemeVariables, string> = {
-  colorPrimary: 'primary',
-};
-
-const defaultTheme: EBTheme = {
-  colorScheme: 'system',
-  variables: {},
-};
-
 export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
   apiBaseUrl,
-  theme = defaultTheme,
+  theme = {},
 }) => {
   const queryClient = new QueryClient();
   // TODO: set up api instance
-
-  useEffect(() => {
-    Object.entries(theme.variables ?? {}).forEach(([key, value]) => {
-      const variableKey: keyof EBThemeVariables = key as keyof EBThemeVariables;
-      window.document.documentElement.style.setProperty(
-        `--${variableKeyMap[variableKey]}`,
-        value
-      );
-    });
-  }, [theme.variables]);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -44,11 +33,21 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
     ) {
       root.classList.add('eb-dark');
     } else {
-      document.documentElement.classList.add('eb-light');
+      root.classList.add('eb-light');
     }
   }, [theme.colorScheme]);
 
+  const css = useMemo(() => convertThemeToCssString(theme), [theme]);
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <>
+      <style
+        data-eb-styles
+        dangerouslySetInnerHTML={{
+          __html: css,
+        }}
+      />
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </>
   );
 };

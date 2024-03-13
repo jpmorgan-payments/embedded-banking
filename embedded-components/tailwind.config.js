@@ -18,44 +18,44 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        border: 'var(--eb-border)',
+        input: 'var(--eb-input)',
+        ring: 'var(--eb-ring)',
+        background: 'var(--eb-background)',
+        foreground: 'var(--eb-foreground)',
         primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
+          DEFAULT: 'var(--eb-primary)',
+          foreground: 'var(--eb-primary-foreground)',
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
+          DEFAULT: 'var(--eb-secondary)',
+          foreground: 'var(--eb-secondary-foreground)',
         },
         destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground: 'var(--destructive-foreground)',
+          DEFAULT: 'var(--eb-destructive)',
+          foreground: 'var(--eb-destructive-foreground)',
         },
         muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
+          DEFAULT: 'var(--eb-muted)',
+          foreground: 'var(--eb-muted-foreground)',
         },
         accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)',
+          DEFAULT: 'var(--eb-accent)',
+          foreground: 'var(--eb-accent-foreground)',
         },
         popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)',
+          DEFAULT: 'var(--eb-popover)',
+          foreground: 'var(--eb-popover-foreground)',
         },
         card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
+          DEFAULT: 'var(--eb-card)',
+          foreground: 'var(--eb-card-foreground)',
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: 'var(--eb-radius)',
+        md: 'calc(var(--eb-radius) - 2px)',
+        sm: 'calc(var(--eb-radius) - 4px)',
       },
       keyframes: {
         'accordion-down': {
@@ -71,6 +71,9 @@ module.exports = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      // zIndex: {
+      //   overlay: 'var(--'
+      // }
     },
   },
   plugins: [require('tailwindcss-animate')],

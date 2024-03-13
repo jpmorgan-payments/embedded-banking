@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
+
 import { EBComponentsProvider } from '@/shared/EBComponentsProvider';
-import { EBConfig } from '@/types';
+import { EBConfig } from '@/shared/EBComponentsProvider/config.types';
+
 import { componentRegistry, ComponentRegistry } from './componentRegistry';
 
 class EBComponentsManager {
@@ -51,4 +53,5 @@ class EBComponentsManager {
   }
 }
 
-export const initEBComponentsManager = (config: EBConfig) => new EBComponentsManager(config);
+export const initEBComponentsManager = (config: EBConfig) =>
+  new EBComponentsManager(config);

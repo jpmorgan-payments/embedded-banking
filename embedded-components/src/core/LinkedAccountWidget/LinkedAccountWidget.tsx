@@ -69,14 +69,11 @@ export const LinkedAccountWidget = () => {
           {accountStatus === 'notLinked' && (
             <Dialog>
               <DialogTrigger asChild>
-                <Button
-                  onClick={() => setDialogOpen(true)}
-                  className="bg-primary"
-                >
+                <Button onClick={() => setDialogOpen(true)}>
                   Link Account
                 </Button>
               </DialogTrigger>
-              <DialogContent className="eb-z-[100]">
+              <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Link an account</DialogTitle>
                   <DialogDescription>This is a description</DialogDescription>
@@ -91,7 +88,7 @@ export const LinkedAccountWidget = () => {
                           <FormItem>
                             <FormLabel>First Name</FormLabel>
                             <FormControl>
-                              <Input {...field} />
+                              <Input {...field} required />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

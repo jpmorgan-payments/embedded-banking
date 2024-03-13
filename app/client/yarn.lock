@@ -2435,6 +2435,11 @@ deep-equal@^2.0.5:
     which-collection "^1.0.1"
     which-typed-array "^1.1.13"
 
+deepmerge@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
+  integrity sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==
+
 defaults@^1.0.3:
   version "1.0.4"
   resolved "https://registry.npmjs.org/defaults/-/defaults-1.0.4.tgz#b0b02062c1e2aa62ff5d9528f0f98baa90978d7a"
@@ -2549,6 +2554,7 @@ embedded-banking-components@../../embedded-components/:
     class-variance-authority "^0.7.0"
     clsx "^2.1.0"
     date-fns "^3.3.1"
+    deepmerge "^4.3.1"
     lucide-react "^0.294.0"
     react "^18.2.0"
     react-day-picker "^8.10.0"
