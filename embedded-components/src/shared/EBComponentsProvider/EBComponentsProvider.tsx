@@ -35,15 +35,17 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('eb-dark');
+    root.classList.remove('eb-light', 'eb-dark');
 
     if (
       theme.colorScheme === 'dark' ||
       (theme.colorScheme === 'system' &&
         window.matchMedia('(prefers-color-scheme: dark)').matches)
-    )
-      window.document.documentElement.classList.add('eb-dark');
-    else document.documentElement.classList.remove('eb-dark');
+    ) {
+      root.classList.add('eb-dark');
+    } else {
+      document.documentElement.classList.add('eb-light');
+    }
   }, [theme.colorScheme]);
 
   return (

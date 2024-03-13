@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SelectContent } from '@radix-ui/react-select';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -9,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -24,6 +24,7 @@ import {
 import { Input } from '@/components/ui/input';
 import {
   Select,
+  SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -78,6 +79,7 @@ export const LinkedAccountWidget = () => {
               <DialogContent className="eb-z-[100]">
                 <DialogHeader>
                   <DialogTitle>Link an account</DialogTitle>
+                  <DialogDescription>This is a description</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)}>
