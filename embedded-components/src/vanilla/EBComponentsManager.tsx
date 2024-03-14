@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 
-import { EBComponentsProvider } from '@/shared/EBComponentsProvider';
-import { EBConfig } from '@/shared/EBComponentsProvider/config.types';
+import { EBComponentsProvider } from '@/core/EBComponentsProvider';
+import { EBConfig } from '@/core/EBComponentsProvider/config.types';
 
 import { componentRegistry, ComponentRegistry } from './componentRegistry';
 
@@ -32,7 +32,7 @@ class EBComponentsManager {
     if (Component) {
       const root = ReactDOMClient.createRoot(container);
       root.render(
-        <EBComponentsProvider theme={{}}>
+        <EBComponentsProvider {...this.config}>
           <Component {...props} />
         </EBComponentsProvider>
       );
