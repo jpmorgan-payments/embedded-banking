@@ -31,6 +31,9 @@ const convertThemeVariablesToCssVariables = (
     '--eb-border': variables.borderColor,
     '--eb-input': variables.inputColor,
     '--eb-ring': variables.ringColor,
+    '--eb-z-overlay': variables.zIndexOverlay
+      ? String(variables.zIndexOverlay)
+      : undefined,
   };
 
   Object.keys(cssVariablesObject).forEach(

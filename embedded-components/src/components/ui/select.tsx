@@ -73,7 +73,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'eb-relative eb-z-[100] eb-max-h-96 eb-min-w-[8rem] eb-overflow-hidden eb-rounded-md eb-border eb-border-border eb-bg-popover eb-text-popover-foreground eb-shadow-md data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[side=bottom]:eb-slide-in-from-top-2 data-[side=left]:eb-slide-in-from-right-2 data-[side=right]:eb-slide-in-from-left-2 data-[side=top]:eb-slide-in-from-bottom-2',
+        'eb-relative eb-z-overlay eb-max-h-96 eb-min-w-[8rem] eb-overflow-hidden eb-rounded-md eb-border eb-border-border eb-bg-popover eb-text-popover-foreground eb-shadow-md data-[state=open]:eb-animate-in data-[state=closed]:eb-animate-out data-[state=closed]:eb-fade-out-0 data-[state=open]:eb-fade-in-0 data-[state=closed]:eb-zoom-out-95 data-[state=open]:eb-zoom-in-95 data-[side=bottom]:eb-slide-in-from-top-2 data-[side=left]:eb-slide-in-from-right-2 data-[side=right]:eb-slide-in-from-left-2 data-[side=top]:eb-slide-in-from-bottom-2',
         position === 'popper' &&
           'data-[side=bottom]:eb-translate-y-1 data-[side=left]:eb--translate-x-1 data-[side=right]:eb-translate-x-1 data-[side=top]:eb--translate-y-1',
         className

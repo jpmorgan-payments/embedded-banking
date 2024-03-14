@@ -4,6 +4,7 @@ export const defaultTheme: EBTheme = {
   colorScheme: 'system',
   variables: {
     borderRadius: '0.5rem',
+    zIndexOverlay: 100,
   },
   light: {
     backgroundColor: 'hsl(0.0% 100%)',

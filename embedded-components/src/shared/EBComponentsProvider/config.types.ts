@@ -21,6 +21,7 @@ export type EBThemeVariables = {
   borderColor?: string;
   inputColor?: string;
   ringColor?: string;
+  zIndexOverlay?: number;
 };
 
 export type EBTheme = {
