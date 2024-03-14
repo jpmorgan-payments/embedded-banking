@@ -135,7 +135,7 @@ export const YourReactApplication = () => {
                 apiBaseUrl=""
                 theme={{
                   colorScheme: 'dark',
-                  variables: { colorPrimary: 'hsl(0 50% 75%)' },
+                  variables: { primaryColor: 'hsl(0 50% 75%)' },
                 }}
               >
                 <LinkedAccountWidget />
