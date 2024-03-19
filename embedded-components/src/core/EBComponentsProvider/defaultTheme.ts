@@ -7,7 +7,7 @@ export const defaultTheme: EBTheme = {
     zIndexOverlay: 100,
   },
   light: {
-    backgroundColor: 'hsl(0.0% 100%)',
+    backgroundColor: 'hsl(0 0% 100%)',
     foregroundColor: 'hsl(240 10% 3.9%)',
     cardColor: 'hsl(0 0% 100%)',
     cardForegroundColor: 'hsl(240 10% 3.9%)',
