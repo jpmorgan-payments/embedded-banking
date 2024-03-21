@@ -9,6 +9,7 @@ import {
   IconHome,
   IconUsers,
   IconLock,
+  IconTools,
 } from '@tabler/icons';
 
 import useStyles from './NavbarLinks.styles';
@@ -22,6 +23,11 @@ const links = [
   { link: 'transactions', label: 'Moving Money', icon: IconExchange },
   { link: 'debit-cards', label: 'Managing Debit Cards', icon: IconCreditCard },
   { link: 'cases', label: 'Getting Support', icon: IconHelp },
+  {
+    link: 'embedded-components',
+    label: 'Embedded Components',
+    icon: IconTools,
+  },
 ];
 
 const NavbarLink = ({ children, to, ...props }: LinkProps) => {
