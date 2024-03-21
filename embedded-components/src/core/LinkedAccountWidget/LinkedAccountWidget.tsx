@@ -33,7 +33,8 @@ import {
 const FormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
-  accountType: z.enum(['checking', 'savings'], {
+  businessName: z.string().min(1, 'Business name is required'),
+  accountType: z.enum(['individual', 'business'], {
     required_error: 'Account type is required',
   }),
   routingNumber: z
@@ -45,8 +46,9 @@ const FormSchema = z.object({
 
 export const LinkedAccountWidget = () => {
   const accountStatus = 'notLinked';
-
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedAccountType, setSelectedAccountType] = useState('individual'); // Default to individual
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -57,6 +59,10 @@ export const LinkedAccountWidget = () => {
     setDialogOpen(false);
   };
 
+  const handleAccountTypeChange = (accountType: string) => {
+    setSelectedAccountType(accountType);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -64,14 +70,10 @@ export const LinkedAccountWidget = () => {
       </CardHeader>
       <CardContent>
         <div className="flex items-center space-x-4 rounded-md border p-4">
-          {/* {accountStatus === 'linked' && <div>Account is Linked</div>}
-      {accountStatus === 'pending' && <div>Pending Verification</div>} */}
           {accountStatus === 'notLinked' && (
             <Dialog>
               <DialogTrigger asChild>
-                <Button onClick={() => setDialogOpen(true)}>
-                  Link Account
-                </Button>
+                <Button>Link Account</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -81,33 +83,53 @@ export const LinkedAccountWidget = () => {
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="eb-grid eb-gap-4">
-                      <FormField
-                        control={form.control}
-                        name="firstName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>First Name</FormLabel>
-                            <FormControl>
-                              <Input {...field} required />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {selectedAccountType === 'individual' && (
+                        <>
+                          <FormField
+                            control={form.control}
+                            name="firstName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>First Name</FormLabel>
+                                <FormControl>
+                                  <Input {...field} required />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                      <FormField
-                        control={form.control}
-                        name="lastName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Last Name</FormLabel>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                          <FormField
+                            control={form.control}
+                            name="lastName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Last Name</FormLabel>
+                                <FormControl>
+                                  <Input {...field} required />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </>
+                      )}
+
+                      {selectedAccountType === 'business' && (
+                        <FormField
+                          control={form.control}
+                          name="businessName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Business Name</FormLabel>
+                              <FormControl>
+                                <Input {...field} required />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
 
                       <FormField
                         control={form.control}
@@ -116,7 +138,10 @@ export const LinkedAccountWidget = () => {
                           <FormItem>
                             <FormLabel>Account Type</FormLabel>
                             <Select
-                              onValueChange={field.onChange}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                                handleAccountTypeChange(value);
+                              }}
                               defaultValue={field.value}
                             >
                               <FormControl>
@@ -125,10 +150,12 @@ export const LinkedAccountWidget = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="checking">
-                                  Checking
+                                <SelectItem value="individual">
+                                  Individual
                                 </SelectItem>
-                                <SelectItem value="savings">Savings</SelectItem>
+                                <SelectItem value="business">
+                                  Business
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                             <FormMessage />
@@ -163,6 +190,7 @@ export const LinkedAccountWidget = () => {
                           </FormItem>
                         )}
                       />
+
                       <Button type="submit">Submit</Button>
                     </div>
                   </form>
