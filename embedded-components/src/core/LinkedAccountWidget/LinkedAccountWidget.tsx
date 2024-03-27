@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -13,54 +11,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
-const FormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  businessName: z.string().min(1, 'Business name is required'),
-  accountType: z.enum(['individual', 'business'], {
-    required_error: 'Account type is required',
-  }),
-  routingNumber: z
-    .string()
-    .min(9, 'Routing number must be 9 digits')
-    .max(9, 'Routing number must be 9 digits'),
-  accountNumber: z.string().min(1, 'Account number is required'),
-});
+import { LinkAccountForm } from './LinkAccountForm/LinkAccountForm';
+import { LinkAccountFormSchema } from './LinkAccountForm/LinkAccountForm.schema';
 
 export const LinkedAccountWidget = () => {
   const accountStatus = 'notLinked';
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedAccountType, setSelectedAccountType] = useState('individual'); // Default to individual
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
-
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const handleSubmit = (data: z.infer<typeof LinkAccountFormSchema>) => {
     console.log(data);
     // Handle account linking logic here
     setDialogOpen(false);
-  };
-
-  const handleAccountTypeChange = (accountType: string) => {
-    setSelectedAccountType(accountType);
   };
 
   return (
@@ -71,7 +33,12 @@ export const LinkedAccountWidget = () => {
       <CardContent>
         <div className="flex items-center space-x-4 rounded-md border p-4">
           {accountStatus === 'notLinked' && (
-            <Dialog>
+            <Dialog
+              open={isDialogOpen}
+              onOpenChange={(open) => {
+                setDialogOpen(open);
+              }}
+            >
               <DialogTrigger asChild>
                 <Button>Link Account</Button>
               </DialogTrigger>
@@ -80,121 +47,7 @@ export const LinkedAccountWidget = () => {
                   <DialogTitle>Link an account</DialogTitle>
                   <DialogDescription>This is a description</DialogDescription>
                 </DialogHeader>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="eb-grid eb-gap-4">
-                      {selectedAccountType === 'individual' && (
-                        <>
-                          <FormField
-                            control={form.control}
-                            name="firstName"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>First Name</FormLabel>
-                                <FormControl>
-                                  <Input {...field} required />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={form.control}
-                            name="lastName"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Last Name</FormLabel>
-                                <FormControl>
-                                  <Input {...field} required />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </>
-                      )}
-
-                      {selectedAccountType === 'business' && (
-                        <FormField
-                          control={form.control}
-                          name="businessName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Business Name</FormLabel>
-                              <FormControl>
-                                <Input {...field} required />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
-
-                      <FormField
-                        control={form.control}
-                        name="accountType"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Account Type</FormLabel>
-                            <Select
-                              onValueChange={(value) => {
-                                field.onChange(value);
-                                handleAccountTypeChange(value);
-                              }}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select account type" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="individual">
-                                  Individual
-                                </SelectItem>
-                                <SelectItem value="business">
-                                  Business
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="routingNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Routing Number</FormLabel>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="accountNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Account Number</FormLabel>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <Button type="submit">Submit</Button>
-                    </div>
-                  </form>
-                </Form>
+                <LinkAccountForm onSubmit={handleSubmit} />
               </DialogContent>
             </Dialog>
           )}
