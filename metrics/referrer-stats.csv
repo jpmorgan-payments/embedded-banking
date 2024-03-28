@@ -1,11 +1,13 @@
 repository_name,site,views,unique_visitors/cloners
-embedded-banking,Google,70,12
+embedded-banking,jiradc-cib-cluster02.prod.aws.jpmchase.net,9,2
+embedded-banking,Google,59,9
 embedded-banking,statics.teams.cdn.office.net,1,1
+embedded-banking,bitbucketdc-cluster07.jpmchase.net,2,1
+embedded-banking,github.com,56,7
 embedded-banking,embedded-banking-dev.com,17,2
-embedded-banking,github.com,55,7
 embedded-banking,developer.payments.jpmorgan.com,2,2
-embedded-banking,theforage.com,1,1
 embedded-banking,Bing,1,1
+embedded-banking,theforage.com,1,1
 embedded-banking,online-payments-dev.com,2,1
 embedded-banking,confluence.walmart.com,8,1
 embedded-banking,confluence.prod.aws.jpmchase.net,17,1
