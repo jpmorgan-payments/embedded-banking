@@ -133,10 +133,12 @@ export const YourReactApplication = () => {
             <Card maw={300}>
               <EBComponentsProvider
                 apiBaseUrl=""
-                theme={{
-                  colorScheme: 'dark',
-                  variables: { primaryColor: 'hsl(0 50% 75%)' },
-                }}
+                theme={
+                  {
+                    // colorScheme: 'dark',
+                    // variables: { primaryColor: 'hsl(0 50% 75%)' },
+                  }
+                }
               >
                 <LinkedAccountWidget />
               </EBComponentsProvider>
