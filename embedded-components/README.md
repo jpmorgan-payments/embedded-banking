@@ -1,14 +1,42 @@
-# Mantine Vite template
+# Embedded Banking Components
 
-## Features
+Seamlessly integrate sophisticated UI components into your existing applications with Embedded Components, offering a plug-and-play solution for Embedded Banking features.
 
-This template comes with the following features:
+This library is a works-in-progress.
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Vitest](https://vitest.dev/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+## Contributing
+
+### Recommended VSCode plugins:
+
+- Prettier
+- Tailwind CSS Intellisense
+
+### Recommended VS Code Settings
+
+#### `files.associations`
+
+Use the `files.associations` setting to tell VS Code to always open `.css` files in Tailwind CSS mode:
+
+```
+"files.associations": {
+  "*.css": "tailwindcss"
+}
+```
+
+#### `editor.quickSuggestions`
+
+By default VS Code will not trigger completions when editing "string" content, for example within JSX attribute values. Updating the `editor.quickSuggestions` setting may improve your experience:
+
+```"editor.quickSuggestions": {
+  "strings": "on"
+}
+```
+
+### Guidelines
+
+1. Create a new component in `./src/core`
+2. Export it in `./src/index.tsx`
+3. Also add it to `./src/vanilla/componentRegistry.ts`
 
 ## npm scripts
 
