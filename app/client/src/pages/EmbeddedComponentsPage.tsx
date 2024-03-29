@@ -18,7 +18,7 @@ import { GITHUB_REPO } from 'data/constants';
 import {
   LinkedAccountWidget,
   EBComponentsProvider,
-} from 'embedded-banking-components';
+} from '@jpmorgan-payments/embedded-banking-components';
 
 export const EmbeddedComponentsPage = () => {
   const defaultTheme = {
