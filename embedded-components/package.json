@@ -50,7 +50,9 @@
     "date-fns": "^3.3.1",
     "deepmerge": "^4.3.1",
     "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
     "react-day-picker": "^8.10.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
@@ -113,10 +115,6 @@
     "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
