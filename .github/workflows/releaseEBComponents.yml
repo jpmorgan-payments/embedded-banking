@@ -3,6 +3,10 @@
 
 name: Release EB Components to npm
 on:
+  pull_request:
+    branches:
+      - main
+
   workflow_dispatch:
 
 jobs:
