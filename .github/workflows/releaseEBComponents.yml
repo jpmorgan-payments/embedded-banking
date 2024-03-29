@@ -26,7 +26,6 @@ jobs:
       - name: Build and package
         run: |
           yarn install --frozen-lockfile
-          yarn run build
           yarn run test
       - name: Publish
         run: npm publish
