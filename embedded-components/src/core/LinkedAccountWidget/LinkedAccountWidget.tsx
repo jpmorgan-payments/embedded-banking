@@ -31,7 +31,7 @@ export const LinkedAccountWidget = () => {
         <CardTitle>Linked Account</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex items-center space-x-4 rounded-md border p-4">
+        <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-4">
           {accountStatus === 'notLinked' && (
             <Dialog
               open={isDialogOpen}

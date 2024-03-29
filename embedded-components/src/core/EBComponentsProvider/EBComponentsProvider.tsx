@@ -1,13 +1,7 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { EBConfig, EBThemeVariables } from './config.types';
+import { EBConfig } from './config.types';
 import { convertThemeToCssString } from './convert-theme-to-css-variables';
 
 export interface EBComponentsProviderProps extends EBConfig {
@@ -16,6 +10,7 @@ export interface EBComponentsProviderProps extends EBConfig {
 
 export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
   theme = {},
 }) => {
