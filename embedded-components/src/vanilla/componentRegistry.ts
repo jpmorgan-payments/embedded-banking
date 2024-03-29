@@ -1,7 +1,7 @@
-import { LinkAccountForm } from '@/core/LinkAccountForm/LinkAccountForm';
+import { LinkedAccountWidget } from '@/core/LinkedAccountWidget';
 
 export const componentRegistry = {
-  LinkAccountForm,
+  LinkedAccountWidget,
 };
 
 export type ComponentRegistry = typeof componentRegistry;
