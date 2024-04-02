@@ -10,12 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install EB Components modules
-        run: yarn install
-        working-directory: ./embedded-components
-      - name: Build EB Components
-        run: yarn build
-        working-directory: ./embedded-components
       - name: Install modules
         run: yarn install
         working-directory: ./app/client
