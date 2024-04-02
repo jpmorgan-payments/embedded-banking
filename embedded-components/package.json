@@ -1,6 +1,7 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
   "version": "0.2.0",
+  "version": "0.2.0",
   "license": "Apache-2.0",
   "type": "module",
   "files": [
@@ -8,11 +9,13 @@
   ],
   "main": "./dist/umd/eb-components.js",
   "module": "./dist/esm/eb-components.js",
+  "main": "./dist/umd/eb-components.js",
+  "module": "./dist/esm/eb-components.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/esm/eb-components.js",
-      "require": "./dist/umd/eb-components.js"
+      "require": "./dist/umd.eb-components.js"
     }
   },
   "scripts": {
