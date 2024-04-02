@@ -3,7 +3,7 @@ import { Panel, ComponentSamplePanel } from 'components';
 import {
   LinkedAccountWidget,
   EBComponentsProvider,
-} from '../../../../../embedded-components';
+} from '@jpmorgan-payments/embedded-banking-components';
 
 const componentSample = (
   <EBComponentsProvider apiBaseUrl="">

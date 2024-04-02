@@ -1,14 +1,12 @@
 import { Text, Badge } from '@mantine/core';
 import { Panel, ComponentSamplePanel } from 'components';
 import {
-  PaymentDetails,
+
   EBComponentsProvider,
-} from '../../../../../embedded-components';
+} from '@jpmorgan-payments/embedded-banking-components';
 
 const componentSample = (
-  <EBComponentsProvider apiBaseUrl="">
-    <PaymentDetails />
-  </EBComponentsProvider>
+  <></>
 );
 
 const codeSample = `
