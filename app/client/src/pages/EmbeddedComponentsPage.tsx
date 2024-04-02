@@ -1,5 +1,10 @@
 import { PageWrapper } from 'components';
-import { Overview, Installation, AuthProvider } from 'features/EBComponentSections';
+import {
+  Overview,
+  Installation,
+  AuthProvider,
+  CreateUser,
+} from 'features/EBComponentSections';
 
 export const EmbeddedComponentsPage = () => {
   return (
@@ -7,6 +12,7 @@ export const EmbeddedComponentsPage = () => {
       <Overview />
       <Installation />
       <AuthProvider />
+      <CreateUser />
     </PageWrapper>
   );
 };
