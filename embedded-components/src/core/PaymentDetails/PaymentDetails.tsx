@@ -1,16 +1,7 @@
-import { Group, Text, Title } from '@mantine/core';
+import { Card } from '@/components/ui/card';
 
 export const PaymentDetails = () => (
-  <>
-    <Group justify="center">
-      <Title order={1}>-$30.00</Title>
-    </Group>
-    <Group justify="center">
-      <Text>to xxx</Text>
-    </Group>
-    <Title order={2} mt="sm">
-      General Information
-    </Title>
+  <Card>
     {[
       { label: 'Transaction ID', value: '123' },
       { label: 'Status', value: 'Pending' },
@@ -21,18 +12,9 @@ export const PaymentDetails = () => (
       { label: 'Memo', value: '--' },
       { label: 'Date', value: '2/22/2024' },
       { label: 'Recipient', value: 'John Doe' },
-      { label: 'Account number', value: '...1234' },
-    ].map(({ label, value }) => (
-      <Group
-        justify="space-between"
-        mt="xs"
-        styles={{ root: { borderBottom: '1px dotted grey' } }}
-      >
-        <Text fw="bold" size="sm">
-          {label}
-        </Text>
-        <Text size="sm">{value}</Text>
-      </Group>
+      { label: 'Account numberss', value: '...1234' },
+    ].map(({ label }) => (
+      <p>{label}</p>
     ))}
-  </>
+  </Card>
 );

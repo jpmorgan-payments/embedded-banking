@@ -2,7 +2,7 @@ import { Text, Box } from '@mantine/core';
 import { Panel } from 'components';
 import { Prism } from '@mantine/prism';
 
-export const Installation = () => {
+export const InstallationSection = () => {
   return (
     <Panel title="Installation">
       <Text size="md" mb="sm">

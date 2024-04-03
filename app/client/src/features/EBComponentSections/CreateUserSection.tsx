@@ -2,7 +2,7 @@ import { Text, Box } from '@mantine/core';
 import { Panel } from 'components';
 import { Prism } from '@mantine/prism';
 
-export const CreateUser = () => {
+export const CreateUserSection = () => {
   return (
     <Panel title="CreateUser">
       <Text size="md" mb="sm">

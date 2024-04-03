@@ -64,7 +64,7 @@ const optionalParams = `{
     prefix: '',
 }`;
 
-export const AuthProvider = () => {
+export const AuthProviderSection = () => {
   return (
     <Panel title="Authentication Provider" sampleCode={sampleCode}>
       <Text size="md" mb="lg">

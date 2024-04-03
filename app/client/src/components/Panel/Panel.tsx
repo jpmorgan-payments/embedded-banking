@@ -61,6 +61,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(
         }}
         ref={ref}
         {...props}
+        id={`${title?.trim()}-panel`}
       >
         <Grid>
           <Grid.Col xs={12} lg="auto">

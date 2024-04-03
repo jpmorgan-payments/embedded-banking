@@ -8,28 +8,13 @@ const menu = [
     label: 'Getting Started',
     items: [
       {
-        position: 0,
         label: 'Overview',
-        scrollStart: 0,
-        scrollEnd: 200,
       },
       {
-        position: 200,
         label: 'Installation',
-        scrollStart: 200,
-        scrollEnd: 300,
       },
       {
-        position: 300,
         label: 'Authentication Provider',
-        scrollStart: 300,
-        scrollEnd: 1500,
-      },
-      {
-        position: 1500,
-        label: 'Create a User',
-        scrollStart: 1500,
-        scrollEnd: 1700,
       },
     ],
   },
@@ -37,36 +22,49 @@ const menu = [
     label: 'Components',
     items: [
       {
-        position: 1700,
+        label: 'Payment Details',
+      },
+      {
         label: 'Link Account',
-        scrollStart: 1700,
-        scrollEnd: 1800,
       },
     ],
   },
 ];
 
-const NavbarLink = ({ children, to, scrollStart, scrollEnd }: any) => {
+function getStartY(el: any) {
+  const rect = el?.getBoundingClientRect();
+  return rect?.top + window.scrollY-200;
+}
+
+function getEndY(startY: any, el: any) {
+  const height = el?.offsetHeight;
+  return height + startY;
+}
+
+const NavbarLink = ({ children, to, title }: any) => {
   const { classes, cx } = useStyles();
   const resolved = useResolvedPath(to);
   const match = useMatch({ path: resolved.pathname });
   const childMatch = useMatch({ path: resolved.pathname + '/:child' });
   const [scroll, scrollTo] = useWindowScroll();
   const theme = useMantineTheme();
+  const elM = document.getElementById(`${title?.trim()}-panel`);
+  const startY = getStartY(elM);
+  const endY = getEndY(startY, elM);
 
   return (
     <Button
       style={{
         width: '100%',
         backgroundColor:
-          scroll.y >= scrollStart && scroll.y < scrollEnd
+          scroll.y >= startY && scroll.y < endY
             ? theme.colors.gray[1]
             : 'white',
       }}
       className={cx(classes.link, {
         [classes.linkActive]: match || childMatch,
       })}
-      onClick={() => scrollTo({ y: to })}
+      onClick={() => scrollTo({ y: startY })}
     >
       {children}
     </Button>
@@ -77,23 +75,17 @@ export const NavbarLinksComponentShowcase = () => {
   const theme = useMantineTheme();
   return (
     <>
-      {menu.map((section) => (
-        <>
+      {menu.map((section, index) => (
+        <div key={`navbar${index}`}>
           <Text mb={theme.spacing.sm} mt={theme.spacing.sm} weight={600}>
-            
             {section?.label}
           </Text>
           {section?.items.map((item) => (
-            <NavbarLink
-              to={item.position}
-              scrollStart={item.scrollStart}
-              scrollEnd={item.scrollEnd}
-              key={item.label}
-            >
+            <NavbarLink key={item.label} title={item?.label}>
               <span>{item.label}</span>
             </NavbarLink>
           ))}
-        </>
+        </div>
       ))}
     </>
   );

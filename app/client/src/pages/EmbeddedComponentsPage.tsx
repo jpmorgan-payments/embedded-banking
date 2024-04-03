@@ -3,7 +3,9 @@ import {
   Overview,
   Installation,
   AuthProvider,
-  CreateUser,
+  //CreateUserSection,
+  LinkAccountSection,
+  PaymentDetailsSection
 } from 'features/EBComponentSections';
 
 export const EmbeddedComponentsPage = () => {
@@ -12,7 +14,9 @@ export const EmbeddedComponentsPage = () => {
       <Overview />
       <Installation />
       <AuthProvider />
-      <CreateUser />
+   {/*    <CreateUser /> */}
+      <PaymentDetailsSection />
+      <LinkAccountSection />
     </PageWrapper>
   );
 };

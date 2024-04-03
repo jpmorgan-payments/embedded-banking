@@ -1,4 +1,6 @@
-export { Overview } from './Overview';
-export { Installation } from './Installation';
-export { AuthProvider } from './AuthProvider';
-export { CreateUser } from './CreateUser';
+export { OverviewSection as Overview } from './OverviewSection';
+export { InstallationSection as Installation } from './InstallationSection';
+export { AuthProviderSection as AuthProvider } from './AuthProviderSection';
+export { CreateUserSection } from './CreateUserSection';
+export {PaymentDetailsSection } from './PaymentDetailsSection';
+export {LinkAccountSection } from './LinkAccountSection';

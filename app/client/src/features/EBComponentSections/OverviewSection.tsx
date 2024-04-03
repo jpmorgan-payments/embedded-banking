@@ -2,7 +2,7 @@ import { List, Text, Anchor, rem, ThemeIcon } from '@mantine/core';
 import { Panel } from 'components';
 import {IconCircleCheck} from "@tabler/icons";
 
-export const Overview = () => {
+export const OverviewSection = () => {
   return (
     <Panel
       title="Overview"
