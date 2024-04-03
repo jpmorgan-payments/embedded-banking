@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -178,14 +179,9 @@ export const LinkAccountFormDialogTrigger: FC<
                 />
               </div>
               <DialogFooter className="eb-my-4 eb-gap-2">
-                <Button
-                  onClick={() => {
-                    setDialogOpen(false);
-                  }}
-                  variant="secondary"
-                >
-                  Cancel
-                </Button>
+                <DialogClose asChild>
+                  <Button variant="secondary">Cancel</Button>
+                </DialogClose>
                 <Button type="submit">Link Account</Button>
               </DialogFooter>
             </ScrollArea>
