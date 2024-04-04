@@ -2,28 +2,6 @@ import { Text, Code, Accordion, Anchor, Image, Flex } from '@mantine/core';
 import { Panel } from 'components';
 import { Prism } from '@mantine/prism';
 
-const code1 = `
-<EBComponentsProvider>
-`;
-const code2 = `
-<App>
-`;
-const code3 = ` <EBComponentsProvider>`;
-
-const code4 = 'YOUR_IDP_URL';
-const code5 = 'YOUR_IDP_CLIENT_ID';
-const code6 = 'YOUR_IDP_REDIRECT_URL';
-const code7 = `{
-    colorScheme: 'dark',
-    variables: {
-      primaryColor: 'blue'
-    }
-}`;
-
-const code8 = `theme`;
-const code9 = 'sandboxMode';
-const code10 = 'true';
-
 const sampleCode = `
 import {
   EBComponentsProvider,
@@ -68,46 +46,62 @@ export const AuthProviderSection = () => {
   return (
     <Panel title="Authentication Provider" sampleCode={sampleCode}>
       <Text size="md" mb="lg">
-        Next, place the <Code>{code1}</Code> component at the top-level of your
-        React application above <Code>{code2}</Code> . This wrapper will
-        securely handle the sign-in and authenticate the user.
+        Next, place the
+        <Code>{`<EBComponentsProvider>`}</Code>
+        component at the top-level of your React application above
+        <Code>{`<App>`}</Code>
+        . This wrapper will securely handle the sign-in and authenticate the
+        user.
       </Text>
-      <Text><b>Sandbox</b></Text>
+      <Text>
+        <b>Sandbox</b>
+      </Text>
       <Text size="md" mb="lg">
-        The <Code>{code9}</Code> parameter will have to be set by your
+        The <Code>{'sandboxMode'}</Code> parameter will have to be set by your
         application depending on the environment. When running your application
-        in development mode, set this value to <Code>{code10}</Code>. This will
+        in development mode, set this value to <Code>{'true'}</Code>. This will
         connect your application to a stateless mock api which will allow you to
         start using the components without creating an account.
       </Text>
-      <Text><b>Production</b></Text>
-      <Text size="md" mb="lg">
-        For production, you will have to create an account and set values for <Code>{code4}</Code>
-        <Code>{code5}</Code>. You can obtain these values by requesting them from J.P. Morgan
-        directly.
-      </Text>
-     
-      <Text size="md" mb="lg">
-        The <Code>{code6}</Code> will be your application url.
+      <Text>
+        <b>Production</b>
       </Text>
       <Text size="md" mb="lg">
-        When in production, users of your application will automatically get
-        redirected to a login page which will handle the authentication of all the components in this library.
+        For production, you will have to create an account and set values for{' '}
+        <Code>{'YOUR_IDP_URL'}</Code>
+        <Code>{'YOUR_IDP_CLIENT_ID'}</Code>. You can obtain these values by
+        requesting them from J.P. Morgan directly.
       </Text>
-      
+
+      <Text size="md" mb="lg">
+        The <Code>{'YOUR_IDP_REDIRECT_URL'}</Code> will be your application url.
+      </Text>
+      <Text size="md" mb="lg">
+        When outside of sandbox mode, users of your application will
+        automatically get redirected to a login page which will handle the
+        authentication of all the components in this library.
+      </Text>
+
       <Flex direction="row" p="lg" justify="center" align="center">
         <Image width="300px" src="/signIn.svg"></Image>
       </Flex>
       <Text size="md" mb="lg">
-        Please note, you will have to create each user prior to their using your application in production. 
+        Please note, you will have to create each user prior to their using your
+        application in production.
       </Text>
       <Accordion>
         <Accordion.Item value="theming">
           <Accordion.Control>
-            Optional <Code>{code8}</Code> Parameter for <Code>{code3}</Code>
+            Optional <Code>{`theme`}</Code> Parameter for{' '}
+            <Code>{` <EBComponentsProvider>`}</Code>
           </Accordion.Control>
           <Accordion.Panel>
-            <Prism language={'json'}>{code7}</Prism>
+            <Prism language={'json'}>{`{
+    colorScheme: 'dark',
+    variables: {
+      primaryColor: 'blue'
+    }
+}`}</Prism>
           </Accordion.Panel>
         </Accordion.Item>
         <Accordion.Item value="apiConfig">

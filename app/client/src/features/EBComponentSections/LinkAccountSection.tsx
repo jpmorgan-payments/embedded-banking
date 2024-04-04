@@ -1,6 +1,9 @@
 import { Text, Badge } from '@mantine/core';
 import { Panel, CodeSamplePanel } from 'components';
-import { LinkedAccountWidget, EBComponentsProvider } from '../../../../../embedded-components';
+import {
+  LinkedAccountWidget,
+  EBComponentsProvider,
+} from '../../../../../embedded-components';
 
 const componentSample = (
   <EBComponentsProvider apiBaseUrl="">
@@ -15,22 +18,17 @@ import { LinkedAccountWidget } from "@jpmorgan-payments/embedded-banking-compone
 <LinkedAccountWidget/>
 `;
 
-const description =
-  'This component allows you to link an account';
-const title = 'Link Account';
-const type = 'Component';
-
 export const LinkAccountSection = () => {
   return (
     <Panel
-      title={title}
+      title={'Link Account'}
       customBadge={
         <Badge variant="filled" color="jpmc" radius="xs">
-          {type}
+          Component
         </Badge>
       }
     >
-      <Text mb="md">{description}</Text>
+      <Text mb="md"> This component allows you to link an account</Text>
       <CodeSamplePanel component={componentSample} code={`${codeSample}`} />
     </Panel>
   );

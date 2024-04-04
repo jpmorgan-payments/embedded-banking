@@ -39,6 +39,10 @@ export const Layout = ({
   }, [location]);
 
   const lessThanSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const appTitle =
+    location?.pathname === '/embedded-components'
+      ? 'Embedded Components'
+      : 'Embedded Banking Showcase';
 
   return (
     <AppShell
@@ -91,11 +95,7 @@ export const Layout = ({
                   : theme.colors.dark[4]
               }
             >
-              {lessThanSm
-                ? 'EB Showcase'
-                : location?.pathname === '/embedded-components'
-                ? 'Embedded Components'
-                : 'Embedded Banking Showcase'}
+              {lessThanSm ? 'EB Showcase' : appTitle}
             </Text>
 
             <ThemeSelectMenu {...themeProps} />

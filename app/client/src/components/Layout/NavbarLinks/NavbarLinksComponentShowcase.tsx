@@ -33,7 +33,7 @@ const menu = [
 
 function getStartY(el: any) {
   const rect = el?.getBoundingClientRect();
-  return rect?.top + window.scrollY-200;
+  return rect?.top + window.scrollY - 200;
 }
 
 function getEndY(startY: any, el: any) {
@@ -75,13 +75,13 @@ export const NavbarLinksComponentShowcase = () => {
   const theme = useMantineTheme();
   return (
     <>
-      {menu.map((section, index) => (
-        <div key={`navbar${index}`}>
+      {menu.map((section) => (
+        <div key={`navbar${section.label}`}>
           <Text mb={theme.spacing.sm} mt={theme.spacing.sm} weight={600}>
             {section?.label}
           </Text>
           {section?.items.map((item) => (
-            <NavbarLink key={item.label} title={item?.label}>
+            <NavbarLink key={`${item.label}`} title={item?.label}>
               <span>{item.label}</span>
             </NavbarLink>
           ))}
