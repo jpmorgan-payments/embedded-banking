@@ -1,5 +1,5 @@
 import { Text, Badge } from '@mantine/core';
-import { Panel, CodeSamplePanel } from 'components';
+import { Panel, ComponentSamplePanel } from 'components';
 import {
   LinkedAccountWidget,
   EBComponentsProvider,
@@ -29,7 +29,7 @@ export const LinkAccountSection = () => {
       }
     >
       <Text mb="md"> This component allows you to link an account</Text>
-      <CodeSamplePanel component={componentSample} code={`${codeSample}`} />
+      <ComponentSamplePanel component={componentSample} code={`${codeSample}`} />
     </Panel>
   );
 };

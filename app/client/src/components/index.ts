@@ -8,4 +8,4 @@ export { ValuesTable } from './ValuesTable/ValuesTable';
 export { Panel } from './Panel/Panel';
 export { ObjectDisplay } from './ObjectDisplay/ObjectDisplay';
 export { TableWithJsonDisplay } from './TableWithJsonDisplay/TableWithJsonDisplay';
-export { CodeSamplePanel } from './CodeSample/CodeSamplePanel';
+export { ComponentSamplePanel } from './ComponentSamplePanel/ComponentSamplePanel';

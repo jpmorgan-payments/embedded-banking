@@ -1,5 +1,5 @@
 import { Text, Badge } from '@mantine/core';
-import { Panel, CodeSamplePanel } from 'components';
+import { Panel, ComponentSamplePanel } from 'components';
 import {
   PaymentDetails,
   EBComponentsProvider,
@@ -32,7 +32,7 @@ export const PaymentDetailsSection = () => {
         This component allows your client to view details of a payment made
         through Embedded Banking.
       </Text>
-      <CodeSamplePanel component={componentSample} code={`${codeSample}`} />
+      <ComponentSamplePanel component={componentSample} code={`${codeSample}`} />
     </Panel>
   );
 };

@@ -1,12 +1,12 @@
 import { Box, Grid } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 
-type CodeSampleProps = {
+type ComponentSamplePanelProps = {
   code: string;
   component: React.ReactNode;
 };
 
-export const CodeSamplePanel = ({ code, component }: CodeSampleProps) => {
+export const ComponentSamplePanel = ({ code, component }:ComponentSamplePanelProps) => {
   return (
     <Grid align="center" justify="center" style={{ width: '100%' }}>
       <Grid.Col lg={8} sm={10}>
