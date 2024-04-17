@@ -5,20 +5,6 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@7nohe/openapi-react-query-codegen@npm:^0.5.3":
-  version: 0.5.3
-  resolution: "@7nohe/openapi-react-query-codegen@npm:0.5.3"
-  peerDependencies:
-    commander: ">= 11 < 13"
-    glob: ">= 10"
-    openapi-typescript-codegen: ^0.24.0
-    typescript: ">= 4.8.3"
-  bin:
-    openapi-rq: dist/src/cli.js
-  checksum: 10c0/6780f19548d126ca1993637ea307da10658606f2aee9aa4e303c1dc7b98681fbe1acb4a4fe12584c550477a21fa1e222cf318b612fd6f9733bb5cd610cd77224
-  languageName: node
-  linkType: hard
-
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
   version: 1.2.6
   resolution: "@aashutoshrathi/word-wrap@npm:1.2.6"
@@ -2269,7 +2255,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorgan-payments/embedded-banking-components@workspace:."
   dependencies:
-    "@7nohe/openapi-react-query-codegen": "npm:^0.5.3"
     "@hookform/resolvers": "npm:^3.3.4"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.2.1"
     "@mantine/core": "npm:7.5.1"
