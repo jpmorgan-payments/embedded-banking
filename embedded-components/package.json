@@ -1,18 +1,18 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "Apache-2.0",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/EBComponents.umd.cjs",
-  "module": "./dist/EBComponents.js",
+  "main": "./dist/umd/eb-components.js",
+  "module": "./dist/esm/eb-components.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/EBComponents.js",
-      "require": "./dist/EBComponents.umd.cjs"
+      "import": "./dist/esm/eb-components.js",
+      "require": "./dist/umd/eb-components.js"
     }
   },
   "scripts": {
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@mantine/core": "7.5.1",
     "@mantine/form": "^7.5.2",
     "@mantine/hooks": "7.5.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -40,7 +39,9 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.20.5",
     "@tanstack/react-table": "^8.13.0",
@@ -50,9 +51,7 @@
     "date-fns": "^3.3.1",
     "deepmerge": "^4.3.1",
     "lucide-react": "^0.294.0",
-    "react": "^18.2.0",
     "react-day-picker": "^8.10.0",
-    "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
@@ -60,15 +59,14 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@7nohe/openapi-react-query-codegen": "^0.5.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@openapi-codegen/typescript": "^8.0.0",
-    "@storybook/addon-essentials": "^7.6.6",
-    "@storybook/addon-interactions": "^7.6.6",
-    "@storybook/addon-links": "^7.6.6",
-    "@storybook/blocks": "^7.6.6",
-    "@storybook/react": "^7.6.6",
-    "@storybook/react-vite": "^7.6.6",
+    "@storybook/addon-essentials": "^8.0.8",
+    "@storybook/addon-interactions": "^8.0.8",
+    "@storybook/addon-links": "^8.0.8",
+    "@storybook/blocks": "^8.0.8",
+    "@storybook/react": "^8.0.8",
+    "@storybook/react-vite": "^8.0.8",
     "@storybook/testing-library": "^0.2.2",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.5",
@@ -83,17 +81,9 @@
     "eslint": "^8.53.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-auto": "^0.9.0",
     "eslint-config-mantine": "^3.1.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-chai-expect": "^3.0.0",
-    "eslint-plugin-chai-friendly": "^0.7.4",
-    "eslint-plugin-const-case": "^1.2.2",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest-dom": "^5.1.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.7.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -106,8 +96,10 @@
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.1.1",
     "prop-types": "^15.8.1",
-    "storybook": "^7.6.6",
-    "storybook-dark-mode": "^3.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^8.0.8",
+    "storybook-dark-mode": "^4.0.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
@@ -115,6 +107,10 @@
     "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
