@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@mantine/core": "7.5.1",
     "@mantine/form": "^7.5.2",
     "@mantine/hooks": "7.5.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
