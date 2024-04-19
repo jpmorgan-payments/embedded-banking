@@ -16,9 +16,7 @@
     }
   },
   "scripts": {
-    "dev": "vite",
     "build": "rm -rf dist && tsc && vite build",
-    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx --cache",
     "prettier": "prettier --check \"**/*.{ts,tsx}\"",
