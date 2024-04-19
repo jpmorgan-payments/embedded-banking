@@ -1,14 +1,11 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
   "version": "0.2.0",
-  "version": "0.2.0",
   "license": "Apache-2.0",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/umd/eb-components.js",
-  "module": "./dist/esm/eb-components.js",
   "main": "./dist/umd/eb-components.js",
   "module": "./dist/esm/eb-components.js",
   "types": "./dist/index.d.ts",
@@ -110,10 +107,6 @@
     "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",

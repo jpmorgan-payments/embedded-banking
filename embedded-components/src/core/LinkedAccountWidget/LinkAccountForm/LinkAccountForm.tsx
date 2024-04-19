@@ -1,5 +1,4 @@
 import { FC, ReactNode, useState } from 'react';
-import { FC, ReactNode, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -24,7 +23,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
   SelectContent,
@@ -39,16 +37,10 @@ import {
 } from './LinkAccountForm.schema';
 
 type LinkAccountFormDialogTriggerProps = {
-type LinkAccountFormDialogTriggerProps = {
   onSubmit: (data: LinkAccountFormDataType) => void;
-  children: ReactNode;
   children: ReactNode;
 };
 
-export const LinkAccountFormDialogTrigger: FC<
-  LinkAccountFormDialogTriggerProps
-> = ({ onSubmit, children }) => {
-  const [isDialogOpen, setDialogOpen] = useState(false);
 export const LinkAccountFormDialogTrigger: FC<
   LinkAccountFormDialogTriggerProps
 > = ({ onSubmit, children }) => {
@@ -109,65 +101,7 @@ export const LinkAccountFormDialogTrigger: FC<
                     </FormItem>
                   )}
                 />
-        <Dialog
-          open={isDialogOpen}
-          onOpenChange={(open) => {
-            setDialogOpen(open);
-          }}
-        >
-          <DialogTrigger asChild>{children}</DialogTrigger>
-          <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-gap-4 eb-px-0 eb-pb-0">
-            <DialogHeader className="eb-px-6">
-              <DialogTitle>Link an account</DialogTitle>
-              <DialogDescription>
-                Enter your external account&apos;s information to link it
-              </DialogDescription>
-            </DialogHeader>
-            <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2 eb-px-6">
-              <div className="eb-grid eb-gap-4 eb-pt-4">
-                <FormField
-                  control={form.control}
-                  name="accountType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Account Type</FormLabel>
-                      <Select
-                        onValueChange={(value) => {
-                          field.onChange(value);
-                          handleAccountTypeChange(value);
-                        }}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select account type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="individual">Individual</SelectItem>
-                          <SelectItem value="business">Business</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
-                {selectedAccountType === 'individual' && (
-                  <>
-                    <FormField
-                      control={form.control}
-                      name="firstName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>First Name</FormLabel>
-                          <FormControl>
-                            <Input {...field} required />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                 {selectedAccountType === 'individual' && (
                   <>
                     <FormField
@@ -199,21 +133,6 @@ export const LinkAccountFormDialogTrigger: FC<
                     />
                   </>
                 )}
-                    <FormField
-                      control={form.control}
-                      name="lastName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Last Name</FormLabel>
-                          <FormControl>
-                            <Input {...field} required />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </>
-                )}
 
                 {selectedAccountType === 'business' && (
                   <FormField
@@ -230,35 +149,7 @@ export const LinkAccountFormDialogTrigger: FC<
                     )}
                   />
                 )}
-                {selectedAccountType === 'business' && (
-                  <FormField
-                    control={form.control}
-                    name="businessName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Business Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} required />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
 
-                <FormField
-                  control={form.control}
-                  name="routingNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Routing Number</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <FormField
                   control={form.control}
                   name="routingNumber"
