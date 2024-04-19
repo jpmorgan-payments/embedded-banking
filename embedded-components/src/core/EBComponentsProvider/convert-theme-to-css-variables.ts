@@ -36,13 +36,30 @@ const convertThemeVariablesToCssVariables = (
       : undefined,
   };
 
-  Object.keys(cssVariablesObject).forEach(
-    (key) =>
-      cssVariablesObject[key as CSSVariable] === undefined &&
-      delete cssVariablesObject[key as CSSVariable]
-  );
+  const cssVariables = (variables: Record<string, string | number | undefined>): CSSVariables => {
+    type CSSVariables = Record<CSSVariable, string>;
+    const cssVars: CSSVariables = {};
 
-  return cssVariablesObject;
+    Object.keys(variables).forEach((key) => {
+      const cssVariablesKey: CSSVariable = `--eb-${key.replace(/[A-Z]/g, (match) => `-${match.toLocaleLowerCase()}`)}`
+      if (variables[key]) {
+        cssVars[cssVariablesKey] = '' + variables[key];
+      }
+    })
+    return cssVars;
+  }
+
+
+
+  // Object.keys(cssVariablesObject).forEach(
+  //   (key) =>
+  //     cssVariablesObject[key as CSSVariable] === undefined &&
+  //     delete cssVariablesObject[key as CSSVariable]
+  // );
+  // check this:
+  console.log('@@css', cssVariables(variables));
+
+  return cssVariables(variables);
 };
 
 const cssVariablesObjectToString = (variables: CSSVariables) =>

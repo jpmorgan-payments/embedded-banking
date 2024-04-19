@@ -18,44 +18,44 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: 'var(--eb-border)',
-        input: 'var(--eb-input)',
-        ring: 'var(--eb-ring)',
-        background: 'var(--eb-background)',
-        foreground: 'var(--eb-foreground)',
+        border: 'var(--eb-border-color)',
+        input: 'var(--eb-input-color)',
+        ring: 'var(--eb-ring-color)',
+        background: 'var(--eb-background-color)',
+        foreground: 'var(--eb-foreground-color)',
         primary: {
-          DEFAULT: 'var(--eb-primary)',
-          foreground: 'var(--eb-primary-foreground)',
+          DEFAULT: 'var(--eb-primary-color)',
+          foreground: 'var(--eb-primary-foreground-color)',
         },
         secondary: {
-          DEFAULT: 'var(--eb-secondary)',
-          foreground: 'var(--eb-secondary-foreground)',
+          DEFAULT: 'var(--eb-secondary-color)',
+          foreground: 'var(--eb-secondary-foreground-color)',
         },
         destructive: {
-          DEFAULT: 'var(--eb-destructive)',
-          foreground: 'var(--eb-destructive-foreground)',
+          DEFAULT: 'var(--eb-destructive-color)',
+          foreground: 'var(--eb-destructive-foreground-color)',
         },
         muted: {
-          DEFAULT: 'var(--eb-muted)',
-          foreground: 'var(--eb-muted-foreground)',
+          DEFAULT: 'var(--eb-muted-color)',
+          foreground: 'var(--eb-muted-foreground-color)',
         },
         accent: {
-          DEFAULT: 'var(--eb-accent)',
-          foreground: 'var(--eb-accent-foreground)',
+          DEFAULT: 'var(--eb-accent-color)',
+          foreground: 'var(--eb-accent-foreground-color)',
         },
         popover: {
-          DEFAULT: 'var(--eb-popover)',
-          foreground: 'var(--eb-popover-foreground)',
+          DEFAULT: 'var(--eb-popover-color)',
+          foreground: 'var(--eb-popover-foreground-color)',
         },
         card: {
-          DEFAULT: 'var(--eb-card)',
-          foreground: 'var(--eb-card-foreground)',
+          DEFAULT: 'var(--eb-card-color)',
+          foreground: 'var(--eb-card-foreground-color)',
         },
       },
       borderRadius: {
-        lg: 'var(--eb-radius)',
-        md: 'calc(var(--eb-radius) - 2px)',
-        sm: 'calc(var(--eb-radius) - 4px)',
+        lg: 'var(--eb-radius-color)',
+        md: 'calc(var(--eb-radius-color) - 2px)',
+        sm: 'calc(var(--eb-radius-color) - 4px)',
       },
       keyframes: {
         'accordion-down': {
@@ -72,7 +72,7 @@ module.exports = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       zIndex: {
-        overlay: 'var(--eb-z-overlay)',
+        overlay: 'var(--eb-z-index-overlay)',
       },
     },
   },
