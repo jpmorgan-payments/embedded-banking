@@ -4,7 +4,6 @@ import {
   Installation,
   AuthProvider,
   LinkAccountSection,
-  PaymentDetailsSection,
 } from 'features/EBComponentSections';
 
 export const EmbeddedComponentsPage = () => {
@@ -13,7 +12,6 @@ export const EmbeddedComponentsPage = () => {
       <Overview />
       <Installation />
       <AuthProvider />
-      <PaymentDetailsSection />
       <LinkAccountSection />
     </PageWrapper>
   );

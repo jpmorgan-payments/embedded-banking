@@ -22,9 +22,6 @@ const menu = [
     label: 'Components',
     items: [
       {
-        label: 'Payment Details',
-      },
-      {
         label: 'Link Account',
       },
     ],
