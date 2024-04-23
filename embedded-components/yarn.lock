@@ -2258,6 +2258,7 @@ __metadata:
     eslint-plugin-tailwindcss: "npm:^3.15.1"
     identity-obj-proxy: "npm:^3.0.0"
     jsdom: "npm:^23.0.1"
+    libphonenumber-js: "npm:^1.10.46"
     lucide-react: "npm:^0.294.0"
     openapi-typescript-codegen: "npm:^0.28.0"
     postcss: "npm:^8.4.35"
@@ -9063,6 +9064,13 @@ __metadata:
     prelude-ls: "npm:^1.2.1"
     type-check: "npm:~0.4.0"
   checksum: 10c0/effb03cad7c89dfa5bd4f6989364bfc79994c2042ec5966cb9b95990e2edee5cd8969ddf42616a0373ac49fac1403437deaf6e9050fbbaa3546093a59b9ac94e
+  languageName: node
+  linkType: hard
+
+"libphonenumber-js@npm:^1.10.46":
+  version: 1.10.61
+  resolution: "libphonenumber-js@npm:1.10.61"
+  checksum: 10c0/0c920293b2845d0c1a613fcc9d9f7259c6d157c58fd820766471c48e64f7300205ece75fab32f8770f5e68d992512ff91793e3c600f98ffbce4a3905b6af4924
   languageName: node
   linkType: hard
 
