@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
@@ -25,7 +26,7 @@ import { validationSchema } from './EntityTypeForm.schema';
 
 type EntityTypeFormProps = {
   onSubmit: (data: any) => void;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
@@ -44,6 +45,49 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2 eb-px-6">
           <div className="eb-grid eb-gap-4 eb-pt-4">
+            <FormField
+              control={form.control}
+              name="accountType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account Type</FormLabel>
+
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="all" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          All new messages
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="mentions" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Direct messages and mentions
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="none" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Nothing</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="accountType"
