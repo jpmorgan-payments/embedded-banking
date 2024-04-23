@@ -9,7 +9,7 @@ export const OnboardingWizard = () => {
         <CardTitle>Onboarding Wizards</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-4">
+        <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
            {/* <EntityTypeForm
             onSubmit={() => {
               console.log('@@submit');

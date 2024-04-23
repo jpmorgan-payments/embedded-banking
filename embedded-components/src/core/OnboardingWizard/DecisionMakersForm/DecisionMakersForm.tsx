@@ -82,7 +82,11 @@ const DecisionMakerForm = ({
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
-    if (jobTitle === 'Other') setJobTitleIsOther(true);
+    if (jobTitle === 'Other') {
+      setJobTitleIsOther(true);
+    } else {
+      setJobTitleIsOther(false);
+    }
   };
 
   const handleAddressTypeChange = (addressType: string) => {
@@ -93,13 +97,13 @@ const DecisionMakerForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <ScrollArea className="eb-border-t-2 eb-px-6">
-          <div className="eb-grid eb-grid-cols-3 eb-gap-4 eb-pt-4">
+          <div className="eb-grid eb-grid-cols-3 eb-gap-6 eb-pt-4">
             <FormField
               control={form.control}
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel withAsterisk >First Name</FormLabel>
+                  <FormLabel withAsterisk>First Name</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -108,7 +112,6 @@ const DecisionMakerForm = ({
               )}
             />
             <FormField
-            
               control={form.control}
               name="middleName"
               render={({ field }) => (
@@ -189,7 +192,9 @@ const DecisionMakerForm = ({
               name="jobTitleDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel withAsterisk={jobTitleIsOther}>Job Description</FormLabel>
+                  <FormLabel withAsterisk={jobTitleIsOther}>
+                    Job Description
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -355,14 +360,8 @@ const DecisionMakerForm = ({
               )}
             />
 
-            <Button onClick={onCancel}>Cancel</Button>
-
-            {editMode ? (
-              <Button color="red" onClick={onDelete}>
-                Delete
-              </Button>
-            ) : null}
-            <Button type="submit">Submit</Button>
+            <Button type="button">Back</Button>
+            <Button type="button">Next</Button>
           </div>
         </ScrollArea>
       </form>

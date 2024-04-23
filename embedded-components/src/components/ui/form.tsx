@@ -99,7 +99,7 @@ const FormLabel = React.forwardRef<
       ref={ref}
       className={cn(
         error && '!eb-text-destructive',
-        props?.withAsterisk && `after:eb-content-["*"] after:eb-text-red-600`,
+        props?.withAsterisk && `after:eb-content-["_*"] after:eb-text-red-500`,
         className
       )}
       htmlFor={formItemId}
