@@ -35,7 +35,6 @@ const Title = React.forwardRef<
 >(({ className, asChild, as: Tag, children, ...props }: any, ref) => (
   <Slot
     ref={ref}
-    role="alert"
     className={cn(titleVariants({ as: Tag }), className)}
     {...props}
   >

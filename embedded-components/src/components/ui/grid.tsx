@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-const titleVariants = cva('eb-flex eb-flex-col', {
+const gridVariant = cva('eb-grid', {
   variants: {
     variant: {
       default: 'eb-bg-background eb-text-foreground',
@@ -14,18 +14,18 @@ const titleVariants = cva('eb-flex eb-flex-col', {
   },
 });
 
-const Stack = React.forwardRef<
+const Grid = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof titleVariants>
+  React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof gridVariant>
 >(({ className, variant, children, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(titleVariants({ variant }), className)}
+    className={cn(gridVariant({ variant }), className)}
     {...props}
   >
     {children}
   </div>
 ));
-Stack.displayName = 'Stack';
+Grid.displayName = 'Grid';
 
-export { Stack };
+export { Grid };
