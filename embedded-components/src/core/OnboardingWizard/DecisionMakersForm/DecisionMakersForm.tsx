@@ -22,12 +22,12 @@ import {
 } from '@/components/ui/select';
 
 import {
-  DecisionMakerFormValues,
   createDecisionMakerFormSchema,
+  DecisionMakerFormValues,
 } from './validationSchema';
 
 const defaultInitialValues = createDecisionMakerFormSchema().cast(
-  {},
+  {}
 ) as DecisionMakerFormValues;
 
 const jobTitles = [
@@ -47,25 +47,27 @@ const addressTypes = [
   'RESIDENTIAL_ADDRESS',
 ];
 
-type RepresentativeFormProps = {
+type DecisionMakerFormProps = {
   editMode?: boolean;
   parentForm?: any;
-  initialValues?: DecisionMakerFormValues;
+  initialValues?: DecisionMakerFormValues | any;
   onCancel?: () => void;
   onDelete?: () => void;
   onSubmit?: (
-    values:  DecisionMakerFormValues,
+    values: DecisionMakerFormValues | any,
     event: FormEvent<Element>
   ) => void;
 };
 
-const RepresentativeForm = ({
+const DecisionMakerForm = ({
+  parentForm,
   editMode,
   initialValues,
   onCancel,
   onDelete,
   onSubmit,
-}: RepresentativeFormProps) => {
+}: DecisionMakerFormProps) => {
+  const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
   const [selectedAddressType, setSelectedAddressType] =
     useState('LEGAL_ADDRESS');
@@ -74,28 +76,24 @@ const RepresentativeForm = ({
     initialValues: initialValues ?? defaultInitialValues,
     validateInputOnBlur: true,
     validate: yupResolver(
-      createDecisionMakerFormSchema(
-        parentForm?.values?.legalStructure,
-        getFormSchema,
-      ),
+      createDecisionMakerFormSchema(parentForm?.values?.legalStructure)
     ),
   });
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
+    if (jobTitle === 'Other') setJobTitleIsOther(true);
   };
 
   const handleAddressTypeChange = (addressType: string) => {
     setSelectedAddressType(addressType);
   };
 
-  const jobTitleIsOther = form?.values?.jobTitle === 'Other';
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2 eb-px-6">
-          <div className="eb-grid eb-gap-4 eb-pt-4">
+        <ScrollArea className="eb-border-t-2 eb-px-6">
+          <div className="eb-grid eb-grid-cols-3 eb-gap-4 eb-pt-4">
             <FormField
               control={form.control}
               name="firstName"
@@ -116,7 +114,7 @@ const RepresentativeForm = ({
                 <FormItem>
                   <FormLabel>Middle Name</FormLabel>
                   <FormControl>
-                    <Input {...field} required />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,6 +133,8 @@ const RepresentativeForm = ({
                 </FormItem>
               )}
             />
+          </div>
+          <div className="eb-grid eb-grid-cols-1 eb-gap-4 eb-pt-4">
             <FormField
               control={form.control}
               name="email"
@@ -148,8 +148,10 @@ const RepresentativeForm = ({
                 </FormItem>
               )}
             />
+          </div>
+          <div className="eb-grid eb-grid-cols-2 eb-gap-4 eb-pt-4">
             <FormField
-            // TODO if the legal strucutre is a sole propritorship, then don't make this required
+              // TODO if the legal strucutre is a sole propritorship, then don't make this required
               control={form.control}
               name="jobTitle"
               render={({ field }) => (
@@ -188,7 +190,11 @@ const RepresentativeForm = ({
                 <FormItem>
                   <FormLabel>Job Description</FormLabel>
                   <FormControl>
-                    <Input {...field} required />
+                    <Input
+                      {...field}
+                      disabled={!jobTitleIsOther}
+                      required={jobTitleIsOther}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -207,7 +213,7 @@ const RepresentativeForm = ({
                 </FormItem>
               )}
             />
-          {/*    <FormField
+            <FormField
               control={form.control}
               name="birthDate"
               render={({ field }) => (
@@ -219,8 +225,10 @@ const RepresentativeForm = ({
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
-              <FormField
+            />
+          </div>
+          <div className="eb-grid eb-grid-cols-1 eb-gap-4 eb-pt-4">
+            <FormField
               control={form.control}
               name="ssn9"
               render={({ field }) => (
@@ -284,7 +292,7 @@ const RepresentativeForm = ({
                 <FormItem>
                   <FormLabel>Address Line Two</FormLabel>
                   <FormControl>
-                    <Input {...field} required />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -297,12 +305,14 @@ const RepresentativeForm = ({
                 <FormItem>
                   <FormLabel>Address Line Three</FormLabel>
                   <FormControl>
-                    <Input {...field}  />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+          </div>
+          <div className="eb-grid eb-grid-cols-3 eb-gap-4 eb-pt-4">
             <FormField
               control={form.control}
               name="city"
@@ -359,4 +369,4 @@ const RepresentativeForm = ({
   );
 };
 
-export { RepresentativeForm };
+export { DecisionMakerForm };
