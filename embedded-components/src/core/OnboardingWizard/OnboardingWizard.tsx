@@ -10,7 +10,11 @@ export const OnboardingWizard = () => {
       </CardHeader>
       <CardContent>
         <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-4">
-          <EntityTypeForm />
+          <EntityTypeForm
+            onSubmit={() => {
+              console.log('@@submit');
+            }}
+          />
         </div>
       </CardContent>
     </Card>
