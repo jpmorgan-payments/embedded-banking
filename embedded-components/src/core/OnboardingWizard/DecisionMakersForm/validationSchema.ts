@@ -140,7 +140,7 @@ const createDecisionMakerFormSchema = (
         )
         .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
         .default(''),
-      addressLine3: yup
+/*       addressLine3: yup
         .string()
         .nullable()
         .transform((value, originalValue) =>
@@ -164,7 +164,7 @@ const createDecisionMakerFormSchema = (
             .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
         })
         .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
-        .default(''),
+        .default(''), */
       city: yup
         .string()
         .default('')
