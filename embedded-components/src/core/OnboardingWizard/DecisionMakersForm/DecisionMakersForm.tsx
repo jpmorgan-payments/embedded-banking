@@ -99,7 +99,7 @@ const DecisionMakerForm = ({
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel withAsterisk >First Name</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -108,6 +108,7 @@ const DecisionMakerForm = ({
               )}
             />
             <FormField
+            
               control={form.control}
               name="middleName"
               render={({ field }) => (
@@ -125,7 +126,7 @@ const DecisionMakerForm = ({
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel withAsterisk>Last Name</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -140,7 +141,7 @@ const DecisionMakerForm = ({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel withAsterisk>Email</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -156,7 +157,7 @@ const DecisionMakerForm = ({
               name="jobTitle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Title</FormLabel>
+                  <FormLabel withAsterisk>Job Title</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
@@ -188,7 +189,7 @@ const DecisionMakerForm = ({
               name="jobTitleDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Description</FormLabel>
+                  <FormLabel withAsterisk={jobTitleIsOther}>Job Description</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -205,7 +206,7 @@ const DecisionMakerForm = ({
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel withAsterisk>Phone</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -218,7 +219,7 @@ const DecisionMakerForm = ({
               name="birthDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date of Birth</FormLabel>
+                  <FormLabel withAsterisk>Date of Birth</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -233,7 +234,7 @@ const DecisionMakerForm = ({
               name="ssn9"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Social Security Number</FormLabel>
+                  <FormLabel withAsterisk>Social Security Number</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -277,7 +278,7 @@ const DecisionMakerForm = ({
               name="addressLine1"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address Line One</FormLabel>
+                  <FormLabel withAsterisk>Address Line One</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -318,7 +319,7 @@ const DecisionMakerForm = ({
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel> City</FormLabel>
+                  <FormLabel withAsterisk> City</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -332,7 +333,7 @@ const DecisionMakerForm = ({
               name="state"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>State</FormLabel>
+                  <FormLabel withAsterisk>State</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
@@ -345,7 +346,7 @@ const DecisionMakerForm = ({
               name="zip"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Zip</FormLabel>
+                  <FormLabel withAsterisk>Zip</FormLabel>
                   <FormControl>
                     <Input {...field} required />
                   </FormControl>
