@@ -22,33 +22,33 @@ const validationSchema = (getContentToken?: (val: string) => string) => {
       )
       .default('')
       .required(),
-    businessInSanctionedCountries: yup
-      .string()
-      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default(undefined)
-      .required(),
-    significantOwnership: yup.string().when('legalStructure', {
-      is: isBusiness,
-      then: (schema) =>
-        schema
-          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default(undefined)
-          .required(),
-    }),
-    entitiesInOwnership: yup.string().when('legalStructure', {
-      is: isBusiness,
-      then: (schema) =>
-        schema
-          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default(undefined)
-          .required(),
-    }),
-    relatedToATM: yup
-      .string()
-      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default(undefined)
-      .required(),
-    mockEnabled: yup.boolean().default(false),
+    // businessInSanctionedCountries: yup
+    //   .string()
+    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //   .default(undefined)
+    //   .required(),
+    // significantOwnership: yup.string().when('legalStructure', {
+    //   is: isBusiness,
+    //   then: (schema) =>
+    //     schema
+    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //       .default(undefined)
+    //       .required(),
+    // }),
+    // entitiesInOwnership: yup.string().when('legalStructure', {
+    //   is: isBusiness,
+    //   then: (schema) =>
+    //     schema
+    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //       .default(undefined)
+    //       .required(),
+    // }),
+    // relatedToATM: yup
+    //   .string()
+    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //   .default(undefined)
+    //   .required(),
+    // mockEnabled: yup.boolean().default(false),
   });
 };
 

@@ -1,12 +1,14 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
@@ -37,25 +40,31 @@ type EntityTypeFormProps = {
 export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState('individual'); // Default to individual
 
-  const form = useForm<any>({
+  const formz = useForm<any>({
     resolver: yupResolver(validationSchema()),
   });
+
+  useEffect(() => {
+    console.log('@@event on formz', formz.getValues());
+  }, [JSON.stringify(formz.getValues())]);
 
   const handleAccountTypeChange = (accountType: string) => {
     setSelectedAccountType(accountType);
   };
-
+  const sub = (val: any) => {
+    console.log('@@WG', val);
+  };
   return (
     <Stack>
       <Title as="h3">What Kind of Business do you run?</Title>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+      <Form {...formz}>
+        <form onSubmit={formz.handleSubmit(sub)}>
           <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6">
             <Grid
               className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'}  eb-grid-cols-2`}
             >
               <FormField
-                control={form.control}
+                control={formz.control}
                 name="accountType"
                 render={({ field }) => (
                   <FormItem>
@@ -114,113 +123,175 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
                 </CardContent>
               </Card>
             </Grid>
-            <Stack>
+            <Separator className="eb-my-8" />
+            <Stack className="eb-gap-8">
+              <Title as="h2">Additional Questions</Title>
               <FormField
-                control={form.control}
-                name="accountType"
+                control={formz.control}
+                name="businessInSanctionedCountries"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Account Type</FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handleAccountTypeChange(value);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select account type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="individual">Individual</SelectItem>
-                        <SelectItem value="business">Business</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormLabel>
+                      Do you have locations, sell goods or services, or have
+                      vendors or suppliers in countries or regions subject to
+                      comprehensive sanctions programs (Iran, North Korea, Cuba,
+                      Syria and the Crimea, Donetsk, Luhansk Regions of
+                      Ukraine), or work with Sanctioned Parties in Russia or
+                      Venezuela? *
+                    </FormLabel>
+
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="eb-flex eb-flex-row eb-space-y-1"
+                      >
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="yes" />
+
+                          <FormLabel className="eb-font-normal">Yes</FormLabel>
+                        </FormItem>
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="no" />
+
+                          <FormLabel className="eb-font-normal">No</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
-              {selectedAccountType === 'individual' && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>First Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} required />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} required />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
-
-              {selectedAccountType === 'business' && (
-                <FormField
-                  control={form.control}
-                  name="businessName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Business Name</FormLabel>
-                      <FormControl>
-                        <Input {...field} required />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
-
               <FormField
-                control={form.control}
-                name="routingNumber"
+                control={formz.control}
+                name="relatedToATM"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Routing Number</FormLabel>
+                    <FormLabel>
+                      Do you identify as a provider, owner, and/or operator of
+                      private ATM(s) and/or third Party ATM(s) activity? *
+                    </FormLabel>
+
                     <FormControl>
-                      <Input {...field} />
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="eb-flex eb-flex-row eb-space-y-1"
+                      >
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="yes" />
+
+                          <FormLabel className="eb-font-normal">Yes</FormLabel>
+                        </FormItem>
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="no" />
+
+                          <FormLabel className="eb-font-normal">No</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
                     </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
               <FormField
-                control={form.control}
-                name="accountNumber"
+                control={formz.control}
+                name="entitiesInOwnership"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Account Number</FormLabel>
+                    <FormLabel>
+                      Are there any entities (or non-individuals) in your
+                      ownership hierarchy? *
+                    </FormLabel>
+
                     <FormControl>
-                      <Input {...field} />
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="eb-flex eb-flex-row eb-space-y-1"
+                      >
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="yes" />
+
+                          <FormLabel className="eb-font-normal">Yes</FormLabel>
+                        </FormItem>
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="no" />
+
+                          <FormLabel className="eb-font-normal">No</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
                     </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={formz.control}
+                name="significantOwnership"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Are there any individuals who own 25% or more of your
+                      company? *
+                    </FormLabel>
+
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="eb-flex eb-flex-row eb-space-y-1"
+                      >
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="yes" />
+
+                          <FormLabel className="eb-font-normal">Yes</FormLabel>
+                        </FormItem>
+                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                          <RadioGroupItem value="no" />
+
+                          <FormLabel className="eb-font-normal">No</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </Stack>
+            <Separator className="eb-my-8" />
+            <FormField
+              control={formz.control}
+              name="mockEnabled"
+              render={({ field }) => (
+                <FormItem className="eb-flex eb-flex-row mt-8">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
 
-            <Button variant="secondary" type="submit">
+                  <FormLabel>Auto-fill forms with mock data</FormLabel>
+                  {/* <FormDescription>
+                    You can manage your mobile notifications in the{' '}
+                  </FormDescription> */}
+                </FormItem>
+              )}
+            />
+
+            <Button
+              variant="secondary"
+              type="submit"
+              className="eb-mt-8"
+              onClick={() => {
+                console.log('@@click', formz.getValues(), formz.control);
+              }}
+            >
               Submit
             </Button>
           </ScrollArea>
