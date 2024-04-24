@@ -16,6 +16,11 @@ export const OnboardingWizard = () => {
               console.log('@@submit');
             }}
           />  */}
+           {/* <EntityTypeForm
+            onSubmit={() => {
+              console.log('@@submit');
+            }}
+          />  */}
           {/* <DecisionMakerForm
             onSubmit={() => {
               console.log('@@submit');
