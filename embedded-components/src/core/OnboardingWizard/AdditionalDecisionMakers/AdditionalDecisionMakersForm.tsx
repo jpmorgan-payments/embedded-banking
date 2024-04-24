@@ -62,7 +62,7 @@ const AdditionalDecisionMakersForm = ({
           
         /> */}
         <Text>Listed business decision makers</Text>
-        <div className="eb-box-content eb-h-200 eb-w-200 eb-bg-black-500 eb-rounded-lg eb-border eb-border-border eb-bg-card eb-text-card-foreground eb-shadow-sm"><p>Hi</p></div>
+        <DecisionMakerPanel></DecisionMakerPanel>
         <Dialog>
           <DialogTrigger asChild>
             <Button>Click to add a decision maker</Button>
