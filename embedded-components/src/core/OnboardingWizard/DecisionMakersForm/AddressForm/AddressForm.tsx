@@ -1,6 +1,3 @@
-import { FormEvent } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -11,21 +8,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { AddressFormValues, createAddressFormSchema } from './validationSchema';
 
-const defaultInitialValues = createAddressFormSchema().cast(
-  {}
-) as AddressFormValues;
-
-
-const AddressForm = () => {
-  const form = useForm<any>({
-    defaultInitialValues,
-    validateInputOnBlur: true,
-    validate: yupResolver(
-      createAddressFormSchema()
-    ),
-  });
+const AddressForm = ({form}: any) => {
+  
 
   return (
     <>

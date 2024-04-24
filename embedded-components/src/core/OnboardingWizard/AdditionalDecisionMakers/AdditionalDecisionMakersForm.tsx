@@ -1,21 +1,15 @@
-import { FormEvent, Key } from 'react';
+import {  Key } from 'react';
 import { useForm } from 'react-hook-form';
-
 import { Dialog } from '@/components/ui/dialog';
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-
 import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
-import { DecisionMakerPanel } from './DecisionMakerPanel/DecisionMakerPanel';
+import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
-type AdditionalDecisionMakersFormProps = {
-  form: any;
-};
 
-const AdditionalDecisionMakersForm = ({
-  form,
-}: AdditionalDecisionMakersFormProps) => {
+
+const AdditionalDecisionMakersForm = () => {
+  const form = useForm<any>({});
   const handleAddBusinessOwner = (owner: any) => {
     form.insertListItem('owners', owner);
   };
@@ -66,7 +60,7 @@ const AdditionalDecisionMakersForm = ({
 
         <Dialog>
           {form?.values?.owners.map((owner: any, index: Key) => (
-            <DecisionMakerPanel data={owner} key={index}></DecisionMakerPanel>
+            <DecisionMakerCard data={owner} key={index}></DecisionMakerCard>
           ))}
 
           <AdditionalDecisionMakerModalForm form={form} onSubmit={()=>{}}/>

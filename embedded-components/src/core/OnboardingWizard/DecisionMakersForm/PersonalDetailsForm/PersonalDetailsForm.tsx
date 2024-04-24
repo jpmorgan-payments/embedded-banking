@@ -1,7 +1,5 @@
-import { FormEvent, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { SelectValue } from '@radix-ui/react-select';
-import { useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -18,15 +16,6 @@ import {
   SelectTrigger,
 } from '@/components/ui/select';
 
-import {
-  createPersonalDetailsFormSchema,
-  PersonalDetailsFormValues,
-} from './validationSchema';
-
-const defaultInitialValues = createPersonalDetailsFormSchema().cast(
-  {}
-) as PersonalDetailsFormValues;
-
 const jobTitles = [
   'CEO',
   'CFO',
@@ -38,22 +27,12 @@ const jobTitles = [
 ];
 
 type PersonalDetailsFormProps = {
-  parentForm: any
+  form: any;
 };
 
-const PersonalDetailsForm = ({
-  parentForm
-}: PersonalDetailsFormProps) => {
+const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
-
-  const form = useForm<any>({
-    initialValues: defaultInitialValues,
-    validateInputOnBlur: true,
-    validate: yupResolver(
-      createPersonalDetailsFormSchema()
-    ),
-  });
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);

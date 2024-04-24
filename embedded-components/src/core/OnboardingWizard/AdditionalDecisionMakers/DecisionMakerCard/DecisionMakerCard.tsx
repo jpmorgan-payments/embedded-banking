@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import {  DialogTrigger } from '@/components/ui/dialog';
 
-type DecisionMakersPanelProps = {
+type DecisionMakersCardProps = {
   controller?: boolean;
   data: any
 };
@@ -25,10 +25,10 @@ const fieldsOther = (data: any) => {
 };
 
 
-const DecisionMakerPanel = ({
+const DecisionMakerCard = ({
   controller,
   data
-}: DecisionMakersPanelProps) => {
+}: DecisionMakersCardProps) => {
   const fields = controller ? fieldsController(data) : fieldsOther(data);
   
  
@@ -61,4 +61,4 @@ const DecisionMakerPanel = ({
     </div>
   );
 };
-export { DecisionMakerPanel };
+export { DecisionMakerCard };
