@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
 import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
+import { AdditionalDecisionMakerForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
 
 export const OnboardingWizard = () => {
   return (
@@ -15,11 +16,12 @@ export const OnboardingWizard = () => {
               console.log('@@submit');
             }}
           />  */}
-          <DecisionMakerForm
+          {/* <DecisionMakerForm
             onSubmit={() => {
               console.log('@@submit');
             }}
-          />
+          /> */}
+          <AdditionalDecisionMakerForm/>
         </div>
       </CardContent>
     </Card>
