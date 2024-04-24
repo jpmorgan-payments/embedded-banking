@@ -4,7 +4,6 @@ import { createRegExpAndMessage } from '../../../lib/utils';
 
 const createDecisionMakerFormSchema = (getContentToken?: any) => {
   return yup.object({
-    id: yup.string().default(''),
     firstName: yup
       .string()
       .default('')
@@ -56,9 +55,9 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
       .default('')
       .required(getContentToken?.(`lastName`) ?? ''),
     jobTitle: yup
-            .string()
-            .default('')
-            .required(getContentToken?.(`jobTitle`) ?? ''),
+      .string()
+      .default('')
+      .required(getContentToken?.(`jobTitle`) ?? ''),
     jobTitleDescription: yup
       .string()
       .default('')

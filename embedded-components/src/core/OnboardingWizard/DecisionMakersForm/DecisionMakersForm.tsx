@@ -7,6 +7,7 @@ import { AddressForm } from './AddressForm/AddressForm';
 import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
 import { Button } from '@/components/ui/button';
 import { createDecisionMakerFormSchema, DecisionMakerFormValues } from './DecisionMakerForm.schema';
+import { useContentData } from '../useContentData';
 
 const defaultInitialValues = createDecisionMakerFormSchema().cast(
   {}
@@ -14,16 +15,21 @@ const defaultInitialValues = createDecisionMakerFormSchema().cast(
 
 
 const DecisionMakerForm = () => {
+
+  const { getContentToken: getFormSchema } = useContentData(
+    'schema.businessOwnerFormSchema',
+  );
   const form = useForm<any>({
     initialValues: defaultInitialValues,
     validateInputOnBlur: true,
     validate: yupResolver(
-      createDecisionMakerFormSchema()
+      createDecisionMakerFormSchema(getFormSchema)
     ),
   });
 
   const onSubmit = () => {
-    console.log(form.getValues())
+    console.log(getFormSchema('invalidCharacters'))
+    console.log(form.getValues());
   }
 
   return (
