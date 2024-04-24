@@ -18,6 +18,7 @@ const convertThemeVariablesToCssVariables = (
     '--eb-popover': variables.popoverColor,
     '--eb-popover-foreground': variables.popoverForegroundColor,
     '--eb-primary': variables.primaryColor,
+    '--eb-primary-hover': variables.primaryColorHover,
     '--eb-primary-foreground': variables.primaryForegroundColor,
     '--eb-secondary': variables.secondaryColor,
     '--eb-secondary-foreground': variables.secondaryForegroundColor,
