@@ -1,10 +1,8 @@
 import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
-
+import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
 
 import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
@@ -33,8 +31,12 @@ const AdditionalDecisionMakersForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form?.handleSubmit(onSubmit)}>
-        <Text>Additional Decision Makers</Text>
-        <Text>Are there any general partners or managing members within in your business who can make decisions on behalf of your company that we have not already captured in the business details?</Text>
+        <Label as="h1">Additional Decision Makers</Label>
+        <Label as="h3">
+          Are there any general partners or managing members within in your
+          business who can make decisions on behalf of your company that we have
+          not already captured in the business details?
+        </Label>
         {/* <FormField
           control={form.control}
           name="accountType"
@@ -62,11 +64,9 @@ const AdditionalDecisionMakersForm = ({
           
         /> */}
         <Text>Listed business decision makers</Text>
-        <DecisionMakerPanel></DecisionMakerPanel>
+
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>Click to add a decision maker</Button>
-          </DialogTrigger>
+          <DecisionMakerPanel></DecisionMakerPanel>
           <AdditionalDecisionMakerModalForm />
         </Dialog>
       </form>
