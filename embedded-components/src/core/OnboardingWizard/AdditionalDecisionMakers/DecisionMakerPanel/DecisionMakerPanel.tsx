@@ -5,6 +5,7 @@ import {  DialogTrigger } from '@/components/ui/dialog';
 
 type DecisionMakersPanelProps = {
   controller?: boolean;
+  data: any
 };
 
 const fieldsController = (data: any) => {
@@ -23,43 +24,14 @@ const fieldsOther = (data: any) => {
   ];
 };
 
-const data = {
-  partyType: 'INDIVIDUAL',
-  externalId: 'TCU12344',
-  email: 'monicagellar@gmail.com',
-  roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
-  individualDetails: {
-    firstName: 'Monica',
-    lastName: 'Gellar',
-    countryOfResidence: 'US',
-    natureOfOwnership: 'Direct',
-    jobTitle: 'Other',
-    jobTitleDescription: 'CEO',
-    soleOwner: true,
-    addresses: [
-      {
-        addressType: 'RESIDENTIAL_ADDRESS',
-        addressLines: ['90 Bedford Street', 'Apt 2E'],
-        city: 'New York',
-        state: 'NY',
-        postalCode: '10014',
-        country: 'US',
-      },
-    ],
-    individualIds: [
-      {
-        idType: 'SSN',
-        issuer: 'US',
-        value: '100-01-0001',
-      },
-    ],
-  },
-};
 
 const DecisionMakerPanel = ({
-  controller = false,
+  controller,
+  data
 }: DecisionMakersPanelProps) => {
   const fields = controller ? fieldsController(data) : fieldsOther(data);
+  
+ 
   return (
     <div className="eb-w-80">
       <Card>

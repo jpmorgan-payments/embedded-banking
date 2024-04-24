@@ -1,4 +1,3 @@
-import { FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -8,31 +7,12 @@ import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
 import { Button } from '@/components/ui/button';
 
 
-type DecisionMakerFormProps = {
-  editMode?: boolean;
-  parentForm?: any;
-  initialValues?: DecisionMakerFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: DecisionMakerFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
-};
-
-const DecisionMakerForm = ({
-  parentForm,
-  editMode,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: DecisionMakerFormProps) => {
+const DecisionMakerForm = () => {
   const form = useForm<any>({});
 
   return (
     <Form {...form}>
-      <form onSubmit={form?.handleSubmit(onSubmit)}>
+      <form /* onSubmit={form?.handleSubmit(onSubmit)} */>
         <ScrollArea className="eb-border-t-2 eb-px-6">
 
         <Text size="lg">
@@ -43,10 +23,10 @@ const DecisionMakerForm = ({
             Please provide your personal information. We will verify that you
             are a controller of the business.
           </Text>
-          <PersonalDetailsForm parentForm={parentForm} />
+          <PersonalDetailsForm />
           <Text size="lg">What is your personal address?</Text>
 
-          <AddressForm parentForm={parentForm} />
+          <AddressForm />
           <Button type="button">Back</Button>
           <Button variant="default" type="submit">
             Next

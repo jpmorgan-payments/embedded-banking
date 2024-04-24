@@ -4,4 +4,9 @@ export default {
   title: 'Additional Decision Makers Form',
 };
 
-export const Usage = () => <AdditionalDecisionMakersForm />;
+const form = {
+  
+}
+
+
+export const Usage = () => <AdditionalDecisionMakersForm form={form} />;

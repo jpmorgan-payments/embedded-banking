@@ -17,31 +17,13 @@ const defaultInitialValues = createAddressFormSchema().cast(
   {}
 ) as AddressFormValues;
 
-type AddressFormProps = {
-  editMode?: boolean;
-  parentForm?: any;
-  initialValues?: AddressFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: AddressFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
-};
 
-const AddressForm = ({
-  parentForm,
-  editMode,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: AddressFormProps) => {
+const AddressForm = () => {
   const form = useForm<any>({
-    initialValues: initialValues ?? defaultInitialValues,
+    defaultInitialValues,
     validateInputOnBlur: true,
     validate: yupResolver(
-      createAddressFormSchema(parentForm?.values?.legalStructure)
+      createAddressFormSchema()
     ),
   });
 

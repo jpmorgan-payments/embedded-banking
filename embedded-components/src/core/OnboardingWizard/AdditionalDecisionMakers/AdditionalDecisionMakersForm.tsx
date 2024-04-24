@@ -1,6 +1,7 @@
-import { FormEvent } from 'react';
+import { FormEvent, Key } from 'react';
 import { useForm } from 'react-hook-form';
-import { Dialog, } from '@/components/ui/dialog';
+
+import { Dialog } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
@@ -9,28 +10,26 @@ import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModa
 import { DecisionMakerPanel } from './DecisionMakerPanel/DecisionMakerPanel';
 
 type AdditionalDecisionMakersFormProps = {
-  parentForm?: any;
-  initialValues?: AdditionalDecisionMakersFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: AdditionalDecisionMakersFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
+  form: any;
 };
 
 const AdditionalDecisionMakersForm = ({
-  parentForm,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: DecisionMakersFormProps) => {
-  const form = useForm<any>({});
+  form,
+}: AdditionalDecisionMakersFormProps) => {
+  const handleAddBusinessOwner = (owner: any) => {
+    form.insertListItem('owners', owner);
+  };
+  const handleEditBusinessOwner = (owner: any, index: number) => {
+    form.insertListItem('owners', owner, index);
+    form.removeListItem('owners', index + 1);
+  };
+
+  const handleDeleteBusinessOwner = (index: number) => {
+    form.removeListItem('owners', index);
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form?.handleSubmit(onSubmit)}>
+<>
         <Label as="h1">Additional Decision Makers</Label>
         <Label as="h3">
           Are there any general partners or managing members within in your
@@ -66,11 +65,13 @@ const AdditionalDecisionMakersForm = ({
         <Text>Listed business decision makers</Text>
 
         <Dialog>
-          <DecisionMakerPanel></DecisionMakerPanel>
-          <AdditionalDecisionMakerModalForm />
+          {form?.values?.owners.map((owner: any, index: Key) => (
+            <DecisionMakerPanel data={owner} key={index}></DecisionMakerPanel>
+          ))}
+
+          <AdditionalDecisionMakerModalForm form={form} onSubmit={()=>{}}/>
         </Dialog>
-      </form>
-    </Form>
+        </>
   );
 };
 

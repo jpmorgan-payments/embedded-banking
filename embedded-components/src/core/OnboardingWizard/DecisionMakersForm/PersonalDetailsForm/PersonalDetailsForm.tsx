@@ -38,33 +38,20 @@ const jobTitles = [
 ];
 
 type PersonalDetailsFormProps = {
-  editMode?: boolean;
-  parentForm?: any;
-  initialValues?: PersonalDetailsFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: PersonalDetailsFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
+  parentForm: any
 };
 
 const PersonalDetailsForm = ({
-  parentForm,
-  editMode,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
+  parentForm
 }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
 
   const form = useForm<any>({
-    initialValues: initialValues ?? defaultInitialValues,
+    initialValues: defaultInitialValues,
     validateInputOnBlur: true,
     validate: yupResolver(
-      createPersonalDetailsFormSchema(parentForm?.values?.legalStructure)
+      createPersonalDetailsFormSchema()
     ),
   });
 
