@@ -30,7 +30,7 @@ const data= {
 }
 
 
-const DecisionMakersPanel = ({disabled}: DecisionMakersPanelProps) => {
+const DecisionMakerPanel = ({disabled}: DecisionMakersPanelProps) => {
   return (
     <div className="eb-w-80">
       <Card>
@@ -47,4 +47,4 @@ const DecisionMakersPanel = ({disabled}: DecisionMakersPanelProps) => {
     </div>
   );
 };
-export { DecisionMakersPanel };
+export { DecisionMakerPanel };
