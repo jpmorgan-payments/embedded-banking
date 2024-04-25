@@ -41,7 +41,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState('individual'); // Default to individual
 
   const formz = useForm<any>({
-    resolver: yupResolver(validationSchema()),
+    // resolver: yupResolver(validationSchema()),
   });
 
   useEffect(() => {
