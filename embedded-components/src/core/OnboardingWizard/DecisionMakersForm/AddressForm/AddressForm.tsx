@@ -20,7 +20,7 @@ const AddressForm = ({form}: any) => {
           name="addressLine1"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Address Line One</FormLabel>
+              <FormLabel asterisk>Address Line One</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -61,7 +61,7 @@ const AddressForm = ({form}: any) => {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk> City</FormLabel>
+              <FormLabel asterisk> City</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -75,7 +75,7 @@ const AddressForm = ({form}: any) => {
           name="state"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>State</FormLabel>
+              <FormLabel asterisk>State</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -88,7 +88,7 @@ const AddressForm = ({form}: any) => {
           name="zip"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Zip</FormLabel>
+              <FormLabel asterisk>Zip</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>

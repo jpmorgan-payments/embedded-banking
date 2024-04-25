@@ -93,7 +93,7 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
       .string()
       .default('')
       .matches(/^\d{10}$/, getContentToken?.(`phoneMatch`) ?? '')
-      .test(
+      /* .test(
         'is-valid-us-phone',
         getContentToken?.('isPhoneUSValid'),
         (value) => {
@@ -101,8 +101,9 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
             !getContentToken?.('isPhoneUSValid') ||
             isValidPhoneNumber(value, 'US') === true
           );
-        }
-      )
+        } 
+         )*/
+     
       .required(getContentToken?.(`phoneReq`) ?? ''),
     birthDate: yup
       .date()

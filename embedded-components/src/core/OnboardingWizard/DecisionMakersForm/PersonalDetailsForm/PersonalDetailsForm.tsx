@@ -51,7 +51,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>First Name</FormLabel>
+              <FormLabel asterisk>First Name</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -77,7 +77,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Last Name</FormLabel>
+              <FormLabel asterisk>Last Name</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -92,7 +92,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Email</FormLabel>
+              <FormLabel asterisk>Email</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -108,7 +108,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="jobTitle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Job Title</FormLabel>
+              <FormLabel asterisk>Job Title</FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
@@ -140,7 +140,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="jobTitleDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk={jobTitleIsOther}>
+              <FormLabel asterisk={jobTitleIsOther}>
                 Job Description
               </FormLabel>
               <FormControl>
@@ -159,7 +159,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Phone</FormLabel>
+              <FormLabel asterisk>Phone</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -172,7 +172,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="birthDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Date of Birth</FormLabel>
+              <FormLabel asterisk>Date of Birth</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -187,7 +187,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="ssn9"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Social Security Number</FormLabel>
+              <FormLabel asterisk>Social Security Number</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
