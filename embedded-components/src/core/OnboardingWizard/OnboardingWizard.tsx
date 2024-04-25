@@ -2,9 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
 
-// import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
-// import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
-
 export const OnboardingWizard = () => {
   return (
     <Card>
@@ -23,8 +20,7 @@ export const OnboardingWizard = () => {
               console.log('@@submit');
             }}
           /> */}
-          MAIN STEPPER
-          {/* <AdditionalDecisionMakersForm/> */}
+          
         </div>
       </CardContent>
     </Card>

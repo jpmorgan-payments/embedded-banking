@@ -1,40 +1,35 @@
-import { FormEvent } from 'react';
+import {  Key } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Dialog } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { Text } from '@/components/ui/text';
-
 import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
-import { DecisionMakerPanel } from './DecisionMakerPanel/DecisionMakerPanel';
+import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
-type AdditionalDecisionMakersFormProps = {
-  parentForm?: any;
-  initialValues?: AdditionalDecisionMakersFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: AdditionalDecisionMakersFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
-};
 
-const AdditionalDecisionMakersForm = ({
-  parentForm,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: DecisionMakersFormProps) => {
+
+const AdditionalDecisionMakersForm = () => {
   const form = useForm<any>({});
+  const handleAddBusinessOwner = (owner: any) => {
+    form.insertListItem('owners', owner);
+  };
+  const handleEditBusinessOwner = (owner: any, index: number) => {
+    form.insertListItem('owners', owner, index);
+    form.removeListItem('owners', index + 1);
+  };
+
+  const handleDeleteBusinessOwner = (index: number) => {
+    form.removeListItem('owners', index);
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form?.handleSubmit(onSubmit)}>
-        <Text>Additional Decision Makers</Text>
-        <Text>Are there any general partners or managing members within in your business who can make decisions on behalf of your company that we have not already captured in the business details?</Text>
+<>
+        <Label as="h1">Additional Decision Makers</Label>
+        <Label as="h3">
+          Are there any general partners or managing members within in your
+          business who can make decisions on behalf of your company that we have
+          not already captured in the business details?
+        </Label>
         {/* <FormField
           control={form.control}
           name="accountType"
@@ -62,15 +57,15 @@ const AdditionalDecisionMakersForm = ({
           
         /> */}
         <Text>Listed business decision makers</Text>
-        <div className="eb-box-content eb-h-200 eb-w-200 eb-bg-black-500 eb-rounded-lg eb-border eb-border-border eb-bg-card eb-text-card-foreground eb-shadow-sm"><p>Hi</p></div>
+
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>Click to add a decision maker</Button>
-          </DialogTrigger>
-          <AdditionalDecisionMakerModalForm />
+          {form?.values?.owners.map((owner: any, index: Key) => (
+            <DecisionMakerCard data={owner} key={index}></DecisionMakerCard>
+          ))}
+
+          <AdditionalDecisionMakerModalForm form={form} onSubmit={()=>{}}/>
         </Dialog>
-      </form>
-    </Form>
+        </>
   );
 };
 

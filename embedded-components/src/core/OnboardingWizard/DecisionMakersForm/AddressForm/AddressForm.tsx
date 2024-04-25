@@ -1,6 +1,3 @@
-import { FormEvent } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -11,39 +8,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { AddressFormValues, createAddressFormSchema } from './validationSchema';
 
-const defaultInitialValues = createAddressFormSchema().cast(
-  {}
-) as AddressFormValues;
-
-type AddressFormProps = {
-  editMode?: boolean;
-  parentForm?: any;
-  initialValues?: AddressFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: AddressFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
-};
-
-const AddressForm = ({
-  parentForm,
-  editMode,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: AddressFormProps) => {
-  const form = useForm<any>({
-    initialValues: initialValues ?? defaultInitialValues,
-    validateInputOnBlur: true,
-    validate: yupResolver(
-      createAddressFormSchema(parentForm?.values?.legalStructure)
-    ),
-  });
+const AddressForm = ({form}: any) => {
+  
 
   return (
     <>
@@ -53,7 +20,7 @@ const AddressForm = ({
           name="addressLine1"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Address Line One</FormLabel>
+              <FormLabel asterisk>Address Line One</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -94,7 +61,7 @@ const AddressForm = ({
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk> City</FormLabel>
+              <FormLabel asterisk> City</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -108,7 +75,7 @@ const AddressForm = ({
           name="state"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>State</FormLabel>
+              <FormLabel asterisk>State</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -121,7 +88,7 @@ const AddressForm = ({
           name="zip"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Zip</FormLabel>
+              <FormLabel asterisk>Zip</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>

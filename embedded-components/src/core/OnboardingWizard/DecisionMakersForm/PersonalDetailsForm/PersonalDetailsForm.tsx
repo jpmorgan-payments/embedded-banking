@@ -1,7 +1,5 @@
-import { FormEvent, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { SelectValue } from '@radix-ui/react-select';
-import { useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -18,15 +16,6 @@ import {
   SelectTrigger,
 } from '@/components/ui/select';
 
-import {
-  createPersonalDetailsFormSchema,
-  PersonalDetailsFormValues,
-} from './validationSchema';
-
-const defaultInitialValues = createPersonalDetailsFormSchema().cast(
-  {}
-) as PersonalDetailsFormValues;
-
 const jobTitles = [
   'CEO',
   'CFO',
@@ -38,35 +27,12 @@ const jobTitles = [
 ];
 
 type PersonalDetailsFormProps = {
-  editMode?: boolean;
-  parentForm?: any;
-  initialValues?: PersonalDetailsFormValues | any;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onSubmit?: (
-    values: PersonalDetailsFormValues | any,
-    event: FormEvent<Element>
-  ) => void;
+  form: any;
 };
 
-const PersonalDetailsForm = ({
-  parentForm,
-  editMode,
-  initialValues,
-  onCancel,
-  onDelete,
-  onSubmit,
-}: PersonalDetailsFormProps) => {
+const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
-
-  const form = useForm<any>({
-    initialValues: initialValues ?? defaultInitialValues,
-    validateInputOnBlur: true,
-    validate: yupResolver(
-      createPersonalDetailsFormSchema(parentForm?.values?.legalStructure)
-    ),
-  });
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
@@ -85,7 +51,7 @@ const PersonalDetailsForm = ({
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>First Name</FormLabel>
+              <FormLabel asterisk>First Name</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -111,7 +77,7 @@ const PersonalDetailsForm = ({
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Last Name</FormLabel>
+              <FormLabel asterisk>Last Name</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -126,7 +92,7 @@ const PersonalDetailsForm = ({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Email</FormLabel>
+              <FormLabel asterisk>Email</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -142,7 +108,7 @@ const PersonalDetailsForm = ({
           name="jobTitle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Job Title</FormLabel>
+              <FormLabel asterisk>Job Title</FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
@@ -174,7 +140,7 @@ const PersonalDetailsForm = ({
           name="jobTitleDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk={jobTitleIsOther}>
+              <FormLabel asterisk={jobTitleIsOther}>
                 Job Description
               </FormLabel>
               <FormControl>
@@ -193,7 +159,7 @@ const PersonalDetailsForm = ({
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Phone</FormLabel>
+              <FormLabel asterisk>Phone</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>
@@ -206,7 +172,7 @@ const PersonalDetailsForm = ({
           name="birthDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Date of Birth</FormLabel>
+              <FormLabel asterisk>Date of Birth</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -221,7 +187,7 @@ const PersonalDetailsForm = ({
           name="ssn9"
           render={({ field }) => (
             <FormItem>
-              <FormLabel withAsterisk>Social Security Number</FormLabel>
+              <FormLabel asterisk>Social Security Number</FormLabel>
               <FormControl>
                 <Input {...field} required />
               </FormControl>

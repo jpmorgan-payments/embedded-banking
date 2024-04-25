@@ -86,7 +86,7 @@ FormItem.displayName = 'FormItem';
 
 interface FormLablePropsRef
   extends React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> {
-  withAsterisk?: boolean;
+  asterisk?: boolean;
 }
 
 const FormLabel = React.forwardRef<
@@ -99,7 +99,7 @@ const FormLabel = React.forwardRef<
       ref={ref}
       className={cn(
         error && '!eb-text-destructive',
-        props?.withAsterisk && `after:eb-content-["_*"] after:eb-text-red-500`,
+        props?.asterisk && `after:eb-content-["_*"] after:eb-text-red-500`,
         className
       )}
       htmlFor={formItemId}
