@@ -25,7 +25,7 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
       .nullable()
       .transform((value, originalValue) =>
         originalValue.trim() === '' ? null : value
-      )
+      ) 
       .matches(
         ...createRegExpAndMessage(
           getContentToken?.('validCharacters', undefined, 'common'),

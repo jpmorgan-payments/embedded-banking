@@ -2,12 +2,14 @@ import * as yup from 'yup';
 
 import { LegalStructure } from '../models';
 
-const validationSchema = (getContentToken?: (val: string) => string) => {
-  const isBusiness = (value?: LegalStructure) =>
-    value === 'Corporation' ||
-    value === 'Limited Partnership' ||
-    value === 'Limited Liability Company';
-
+const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
+  const isBusiness = (value?: LegalStructure) => {
+    return (
+      value === 'Corporation' ||
+      value === 'Limited Partnership' ||
+      value === 'Limited Liability Company'
+    );
+  };
   return yup.object({
     legalStructure: yup
       .mixed<LegalStructure>()
@@ -22,34 +24,41 @@ const validationSchema = (getContentToken?: (val: string) => string) => {
       )
       .default('')
       .required(),
-    // businessInSanctionedCountries: yup
-    //   .string()
-    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-    //   .default(undefined)
-    //   .required(),
-    // significantOwnership: yup.string().when('legalStructure', {
-    //   is: isBusiness,
-    //   then: (schema) =>
-    //     schema
-    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-    //       .default(undefined)
-    //       .required(),
-    // }),
-    // entitiesInOwnership: yup.string().when('legalStructure', {
-    //   is: isBusiness,
-    //   then: (schema) =>
-    //     schema
-    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-    //       .default(undefined)
-    //       .required(),
-    // }),
-    // relatedToATM: yup
-    //   .string()
-    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-    //   .default(undefined)
-    //   .required(),
-    // mockEnabled: yup.boolean().default(false),
+    businessInSanctionedCountries: yup
+      .string()
+      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+      .default('')
+      .required(),
+    relatedToATM: yup
+      .string()
+      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+      .default('')
+      .required(),
+    entitiesInOwnership: yup.string().when('legalStructure', {
+      is: isBusiness,
+      then: (schema) =>
+        schema
+          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+          .default('')
+          .required(),
+    }),
+
+    significantOwnership: yup.string().when('legalStructure', {
+      is: isBusiness,
+      then: (schema) =>
+        schema
+          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+          .default('')
+          .required(),
+    }),
+    mockEnabled: yup.boolean().default(false),
   });
 };
+const entityTypeFormValidationSchema = createEntityTypeFormValidationSchema();
 
-export { validationSchema };
+type tEntityTypeFormValidationSchemaValues = yup.InferType<
+  typeof entityTypeFormValidationSchema
+>;
+
+export { createEntityTypeFormValidationSchema, entityTypeFormValidationSchema };
+export type { tEntityTypeFormValidationSchemaValues };

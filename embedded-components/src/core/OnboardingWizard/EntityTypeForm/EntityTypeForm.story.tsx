@@ -7,7 +7,7 @@ export default {
 export const Usage = () => (
   <EntityTypeForm
     onSubmit={(val: any) => {
-      console.log('@@val', val);
+      console.log('@@submit', val);
     }}
   />
 );
