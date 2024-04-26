@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
 import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
+import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
 
 export const OnboardingWizard = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -18,6 +19,12 @@ export const OnboardingWizard = () => {
       
     />,
     <DecisionMakerForm
+      key={1}
+      setActiveStep={setActiveStep}
+      activeStep={activeStep}
+      
+    />,
+    <AdditionalDecisionMakersForm
       key={1}
       setActiveStep={setActiveStep}
       activeStep={activeStep}
