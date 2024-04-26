@@ -2273,6 +2273,7 @@ __metadata:
     react-hook-form: "npm:^7.50.1"
     storybook: "npm:^8.0.8"
     storybook-dark-mode: "npm:^4.0.1"
+    tabler-icons-react: "npm:^1.56.0"
     tailwind-merge: "npm:^2.1.0"
     tailwindcss: "npm:^3.4.1"
     tailwindcss-animate: "npm:^1.0.7"
@@ -12144,6 +12145,15 @@ __metadata:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 10c0/dfbe201ae09ac6053d163578778c53aa860a784147ecf95705de0cd23f42c851e1be7889241495e95c37cabb058edb1052f141387bef68f705afc8f9dd358509
+  languageName: node
+  linkType: hard
+
+"tabler-icons-react@npm:^1.56.0":
+  version: 1.56.0
+  resolution: "tabler-icons-react@npm:1.56.0"
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: 10c0/65706011940ead0c6e39771fddce31aae11966e31a1da5bbddeaaa2b4d00b589fbdb8722bbd90af2a537ea2a69ff78b254c6f59bca04b02dca3deac38e1d2615
   languageName: node
   linkType: hard
 

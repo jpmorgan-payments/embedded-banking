@@ -88,7 +88,7 @@ const DecisionMakerCard = ({ individual, key }: DecisionMakersCardProps) => {
               ) : (
                 <Dialog >
                   <DialogTrigger >
-                    <Button variant="default">View/Edit Details</Button>
+                    <Button className="eb-bg-black">View/Edit Details</Button>
                   </DialogTrigger>
                   <AdditionalDecisionMakerModalForm form={form} />
                 </Dialog>

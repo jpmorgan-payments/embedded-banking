@@ -86,9 +86,12 @@ const parentForm = {
 type AdditionalDecisionMakersFormType = {
   setActiveStep: any;
   activeStep: any;
-}
+};
 
-const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalDecisionMakersFormType) => {
+const AdditionalDecisionMakersForm = ({
+  setActiveStep,
+  activeStep,
+}: AdditionalDecisionMakersFormType) => {
   const [additionalDecisionMakers, setAdditionalDecisionmakers] =
     useState(false);
   const owners = parentForm?.parties.filter(
@@ -117,8 +120,7 @@ const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalD
     const errors = form?.formState?.errors;
     if (Object.values(errors).length === 0 && form.formState.isSubmitted)
       setActiveStep(activeStep + 1);
-  }
-
+  };
 
   return (
     <div className="eb-grid eb-grid-row-3">
@@ -172,14 +174,12 @@ const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalD
             </>
           )}
           <NavigationButtons
-        setActiveStep={setActiveStep}
-        activeStep={activeStep}
-       onSubmit={onSubmit}
-      
-       />
+            setActiveStep={setActiveStep}
+            activeStep={activeStep}
+            onSubmit={onSubmit}
+          />
         </form>
       </Form>
-      
     </div>
   );
 };
