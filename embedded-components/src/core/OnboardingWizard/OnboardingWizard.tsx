@@ -8,7 +8,7 @@ import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
 export const OnboardingWizard = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const decision
+
 
   const steps = [
     <EntityTypeForm
@@ -32,7 +32,7 @@ export const OnboardingWizard = () => {
       </CardHeader>
       <CardContent>
         <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
-          {steps[activeStep]}
+          {steps? steps[activeStep] : <></>}
         </div>
       </CardContent>
     </Card>
