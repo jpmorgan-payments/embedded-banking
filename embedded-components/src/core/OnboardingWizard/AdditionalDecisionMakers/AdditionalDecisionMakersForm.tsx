@@ -1,6 +1,9 @@
 import { Key, useState } from 'react';
+import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -12,77 +15,55 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 
 import NavigationButtons from '../Stepper/NavigationButtons';
+import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
-import { Button } from '@/components/ui/button';
+import { createDecisionMakerFormSchema } from '../DecisionMakersForm/DecisionMakerForm.schema';
+import { useContentData } from '../useContentData';
 
-const parentForm = {
-  parties: [
-    {
-      partyType: 'INDIVIDUAL',
-      externalId: 'TCU12344',
-      email: 'monicagellar@gmail.com',
-      roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
-      individualDetails: {
-        firstName: 'Monica',
-        lastName: 'Gellar',
-        countryOfResidence: 'US',
-        natureOfOwnership: 'Direct',
-        jobTitle: 'Other',
-        jobTitleDescription: 'CEO',
-        soleOwner: true,
-        addresses: [
-          {
-            addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
-            city: 'New York',
-            state: 'NY',
-            postalCode: '10014',
-            country: 'US',
-          },
-        ],
-        individualIds: [
-          {
-            idType: 'SSN',
-            issuer: 'US',
-            value: '100-01-0001',
-          },
-        ],
-      },
-    },
-    {
-      partyType: 'INDIVIDUAL',
-      externalId: 'TCU12344',
-      email: 'monicagellar@gmail.com',
-      roles: ['AUTHORIZED_USER'],
-      individualDetails: {
-        firstName: 'Tess',
-        lastName: 'Gellar',
-        countryOfResidence: 'US',
-        natureOfOwnership: 'Direct',
-        jobTitle: 'Other',
-        jobTitleDescription: 'Other',
-        soleOwner: true,
-        addresses: [
-          {
-            addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
-            city: 'New York',
-            state: 'NY',
-            postalCode: '10014',
-            country: 'US',
-          },
-        ],
-        individualIds: [
-          {
-            idType: 'SSN',
-            issuer: 'US',
-            value: '100-01-0001',
-          },
-        ],
-      },
-    },
-  ],
-};
+const owners = [
+  {
+    email: 'monicagellar@gmail.com',
+    roles: ['CONTROLLER'],
+    firstName: 'Monica',
+    lastName: 'Gellar',
+    countryOfResidence: 'US',
+    natureOfOwnership: 'Direct',
+    jobTitle: 'Other',
+    jobTitleDescription: 'Other person',
+    soleOwner: true,
+    addressType: 'RESIDENTIAL_ADDRESS',
+    addressLine1: '90 Bedford Street',
+    addressLine2: 'Apt 2E',
+    city: 'New York',
+    state: 'NY',
+    zip: '10014',
+    country: 'US',
+    idType: 'SSN',
+    issuer: 'US',
+    ssn9: '100-01-0001',
+  },
+  {
+    email: 'monicagellar@gmail.com',
+    roles: ['OTHER'],
+    firstName: 'Lizzy',
+    lastName: 'Gellar',
+    countryOfResidence: 'US',
+    natureOfOwnership: 'Direct',
+    jobTitle: 'Other',
+    jobTitleDescription: 'Other person',
+    soleOwner: true,
+    addressType: 'RESIDENTIAL_ADDRESS',
+    addressLine1: '90 Bedford Street',
+    addressLine2: 'Apt 2E',
+    city: 'New York',
+    state: 'NY',
+    zip: '10014',
+    country: 'US',
+    idType: 'SSN',
+    issuer: 'US',
+    ssn9: '100-01-0001',
+  },
+];
 
 type AdditionalDecisionMakersFormType = {
   setActiveStep: any;
@@ -95,11 +76,15 @@ const AdditionalDecisionMakersForm = ({
 }: AdditionalDecisionMakersFormType) => {
   const [additionalDecisionMakers, setAdditionalDecisionmakers] =
     useState(false);
-  const owners = parentForm?.parties.filter(
-    (party) => party?.partyType === 'INDIVIDUAL'
+  // const owners = owners; //get form form
+  const { getContentToken: getFormSchema } = useContentData(
+    'schema.businessOwnerFormSchema'
   );
+  const form = useForm<any>({
+    resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
+  });
 
-  const form = useForm<any>({});
+  /**
   const handleAddBusinessOwner = (owner: any) => {
     form.insertListItem('owners', owner);
   };
@@ -111,6 +96,7 @@ const AdditionalDecisionMakersForm = ({
   const handleDeleteBusinessOwner = (index: number) => {
     form.removeListItem('owners', index);
   };
+   */
 
   const handleToggleButton = (val) => {
     if (val === 'No') setAdditionalDecisionmakers(false);
@@ -164,16 +150,27 @@ const AdditionalDecisionMakersForm = ({
           {additionalDecisionMakers && (
             <>
               <Title as="h4">Listed business decision makers</Title>
+
               <div className="eb-grid eb-grid-cols-3">
                 {owners?.map((individual: any, index: Key) => (
-                  <div key={index} className="eb-grid-cols-subgrid eb-grid-cols-2">
+                  <div
+                    key={index}
+                    className="eb-grid-cols-subgrid eb-grid-cols-2"
+                  >
                     <DecisionMakerCard
                       individual={individual}
                       key={index}
                     ></DecisionMakerCard>
                   </div>
                 ))}
-                <Button className="eb-bg-black">Click to add a decision maker</Button>
+                <Dialog>
+                  <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
+                  <DialogTrigger >
+                    Click to add a decision maker
+                  </DialogTrigger >
+                  </div>
+                  <AdditionalDecisionMakerModalForm form={form} />
+                </Dialog>
               </div>
             </>
           )}

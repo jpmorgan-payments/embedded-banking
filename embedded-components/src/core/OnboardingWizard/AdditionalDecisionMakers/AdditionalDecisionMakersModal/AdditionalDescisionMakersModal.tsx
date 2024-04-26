@@ -12,14 +12,13 @@ import { AddressForm } from '../../DecisionMakersForm/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '../../DecisionMakersForm/PersonalDetailsForm/PersonalDetailsForm';
 
 type AdditionalDecisionMakerModalFormProps = {
-  form: any;
+  //individual: any;
+  form
 };
 
-const AdditionalDecisionMakerModalForm = ({
-  form,
-}: AdditionalDecisionMakerModalFormProps) => {
+const AdditionalDecisionMakerModalForm = ({form}: AdditionalDecisionMakerModalFormProps) => {
   return (
-    <DialogPortal>
+    <DialogPortal >
       <DialogOverlay />
       <DialogContent>
         <DialogTitle>Enter decision maker details</DialogTitle>
