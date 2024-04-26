@@ -174,7 +174,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
             <FormItem>
               <FormLabel asterisk>Date of Birth</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} required />
               </FormControl>
               <FormMessage />
             </FormItem>

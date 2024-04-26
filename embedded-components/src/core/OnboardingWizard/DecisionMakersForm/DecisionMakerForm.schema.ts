@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { createRegExpAndMessage } from '../../../lib/utils';
+import { createRegExpAndMessage } from '@/lib/utils';
 
 const createDecisionMakerFormSchema = (getContentToken?: any) => {
   return yup.object({
@@ -109,10 +109,11 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
       .date()
       .nullable()
       .default(null)
+      //.required(getContentToken?.(`controllerBirthDateReq`))
       .test(
-        'birthday',
+        'birthDate',
         getContentToken?.(`birthDateTest`) ?? '',
-        function (value) {
+        (value) => {
           if (value !== null) {
             const ageDiffMs = Date.now() - value.valueOf();
             const ageDate = new Date(ageDiffMs);
@@ -122,7 +123,7 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
           return true;
         }
       ),
-
+     
     addressLine1: yup
       .string()
       .default('')
