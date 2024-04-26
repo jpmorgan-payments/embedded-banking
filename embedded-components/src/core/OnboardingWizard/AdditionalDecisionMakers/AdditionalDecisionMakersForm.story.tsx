@@ -6,4 +6,4 @@ export default {
 };
 
 
-export const Usage = () => <AdditionalDecisionMakersForm />;
+export const Usage = () => <AdditionalDecisionMakersForm activeStep={2} setActiveStep={()=> {}}  />;

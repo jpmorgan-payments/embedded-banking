@@ -6,6 +6,7 @@ export default {
 
 export const Usage = () => (
   <EntityTypeForm
+  activeStep={0} setActiveStep={()=> {}} 
     onSubmit={(val: any) => {
       console.log('@@submit', val);
     }}

@@ -13,6 +13,7 @@ import { Title } from '@/components/ui/title';
 
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
+import { Button } from '@/components/ui/button';
 
 const parentForm = {
   parties: [
@@ -165,11 +166,14 @@ const AdditionalDecisionMakersForm = ({
               <Title as="h4">Listed business decision makers</Title>
               <div className="eb-grid eb-grid-cols-3">
                 {owners?.map((individual: any, index: Key) => (
-                  <DecisionMakerCard
-                    individual={individual}
-                    key={index}
-                  ></DecisionMakerCard>
+                  <div key={index} className="eb-grid-cols-subgrid eb-grid-cols-2">
+                    <DecisionMakerCard
+                      individual={individual}
+                      key={index}
+                    ></DecisionMakerCard>
+                  </div>
                 ))}
+                <Button className="eb-bg-black">Click to add a decision maker</Button>
               </div>
             </>
           )}

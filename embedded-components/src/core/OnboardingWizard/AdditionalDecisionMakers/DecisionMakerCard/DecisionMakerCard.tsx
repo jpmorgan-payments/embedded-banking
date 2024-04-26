@@ -44,7 +44,7 @@ const DecisionMakerCard = ({ individual, key }: DecisionMakersCardProps) => {
   );
 
   const form = useForm<any>({
-   // defaultValues: individual,
+    defaultValues: individual,
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
@@ -86,8 +86,8 @@ const DecisionMakerCard = ({ individual, key }: DecisionMakersCardProps) => {
               {controller ? (
                 <Text>View/edit details in controller step</Text>
               ) : (
-                <Dialog >
-                  <DialogTrigger >
+                <Dialog key={`dialogTrigger${key}`} >
+                  <DialogTrigger  key={`dialogTriggerButton${key}`} >
                     <Button className="eb-bg-black">View/Edit Details</Button>
                   </DialogTrigger>
                   <AdditionalDecisionMakerModalForm form={form} />

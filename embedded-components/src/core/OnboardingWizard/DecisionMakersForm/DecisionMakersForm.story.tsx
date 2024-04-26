@@ -4,4 +4,4 @@ export default {
   title: 'Decision Makers Form',
 };
 
-export const Usage = () => <DecisionMakerForm />;
+export const Usage = () => <DecisionMakerForm activeStep={1} setActiveStep={()=> {}} />;
