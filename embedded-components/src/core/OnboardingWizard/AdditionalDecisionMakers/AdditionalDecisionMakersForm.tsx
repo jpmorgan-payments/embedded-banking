@@ -8,7 +8,7 @@ import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
 
 
-const AdditionalDecisionMakersForm = () => {
+const AdditionalDecisionMakersForm = ({setActiveStep}) => {
   const form = useForm<any>({});
   const handleAddBusinessOwner = (owner: any) => {
     form.insertListItem('owners', owner);

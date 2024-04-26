@@ -18,7 +18,12 @@ const defaultInitialValues = createDecisionMakerFormSchema().cast(
   {}
 ) as DecisionMakerFormValues;
 
-const DecisionMakerForm = () => {
+type DecisionMakersFormProps = {
+  setActiveStep: any;
+  activeStep: number;
+}
+
+const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps ) => {
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -28,8 +33,12 @@ const DecisionMakerForm = () => {
   });
 
   const onSubmit = () => {
-    console.log('submitted!');
+    setActiveStep(activeStep+1);
   };
+
+  const handleBack = () => {
+    setActiveStep(activeStep-1);
+  }
 
   return (
     <Form {...form}>
@@ -45,10 +54,10 @@ const DecisionMakerForm = () => {
           <Text size="lg">What is your personal address?</Text>
 
           <AddressForm form={form} />
-          <Button className="eb-bg-black" type="button">
+          <Button onClick={handleBack} className="eb-bg-black" type="button">
             Back
           </Button>
-          <Button className="eb-bg-black" type="submit">
+          <Button onClick={onSubmit} className="eb-bg-black" type="submit">
             Next
           </Button>
         </ScrollArea>

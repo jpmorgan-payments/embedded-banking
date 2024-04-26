@@ -29,11 +29,12 @@ import {
 } from './EntityTypeForm.schema';
 
 type EntityTypeFormProps = {
-  onSubmit: (data: any) => void;
   children?: ReactNode;
+  setActiveStep: any;
+  activeStep: number;
 };
 
-export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
+export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeStep }: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
   const defaultInitialValues = createEntityTypeFormValidationSchema().cast(
@@ -47,6 +48,11 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
     ),
     mode: 'onBlur',
   });
+
+  const onSubmit = () => {
+    const errors = formz?.formState?.errors;
+    if (Object.values(errors).length === 0) setActiveStep(activeStep+1);
+  }
 
   return (
     <Stack>
@@ -294,9 +300,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ onSubmit }: any) => {
               variant="secondary"
               type="submit"
               className="eb-mt-8"
-              onClick={() => {
-                console.log('@@click', formz.getValues(), formz.control);
-              }}
+              onClick={onSubmit}
             >
               Submit
             </Button>
