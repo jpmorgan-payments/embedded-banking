@@ -26,7 +26,7 @@
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "generate-api": "rm -rf ./src/api/generated/requests && openapi-rq -i ./api-specs/embedded-banking-solutions-api-v2-external.yml -o ./src/api/generated -c axios --indent 2 --useUnionTypes"
+    "generate-api": "orval --config ./orval.config.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -58,7 +58,6 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@openapi-codegen/typescript": "^8.0.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",
     "@storybook/addon-links": "^8.0.8",
@@ -88,7 +87,7 @@
     "eslint-plugin-tailwindcss": "^3.15.1",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^23.0.1",
-    "openapi-typescript-codegen": "^0.28.0",
+    "orval": "^6.27.1",
     "postcss": "^8.4.35",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "^7.0.1",
