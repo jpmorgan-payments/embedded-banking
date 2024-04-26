@@ -117,6 +117,7 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'steps.BusinessDetailsStep.businessDescription.placeholder': `Provide a brief description of the nature of your business.`,
   'steps.BusinessDetailsStep.businessEmail.label': `Business Email (optional)`,
   'steps.BusinessDetailsStep.businessEmail.placeholder': `Business Email`,
+  'steps.BusinessDetailsStep.businessPhone.label': `Phone Number`,
   'steps.BusinessDetailsStep.businessWebsite.label': `Business Website`,
   'steps.BusinessDetailsStep.businessWebsite.description': `Website URL must start with https://www.`,
   'steps.BusinessDetailsStep.businessWebsite.placeholder': `Business Website`,
