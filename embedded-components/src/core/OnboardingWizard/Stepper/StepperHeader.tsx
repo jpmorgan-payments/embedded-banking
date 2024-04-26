@@ -60,7 +60,7 @@ const StepperHeader = ({ activeStep }: StepperHeaderProps) => {
           <div className="eb-flex eb-justify-center eb-place-content-center eb-items-center eb-mr-5">
             <Text >{val?.title}</Text>
           </div>
-          {key !== icons?.length && (
+          {key !== icons?.length-1 && (
             <div className="eb-grid eb-grid-row-2 eb-w-12">
               <div></div>
               <div className="eb-border-t-4"></div>

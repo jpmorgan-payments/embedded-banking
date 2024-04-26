@@ -40,7 +40,7 @@ const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps 
   return (
     <Form {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-        <ScrollArea className="eb-border-t-2 eb-px-6">
+      <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6">
           <Text size="lg">Tell us about yourself</Text>
 
           <Text size="lg">
