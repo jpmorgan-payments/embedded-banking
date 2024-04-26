@@ -6,225 +6,225 @@
  * OpenAPI spec version: 2.0.3
  */
 export type ListWebhooksParams = {
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
 };
 
 export type GetAllUsersParams = {
-/**
- * Number of records per page.
- */
-limit?: UserPageSizeParameter;
-/**
- * Page Number
- */
-page?: UserPageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: UserPageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: UserPageNoParameter;
 };
 
 export type GetDebitCardsParams = {
-/**
- * Current page number.
- */
-page?: number;
-/**
- * Number of records per page.
- */
-limit?: number;
+  /**
+   * Current page number.
+   */
+  page?: number;
+  /**
+   * Number of records per page.
+   */
+  limit?: number;
 };
 
 export type GetCasesParams = {
-/**
- * Number of records per page.
- */
-limit?: ParametersPageSizeParameter;
-/**
- * Page Number
- */
-page?: ComponentsParametersPageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: ParametersPageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: ComponentsParametersPageNoParameter;
 };
 
 export type SearchStatementsParams = {
-/**
+  /**
  * Account identifiers used to represent client accounts.
 
  */
-accountIds?: string[];
-/**
- * Earliest date in search range. Must be set at least one day earlier than dateTo.
- */
-dateFrom: string;
-/**
- * Latest date in search range. Must be set at least one day later than dateFrom.
- */
-dateTo: string;
+  accountIds?: string[];
+  /**
+   * Earliest date in search range. Must be set at least one day earlier than dateTo.
+   */
+  dateFrom: string;
+  /**
+   * Latest date in search range. Must be set at least one day later than dateFrom.
+   */
+  dateTo: string;
 };
 
 export type ListTransactionsV2Params = {
-/**
- * Filters by type of transaction.
- */
-type?: RequestTransactionTypeV2;
-/**
- * Filters by transaction status.
- */
-status?: RequestTransactionStatus;
-/**
- * Filters by the Embedded Finance account id connected to the transaction.
- */
-accountId?: string;
-/**
- * Filters by an exact amount.
- */
-amountEquals?: string;
-/**
- * Filters by amounts greater than a specified value.
- */
-amountGreaterThan?: string;
-/**
- * Filters by amounts less than a specified value.
- */
-amountLessThan?: string;
-/**
- * Filters transactions by an exact date.
- */
-dateEquals?: string;
-/**
- * Filters for transactions made after this payment date.
- */
-dateGreaterThan?: string;
-/**
- * Filters for transactions made before this payment date.
- */
-dateLessThan?: string;
-/**
- * Filters for transactions created after this date and time.
- */
-dateTimeGreaterThan?: string;
-/**
- * Filters for transactions created before this date and time.
- */
-dateTimeLessThan?: string;
-/**
- * Filters for transactions from/to this recipientId.
- */
-recipientId?: string;
-/**
- * Filters for a transaction that matches a specific transaction reference ID provided by the client.
- */
-transactionReferenceId?: string;
-/**
- * Filters for transactions from/to this clientId.
- */
-clientId?: string;
+  /**
+   * Filters by type of transaction.
+   */
+  type?: RequestTransactionTypeV2;
+  /**
+   * Filters by transaction status.
+   */
+  status?: RequestTransactionStatus;
+  /**
+   * Filters by the Embedded Finance account id connected to the transaction.
+   */
+  accountId?: string;
+  /**
+   * Filters by an exact amount.
+   */
+  amountEquals?: string;
+  /**
+   * Filters by amounts greater than a specified value.
+   */
+  amountGreaterThan?: string;
+  /**
+   * Filters by amounts less than a specified value.
+   */
+  amountLessThan?: string;
+  /**
+   * Filters transactions by an exact date.
+   */
+  dateEquals?: string;
+  /**
+   * Filters for transactions made after this payment date.
+   */
+  dateGreaterThan?: string;
+  /**
+   * Filters for transactions made before this payment date.
+   */
+  dateLessThan?: string;
+  /**
+   * Filters for transactions created after this date and time.
+   */
+  dateTimeGreaterThan?: string;
+  /**
+   * Filters for transactions created before this date and time.
+   */
+  dateTimeLessThan?: string;
+  /**
+   * Filters for transactions from/to this recipientId.
+   */
+  recipientId?: string;
+  /**
+   * Filters for a transaction that matches a specific transaction reference ID provided by the client.
+   */
+  transactionReferenceId?: string;
+  /**
+   * Filters for transactions from/to this clientId.
+   */
+  clientId?: string;
 };
 
 export type GetAllRecipientsParams = {
-/**
- * Unique Client identifier
- */
-clientId?: ClientIdInQueryParameter;
-/**
- * Recipient type to return
- */
-type?: RecipientType;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Unique Client identifier
+   */
+  clientId?: ClientIdInQueryParameter;
+  /**
+   * Recipient type to return
+   */
+  type?: RecipientType;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetAccountsParams = {
-/**
- * Unique client identifier
- */
-clientId?: ClientIdParamParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: ParametersPageNoParameter;
+  /**
+   * Unique client identifier
+   */
+  clientId?: ClientIdParamParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: ParametersPageNoParameter;
 };
 
 export type SmbdoListDocumentRequestsParams = {
-/**
- * Unique Client identifier.
- */
-clientId?: ClientIdQueryParameter;
-/**
- * Unique Party identifier.
- */
-partyId?: PartyIdQueryParameter;
+  /**
+   * Unique Client identifier.
+   */
+  clientId?: ClientIdQueryParameter;
+  /**
+   * Unique Party identifier.
+   */
+  partyId?: PartyIdQueryParameter;
 };
 
 export type SmbdoDownloadDocument200Six = { [key: string]: any };
 
 export type SmbdoGetAllDocumentDetailsParams = {
-/**
- * Unique Client identifier
- */
-clientId?: ClientIdInQueryParameter;
-/**
- * Unique Party identifier.
- */
-partyId?: PartyIdQueryParameter;
-/**
- * Unique identifier for the platform.
- */
-platformId?: PlatformIdInQueryParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
+  /**
+   * Unique Client identifier
+   */
+  clientId?: ClientIdInQueryParameter;
+  /**
+   * Unique Party identifier.
+   */
+  partyId?: PartyIdQueryParameter;
+  /**
+   * Unique identifier for the platform.
+   */
+  platformId?: PlatformIdInQueryParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
 };
 
 export type SmbdoListQuestionsParams = {
-/**
- * Comma-separated list of Question IDs.
- */
-questionIds?: QuestionIdListInQueryParameter;
+  /**
+   * Comma-separated list of Question IDs.
+   */
+  questionIds?: QuestionIdListInQueryParameter;
 };
 
 export type SmbdoListPartiesParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * ID of the parent party.
- */
-parentPartyId?: ParentPartyIdParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * ID of the parent party.
+   */
+  parentPartyId?: ParentPartyIdParameter;
 };
 
 export type SmbdoListClientsParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 /**
@@ -432,20 +432,21 @@ export type N401Response = ApiError;
  */
 export type N400Response = ApiError;
 
-export type RemittanceCallbackEventResourceType = typeof RemittanceCallbackEventResourceType[keyof typeof RemittanceCallbackEventResourceType];
-
+export type RemittanceCallbackEventResourceType =
+  (typeof RemittanceCallbackEventResourceType)[keyof typeof RemittanceCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RemittanceCallbackEventResourceType = {
   REMITTANCE: 'REMITTANCE',
 } as const;
 
-export type RemittanceCallbackEvent = WebhookCallbackEvent & RemittanceCallbackEventAllOf & {
-  resourceType: RemittanceCallbackEventResourceType;
-};
+export type RemittanceCallbackEvent = WebhookCallbackEvent &
+  RemittanceCallbackEventAllOf & {
+    resourceType: RemittanceCallbackEventResourceType;
+  };
 
-export type RemittanceCallbackEventAllOfResourceStatusType = typeof RemittanceCallbackEventAllOfResourceStatusType[keyof typeof RemittanceCallbackEventAllOfResourceStatusType];
-
+export type RemittanceCallbackEventAllOfResourceStatusType =
+  (typeof RemittanceCallbackEventAllOfResourceStatusType)[keyof typeof RemittanceCallbackEventAllOfResourceStatusType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RemittanceCallbackEventAllOfResourceStatusType = {
@@ -476,8 +477,8 @@ REJECTED: Cannot Be Processed
 ROLLOVER: Rollover To Future Date
 RETURNED: Returned
  */
-export type StatusDetailsStatus = typeof StatusDetailsStatus[keyof typeof StatusDetailsStatus];
-
+export type StatusDetailsStatus =
+  (typeof StatusDetailsStatus)[keyof typeof StatusDetailsStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const StatusDetailsStatus = {
@@ -520,8 +521,8 @@ RETURNED: Returned */
   status: StatusDetailsStatus;
 }
 
-export type PartyCallbackEventResourceType = typeof PartyCallbackEventResourceType[keyof typeof PartyCallbackEventResourceType];
-
+export type PartyCallbackEventResourceType =
+  (typeof PartyCallbackEventResourceType)[keyof typeof PartyCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyCallbackEventResourceType = {
@@ -531,8 +532,8 @@ export const PartyCallbackEventResourceType = {
 /**
  * The client's status.
  */
-export type PartyCallbackEventAllOfResourceProfileStatus = typeof PartyCallbackEventAllOfResourceProfileStatus[keyof typeof PartyCallbackEventAllOfResourceProfileStatus];
-
+export type PartyCallbackEventAllOfResourceProfileStatus =
+  (typeof PartyCallbackEventAllOfResourceProfileStatus)[keyof typeof PartyCallbackEventAllOfResourceProfileStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyCallbackEventAllOfResourceProfileStatus = {
@@ -558,27 +559,29 @@ export type PartyCallbackEventAllOf = {
   resource?: PartyCallbackEventAllOfResource;
 };
 
-export type PartyCallbackEvent = WebhookCallbackEvent & PartyCallbackEventAllOf & {
-  resourceType: PartyCallbackEventResourceType;
-};
+export type PartyCallbackEvent = WebhookCallbackEvent &
+  PartyCallbackEventAllOf & {
+    resourceType: PartyCallbackEventResourceType;
+  };
 
-export type ClientCallbackEventResourceType = typeof ClientCallbackEventResourceType[keyof typeof ClientCallbackEventResourceType];
-
+export type ClientCallbackEventResourceType =
+  (typeof ClientCallbackEventResourceType)[keyof typeof ClientCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ClientCallbackEventResourceType = {
   CLIENTS: 'CLIENTS',
 } as const;
 
-export type ClientCallbackEvent = WebhookCallbackEvent & ClientCallbackEventAllOf & {
-  resourceType: ClientCallbackEventResourceType;
-};
+export type ClientCallbackEvent = WebhookCallbackEvent &
+  ClientCallbackEventAllOf & {
+    resourceType: ClientCallbackEventResourceType;
+  };
 
 /**
  * The client's status.
  */
-export type ClientCallbackEventAllOfResourceStatus = typeof ClientCallbackEventAllOfResourceStatus[keyof typeof ClientCallbackEventAllOfResourceStatus];
-
+export type ClientCallbackEventAllOfResourceStatus =
+  (typeof ClientCallbackEventAllOfResourceStatus)[keyof typeof ClientCallbackEventAllOfResourceStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ClientCallbackEventAllOfResourceStatus = {
@@ -604,8 +607,8 @@ export type ClientCallbackEventAllOf = {
   resource?: ClientCallbackEventAllOfResource;
 };
 
-export type WebhookCallbackEventResourceType = typeof WebhookCallbackEventResourceType[keyof typeof WebhookCallbackEventResourceType];
-
+export type WebhookCallbackEventResourceType =
+  (typeof WebhookCallbackEventResourceType)[keyof typeof WebhookCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookCallbackEventResourceType = {
@@ -617,8 +620,8 @@ export const WebhookCallbackEventResourceType = {
 
 export type WebhookCallbackEventResource = { [key: string]: any };
 
-export type WebhookCallbackEventEventType = typeof WebhookCallbackEventEventType[keyof typeof WebhookCallbackEventEventType];
-
+export type WebhookCallbackEventEventType =
+  (typeof WebhookCallbackEventEventType)[keyof typeof WebhookCallbackEventEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookCallbackEventEventType = {
@@ -638,17 +641,18 @@ export interface WebhookCallbackEvent {
   resourceType: WebhookCallbackEventResourceType;
 }
 
-export type TransactionCallbackEventResourceType = typeof TransactionCallbackEventResourceType[keyof typeof TransactionCallbackEventResourceType];
-
+export type TransactionCallbackEventResourceType =
+  (typeof TransactionCallbackEventResourceType)[keyof typeof TransactionCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TransactionCallbackEventResourceType = {
   TRANSACTIONS: 'TRANSACTIONS',
 } as const;
 
-export type TransactionCallbackEvent = WebhookCallbackEvent & TransactionCallbackEventAllOf & {
-  resourceType: TransactionCallbackEventResourceType;
-};
+export type TransactionCallbackEvent = WebhookCallbackEvent &
+  TransactionCallbackEventAllOf & {
+    resourceType: TransactionCallbackEventResourceType;
+  };
 
 export type TransactionCallbackEventAllOfResource = {
   /**
@@ -681,8 +685,8 @@ export type TransactionCallbackEventAllOf = {
 /**
  * Allowed status - ACTIVE or INACTIVE
  */
-export type WebhookUpdateRequestStatus = typeof WebhookUpdateRequestStatus[keyof typeof WebhookUpdateRequestStatus];
-
+export type WebhookUpdateRequestStatus =
+  (typeof WebhookUpdateRequestStatus)[keyof typeof WebhookUpdateRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookUpdateRequestStatus = {
@@ -703,8 +707,8 @@ export interface WebhookUpdateRequest {
 /**
  * The status of this webhook.
  */
-export type WebhookResponseStatus = typeof WebhookResponseStatus[keyof typeof WebhookResponseStatus];
-
+export type WebhookResponseStatus =
+  (typeof WebhookResponseStatus)[keyof typeof WebhookResponseStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookResponseStatus = {
@@ -741,8 +745,8 @@ export interface ListWebhookResponse {
 /**
  * The event types to be notified of.
  */
-export type SubscriptionEventType = typeof SubscriptionEventType[keyof typeof SubscriptionEventType];
-
+export type SubscriptionEventType =
+  (typeof SubscriptionEventType)[keyof typeof SubscriptionEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SubscriptionEventType = {
@@ -778,8 +782,7 @@ export interface WebhookRequest {
   subscriptions: Subscription[];
 }
 
-export type Action = typeof Action[keyof typeof Action];
-
+export type Action = (typeof Action)[keyof typeof Action];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Action = {
@@ -814,15 +817,14 @@ export type CreateUserRequest = User & {
    */
   clientId?: string;
   /** The client party id to link the user to. This is applicable when the party already exists for a C2.
- */
+   */
   relatedPartyId?: string;
 };
 
 /**
  * Status of the user.
  */
-export type Status = typeof Status[keyof typeof Status];
-
+export type Status = (typeof Status)[keyof typeof Status];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Status = {
@@ -852,7 +854,7 @@ export type UserResponse = User & {
    */
   id?: string;
   /** The client party id to link the user to. This is applicable when the party already exists for a C2.
- */
+   */
   relatedPartyId?: string;
   status?: Status;
 };
@@ -964,10 +966,10 @@ export interface User {
  */
 export interface CardUpdateResponse {
   /** New Card Identifier to Update
- */
+   */
   id?: string;
   /** Message for PUT operation status
- */
+   */
   message?: string;
 }
 
@@ -976,8 +978,8 @@ export interface CardUpdateResponse {
 Optional field. Only use if you want to update the status of the card.
 
  */
-export type CardUpdateRequestStatus = typeof CardUpdateRequestStatus[keyof typeof CardUpdateRequestStatus];
-
+export type CardUpdateRequestStatus =
+  (typeof CardUpdateRequestStatus)[keyof typeof CardUpdateRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestStatus = {
@@ -991,8 +993,8 @@ export const CardUpdateRequestStatus = {
  * Reason for replacing card. Only required if status is set to REPLACED.
 
  */
-export type CardUpdateRequestReplacementReason = typeof CardUpdateRequestReplacementReason[keyof typeof CardUpdateRequestReplacementReason];
-
+export type CardUpdateRequestReplacementReason =
+  (typeof CardUpdateRequestReplacementReason)[keyof typeof CardUpdateRequestReplacementReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestReplacementReason = {
@@ -1006,8 +1008,8 @@ export const CardUpdateRequestReplacementReason = {
  * Reason for cancelling card. Only required if status is set to CANCELLED.
 
  */
-export type CardUpdateRequestCancellingReason = typeof CardUpdateRequestCancellingReason[keyof typeof CardUpdateRequestCancellingReason];
-
+export type CardUpdateRequestCancellingReason =
+  (typeof CardUpdateRequestCancellingReason)[keyof typeof CardUpdateRequestCancellingReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestCancellingReason = {
@@ -1022,13 +1024,13 @@ export const CardUpdateRequestCancellingReason = {
  */
 export interface CardUpdateRequest {
   /** Reason for cancelling card. Only required if status is set to CANCELLED.
- */
+   */
   cancellingReason?: CardUpdateRequestCancellingReason;
   /** Clears daily cashwithdrawal limits on this card. Set value to TRUE to remove any daily cashwithdrawal limits. If set to TRUE, any maxCashWithdrawalLimit limit is ignored. You can still apply daily spend limits even when clearCashWithdrawalLimit is set to TRUE.
- */
+   */
   clearCashWithdrawalLimit?: boolean;
   /** Clears spending limits on this card. Set value to TRUE to remove any daily spending limits. If set to TRUE, any maxSpendLimit limit is ignored. You can still apply daily cash withdrawal limits  even when clearSpendLimit is set to TRUE.
- */
+   */
   clearSpendLimit?: boolean;
   /**
    * The total amount of cash that can be withdrawn in a single day. Resets at 00:00 each day.
@@ -1047,7 +1049,7 @@ Optional field. Only include if setting a new PIN.
  */
   pin?: string;
   /** Reason for replacing card. Only required if status is set to REPLACED.
- */
+   */
   replacementReason?: CardUpdateRequestReplacementReason;
   /** New status of the card after request. Can be locked/unlocked/replaced/cancelled status.
 Optional field. Only use if you want to update the status of the card.
@@ -1061,10 +1063,10 @@ Optional field. Only use if you want to update the status of the card.
  */
 export interface CardDetailResponse {
   /** Account Identifier/ Payment Routing Number
- */
+   */
   accountId: string;
   /** Web link to the Card Holder Profile
- */
+   */
   link: string;
 }
 
@@ -1074,16 +1076,16 @@ export interface CardDetailResponse {
  */
 export interface CreateDebitCardResponse {
   /** Account Identifier/ Payment Routing Number
- */
+   */
   accountId?: string;
   /** Card Identifier
- */
+   */
   id?: string;
   /** Link to the Customer Profile
- */
+   */
   link?: string;
   /** Customer Card Information Message
- */
+   */
   message?: string;
 }
 
@@ -1118,21 +1120,21 @@ export interface CreateDebitCardRequest {
 
 export interface CardDetailsErrorResponse {
   /** Freeform explanatory text for the error.
- */
+   */
   errorDescription: string;
   /** A code defined by the service for the external partner that includes a more specific information of what caused the error.
- */
+   */
   externalErrorCode?: string;
   /** A code defined by the API provider that describes the specific error for a given API. This code provides more fine grained information than the httpStatusCode. As an example if an API provides an httpStatusCode of 400 they may also include the serviceErrorCode that includes more specific information of what caused a 400 response. (i.e. INVALID_EMAIL, INVALID_PHONE_NUMBER, etc)
- */
+   */
   serviceErrorCode?: string;
 }
 
 /**
  * The current status of the card.
  */
-export type DebitCardStatus = typeof DebitCardStatus[keyof typeof DebitCardStatus];
-
+export type DebitCardStatus =
+  (typeof DebitCardStatus)[keyof typeof DebitCardStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DebitCardStatus = {
@@ -1190,8 +1192,8 @@ export interface DebitCardsResponse {
 /**
  * The status you want the case to have as a result of this request. To close a case, use CLOSED. To reopen a case, use REOPEN.
  */
-export type CaseUpdateRequestStatus = typeof CaseUpdateRequestStatus[keyof typeof CaseUpdateRequestStatus];
-
+export type CaseUpdateRequestStatus =
+  (typeof CaseUpdateRequestStatus)[keyof typeof CaseUpdateRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseUpdateRequestStatus = {
@@ -1214,8 +1216,8 @@ export interface CaseUpdateRequest {
 /**
  * Case category
  */
-export type CaseDetailsType = typeof CaseDetailsType[keyof typeof CaseDetailsType];
-
+export type CaseDetailsType =
+  (typeof CaseDetailsType)[keyof typeof CaseDetailsType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseDetailsType = {
@@ -1232,8 +1234,8 @@ export const CaseDetailsType = {
 /**
  * Current status on case.
  */
-export type CaseDetailsStatus = typeof CaseDetailsStatus[keyof typeof CaseDetailsStatus];
-
+export type CaseDetailsStatus =
+  (typeof CaseDetailsStatus)[keyof typeof CaseDetailsStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseDetailsStatus = {
@@ -1245,8 +1247,8 @@ export const CaseDetailsStatus = {
 /**
  * How the case was originally reported. This can be by form, phone, or email.
  */
-export type CaseDetailsOrigin = typeof CaseDetailsOrigin[keyof typeof CaseDetailsOrigin];
-
+export type CaseDetailsOrigin =
+  (typeof CaseDetailsOrigin)[keyof typeof CaseDetailsOrigin];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseDetailsOrigin = {
@@ -1300,8 +1302,8 @@ export interface CaseCreateResponse {
 /**
  * Case category
  */
-export type CaseCreateRequestType = typeof CaseCreateRequestType[keyof typeof CaseCreateRequestType];
-
+export type CaseCreateRequestType =
+  (typeof CaseCreateRequestType)[keyof typeof CaseCreateRequestType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseCreateRequestType = {
@@ -1337,8 +1339,8 @@ export interface CaseCreateRequest {
 /**
  * Case category
  */
-export type CasesDetailsType = typeof CasesDetailsType[keyof typeof CasesDetailsType];
-
+export type CasesDetailsType =
+  (typeof CasesDetailsType)[keyof typeof CasesDetailsType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CasesDetailsType = {
@@ -1355,8 +1357,8 @@ export const CasesDetailsType = {
 /**
  * Current status on case
  */
-export type CasesDetailsStatus = typeof CasesDetailsStatus[keyof typeof CasesDetailsStatus];
-
+export type CasesDetailsStatus =
+  (typeof CasesDetailsStatus)[keyof typeof CasesDetailsStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CasesDetailsStatus = {
@@ -1427,13 +1429,13 @@ export type TransactionGetResponseV2AllOf = {
   status?: TransactionStatus;
 };
 
-export type TransactionGetResponseV2 = TransactionGetResponseDetailsV2 & TransactionGetResponseV2AllOf;
+export type TransactionGetResponseV2 = TransactionGetResponseDetailsV2 &
+  TransactionGetResponseV2AllOf;
 
 /**
  * The type of the fee transaction. Use this to differentiate between the fee transactions that were charged and those that were reversed. * CHARGE - the fee that was incurred as a result of a transaction. * REVERSAL - the fee was incurred and then voided on a transaction.
  */
-export type FeeType = typeof FeeType[keyof typeof FeeType];
-
+export type FeeType = (typeof FeeType)[keyof typeof FeeType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FeeType = {
@@ -1533,8 +1535,8 @@ export interface TransactionResponseV2 {
 /**
  * Transaction currency
  */
-export type PostTransactionRequestV2Currency = typeof PostTransactionRequestV2Currency[keyof typeof PostTransactionRequestV2Currency];
-
+export type PostTransactionRequestV2Currency =
+  (typeof PostTransactionRequestV2Currency)[keyof typeof PostTransactionRequestV2Currency];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostTransactionRequestV2Currency = {
@@ -1563,8 +1565,7 @@ export interface TransactionRecipientDetailsV2 {
 /**
  * Payment method - ACH, RTP, WIRE, ACH, TRANSFER. Only ACH (for payouts) and TRANSFER (for payments between embedded accounts) are used in Embedded Payments transactions.
  */
-export type PaymentType = typeof PaymentType[keyof typeof PaymentType];
-
+export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentType = {
@@ -1621,8 +1622,8 @@ export interface PostTransactionRequestV2 {
 /**
  * The transaction type of the originating transaction that incurred a fee. This is only available for fee transactions. * ACH_PAYOUT - the original transaction was a payout made by ACH payment route. * RTP_PAYOUT - the original transaction was a payout made by ACH payment route. * WIRE_PAYOUT - the original transaction was a payout made by WIRE payment route. * DEBIT_CARD_REQUEST - the original transaction was a debit card request. * FEE - the original transaction was a fee that was reversed.
  */
-export type OriginatingTransactionType = typeof OriginatingTransactionType[keyof typeof OriginatingTransactionType];
-
+export type OriginatingTransactionType =
+  (typeof OriginatingTransactionType)[keyof typeof OriginatingTransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OriginatingTransactionType = {
@@ -1636,8 +1637,8 @@ export const OriginatingTransactionType = {
 /**
  * The transaction type of the transaction. Some transaction types are not available to be initiated via API and are therefore not included in the transaction request type field.
  */
-export type PaymentTypeResponse = typeof PaymentTypeResponse[keyof typeof PaymentTypeResponse];
-
+export type PaymentTypeResponse =
+  (typeof PaymentTypeResponse)[keyof typeof PaymentTypeResponse];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentTypeResponse = {
@@ -1664,8 +1665,8 @@ export const PaymentTypeResponse = {
  * `UNDEFINED` - The status of this transaction cannot be found.
 
  */
-export type TransactionStatus = typeof TransactionStatus[keyof typeof TransactionStatus];
-
+export type TransactionStatus =
+  (typeof TransactionStatus)[keyof typeof TransactionStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TransactionStatus = {
@@ -1735,8 +1736,8 @@ export interface ListTransactionsSearchResponseV2 {
 /**
  * The statuses of the transaction that the client is allowed to search by.
  */
-export type RequestTransactionStatus = typeof RequestTransactionStatus[keyof typeof RequestTransactionStatus];
-
+export type RequestTransactionStatus =
+  (typeof RequestTransactionStatus)[keyof typeof RequestTransactionStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RequestTransactionStatus = {
@@ -1753,8 +1754,8 @@ export const RequestTransactionStatus = {
 /**
  * The types of transaction that the client is allowed to search by.
  */
-export type RequestTransactionTypeV2 = typeof RequestTransactionTypeV2[keyof typeof RequestTransactionTypeV2];
-
+export type RequestTransactionTypeV2 =
+  (typeof RequestTransactionTypeV2)[keyof typeof RequestTransactionTypeV2];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RequestTransactionTypeV2 = {
@@ -1769,8 +1770,8 @@ export const RequestTransactionTypeV2 = {
   FEE: 'FEE',
 } as const;
 
-export type MicrodepositVerificationResponseStatus = typeof MicrodepositVerificationResponseStatus[keyof typeof MicrodepositVerificationResponseStatus];
-
+export type MicrodepositVerificationResponseStatus =
+  (typeof MicrodepositVerificationResponseStatus)[keyof typeof MicrodepositVerificationResponseStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MicrodepositVerificationResponseStatus = {
@@ -1892,8 +1893,8 @@ export interface Responses {
 
 /**
  */
-export type RecipientStatus = typeof RecipientStatus[keyof typeof RecipientStatus];
-
+export type RecipientStatus =
+  (typeof RecipientStatus)[keyof typeof RecipientStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientStatus = {
@@ -1907,8 +1908,8 @@ export const RecipientStatus = {
 /**
  * Type of routing code. Only USABA is supported in this version of Embedded Banking.
  */
-export type RoutingCodeType = typeof RoutingCodeType[keyof typeof RoutingCodeType];
-
+export type RoutingCodeType =
+  (typeof RoutingCodeType)[keyof typeof RoutingCodeType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingCodeType = {
@@ -1918,8 +1919,8 @@ export const RoutingCodeType = {
 /**
  * Type of transaction.
  */
-export type RoutingInformationTransactionType = typeof RoutingInformationTransactionType[keyof typeof RoutingInformationTransactionType];
-
+export type RoutingInformationTransactionType =
+  (typeof RoutingInformationTransactionType)[keyof typeof RoutingInformationTransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingInformationTransactionType = {
@@ -1943,8 +1944,7 @@ export interface RoutingInformation {
 /**
  * Type of bank account, either CHECKING or SAVINGS. Only required for ACH payments. Exclude field from payload completely if not needed.
  */
-export type AccountType = typeof AccountType[keyof typeof AccountType];
-
+export type AccountType = (typeof AccountType)[keyof typeof AccountType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountType = {
@@ -1978,8 +1978,8 @@ export interface RecipientAccount {
 /**
  * Type of contact information being provided
  */
-export type RecipientContactContactType = typeof RecipientContactContactType[keyof typeof RecipientContactContactType];
-
+export type RecipientContactContactType =
+  (typeof RecipientContactContactType)[keyof typeof RecipientContactContactType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientContactContactType = {
@@ -2015,8 +2015,7 @@ WEBSITE - URL starting with http:// or https://.
 
 /**
  */
-export type PartyType = typeof PartyType[keyof typeof PartyType];
-
+export type PartyType = (typeof PartyType)[keyof typeof PartyType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyType = {
@@ -2094,8 +2093,7 @@ export interface RecipientPartyDetails {
 
 /**
  */
-export type RecipientType = typeof RecipientType[keyof typeof RecipientType];
-
+export type RecipientType = (typeof RecipientType)[keyof typeof RecipientType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientType = {
@@ -2107,8 +2105,8 @@ export const RecipientType = {
 /**
  * Balance type: ITAV (interim available balance) or ITBD (interim booked balance)
  */
-export type AccountBalanceDtoTypeCode = typeof AccountBalanceDtoTypeCode[keyof typeof AccountBalanceDtoTypeCode];
-
+export type AccountBalanceDtoTypeCode =
+  (typeof AccountBalanceDtoTypeCode)[keyof typeof AccountBalanceDtoTypeCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountBalanceDtoTypeCode = {
@@ -2156,8 +2154,8 @@ export interface AccountResponseWithStatus {
 /**
  * Payment routing status. Identifies whether the account is active, which means it has been used within the last 13 months. An account with the status INACTIVE is changed to ACTIVE as soon as a transaction is made on the account.
  */
-export type PaymentRoutingStatus = typeof PaymentRoutingStatus[keyof typeof PaymentRoutingStatus];
-
+export type PaymentRoutingStatus =
+  (typeof PaymentRoutingStatus)[keyof typeof PaymentRoutingStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentRoutingStatus = {
@@ -2168,8 +2166,8 @@ export const PaymentRoutingStatus = {
 /**
  * Category of account in create requests
  */
-export type AccountCategoryReq = typeof AccountCategoryReq[keyof typeof AccountCategoryReq];
-
+export type AccountCategoryReq =
+  (typeof AccountCategoryReq)[keyof typeof AccountCategoryReq];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCategoryReq = {
@@ -2218,8 +2216,8 @@ export interface ListAccountsResponse {
 /**
  * Category of account
  */
-export type AccountCategory = typeof AccountCategory[keyof typeof AccountCategory];
-
+export type AccountCategory =
+  (typeof AccountCategory)[keyof typeof AccountCategory];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCategory = {
@@ -2234,8 +2232,7 @@ export const AccountCategory = {
 /**
  * Routing codes supported (currently only ABA is supported)
  */
-export type RoutingCode = typeof RoutingCode[keyof typeof RoutingCode];
-
+export type RoutingCode = (typeof RoutingCode)[keyof typeof RoutingCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingCode = {
@@ -2251,8 +2248,7 @@ export interface RoutingInformationDto {
 /**
  * Two letter country code based on ISO 3166 standard (currently only US is supported)
  */
-export type CountryCode = typeof CountryCode[keyof typeof CountryCode];
-
+export type CountryCode = (typeof CountryCode)[keyof typeof CountryCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CountryCode = {
@@ -2285,8 +2281,7 @@ export interface PaymentRoutingInformationDto {
 /**
  * Account State
  */
-export type AccountState = typeof AccountState[keyof typeof AccountState];
-
+export type AccountState = (typeof AccountState)[keyof typeof AccountState];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountState = {
@@ -2311,13 +2306,13 @@ export interface AccountResponse {
 
 export interface PageMetaData {
   /** Number of records per page.
- */
+   */
   limit?: number;
   /** Page Number.
- */
+   */
   page?: number;
   /** Total number of items.
- */
+   */
   total_items?: number;
 }
 
@@ -2337,8 +2332,8 @@ export interface DocumentRequestListResponse {
  */
 export type ValidForDays = number;
 
-export type DocumentRequestStatus = typeof DocumentRequestStatus[keyof typeof DocumentRequestStatus];
-
+export type DocumentRequestStatus =
+  (typeof DocumentRequestStatus)[keyof typeof DocumentRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentRequestStatus = {
@@ -2347,8 +2342,8 @@ export const DocumentRequestStatus = {
   EXPIRED: 'EXPIRED',
 } as const;
 
-export type DocumentRequestRequirementLevel = typeof DocumentRequestRequirementLevel[keyof typeof DocumentRequestRequirementLevel];
-
+export type DocumentRequestRequirementLevel =
+  (typeof DocumentRequestRequirementLevel)[keyof typeof DocumentRequestRequirementLevel];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentRequestRequirementLevel = {
@@ -2362,8 +2357,8 @@ export const DocumentRequestRequirementLevel = {
  */
 export type DocumentRequestId = string;
 
-export type SchemasDocumentTypeSmbdo = typeof SchemasDocumentTypeSmbdo[keyof typeof SchemasDocumentTypeSmbdo];
-
+export type SchemasDocumentTypeSmbdo =
+  (typeof SchemasDocumentTypeSmbdo)[keyof typeof SchemasDocumentTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemasDocumentTypeSmbdo = {
@@ -2440,8 +2435,8 @@ export interface DocumentRequestResponse {
 /**
  * Key value can be PARTY_ID or COUNTRY_CODE
  */
-export type DocumentMetadataKey = typeof DocumentMetadataKey[keyof typeof DocumentMetadataKey];
-
+export type DocumentMetadataKey =
+  (typeof DocumentMetadataKey)[keyof typeof DocumentMetadataKey];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentMetadataKey = {
@@ -2475,8 +2470,7 @@ export interface DocumentMetadata {
 /**
  * Product type identifies which domain the document is being uploaded to.
  */
-export type ProductType = typeof ProductType[keyof typeof ProductType];
-
+export type ProductType = (typeof ProductType)[keyof typeof ProductType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProductType = {
@@ -2487,8 +2481,7 @@ export const ProductType = {
 /**
  * Supported document types.
  */
-export type DocumentType = typeof DocumentType[keyof typeof DocumentType];
-
+export type DocumentType = (typeof DocumentType)[keyof typeof DocumentType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentType = {
@@ -2518,7 +2511,7 @@ export const DocumentType = {
 export interface DocumentDetails {
   documentType?: DocumentType;
   /** The unique id generated by the system for the uploaded document,  which can be used for future retrieval.
- */
+   */
   id?: string;
   /**
    * @minItems 0
@@ -2528,8 +2521,8 @@ export interface DocumentDetails {
   productType?: ProductType;
 }
 
-export type DocumentMetadataKeyEnum = typeof DocumentMetadataKeyEnum[keyof typeof DocumentMetadataKeyEnum];
-
+export type DocumentMetadataKeyEnum =
+  (typeof DocumentMetadataKeyEnum)[keyof typeof DocumentMetadataKeyEnum];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentMetadataKeyEnum = {
@@ -2550,8 +2543,8 @@ export interface DocumentMetadataSmbdo {
 /**
  * Supported document types
  */
-export type DocumentTypeSmbdo = typeof DocumentTypeSmbdo[keyof typeof DocumentTypeSmbdo];
-
+export type DocumentTypeSmbdo =
+  (typeof DocumentTypeSmbdo)[keyof typeof DocumentTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentTypeSmbdo = {
@@ -2641,16 +2634,16 @@ export type SchemasQuestionResponseSubQuestionsItem = {
   questionIds?: SchemasQuestionIdList;
 };
 
-export type ResponseSchemaType = typeof ResponseSchemaType[keyof typeof ResponseSchemaType];
-
+export type ResponseSchemaType =
+  (typeof ResponseSchemaType)[keyof typeof ResponseSchemaType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaType = {
   array: 'array',
 } as const;
 
-export type ResponseSchemaItemType = typeof ResponseSchemaItemType[keyof typeof ResponseSchemaItemType];
-
+export type ResponseSchemaItemType =
+  (typeof ResponseSchemaItemType)[keyof typeof ResponseSchemaItemType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaItemType = {
@@ -2663,8 +2656,8 @@ export const ResponseSchemaItemType = {
 /**
  * Only applicable to string, number, and integer.
  */
-export type ResponseSchemaItemFormat = typeof ResponseSchemaItemFormat[keyof typeof ResponseSchemaItemFormat];
-
+export type ResponseSchemaItemFormat =
+  (typeof ResponseSchemaItemFormat)[keyof typeof ResponseSchemaItemFormat];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaItemFormat = {
@@ -2856,7 +2849,8 @@ export interface UpdatePartyRequestInline {
   roles?: Role[];
 }
 
-export type UpdateClientRequestSmbdoAddPartiesItem = CreatePartyRequestInline & UpdatePartyRequestInline;
+export type UpdateClientRequestSmbdoAddPartiesItem = CreatePartyRequestInline &
+  UpdatePartyRequestInline;
 
 export type ClientResponseOutstanding = {
   attestationDocumentIds?: DocumentIdList;
@@ -2936,8 +2930,8 @@ export interface PartyField {
   type?: string;
 }
 
-export type ValidationType = typeof ValidationType[keyof typeof ValidationType];
-
+export type ValidationType =
+  (typeof ValidationType)[keyof typeof ValidationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ValidationType = {
@@ -2948,8 +2942,8 @@ export const ValidationType = {
  * Status of a party validation. Missing fields result in `NEEDS_INFO`.
 
  */
-export type ValidationStatus = typeof ValidationStatus[keyof typeof ValidationStatus];
-
+export type ValidationStatus =
+  (typeof ValidationStatus)[keyof typeof ValidationStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ValidationStatus = {
@@ -2990,8 +2984,7 @@ export type ValidationResponseItem = {
  */
 export type ValidationResponse = ValidationResponseItem[];
 
-export type PartyStatus = typeof PartyStatus[keyof typeof PartyStatus];
-
+export type PartyStatus = (typeof PartyStatus)[keyof typeof PartyStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyStatus = {
@@ -2999,8 +2992,7 @@ export const PartyStatus = {
   INACTIVE: 'INACTIVE',
 } as const;
 
-export type ProfileStatus = typeof ProfileStatus[keyof typeof ProfileStatus];
-
+export type ProfileStatus = (typeof ProfileStatus)[keyof typeof ProfileStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProfileStatus = {
@@ -3084,8 +3076,8 @@ export type SignificantOwnership = boolean;
 /**
  * The ID type
  */
-export type OrganizationIdentityDtoIdType = typeof OrganizationIdentityDtoIdType[keyof typeof OrganizationIdentityDtoIdType];
-
+export type OrganizationIdentityDtoIdType =
+  (typeof OrganizationIdentityDtoIdType)[keyof typeof OrganizationIdentityDtoIdType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OrganizationIdentityDtoIdType = {
@@ -3116,8 +3108,8 @@ export interface OrganizationIdentityDto {
   value: string;
 }
 
-export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
-
+export type OrganizationType =
+  (typeof OrganizationType)[keyof typeof OrganizationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OrganizationType = {
@@ -3245,8 +3237,8 @@ export interface IndividualDetails {
   soleOwner?: SoleOwner;
 }
 
-export type PhoneSmbdoPhoneType = typeof PhoneSmbdoPhoneType[keyof typeof PhoneSmbdoPhoneType];
-
+export type PhoneSmbdoPhoneType =
+  (typeof PhoneSmbdoPhoneType)[keyof typeof PhoneSmbdoPhoneType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PhoneSmbdoPhoneType = {
@@ -3272,8 +3264,8 @@ export type IndividualJobTitle = string;
  * `idType` denotes the type of taxpayer identification number (e.g. Social Security Number or Individual Taxpayer Identification Number). A Social Security Number or Individual Taxpayer Identification Number is accepted for an owner or controller individual. Decision makers do not require any tax identifier.
 
  */
-export type IndividualIdentityDTOIdType = typeof IndividualIdentityDTOIdType[keyof typeof IndividualIdentityDTOIdType];
-
+export type IndividualIdentityDTOIdType =
+  (typeof IndividualIdentityDTOIdType)[keyof typeof IndividualIdentityDTOIdType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const IndividualIdentityDTOIdType = {
@@ -3286,7 +3278,7 @@ export interface IndividualIdentityDTO {
   description?: string;
   expiryDate?: string;
   /** `idType` denotes the type of taxpayer identification number (e.g. Social Security Number or Individual Taxpayer Identification Number). A Social Security Number or Individual Taxpayer Identification Number is accepted for an owner or controller individual. Decision makers do not require any tax identifier.
- */
+   */
   idType: IndividualIdentityDTOIdType;
   /** Identification issuer country code e.g. US */
   issuer: string;
@@ -3344,8 +3336,8 @@ export type BirthDate = string;
 /**
  * Type of address.
  */
-export type AddressDtoSmbdoAddressType = typeof AddressDtoSmbdoAddressType[keyof typeof AddressDtoSmbdoAddressType];
-
+export type AddressDtoSmbdoAddressType =
+  (typeof AddressDtoSmbdoAddressType)[keyof typeof AddressDtoSmbdoAddressType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AddressDtoSmbdoAddressType = {
@@ -3383,8 +3375,7 @@ export interface AddressDtoSmbdo {
   state?: string;
 }
 
-export type Role = typeof Role[keyof typeof Role];
-
+export type Role = (typeof Role)[keyof typeof Role];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Role = {
@@ -3399,8 +3390,8 @@ export const Role = {
 /**
  * The party type
  */
-export type PartyTypeSmbdo = typeof PartyTypeSmbdo[keyof typeof PartyTypeSmbdo];
-
+export type PartyTypeSmbdo =
+  (typeof PartyTypeSmbdo)[keyof typeof PartyTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyTypeSmbdo = {
@@ -3446,8 +3437,8 @@ export interface Attestation {
 /**
  * Part of the request which is responsible for the reason
  */
-export type ApiErrorReasonV2Location = typeof ApiErrorReasonV2Location[keyof typeof ApiErrorReasonV2Location];
-
+export type ApiErrorReasonV2Location =
+  (typeof ApiErrorReasonV2Location)[keyof typeof ApiErrorReasonV2Location];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ApiErrorReasonV2Location = {
@@ -3488,8 +3479,7 @@ export interface ApiErrorV2 {
 /**
  * The client's status.
  */
-export type ClientStatus = typeof ClientStatus[keyof typeof ClientStatus];
-
+export type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ClientStatus = {
@@ -3522,8 +3512,8 @@ export interface ClientListResponse {
   metadata: PageMetaDataSmbdo;
 }
 
-export type PartyRoleListItem = typeof PartyRoleListItem[keyof typeof PartyRoleListItem];
-
+export type PartyRoleListItem =
+  (typeof PartyRoleListItem)[keyof typeof PartyRoleListItem];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyRoleListItem = {
@@ -3611,13 +3601,12 @@ export type ClientId = string;
 
 export interface PageMetaDataSmbdo {
   /** Number of records per page.
- */
+   */
   limit?: number;
   /** Page Number.
- */
+   */
   page?: number;
   /** Total number of items.
- */
+   */
   total?: number;
 }
-

@@ -26,7 +26,7 @@
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "generate-api": "orval --config ./orval.config.cjs"
+    "generate-api": "orval --config ./orval.config.cjs && yarn replace '((?:\\s|\\<))(\\d\\S*)Response' '$1N$2Response' ./src/generated/embedded-banking.ts && npx prettier --write './src/generated/embedded-banking.*'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -95,6 +95,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "replace": "^1.2.2",
     "storybook": "^8.0.8",
     "storybook-dark-mode": "^4.0.1",
     "tailwindcss": "^3.4.1",
