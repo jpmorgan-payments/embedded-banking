@@ -13,6 +13,7 @@ import {
   DecisionMakerFormValues,
 } from './DecisionMakerForm.schema';
 import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
+import NavigationButtons from '../Stepper/NavigationButtons';
 
 const defaultInitialValues = createDecisionMakerFormSchema().cast(
   {}
@@ -33,11 +34,7 @@ const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps 
   });
 
   const onSubmit = () => {
-    setActiveStep(activeStep+1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep-1);
+    console.log("submitted")
   }
 
   return (
@@ -54,12 +51,12 @@ const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps 
           <Text size="lg">What is your personal address?</Text>
 
           <AddressForm form={form} />
-          <Button onClick={handleBack} className="eb-bg-black" type="button">
-            Back
-          </Button>
-          <Button onClick={onSubmit} className="eb-bg-black" type="submit">
-            Next
-          </Button>
+          <NavigationButtons
+          onSubmit={onSubmit}
+        setActiveStep={setActiveStep}
+        activeStep={activeStep}
+        form={form}
+      />
         </ScrollArea>
       </form>
     </Form>

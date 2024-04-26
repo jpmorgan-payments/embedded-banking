@@ -27,6 +27,7 @@ import {
   createEntityTypeFormValidationSchema,
   tEntityTypeFormValidationSchemaValues,
 } from './EntityTypeForm.schema';
+import NavigationButtons from '../Stepper/NavigationButtons';
 
 type EntityTypeFormProps = {
   children?: ReactNode;
@@ -50,8 +51,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeS
   });
 
   const onSubmit = () => {
-    const errors = formz?.formState?.errors;
-    if (Object.values(errors).length === 0) setActiveStep(activeStep+1);
+    console.log("here")
   }
 
   return (
@@ -296,14 +296,12 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeS
               )}
             /> */}
 
-            <Button
-              variant="secondary"
-              type="submit"
-              className="eb-mt-8"
-              onClick={onSubmit}
-            >
-              Submit
-            </Button>
+<NavigationButtons
+        setActiveStep={setActiveStep}
+        activeStep={activeStep}
+        form={formz}
+        onSubmit={onSubmit}
+      />
           </ScrollArea>
         </form>
       </Form>

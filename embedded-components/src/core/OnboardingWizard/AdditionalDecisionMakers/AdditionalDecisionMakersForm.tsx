@@ -1,7 +1,6 @@
 import { Key, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -9,16 +8,93 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Text } from '@/components/ui/text';
+import { Title } from '@/components/ui/title';
 
-import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
+import NavigationButtons from '../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
-const AdditionalDecisionMakersForm = ({ setActiveStep }) => {
+const parentForm = {
+  parties: [
+    {
+      partyType: 'INDIVIDUAL',
+      externalId: 'TCU12344',
+      email: 'monicagellar@gmail.com',
+      roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
+      individualDetails: {
+        firstName: 'Monica',
+        lastName: 'Gellar',
+        countryOfResidence: 'US',
+        natureOfOwnership: 'Direct',
+        jobTitle: 'Other',
+        jobTitleDescription: 'CEO',
+        soleOwner: true,
+        addresses: [
+          {
+            addressType: 'RESIDENTIAL_ADDRESS',
+            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            city: 'New York',
+            state: 'NY',
+            postalCode: '10014',
+            country: 'US',
+          },
+        ],
+        individualIds: [
+          {
+            idType: 'SSN',
+            issuer: 'US',
+            value: '100-01-0001',
+          },
+        ],
+      },
+    },
+    {
+      partyType: 'INDIVIDUAL',
+      externalId: 'TCU12344',
+      email: 'monicagellar@gmail.com',
+      roles: ['AUTHORIZED_USER'],
+      individualDetails: {
+        firstName: 'Tess',
+        lastName: 'Gellar',
+        countryOfResidence: 'US',
+        natureOfOwnership: 'Direct',
+        jobTitle: 'Other',
+        jobTitleDescription: 'Other',
+        soleOwner: true,
+        addresses: [
+          {
+            addressType: 'RESIDENTIAL_ADDRESS',
+            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            city: 'New York',
+            state: 'NY',
+            postalCode: '10014',
+            country: 'US',
+          },
+        ],
+        individualIds: [
+          {
+            idType: 'SSN',
+            issuer: 'US',
+            value: '100-01-0001',
+          },
+        ],
+      },
+    },
+  ],
+};
 
-  const [additionalDecisionMakers, setAdditionalDecisionmakers] = useState(false);
+type AdditionalDecisionMakersFormType = {
+  setActiveStep: any;
+  activeStep: any;
+}
+
+const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalDecisionMakersFormType) => {
+  const [additionalDecisionMakers, setAdditionalDecisionmakers] =
+    useState(false);
+  const owners = parentForm?.parties.filter(
+    (party) => party?.partyType === 'INDIVIDUAL'
+  );
+
   const form = useForm<any>({});
   const handleAddBusinessOwner = (owner: any) => {
     form.insertListItem('owners', owner);
@@ -33,21 +109,20 @@ const AdditionalDecisionMakersForm = ({ setActiveStep }) => {
   };
 
   const handleToggleButton = (val) => {
-    console.log(val)
-    if (val === "No") setAdditionalDecisionmakers(false);
-    if (val === "Yes") setAdditionalDecisionmakers(true);
-  }
+    if (val === 'No') setAdditionalDecisionmakers(false);
+    if (val === 'Yes') setAdditionalDecisionmakers(true);
+  };
 
   return (
     <>
-      <Label as="h1">Additional Decision Makers</Label>
+      <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
         <form>
           <FormField
             control={form.control}
             name="additonalDecisionMakers"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel asterisk>
                   Are there any general partners or managing members within in
@@ -57,7 +132,7 @@ const AdditionalDecisionMakersForm = ({ setActiveStep }) => {
 
                 <FormControl>
                   <RadioGroup
-                    onValueChange={() => handleToggleButton(field.value)}
+                    onValueChange={(value) => handleToggleButton(value)}
                     defaultValue="No"
                     className="eb-flex eb-flex-col eb-space-y-1"
                   >
@@ -76,18 +151,26 @@ const AdditionalDecisionMakersForm = ({ setActiveStep }) => {
               </FormItem>
             )}
           />
-          {additionalDecisionMakers && <Text>Hi</Text>}
-          <Dialog>
-            
-            {form?.values?.owners.map((owner: any, index: Key) => (
-              <DecisionMakerCard data={owner} key={index}></DecisionMakerCard>
-            ))}
-
-            <AdditionalDecisionMakerModalForm form={form} onSubmit={() => {}} />
-          </Dialog>
+          {additionalDecisionMakers && (
+            <>
+              <Title as="h4">Listed business decision makers</Title>
+              <div className="eb-grid eb-grid-cols-3">
+                {owners?.map((individual: any, index: Key) => (
+                  <DecisionMakerCard
+                    individual={individual}
+                    key={index}
+                  ></DecisionMakerCard>
+                ))}
+              </div>
+            </>
+          )}
         </form>
       </Form>
-      <Text>Listed business decision makers</Text>
+      <NavigationButtons
+        setActiveStep={setActiveStep}
+        activeStep={activeStep}
+        form={form}
+      />
     </>
   );
 };
