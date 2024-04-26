@@ -44,60 +44,60 @@ const DecisionMakerCard = ({ individual, key }: DecisionMakersCardProps) => {
   );
 
   const form = useForm<any>({
-    defaultValues: individual,
+   // defaultValues: individual,
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
   return (
-    <Dialog key={key}>
-      <div className="eb-w-80">
-        <Card>
-          <CardContent
-            className={`${controller && 'eb-bg-black/10'} eb-h-60 eb-rounded-md`}
-          >
-            <div className="eb-grid  eb-grid-cols-2 eb-grid-rows-5">
-              <div className=" eb-w-16 eb-h-16 eb-bg-secondary  eb-rounded-lg eb-content-center">
-                <Text className="eb-text-center eb-content-center">
-                  {individual?.individualDetails?.firstName?.split('')[0]}
-                  {individual?.individualDetails?.lastName?.split('')[0]}
-                </Text>
-              </div>
+    <div className="eb-w-80">
+      <Card>
+        <CardContent
+          className={`${controller && 'eb-bg-black/10'} eb-h-60 eb-rounded-md`}
+        >
+          <div className="eb-grid  eb-grid-cols-2 eb-grid-rows-5">
+            <div className=" eb-w-16 eb-h-16 eb-bg-secondary  eb-rounded-lg eb-content-center">
+              <Text className="eb-text-center eb-content-center">
+                {individual?.individualDetails?.firstName?.split('')[0]}
+                {individual?.individualDetails?.lastName?.split('')[0]}
+              </Text>
+            </div>
 
-              <div>
-                {individual?.individualDetails?.firstName}{' '}
-                {individual?.individualDetails?.lastName}
-              </div>
+            <div>
+              {individual?.individualDetails?.firstName}{' '}
+              {individual?.individualDetails?.lastName}
+            </div>
 
-              <div>
-                {fields?.map((fieldVal) => (
-                  <div>
-                    <Text className="eb-font-bold">{fieldVal?.des}</Text>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {fields?.map((fieldVal) => (
-                  <div>
-                    <Text>{fieldVal?.var ? fieldVal?.var : 'N/A'}</Text>
-                  </div>
-                ))}
-              </div>
-              <div></div>
-              <div>
-                {controller ? (
-                  <Text>View/edit details in controller step</Text>
-                ) : (
-                  <DialogTrigger key={key}>
+            <div>
+              {fields?.map((fieldVal) => (
+                <div key={fieldVal.des}>
+                  <Text className="eb-font-bold">{fieldVal?.des}</Text>
+                </div>
+              ))}
+            </div>
+            <div>
+              {fields?.map((fieldVal) => (
+                <div key={fieldVal.var}>
+                  <Text>{fieldVal?.var ? fieldVal?.var : 'N/A'}</Text>
+                </div>
+              ))}
+            </div>
+            <div></div>
+            <div>
+              {controller ? (
+                <Text>View/edit details in controller step</Text>
+              ) : (
+                <Dialog >
+                  <DialogTrigger >
                     <Button variant="default">View/Edit Details</Button>
                   </DialogTrigger>
-                )}
-              </div>
+                  <AdditionalDecisionMakerModalForm form={form} />
+                </Dialog>
+              )}
             </div>
-          </CardContent>
-        </Card>
-      </div>
-      <AdditionalDecisionMakerModalForm form={form} />
-    </Dialog>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 export { DecisionMakerCard };

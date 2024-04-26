@@ -113,8 +113,15 @@ const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalD
     if (val === 'Yes') setAdditionalDecisionmakers(true);
   };
 
+  const onSubmit = () => {
+    const errors = form?.formState?.errors;
+    if (Object.values(errors).length === 0 && form.formState.isSubmitted)
+      setActiveStep(activeStep + 1);
+  }
+
+
   return (
-    <>
+    <div className="eb-grid eb-grid-row-3">
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
@@ -164,14 +171,16 @@ const AdditionalDecisionMakersForm = ({ setActiveStep, activeStep }: AdditionalD
               </div>
             </>
           )}
-        </form>
-      </Form>
-      <NavigationButtons
+          <NavigationButtons
         setActiveStep={setActiveStep}
         activeStep={activeStep}
-        form={form}
-      />
-    </>
+       onSubmit={onSubmit}
+      
+       />
+        </form>
+      </Form>
+      
+    </div>
   );
 };
 

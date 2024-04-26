@@ -34,7 +34,9 @@ const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps 
   });
 
   const onSubmit = () => {
-    console.log("submitted")
+    const errors = form?.formState?.errors;
+    if (Object.values(errors).length === 0 && form.formState.isSubmitted)
+      setActiveStep(activeStep + 1);
   }
 
   return (
@@ -55,7 +57,6 @@ const DecisionMakerForm = ({setActiveStep, activeStep}: DecisionMakersFormProps 
           onSubmit={onSubmit}
         setActiveStep={setActiveStep}
         activeStep={activeStep}
-        form={form}
       />
         </ScrollArea>
       </form>

@@ -1,4 +1,3 @@
-
 import {
   FormControl,
   FormField,
@@ -8,10 +7,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-
-const AddressForm = ({form}: any) => {
-  
-
+const AddressForm = ({ form }: any) => {
   return (
     <>
       <div className="eb-grid eb-grid-cols-1 eb-gap-4 eb-pt-4">

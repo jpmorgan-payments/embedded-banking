@@ -209,7 +209,7 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
       .default('')
       .max(30, getContentToken?.(`maxStringLengthAlert`, [30]) ?? '')
       .required(getContentToken?.(`state`) ?? ''),
-    zipCode: yup
+    zip: yup
       .string()
       .default('')
       .max(10, getContentToken?.(`maxStringLengthAlert`, [10]) ?? '')

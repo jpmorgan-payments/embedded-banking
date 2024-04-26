@@ -22,12 +22,12 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
 
+import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import {
   createEntityTypeFormValidationSchema,
   tEntityTypeFormValidationSchemaValues,
 } from './EntityTypeForm.schema';
-import NavigationButtons from '../Stepper/NavigationButtons';
 
 type EntityTypeFormProps = {
   children?: ReactNode;
@@ -35,7 +35,10 @@ type EntityTypeFormProps = {
   activeStep: number;
 };
 
-export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeStep }: any) => {
+export const EntityTypeForm: FC<EntityTypeFormProps> = ({
+  setActiveStep,
+  activeStep,
+}: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
   const defaultInitialValues = createEntityTypeFormValidationSchema().cast(
@@ -51,8 +54,10 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeS
   });
 
   const onSubmit = () => {
-    console.log("here")
-  }
+    const errors = formz?.formState?.errors;
+    if (Object.values(errors).length === 0 && formz.formState.isSubmitted)
+      setActiveStep(activeStep + 1);
+  };
 
   return (
     <Stack>
@@ -296,12 +301,11 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({ setActiveStep, activeS
               )}
             /> */}
 
-<NavigationButtons
-        setActiveStep={setActiveStep}
-        activeStep={activeStep}
-        form={formz}
-        onSubmit={onSubmit}
-      />
+            <NavigationButtons
+              setActiveStep={setActiveStep}
+              activeStep={activeStep}
+              onSubmit={onSubmit}
+            />
           </ScrollArea>
         </form>
       </Form>
