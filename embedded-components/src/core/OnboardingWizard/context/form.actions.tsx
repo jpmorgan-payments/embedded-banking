@@ -1,12 +1,26 @@
 import _ from "lodash";
 import { DecisionMakerFormValues } from "../DecisionMakersForm/DecisionMakerForm.schema";
 import { BusinessDetailsStepValues } from "../BusinessDetails/BusinessDetails.schema";
+import { OnboardingForm } from "./form.context";
+
+export const formToAPIBody = (onboardingForm: OnboardingForm) => {
+  let parties = [];
+  const business = makeBusiness(onboardingForm?.businessDetails, onboardingForm);
+  parties.push(business);
+  for (let owner of onboardingForm?.owners) {
+    const party = makeParty(owner, onboardingForm);
+    parties.push(party);
+  };
+  const form = {
+    parties: parties,
+    products: ['EMBEDDED_BANKING']
+  }
+  return form;
+}
 
 
-export const addPartyAction = (form: any, owner: DecisionMakerFormValues, roles: string[]) => {
-    const deepCopy = _.cloneDeep(form);
-    const parties = deepCopy?.form?.parties;
-    parties.push({
+export const makeParty = (form: any, owner: DecisionMakerFormValues, roles: string[]) => {
+    const party = {
       partyType: 'INDIVIDUAL',
       email: owner?.email,
       roles,
@@ -32,15 +46,13 @@ export const addPartyAction = (form: any, owner: DecisionMakerFormValues, roles:
           },
         ],
       },
-    });
-    deepCopy.form.parties = parties;
-    return deepCopy;
+    };
+    
+    return party;
 }
 
-export const addBusinessAction = (business: BusinessDetailsStepValues, form: any) => {
-    const deepCopy = _.cloneDeep(form);
-    const parties = deepCopy?.form?.parties;
-    parties.push({
+export const makeBusiness = (business: BusinessDetailsStepValues, form: any) => {
+    const party = {
       partyType: 'ORGANIZATION',
       email: business?.businessEmail,
       roles: ['CLIENT'],
@@ -84,7 +96,6 @@ export const addBusinessAction = (business: BusinessDetailsStepValues, form: any
         websiteAvailable: !business?.websiteNotAvailable,
         website: business?.website,
       },
-    });
-    deepCopy.form.parties = parties;
-    return deepCopy;
+    };
+    return party;
 }

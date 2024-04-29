@@ -10,10 +10,10 @@ import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm
 },
 **/
 
-type OnboardingForm = {
+export type OnboardingForm = {
   legalStructure: string | null;
   owners: DecisionMakerFormValues[] | null;
-  businessDetails: BusinessDetailsStepValues[] | null;
+  businessDetails: BusinessDetailsStepValues | null;
 };
 
 export type OnboardingFormContext = {
