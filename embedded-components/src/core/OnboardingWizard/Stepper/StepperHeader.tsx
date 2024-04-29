@@ -43,24 +43,24 @@ const icons = [
 ];
 
 type StepperHeaderProps = {
-    activeStep: number;
-}
+  activeStep: number;
+};
 
 const StepperHeader = ({ activeStep }: StepperHeaderProps) => {
   return (
     <div className="eb-grid eb-grid-cols-6 eb-my-5">
       {icons?.map((val, key) => (
-        <div className="eb-grid eb-grid-cols-3 eb-w-26">
+        <div className="eb-grid eb-grid-cols-3 eb-w-26" key={val.title}>
           <div
-            className={`eb-flex eb-w-14 eb-h-14 eb-place-content-center eb-rounded-full eb-border-2 ${activeStep === key+1 ? 'eb-border-blue-800' : 'eb-border-primary/80'} eb-justify-items-center eb-justify-center eb-place-content-center eb-items-center`}
+            className={`eb-flex eb-w-14 eb-h-14 eb-place-content-center eb-rounded-full eb-border-2 ${activeStep === key + 1 ? 'eb-border-blue-800' : 'eb-border-primary/80'} eb-justify-items-center eb-justify-center eb-place-content-center eb-items-center`}
           >
             {val?.icon}
           </div>
 
           <div className="eb-flex eb-justify-center eb-place-content-center eb-items-center eb-mr-5">
-            <Text >{val?.title}</Text>
+            <Text>{val?.title}</Text>
           </div>
-          {key !== icons?.length-1 && (
+          {key !== icons?.length - 1 && (
             <div className="eb-grid eb-grid-row-2 eb-w-12">
               <div></div>
               <div className="eb-border-t-4"></div>
