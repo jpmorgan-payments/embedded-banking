@@ -3,7 +3,7 @@ import { DecisionMakerFormValues } from "../DecisionMakersForm/DecisionMakerForm
 import { BusinessDetailsStepValues } from "../BusinessDetails/BusinessDetails.schema";
 
 
-export const addOwnerAction = (form: any, owner: DecisionMakerFormValues, roles: string[]) => {
+export const addPartyAction = (form: any, owner: DecisionMakerFormValues, roles: string[]) => {
     const deepCopy = _.cloneDeep(form);
     const parties = deepCopy?.form?.parties;
     parties.push({
