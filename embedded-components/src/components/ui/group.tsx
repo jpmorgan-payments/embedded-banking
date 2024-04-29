@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-const StackVariants = cva('eb-flex eb-flex-col', {
+const groupVariants = cva('eb-flex eb-flex-row', {
   variants: {
     variant: {
       default: 'eb-bg-background eb-text-foreground',
@@ -14,18 +14,18 @@ const StackVariants = cva('eb-flex eb-flex-col', {
   },
 });
 
-const Stack = React.forwardRef<
+const Group = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof StackVariants>
+  React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof groupVariants>
 >(({ className, variant, children, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(StackVariants({ variant }), className)}
+    className={cn(groupVariants({ variant }), className)}
     {...props}
   >
     {children}
   </div>
 ));
-Stack.displayName = 'Stack';
+Group.displayName = 'Group';
 
-export { Stack };
+export { Group };
