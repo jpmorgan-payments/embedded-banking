@@ -23,6 +23,7 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
 
+import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import {
   businessDetailsSchema,
@@ -61,7 +62,6 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
 
   return (
     <Stack>
-      <Title as="h3">What Kind of Business do you run?</Title>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -131,6 +131,11 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
             </Grid>
             <Separator />
             <BusinessDetailsCommon form={form} />
+            <NavigationButtons
+              onSubmit={onSubmit}
+              setActiveStep={setActiveStep}
+              activeStep={activeStep}
+            />
           </ScrollArea>
         </form>
       </Form>

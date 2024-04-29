@@ -1,14 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
+import { BusinessDetails } from './BusinessDetails/BusinessDetails';
+import { OnboardingFormProvider } from './context/form.context';
 import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
 import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
 import NavigationButtons from './Stepper/NavigationButtons';
@@ -17,27 +13,26 @@ import StepperHeader from './Stepper/StepperHeader';
 
 export const OnboardingWizard = () => {
   const { activeStep, setCurrentStep } = useStepper();
-
   console.log('@@activeStep', activeStep);
 
   const steps = [
-    // EntityTypeForm,
-    // DecisionMakerForm,
-    // AdditionalDecisionMakersForm,
-    // <EntityTypeForm key={0} />,
-    // <DecisionMakerForm key={1} />,
     <EntityTypeForm
       key={0}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
+    <BusinessDetails
+      setActiveStep={setCurrentStep}
+      key={2}
+      activeStep={activeStep}
+    />,
     <DecisionMakerForm
-      key={1}
+      key={3}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
     <AdditionalDecisionMakersForm
-      key={2}
+      key={4}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
@@ -50,13 +45,15 @@ export const OnboardingWizard = () => {
         <CardTitle>Onboarding Wizards</CardTitle>
       </CardHeader>
       <CardContent>
-        {activeStep !== 0 && (
-          <StepperHeader activeStep={activeStep}></StepperHeader>
-        )}
-        <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
-          {/* {steps[activeStep]} */}
-          {ActiveStep}
-        </div>
+        <OnboardingFormProvider>
+          {activeStep !== 0 && (
+            <StepperHeader activeStep={activeStep}></StepperHeader>
+          )}
+          <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
+            {/* {steps[activeStep]} */}
+            {ActiveStep}
+          </div>
+        </OnboardingFormProvider>
       </CardContent>
       {/* TODO: something breaks in hooks when i try to decople oprs of activeSTeps, day wasted */}
       {/* <CardFooter>

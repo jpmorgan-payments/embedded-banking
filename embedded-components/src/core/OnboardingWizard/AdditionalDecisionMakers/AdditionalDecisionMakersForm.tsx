@@ -1,8 +1,7 @@
-import { Key, useState } from 'react';
+import { Key, useContext, useEffect, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
@@ -19,51 +18,8 @@ import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModa
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { createDecisionMakerFormSchema } from '../DecisionMakersForm/DecisionMakerForm.schema';
 import { useContentData } from '../useContentData';
+import { OnboardingFormContext } from '../context/form.context';
 
-const owners = [
-  {
-    email: 'monicagellar@gmail.com',
-    roles: ['CONTROLLER'],
-    firstName: 'Monica',
-    lastName: 'Gellar',
-    countryOfResidence: 'US',
-    natureOfOwnership: 'Direct',
-    jobTitle: 'Other',
-    jobTitleDescription: 'Other person',
-    soleOwner: true,
-    addressType: 'RESIDENTIAL_ADDRESS',
-    addressLine1: '90 Bedford Street',
-    addressLine2: 'Apt 2E',
-    city: 'New York',
-    state: 'NY',
-    zip: '10014',
-    country: 'US',
-    idType: 'SSN',
-    issuer: 'US',
-    ssn9: '100-01-0001',
-  },
-  {
-    email: 'monicagellar@gmail.com',
-    roles: ['OTHER'],
-    firstName: 'Lizzy',
-    lastName: 'Gellar',
-    countryOfResidence: 'US',
-    natureOfOwnership: 'Direct',
-    jobTitle: 'Other',
-    jobTitleDescription: 'Other person',
-    soleOwner: true,
-    addressType: 'RESIDENTIAL_ADDRESS',
-    addressLine1: '90 Bedford Street',
-    addressLine2: 'Apt 2E',
-    city: 'New York',
-    state: 'NY',
-    zip: '10014',
-    country: 'US',
-    idType: 'SSN',
-    issuer: 'US',
-    ssn9: '100-01-0001',
-  },
-];
 
 type AdditionalDecisionMakersFormType = {
   setActiveStep: any;
@@ -74,9 +30,12 @@ const AdditionalDecisionMakersForm = ({
   setActiveStep,
   activeStep,
 }: AdditionalDecisionMakersFormType) => {
+
+  const {onboardingForm, setOnboardingForm} = useContext(OnboardingFormContext)
+
   const [additionalDecisionMakers, setAdditionalDecisionmakers] =
     useState(false);
-  // const owners = owners; //get form form
+
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -84,19 +43,6 @@ const AdditionalDecisionMakersForm = ({
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
-  /**
-  const handleAddBusinessOwner = (owner: any) => {
-    form.insertListItem('owners', owner);
-  };
-  const handleEditBusinessOwner = (owner: any, index: number) => {
-    form.insertListItem('owners', owner, index);
-    form.removeListItem('owners', index + 1);
-  };
-
-  const handleDeleteBusinessOwner = (index: number) => {
-    form.removeListItem('owners', index);
-  };
-   */
 
   const handleToggleButton = (val) => {
     if (val === 'No') setAdditionalDecisionmakers(false);
@@ -108,6 +54,11 @@ const AdditionalDecisionMakersForm = ({
     if (Object.values(errors).length === 0 && form.formState.isSubmitted)
       setActiveStep(activeStep + 1);
   };
+
+  useEffect(() => {
+console.log(onboardingForm)
+  },[onboardingForm])
+
 
   return (
     <div className="eb-grid eb-grid-row-3">
@@ -152,7 +103,7 @@ const AdditionalDecisionMakersForm = ({
               <Title as="h4">Listed business decision makers</Title>
 
               <div className="eb-grid eb-grid-cols-3">
-                {owners?.map((individual: any, index: Key) => (
+                {onboardingForm?.owners?.map((individual: any, index: Key) => (
                   <div
                     key={index}
                     className="eb-grid-cols-subgrid eb-grid-cols-2"
