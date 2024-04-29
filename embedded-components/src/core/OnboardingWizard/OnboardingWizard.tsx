@@ -4,22 +4,24 @@ import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/Additio
 import { OnboardingFormProvider } from './context/form.context';
 import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
 import StepperHeader from './Stepper/StepperHeader';
+import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
+import { BusinessDetails } from './BusinessDetails/BusinessDetails';
 
 export const OnboardingWizard = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = [
-   /**  <EntityTypeForm
+   <EntityTypeForm
       key={0}
       setActiveStep={setActiveStep}
       activeStep={activeStep}
-    />,*/ 
+    />,
     <DecisionMakerForm
       key={1}
       setActiveStep={setActiveStep}
       activeStep={activeStep}
     />,
-    //<BusinessDetails setActiveStep={setActiveStep} key={2} activeStep={2} />,
+    <BusinessDetails setActiveStep={setActiveStep} key={2} activeStep={2} />,
     <AdditionalDecisionMakersForm
       key={3}
       setActiveStep={setActiveStep}
