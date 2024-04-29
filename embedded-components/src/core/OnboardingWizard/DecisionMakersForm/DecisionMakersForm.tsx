@@ -1,9 +1,12 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import _ from 'lodash';
+import { useForm } from 'react-hook-form';
+
 import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
+
+import { OnboardingFormContext } from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import { AddressForm } from './AddressForm/AddressForm';
@@ -12,7 +15,6 @@ import {
   DecisionMakerFormValues,
 } from './DecisionMakerForm.schema';
 import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
-import { OnboardingFormContext } from '../context/form.context';
 
 const defaultInitialValues = createDecisionMakerFormSchema().cast(
   {}
@@ -27,9 +29,10 @@ const DecisionMakerForm = ({
   setActiveStep,
   activeStep,
 }: DecisionMakersFormProps) => {
-
   // @ts-ignore
-  const {onboardingForm, setOnboardingForm} = useContext(OnboardingFormContext)
+  const { onboardingForm, setOnboardingForm } = useContext(
+    OnboardingFormContext
+  );
 
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
@@ -41,15 +44,19 @@ const DecisionMakerForm = ({
   });
 
   useEffect(() => {
-console.log(onboardingForm)
-  },[onboardingForm])
+    console.log(onboardingForm);
+  }, [onboardingForm]);
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
     if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
       setActiveStep(activeStep + 1);
-      const newOnboardingForm =  _.cloneDeep(onboardingForm);
-      newOnboardingForm.owners = newOnboardingForm?.owners?.length>0 ?_.merge(newOnboardingForm?.owners, form.getValues()) : [form.getValues()];
+      const newOnboardingForm = _.cloneDeep(onboardingForm);
+      newOnboardingForm.owners = _.merge(
+        newOnboardingForm?.owners,
+        form.getValues()
+      );
+      console.log(newOnboardingForm);
       setOnboardingForm(newOnboardingForm);
     }
   };
