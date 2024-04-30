@@ -1,8 +1,6 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useState } from 'react';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
 import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
 import { BusinessDetails } from './BusinessDetails/BusinessDetails';
 import { OnboardingFormProvider } from './context/form.context';
@@ -14,18 +12,26 @@ export const OnboardingWizard = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = [
-    //  <EntityTypeForm
-    //      key={0}
-    //      setActiveStep={setActiveStep}
-    //      activeStep={activeStep}
-    //    />,
-    // <BusinessDetails setActiveStep={setActiveStep} key={2} activeStep={2} />,
-    <DecisionMakerForm key={0} setActiveStep={setActiveStep} activeStep={0} />,
-    
-    <AdditionalDecisionMakersForm
+    <EntityTypeForm
+      key={0}
+      setActiveStep={setActiveStep}
+      activeStep={activeStep}
+    />,
+
+    <DecisionMakerForm
       key={1}
       setActiveStep={setActiveStep}
-      activeStep={1}
+      activeStep={activeStep}
+    />,
+    <BusinessDetails
+      setActiveStep={setActiveStep}
+      key={2}
+      activeStep={activeStep}
+    />,
+    <AdditionalDecisionMakersForm
+      key={3}
+      setActiveStep={setActiveStep}
+      activeStep={activeStep}
     />,
   ];
 
