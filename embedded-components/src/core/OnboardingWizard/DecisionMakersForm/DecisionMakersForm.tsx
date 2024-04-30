@@ -1,6 +1,4 @@
-import {  useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 
 import { Form } from '@/components/ui/form';
@@ -15,6 +13,7 @@ import {
   DecisionMakerFormValues,
 } from './DecisionMakerForm.schema';
 import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
+import { addController } from '../context/form.actions';
 
 const defaultInitialValues = createDecisionMakerFormSchema().cast(
   {}
@@ -30,7 +29,7 @@ const DecisionMakerForm = ({
   activeStep,
 }: DecisionMakersFormProps) => {
   // @ts-ignore
-  const {setOnboardingForm} = useOnboardingForm();
+  const {setOnboardingForm, onboardingForm} = useOnboardingForm();
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -40,17 +39,13 @@ const DecisionMakerForm = ({
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
+
   const onSubmit = () => {
     const errors = form?.formState?.errors;
     if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
       setActiveStep(activeStep + 1);
-      setOnboardingForm({owners: [form.getValues()]})
-     // if (onboardingForm)
-      // const newOnboardingForm = _.cloneDeep(onboardingForm);
-      // console.log(newOnboardingForm)
-      // newOnboardingForm.owners =  [ form.getValues()];
-      // console.log(newOnboardingForm);
-      // setOnboardingForm(newOnboardingForm);
+      const newOnboardingForm = addController(onboardingForm, form.getValues())
+      setOnboardingForm(newOnboardingForm);
    }
   };
 

@@ -12,31 +12,34 @@ import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm
 **/
 
 export type OnboardingForm = {
-   legalStructure: string | undefined;
-   owners: DecisionMakerFormValues[] | undefined;
-   businessDetails: BusinessDetailsStepValues | undefined;
+  legalStructure: string | undefined;
+  controller: DecisionMakerFormValues | undefined;
+  otherOwners: DecisionMakerFormValues[] | undefined;
+  businessDetails: BusinessDetailsStepValues | undefined;
 };
 
-// export const defaultValues = {
-//   legalStructure: '',
-//   owners: undefined,
-//   businessDetails: undefined,
-// };
+export const defaultValues = {
+  legalStructure: undefined,
+  controller: undefined,
+  otherOwners: undefined,
+  businessDetails: undefined,
+};
 
 //@ts-ignore
 export const OnboardingFormContext = createContext();
 
 export const useOnboardingForm = () => {
-  const context = useContext(OnboardingFormContext)
+  const context = useContext(OnboardingFormContext);
   if (context === undefined) {
-     throw new Error('useValue must be used within a ValueProvider')       }
-   return context
- }
+    throw new Error('useOnboardingForm must be used within OnboardingFormProvider');
+  }
+  return context;
+};
 
 export const OnboardingFormProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [onboardingForm, setOnboardingForm] = useState(null);
+  const [onboardingForm, setOnboardingForm] = useState(defaultValues);
 
   const valueObject = useMemo(() => {
     return { onboardingForm, setOnboardingForm };

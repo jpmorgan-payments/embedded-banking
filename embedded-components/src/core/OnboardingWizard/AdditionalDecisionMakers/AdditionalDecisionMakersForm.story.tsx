@@ -1,4 +1,5 @@
 
+import { OnboardingFormProvider } from '../context/form.context';
 import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakersForm';
 
 export default {
@@ -6,4 +7,4 @@ export default {
 };
 
 
-export const Usage = () => <AdditionalDecisionMakersForm activeStep={2} setActiveStep={()=> {}}  />;
+export const Usage = () => <OnboardingFormProvider><AdditionalDecisionMakersForm activeStep={2} setActiveStep={()=> {}}  /></OnboardingFormProvider>;

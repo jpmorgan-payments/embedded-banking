@@ -10,7 +10,7 @@ import { AdditionalDecisionMakerModalForm } from '../AdditionalDecisionMakersMod
 
 type DecisionMakersCardProps = {
   individual: any;
-  key: any;
+  key?: any;
 };
 
 const fieldsController = (individual: any) => {
