@@ -1,5 +1,4 @@
-import { Key, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Key, useEffect, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 
@@ -15,9 +14,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 
 import { useOnboardingForm } from '../context/form.context';
-import { createDecisionMakerFormSchema } from '../DecisionMakersForm/DecisionMakerForm.schema';
 import NavigationButtons from '../Stepper/NavigationButtons';
-import { useContentData } from '../useContentData';
 import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
@@ -32,14 +29,10 @@ const AdditionalDecisionMakersForm = ({
 }: AdditionalDecisionMakersFormType) => {
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
-  const { getContentToken: getFormSchema } = useContentData(
-    'schema.businessOwnerFormSchema'
-  );
+
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const form = useForm<any>({
-    resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
-  });
+  const form = useForm<any>({});
 
   const handleToggleButton = (val: string) => {
     if (val === 'No') setAdditionalDecisionMakers(false);
@@ -50,6 +43,7 @@ const AdditionalDecisionMakersForm = ({
     setActiveStep(4);
   };
 
+
   return (
     <div className="eb-grid eb-grid-row-3">
       <Title as="h3">Additional Decision Makers</Title>
@@ -57,7 +51,6 @@ const AdditionalDecisionMakersForm = ({
       <Form {...form}>
         <form>
           <FormField
-            control={form.control}
             name="additonalDecisionMakers"
             render={() => (
               <FormItem>
@@ -88,53 +81,48 @@ const AdditionalDecisionMakersForm = ({
               </FormItem>
             )}
           />
-          {additionalDecisionMakers && (
-            <>
-              <Title as="h4">Listed business decision makers</Title>
-
-              <div className="eb-grid eb-grid-cols-3">
-                {onboardingForm?.controller && (
-                  <div
-                    key="controllerPanel"
-                    className="eb-grid-cols-subgrid eb-grid-cols-2"
-                  >
-                    <DecisionMakerCard
-                    controller
-                      individual={onboardingForm?.controller}
-                    ></DecisionMakerCard>
-                  </div>
-                )}
-
-                {onboardingForm?.otherOwners?.map(
-                  (individual: any, index: Key) => (
-                    <div
-                      key={index}
-                      className="eb-grid-cols-subgrid eb-grid-cols-2"
-                    >
-                      <DecisionMakerCard
-                      controller={false}
-                        individual={individual}
-                        key={index}
-                      ></DecisionMakerCard>
-                    </div>
-                  )
-                )}
-                <Dialog>
-                  <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
-                    <DialogTrigger>Click to add a decision maker</DialogTrigger>
-                  </div>
-                  <AdditionalDecisionMakerModalForm form={form} />
-                </Dialog>
-              </div>
-            </>
-          )}
-          <NavigationButtons
-            setActiveStep={setActiveStep}
-            activeStep={activeStep}
-            onSubmit={onSubmit}
-          />
         </form>
       </Form>
+      {additionalDecisionMakers && (
+        <>
+          <Title as="h4">Listed business decision makers</Title>
+
+          <div className="eb-grid eb-grid-cols-3">
+            {onboardingForm?.controller && (
+              <div
+                key="controllerPanel"
+                className="eb-grid-cols-subgrid eb-grid-cols-2"
+              >
+                <DecisionMakerCard
+                  controller
+                  individual={onboardingForm?.controller}
+                ></DecisionMakerCard>
+              </div>
+            )}
+
+            {onboardingForm?.otherOwners?.map((individual: any, index: Key) => (
+              <div key={index} className="eb-grid-cols-subgrid eb-grid-cols-2">
+                <DecisionMakerCard
+                  controller={false}
+                  individual={individual}
+                  key={index}
+                ></DecisionMakerCard>
+              </div>
+            ))}
+            <Dialog>
+              <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
+                <DialogTrigger>Click to add a decision maker</DialogTrigger>
+              </div>
+              <AdditionalDecisionMakerModalForm />
+            </Dialog>
+          </div>
+        </>
+      )}
+      <NavigationButtons
+        setActiveStep={setActiveStep}
+        activeStep={activeStep}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };

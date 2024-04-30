@@ -1,11 +1,6 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
-
-import { createDecisionMakerFormSchema } from '../../DecisionMakersForm/DecisionMakerForm.schema';
-import { useContentData } from '../../useContentData';
 import { AdditionalDecisionMakerModalForm } from '../AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
 
 type DecisionMakersCardProps = {
@@ -36,14 +31,6 @@ const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardPr
     ? fieldsController(individual)
     : fieldsOther(individual);
 
-  const { getContentToken: getFormSchema } = useContentData(
-    'schema.businessOwnerFormSchema'
-  );
-
-  const form = useForm<any>({
-    defaultValues: individual,
-    resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
-  });
 
   return (
     <Dialog>
@@ -84,13 +71,13 @@ const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardPr
                 {controller ? (
                   <Text>View/edit details in controller step</Text>
                 ) : (
-                  <DialogTrigger>View/Edit Details</DialogTrigger>
+                  <DialogTrigger className="eb-bg-black eb-text-white">View/Edit Details</DialogTrigger>
                 )}
               </div>
             </div>
           </CardContent>
         </Card>
-        <AdditionalDecisionMakerModalForm form={form} />
+        <AdditionalDecisionMakerModalForm index={key} />
       </div>
     </Dialog>
   );
