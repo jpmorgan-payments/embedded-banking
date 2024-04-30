@@ -15,9 +15,9 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
-import axios from 'axios';
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { ebInstance } from '../axios-instance';
+import type { BodyType, ErrorType } from '../axios-instance';
 import type {
   AccountBalanceResponse,
   AccountResponseWithStatus,
@@ -110,18 +110,21 @@ import type {
   WebhookUpdateRequest,
 } from './embedded-banking.schemas';
 
+type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
+
 /**
  * Returns a list of clients associated with your platform.
  * @summary List clients
  */
 export const smbdoListClients = (
   params?: SmbdoListClientsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ClientListResponse>> => {
-  return axios.get(`/clients`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ClientListResponse>(
+    { url: `/clients`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSmbdoListClientsQueryKey = (
@@ -132,7 +135,7 @@ export const getSmbdoListClientsQueryKey = (
 
 export const getSmbdoListClientsQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoListClients>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -150,17 +153,17 @@ export const getSmbdoListClientsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoListClientsQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoListClients>>
-  > = ({ signal }) => smbdoListClients(params, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoListClients(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof smbdoListClients>>,
@@ -172,7 +175,7 @@ export const getSmbdoListClientsQueryOptions = <
 export type SmbdoListClientsQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoListClients>>
 >;
-export type SmbdoListClientsQueryError = AxiosError<
+export type SmbdoListClientsQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -186,7 +189,7 @@ export type SmbdoListClientsQueryError = AxiosError<
  */
 export const useSmbdoListClients = <
   TData = Awaited<ReturnType<typeof smbdoListClients>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -204,7 +207,7 @@ export const useSmbdoListClients = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoListClientsQueryOptions(params, options);
@@ -223,14 +226,22 @@ export const useSmbdoListClients = <
  * @summary Create client
  */
 export const smbdoPostClients = (
-  createClientRequestSmbdo: CreateClientRequestSmbdo,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ClientResponse>> => {
-  return axios.post(`/clients`, createClientRequestSmbdo, options);
+  createClientRequestSmbdo: BodyType<CreateClientRequestSmbdo>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<ClientResponse>(
+    {
+      url: `/clients`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createClientRequestSmbdo,
+    },
+    options
+  );
 };
 
 export const getSmbdoPostClientsMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -243,25 +254,25 @@ export const getSmbdoPostClientsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoPostClients>>,
     TError,
-    { data: CreateClientRequestSmbdo },
+    { data: BodyType<CreateClientRequestSmbdo> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof smbdoPostClients>>,
   TError,
-  { data: CreateClientRequestSmbdo },
+  { data: BodyType<CreateClientRequestSmbdo> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof smbdoPostClients>>,
-    { data: CreateClientRequestSmbdo }
+    { data: BodyType<CreateClientRequestSmbdo> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return smbdoPostClients(data, axiosOptions);
+    return smbdoPostClients(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -270,8 +281,8 @@ export const getSmbdoPostClientsMutationOptions = <
 export type SmbdoPostClientsMutationResult = NonNullable<
   Awaited<ReturnType<typeof smbdoPostClients>>
 >;
-export type SmbdoPostClientsMutationBody = CreateClientRequestSmbdo;
-export type SmbdoPostClientsMutationError = AxiosError<
+export type SmbdoPostClientsMutationBody = BodyType<CreateClientRequestSmbdo>;
+export type SmbdoPostClientsMutationError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -284,7 +295,7 @@ export type SmbdoPostClientsMutationError = AxiosError<
  * @summary Create client
  */
 export const useSmbdoPostClients = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -297,14 +308,14 @@ export const useSmbdoPostClients = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoPostClients>>,
     TError,
-    { data: CreateClientRequestSmbdo },
+    { data: BodyType<CreateClientRequestSmbdo> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof smbdoPostClients>>,
   TError,
-  { data: CreateClientRequestSmbdo },
+  { data: BodyType<CreateClientRequestSmbdo> },
   TContext
 > => {
   const mutationOptions = getSmbdoPostClientsMutationOptions(options);
@@ -318,9 +329,13 @@ export const useSmbdoPostClients = <
  */
 export const smbdoGetClient = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ClientResponse>> => {
-  return axios.get(`/clients/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ClientResponse>(
+    { url: `/clients/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoGetClientQueryKey = (id: string) => {
@@ -329,7 +344,7 @@ export const getSmbdoGetClientQueryKey = (id: string) => {
 
 export const getSmbdoGetClientQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetClient>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -343,16 +358,16 @@ export const getSmbdoGetClientQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof smbdoGetClient>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getSmbdoGetClientQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof smbdoGetClient>>> = ({
     signal,
-  }) => smbdoGetClient(id, { signal, ...axiosOptions });
+  }) => smbdoGetClient(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -369,7 +384,7 @@ export const getSmbdoGetClientQueryOptions = <
 export type SmbdoGetClientQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetClient>>
 >;
-export type SmbdoGetClientQueryError = AxiosError<
+export type SmbdoGetClientQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -383,7 +398,7 @@ export type SmbdoGetClientQueryError = AxiosError<
  */
 export const useSmbdoGetClient = <
   TData = Awaited<ReturnType<typeof smbdoGetClient>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -397,7 +412,7 @@ export const useSmbdoGetClient = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof smbdoGetClient>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetClientQueryOptions(id, options);
@@ -417,14 +432,22 @@ export const useSmbdoGetClient = <
  */
 export const smbdoUpdateClient = (
   id: string,
-  updateClientRequestSmbdo: UpdateClientRequestSmbdo,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ClientResponse>> => {
-  return axios.post(`/clients/${id}`, updateClientRequestSmbdo, options);
+  updateClientRequestSmbdo: BodyType<UpdateClientRequestSmbdo>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<ClientResponse>(
+    {
+      url: `/clients/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: updateClientRequestSmbdo,
+    },
+    options
+  );
 };
 
 export const getSmbdoUpdateClientMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -437,25 +460,25 @@ export const getSmbdoUpdateClientMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoUpdateClient>>,
     TError,
-    { id: string; data: UpdateClientRequestSmbdo },
+    { id: string; data: BodyType<UpdateClientRequestSmbdo> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof smbdoUpdateClient>>,
   TError,
-  { id: string; data: UpdateClientRequestSmbdo },
+  { id: string; data: BodyType<UpdateClientRequestSmbdo> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof smbdoUpdateClient>>,
-    { id: string; data: UpdateClientRequestSmbdo }
+    { id: string; data: BodyType<UpdateClientRequestSmbdo> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return smbdoUpdateClient(id, data, axiosOptions);
+    return smbdoUpdateClient(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -464,8 +487,8 @@ export const getSmbdoUpdateClientMutationOptions = <
 export type SmbdoUpdateClientMutationResult = NonNullable<
   Awaited<ReturnType<typeof smbdoUpdateClient>>
 >;
-export type SmbdoUpdateClientMutationBody = UpdateClientRequestSmbdo;
-export type SmbdoUpdateClientMutationError = AxiosError<
+export type SmbdoUpdateClientMutationBody = BodyType<UpdateClientRequestSmbdo>;
+export type SmbdoUpdateClientMutationError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -478,7 +501,7 @@ export type SmbdoUpdateClientMutationError = AxiosError<
  * @summary Update client
  */
 export const useSmbdoUpdateClient = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -491,14 +514,14 @@ export const useSmbdoUpdateClient = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoUpdateClient>>,
     TError,
-    { id: string; data: UpdateClientRequestSmbdo },
+    { id: string; data: BodyType<UpdateClientRequestSmbdo> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof smbdoUpdateClient>>,
   TError,
-  { id: string; data: UpdateClientRequestSmbdo },
+  { id: string; data: BodyType<UpdateClientRequestSmbdo> },
   TContext
 > => {
   const mutationOptions = getSmbdoUpdateClientMutationOptions(options);
@@ -512,13 +535,16 @@ export const useSmbdoUpdateClient = <
  */
 export const smbdoPostClientVerifications = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<void>> => {
-  return axios.post(`/clients/${id}/verifications`, undefined, options);
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<void>(
+    { url: `/clients/${id}/verifications`, method: 'POST' },
+    options
+  );
 };
 
 export const getSmbdoPostClientVerificationsMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -535,14 +561,14 @@ export const getSmbdoPostClientVerificationsMutationOptions = <
     { id: string },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof smbdoPostClientVerifications>>,
   TError,
   { id: string },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof smbdoPostClientVerifications>>,
@@ -550,7 +576,7 @@ export const getSmbdoPostClientVerificationsMutationOptions = <
   > = (props) => {
     const { id } = props ?? {};
 
-    return smbdoPostClientVerifications(id, axiosOptions);
+    return smbdoPostClientVerifications(id, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -560,7 +586,7 @@ export type SmbdoPostClientVerificationsMutationResult = NonNullable<
   Awaited<ReturnType<typeof smbdoPostClientVerifications>>
 >;
 
-export type SmbdoPostClientVerificationsMutationError = AxiosError<
+export type SmbdoPostClientVerificationsMutationError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -574,7 +600,7 @@ export type SmbdoPostClientVerificationsMutationError = AxiosError<
  * @summary Perform client verifications
  */
 export const useSmbdoPostClientVerifications = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -591,7 +617,7 @@ export const useSmbdoPostClientVerifications = <
     { id: string },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof smbdoPostClientVerifications>>,
   TError,
@@ -610,12 +636,13 @@ export const useSmbdoPostClientVerifications = <
  */
 export const smbdoListParties = (
   params?: SmbdoListPartiesParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<PartyListResponse>> => {
-  return axios.get(`/parties`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<PartyListResponse>(
+    { url: `/parties`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSmbdoListPartiesQueryKey = (
@@ -626,7 +653,7 @@ export const getSmbdoListPartiesQueryKey = (
 
 export const getSmbdoListPartiesQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoListParties>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -644,17 +671,17 @@ export const getSmbdoListPartiesQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoListPartiesQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoListParties>>
-  > = ({ signal }) => smbdoListParties(params, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoListParties(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof smbdoListParties>>,
@@ -666,7 +693,7 @@ export const getSmbdoListPartiesQueryOptions = <
 export type SmbdoListPartiesQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoListParties>>
 >;
-export type SmbdoListPartiesQueryError = AxiosError<
+export type SmbdoListPartiesQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -680,7 +707,7 @@ export type SmbdoListPartiesQueryError = AxiosError<
  */
 export const useSmbdoListParties = <
   TData = Awaited<ReturnType<typeof smbdoListParties>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -698,7 +725,7 @@ export const useSmbdoListParties = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoListPartiesQueryOptions(params, options);
@@ -717,14 +744,22 @@ export const useSmbdoListParties = <
  * @summary Create party
  */
 export const smbdoPostParties = (
-  createPartyRequest: CreatePartyRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<PartyResponse>> => {
-  return axios.post(`/parties`, createPartyRequest, options);
+  createPartyRequest: BodyType<CreatePartyRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<PartyResponse>(
+    {
+      url: `/parties`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createPartyRequest,
+    },
+    options
+  );
 };
 
 export const getSmbdoPostPartiesMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -737,25 +772,25 @@ export const getSmbdoPostPartiesMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoPostParties>>,
     TError,
-    { data: CreatePartyRequest },
+    { data: BodyType<CreatePartyRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof smbdoPostParties>>,
   TError,
-  { data: CreatePartyRequest },
+  { data: BodyType<CreatePartyRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof smbdoPostParties>>,
-    { data: CreatePartyRequest }
+    { data: BodyType<CreatePartyRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return smbdoPostParties(data, axiosOptions);
+    return smbdoPostParties(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -764,8 +799,8 @@ export const getSmbdoPostPartiesMutationOptions = <
 export type SmbdoPostPartiesMutationResult = NonNullable<
   Awaited<ReturnType<typeof smbdoPostParties>>
 >;
-export type SmbdoPostPartiesMutationBody = CreatePartyRequest;
-export type SmbdoPostPartiesMutationError = AxiosError<
+export type SmbdoPostPartiesMutationBody = BodyType<CreatePartyRequest>;
+export type SmbdoPostPartiesMutationError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -778,7 +813,7 @@ export type SmbdoPostPartiesMutationError = AxiosError<
  * @summary Create party
  */
 export const useSmbdoPostParties = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -791,14 +826,14 @@ export const useSmbdoPostParties = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoPostParties>>,
     TError,
-    { data: CreatePartyRequest },
+    { data: BodyType<CreatePartyRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof smbdoPostParties>>,
   TError,
-  { data: CreatePartyRequest },
+  { data: BodyType<CreatePartyRequest> },
   TContext
 > => {
   const mutationOptions = getSmbdoPostPartiesMutationOptions(options);
@@ -812,9 +847,13 @@ export const useSmbdoPostParties = <
  */
 export const smbdoGetParty = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<PartyResponse>> => {
-  return axios.get(`/parties/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<PartyResponse>(
+    { url: `/parties/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoGetPartyQueryKey = (id: string) => {
@@ -823,7 +862,7 @@ export const getSmbdoGetPartyQueryKey = (id: string) => {
 
 export const getSmbdoGetPartyQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetParty>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -837,16 +876,16 @@ export const getSmbdoGetPartyQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof smbdoGetParty>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getSmbdoGetPartyQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof smbdoGetParty>>> = ({
     signal,
-  }) => smbdoGetParty(id, { signal, ...axiosOptions });
+  }) => smbdoGetParty(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -863,7 +902,7 @@ export const getSmbdoGetPartyQueryOptions = <
 export type SmbdoGetPartyQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetParty>>
 >;
-export type SmbdoGetPartyQueryError = AxiosError<
+export type SmbdoGetPartyQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -877,7 +916,7 @@ export type SmbdoGetPartyQueryError = AxiosError<
  */
 export const useSmbdoGetParty = <
   TData = Awaited<ReturnType<typeof smbdoGetParty>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -891,7 +930,7 @@ export const useSmbdoGetParty = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof smbdoGetParty>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetPartyQueryOptions(id, options);
@@ -911,14 +950,22 @@ export const useSmbdoGetParty = <
  */
 export const smbdoUpdateParty = (
   id: string,
-  updatePartyRequest: UpdatePartyRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<PartyResponse>> => {
-  return axios.post(`/parties/${id}`, updatePartyRequest, options);
+  updatePartyRequest: BodyType<UpdatePartyRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<PartyResponse>(
+    {
+      url: `/parties/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: updatePartyRequest,
+    },
+    options
+  );
 };
 
 export const getSmbdoUpdatePartyMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -931,25 +978,25 @@ export const getSmbdoUpdatePartyMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoUpdateParty>>,
     TError,
-    { id: string; data: UpdatePartyRequest },
+    { id: string; data: BodyType<UpdatePartyRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof smbdoUpdateParty>>,
   TError,
-  { id: string; data: UpdatePartyRequest },
+  { id: string; data: BodyType<UpdatePartyRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof smbdoUpdateParty>>,
-    { id: string; data: UpdatePartyRequest }
+    { id: string; data: BodyType<UpdatePartyRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return smbdoUpdateParty(id, data, axiosOptions);
+    return smbdoUpdateParty(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -958,8 +1005,8 @@ export const getSmbdoUpdatePartyMutationOptions = <
 export type SmbdoUpdatePartyMutationResult = NonNullable<
   Awaited<ReturnType<typeof smbdoUpdateParty>>
 >;
-export type SmbdoUpdatePartyMutationBody = UpdatePartyRequest;
-export type SmbdoUpdatePartyMutationError = AxiosError<
+export type SmbdoUpdatePartyMutationBody = BodyType<UpdatePartyRequest>;
+export type SmbdoUpdatePartyMutationError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -972,7 +1019,7 @@ export type SmbdoUpdatePartyMutationError = AxiosError<
  * @summary Update party
  */
 export const useSmbdoUpdateParty = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -985,14 +1032,14 @@ export const useSmbdoUpdateParty = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof smbdoUpdateParty>>,
     TError,
-    { id: string; data: UpdatePartyRequest },
+    { id: string; data: BodyType<UpdatePartyRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof smbdoUpdateParty>>,
   TError,
-  { id: string; data: UpdatePartyRequest },
+  { id: string; data: BodyType<UpdatePartyRequest> },
   TContext
 > => {
   const mutationOptions = getSmbdoUpdatePartyMutationOptions(options);
@@ -1007,12 +1054,13 @@ export const useSmbdoUpdateParty = <
  */
 export const smbdoListQuestions = (
   params?: SmbdoListQuestionsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<QuestionListResponse>> => {
-  return axios.get(`/questions`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<QuestionListResponse>(
+    { url: `/questions`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSmbdoListQuestionsQueryKey = (
@@ -1023,7 +1071,7 @@ export const getSmbdoListQuestionsQueryKey = (
 
 export const getSmbdoListQuestionsQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoListQuestions>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1041,17 +1089,17 @@ export const getSmbdoListQuestionsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoListQuestionsQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoListQuestions>>
-  > = ({ signal }) => smbdoListQuestions(params, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoListQuestions(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof smbdoListQuestions>>,
@@ -1063,7 +1111,7 @@ export const getSmbdoListQuestionsQueryOptions = <
 export type SmbdoListQuestionsQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoListQuestions>>
 >;
-export type SmbdoListQuestionsQueryError = AxiosError<
+export type SmbdoListQuestionsQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1077,7 +1125,7 @@ export type SmbdoListQuestionsQueryError = AxiosError<
  */
 export const useSmbdoListQuestions = <
   TData = Awaited<ReturnType<typeof smbdoListQuestions>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1095,7 +1143,7 @@ export const useSmbdoListQuestions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoListQuestionsQueryOptions(params, options);
@@ -1116,9 +1164,13 @@ export const useSmbdoListQuestions = <
  */
 export const smbdoGetQuestion = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<SchemasQuestionResponse>> => {
-  return axios.get(`/questions/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<SchemasQuestionResponse>(
+    { url: `/questions/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoGetQuestionQueryKey = (id: string) => {
@@ -1127,7 +1179,7 @@ export const getSmbdoGetQuestionQueryKey = (id: string) => {
 
 export const getSmbdoGetQuestionQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetQuestion>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1145,16 +1197,16 @@ export const getSmbdoGetQuestionQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getSmbdoGetQuestionQueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoGetQuestion>>
-  > = ({ signal }) => smbdoGetQuestion(id, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoGetQuestion(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -1171,7 +1223,7 @@ export const getSmbdoGetQuestionQueryOptions = <
 export type SmbdoGetQuestionQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetQuestion>>
 >;
-export type SmbdoGetQuestionQueryError = AxiosError<
+export type SmbdoGetQuestionQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1185,7 +1237,7 @@ export type SmbdoGetQuestionQueryError = AxiosError<
  */
 export const useSmbdoGetQuestion = <
   TData = Awaited<ReturnType<typeof smbdoGetQuestion>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1203,7 +1255,7 @@ export const useSmbdoGetQuestion = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetQuestionQueryOptions(id, options);
@@ -1224,12 +1276,13 @@ export const useSmbdoGetQuestion = <
  */
 export const smbdoGetAllDocumentDetails = (
   params?: SmbdoGetAllDocumentDetailsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListDocumentsResponse>> => {
-  return axios.get(`/documents`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListDocumentsResponse>(
+    { url: `/documents`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSmbdoGetAllDocumentDetailsQueryKey = (
@@ -1240,7 +1293,7 @@ export const getSmbdoGetAllDocumentDetailsQueryKey = (
 
 export const getSmbdoGetAllDocumentDetailsQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetAllDocumentDetails>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1258,10 +1311,10 @@ export const getSmbdoGetAllDocumentDetailsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoGetAllDocumentDetailsQueryKey(params);
@@ -1269,7 +1322,7 @@ export const getSmbdoGetAllDocumentDetailsQueryOptions = <
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoGetAllDocumentDetails>>
   > = ({ signal }) =>
-    smbdoGetAllDocumentDetails(params, { signal, ...axiosOptions });
+    smbdoGetAllDocumentDetails(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof smbdoGetAllDocumentDetails>>,
@@ -1281,7 +1334,7 @@ export const getSmbdoGetAllDocumentDetailsQueryOptions = <
 export type SmbdoGetAllDocumentDetailsQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetAllDocumentDetails>>
 >;
-export type SmbdoGetAllDocumentDetailsQueryError = AxiosError<
+export type SmbdoGetAllDocumentDetailsQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1295,7 +1348,7 @@ export type SmbdoGetAllDocumentDetailsQueryError = AxiosError<
  */
 export const useSmbdoGetAllDocumentDetails = <
   TData = Awaited<ReturnType<typeof smbdoGetAllDocumentDetails>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1313,7 +1366,7 @@ export const useSmbdoGetAllDocumentDetails = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetAllDocumentDetailsQueryOptions(
@@ -1337,9 +1390,13 @@ export const useSmbdoGetAllDocumentDetails = <
  */
 export const smbdoGetDocumentDetail = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListDocumentsResponse>> => {
-  return axios.get(`/documents/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListDocumentsResponse>(
+    { url: `/documents/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoGetDocumentDetailQueryKey = (id: string) => {
@@ -1348,7 +1405,7 @@ export const getSmbdoGetDocumentDetailQueryKey = (id: string) => {
 
 export const getSmbdoGetDocumentDetailQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetDocumentDetail>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1366,17 +1423,17 @@ export const getSmbdoGetDocumentDetailQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoGetDocumentDetailQueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoGetDocumentDetail>>
-  > = ({ signal }) => smbdoGetDocumentDetail(id, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoGetDocumentDetail(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -1393,7 +1450,7 @@ export const getSmbdoGetDocumentDetailQueryOptions = <
 export type SmbdoGetDocumentDetailQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetDocumentDetail>>
 >;
-export type SmbdoGetDocumentDetailQueryError = AxiosError<
+export type SmbdoGetDocumentDetailQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1407,7 +1464,7 @@ export type SmbdoGetDocumentDetailQueryError = AxiosError<
  */
 export const useSmbdoGetDocumentDetail = <
   TData = Awaited<ReturnType<typeof smbdoGetDocumentDetail>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1425,7 +1482,7 @@ export const useSmbdoGetDocumentDetail = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetDocumentDetailQueryOptions(id, options);
@@ -1445,9 +1502,13 @@ export const useSmbdoGetDocumentDetail = <
  */
 export const smbdoDownloadDocument = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<string | SmbdoDownloadDocument200Six>> => {
-  return axios.get(`/documents/${id}/file`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<string | SmbdoDownloadDocument200Six>(
+    { url: `/documents/${id}/file`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoDownloadDocumentQueryKey = (id: string) => {
@@ -1456,7 +1517,7 @@ export const getSmbdoDownloadDocumentQueryKey = (id: string) => {
 
 export const getSmbdoDownloadDocumentQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoDownloadDocument>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1474,17 +1535,17 @@ export const getSmbdoDownloadDocumentQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoDownloadDocumentQueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoDownloadDocument>>
-  > = ({ signal }) => smbdoDownloadDocument(id, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoDownloadDocument(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -1501,7 +1562,7 @@ export const getSmbdoDownloadDocumentQueryOptions = <
 export type SmbdoDownloadDocumentQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoDownloadDocument>>
 >;
-export type SmbdoDownloadDocumentQueryError = AxiosError<
+export type SmbdoDownloadDocumentQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1515,7 +1576,7 @@ export type SmbdoDownloadDocumentQueryError = AxiosError<
  */
 export const useSmbdoDownloadDocument = <
   TData = Awaited<ReturnType<typeof smbdoDownloadDocument>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1533,7 +1594,7 @@ export const useSmbdoDownloadDocument = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoDownloadDocumentQueryOptions(id, options);
@@ -1554,12 +1615,13 @@ export const useSmbdoDownloadDocument = <
  */
 export const smbdoListDocumentRequests = (
   params?: SmbdoListDocumentRequestsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<DocumentRequestListResponse>> => {
-  return axios.get(`/document-requests`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<DocumentRequestListResponse>(
+    { url: `/document-requests`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSmbdoListDocumentRequestsQueryKey = (
@@ -1570,7 +1632,7 @@ export const getSmbdoListDocumentRequestsQueryKey = (
 
 export const getSmbdoListDocumentRequestsQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoListDocumentRequests>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1588,18 +1650,17 @@ export const getSmbdoListDocumentRequestsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoListDocumentRequestsQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoListDocumentRequests>>
-  > = ({ signal }) =>
-    smbdoListDocumentRequests(params, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoListDocumentRequests(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof smbdoListDocumentRequests>>,
@@ -1611,7 +1672,7 @@ export const getSmbdoListDocumentRequestsQueryOptions = <
 export type SmbdoListDocumentRequestsQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoListDocumentRequests>>
 >;
-export type SmbdoListDocumentRequestsQueryError = AxiosError<
+export type SmbdoListDocumentRequestsQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1625,7 +1686,7 @@ export type SmbdoListDocumentRequestsQueryError = AxiosError<
  */
 export const useSmbdoListDocumentRequests = <
   TData = Awaited<ReturnType<typeof smbdoListDocumentRequests>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1643,7 +1704,7 @@ export const useSmbdoListDocumentRequests = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoListDocumentRequestsQueryOptions(
@@ -1666,9 +1727,13 @@ export const useSmbdoListDocumentRequests = <
  */
 export const smbdoGetDocumentRequest = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<DocumentRequestResponse>> => {
-  return axios.get(`/document-requests/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<DocumentRequestResponse>(
+    { url: `/document-requests/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getSmbdoGetDocumentRequestQueryKey = (id: string) => {
@@ -1677,7 +1742,7 @@ export const getSmbdoGetDocumentRequestQueryKey = (id: string) => {
 
 export const getSmbdoGetDocumentRequestQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoGetDocumentRequest>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1695,17 +1760,17 @@ export const getSmbdoGetDocumentRequestQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSmbdoGetDocumentRequestQueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof smbdoGetDocumentRequest>>
-  > = ({ signal }) => smbdoGetDocumentRequest(id, { signal, ...axiosOptions });
+  > = ({ signal }) => smbdoGetDocumentRequest(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -1722,7 +1787,7 @@ export const getSmbdoGetDocumentRequestQueryOptions = <
 export type SmbdoGetDocumentRequestQueryResult = NonNullable<
   Awaited<ReturnType<typeof smbdoGetDocumentRequest>>
 >;
-export type SmbdoGetDocumentRequestQueryError = AxiosError<
+export type SmbdoGetDocumentRequestQueryError = ErrorType<
   | N400DoResponse
   | N401DoResponse
   | N403DoResponse
@@ -1736,7 +1801,7 @@ export type SmbdoGetDocumentRequestQueryError = AxiosError<
  */
 export const useSmbdoGetDocumentRequest = <
   TData = Awaited<ReturnType<typeof smbdoGetDocumentRequest>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400DoResponse
     | N401DoResponse
     | N403DoResponse
@@ -1754,7 +1819,7 @@ export const useSmbdoGetDocumentRequest = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSmbdoGetDocumentRequestQueryOptions(id, options);
@@ -1774,12 +1839,13 @@ export const useSmbdoGetDocumentRequest = <
  */
 export const getAccounts = (
   params?: GetAccountsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListAccountsResponse>> => {
-  return axios.get(`/accounts`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListAccountsResponse>(
+    { url: `/accounts`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getGetAccountsQueryKey = (params?: GetAccountsParams) => {
@@ -1788,7 +1854,7 @@ export const getGetAccountsQueryKey = (params?: GetAccountsParams) => {
 
 export const getGetAccountsQueryOptions = <
   TData = Awaited<ReturnType<typeof getAccounts>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -1802,16 +1868,16 @@ export const getGetAccountsQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAccounts>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetAccountsQueryKey(params);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccounts>>> = ({
     signal,
-  }) => getAccounts(params, { signal, ...axiosOptions });
+  }) => getAccounts(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getAccounts>>,
@@ -1823,7 +1889,7 @@ export const getGetAccountsQueryOptions = <
 export type GetAccountsQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAccounts>>
 >;
-export type GetAccountsQueryError = AxiosError<
+export type GetAccountsQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -1837,7 +1903,7 @@ export type GetAccountsQueryError = AxiosError<
  */
 export const useGetAccounts = <
   TData = Awaited<ReturnType<typeof getAccounts>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -1851,7 +1917,7 @@ export const useGetAccounts = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAccounts>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetAccountsQueryOptions(params, options);
@@ -1870,14 +1936,22 @@ export const useGetAccounts = <
  * @summary Create account
  */
 export const postAccounts = (
-  createAccountRequest: CreateAccountRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<AccountResponseWithStatus>> => {
-  return axios.post(`/accounts`, createAccountRequest, options);
+  createAccountRequest: BodyType<CreateAccountRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<AccountResponseWithStatus>(
+    {
+      url: `/accounts`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createAccountRequest,
+    },
+    options
+  );
 };
 
 export const getPostAccountsMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -1890,25 +1964,25 @@ export const getPostAccountsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postAccounts>>,
     TError,
-    { data: CreateAccountRequest },
+    { data: BodyType<CreateAccountRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postAccounts>>,
   TError,
-  { data: CreateAccountRequest },
+  { data: BodyType<CreateAccountRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postAccounts>>,
-    { data: CreateAccountRequest }
+    { data: BodyType<CreateAccountRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return postAccounts(data, axiosOptions);
+    return postAccounts(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -1917,8 +1991,8 @@ export const getPostAccountsMutationOptions = <
 export type PostAccountsMutationResult = NonNullable<
   Awaited<ReturnType<typeof postAccounts>>
 >;
-export type PostAccountsMutationBody = CreateAccountRequest;
-export type PostAccountsMutationError = AxiosError<
+export type PostAccountsMutationBody = BodyType<CreateAccountRequest>;
+export type PostAccountsMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -1931,7 +2005,7 @@ export type PostAccountsMutationError = AxiosError<
  * @summary Create account
  */
 export const usePostAccounts = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -1944,14 +2018,14 @@ export const usePostAccounts = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postAccounts>>,
     TError,
-    { data: CreateAccountRequest },
+    { data: BodyType<CreateAccountRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof postAccounts>>,
   TError,
-  { data: CreateAccountRequest },
+  { data: BodyType<CreateAccountRequest> },
   TContext
 > => {
   const mutationOptions = getPostAccountsMutationOptions(options);
@@ -1965,9 +2039,13 @@ export const usePostAccounts = <
  */
 export const getAccount = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<AccountResponseWithStatus>> => {
-  return axios.get(`/accounts/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<AccountResponseWithStatus>(
+    { url: `/accounts/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetAccountQueryKey = (id: string) => {
@@ -1976,7 +2054,7 @@ export const getGetAccountQueryKey = (id: string) => {
 
 export const getGetAccountQueryOptions = <
   TData = Awaited<ReturnType<typeof getAccount>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -1990,16 +2068,16 @@ export const getGetAccountQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAccount>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetAccountQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccount>>> = ({
     signal,
-  }) => getAccount(id, { signal, ...axiosOptions });
+  }) => getAccount(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -2016,7 +2094,7 @@ export const getGetAccountQueryOptions = <
 export type GetAccountQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAccount>>
 >;
-export type GetAccountQueryError = AxiosError<
+export type GetAccountQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2030,7 +2108,7 @@ export type GetAccountQueryError = AxiosError<
  */
 export const useGetAccount = <
   TData = Awaited<ReturnType<typeof getAccount>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2044,7 +2122,7 @@ export const useGetAccount = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAccount>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetAccountQueryOptions(id, options);
@@ -2064,9 +2142,13 @@ export const useGetAccount = <
  */
 export const getAccountBalance = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<AccountBalanceResponse>> => {
-  return axios.get(`/accounts/${id}/balances`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<AccountBalanceResponse>(
+    { url: `/accounts/${id}/balances`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetAccountBalanceQueryKey = (id: string) => {
@@ -2075,7 +2157,7 @@ export const getGetAccountBalanceQueryKey = (id: string) => {
 
 export const getGetAccountBalanceQueryOptions = <
   TData = Awaited<ReturnType<typeof getAccountBalance>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2093,16 +2175,16 @@ export const getGetAccountBalanceQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetAccountBalanceQueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getAccountBalance>>
-  > = ({ signal }) => getAccountBalance(id, { signal, ...axiosOptions });
+  > = ({ signal }) => getAccountBalance(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -2119,7 +2201,7 @@ export const getGetAccountBalanceQueryOptions = <
 export type GetAccountBalanceQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAccountBalance>>
 >;
-export type GetAccountBalanceQueryError = AxiosError<
+export type GetAccountBalanceQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2133,7 +2215,7 @@ export type GetAccountBalanceQueryError = AxiosError<
  */
 export const useGetAccountBalance = <
   TData = Awaited<ReturnType<typeof getAccountBalance>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2151,7 +2233,7 @@ export const useGetAccountBalance = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetAccountBalanceQueryOptions(id, options);
@@ -2171,12 +2253,13 @@ export const useGetAccountBalance = <
  */
 export const getAllRecipients = (
   params?: GetAllRecipientsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListRecipientsResponse>> => {
-  return axios.get(`/recipients`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListRecipientsResponse>(
+    { url: `/recipients`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getGetAllRecipientsQueryKey = (
@@ -2187,7 +2270,7 @@ export const getGetAllRecipientsQueryKey = (
 
 export const getGetAllRecipientsQueryOptions = <
   TData = Awaited<ReturnType<typeof getAllRecipients>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2205,17 +2288,17 @@ export const getGetAllRecipientsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getGetAllRecipientsQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getAllRecipients>>
-  > = ({ signal }) => getAllRecipients(params, { signal, ...axiosOptions });
+  > = ({ signal }) => getAllRecipients(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getAllRecipients>>,
@@ -2227,7 +2310,7 @@ export const getGetAllRecipientsQueryOptions = <
 export type GetAllRecipientsQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAllRecipients>>
 >;
-export type GetAllRecipientsQueryError = AxiosError<
+export type GetAllRecipientsQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2241,7 +2324,7 @@ export type GetAllRecipientsQueryError = AxiosError<
  */
 export const useGetAllRecipients = <
   TData = Awaited<ReturnType<typeof getAllRecipients>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2259,7 +2342,7 @@ export const useGetAllRecipients = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetAllRecipientsQueryOptions(params, options);
@@ -2278,14 +2361,22 @@ export const useGetAllRecipients = <
  * @summary Create recipient
  */
 export const createRecipient = (
-  recipientRequest: RecipientRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Recipient>> => {
-  return axios.post(`/recipients`, recipientRequest, options);
+  recipientRequest: BodyType<RecipientRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<Recipient>(
+    {
+      url: `/recipients`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: recipientRequest,
+    },
+    options
+  );
 };
 
 export const getCreateRecipientMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400RecipientsResponse
     | N401Response
     | N403Response
@@ -2298,25 +2389,25 @@ export const getCreateRecipientMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createRecipient>>,
     TError,
-    { data: RecipientRequest },
+    { data: BodyType<RecipientRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createRecipient>>,
   TError,
-  { data: RecipientRequest },
+  { data: BodyType<RecipientRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createRecipient>>,
-    { data: RecipientRequest }
+    { data: BodyType<RecipientRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return createRecipient(data, axiosOptions);
+    return createRecipient(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -2325,8 +2416,8 @@ export const getCreateRecipientMutationOptions = <
 export type CreateRecipientMutationResult = NonNullable<
   Awaited<ReturnType<typeof createRecipient>>
 >;
-export type CreateRecipientMutationBody = RecipientRequest;
-export type CreateRecipientMutationError = AxiosError<
+export type CreateRecipientMutationBody = BodyType<RecipientRequest>;
+export type CreateRecipientMutationError = ErrorType<
   | N400RecipientsResponse
   | N401Response
   | N403Response
@@ -2339,7 +2430,7 @@ export type CreateRecipientMutationError = AxiosError<
  * @summary Create recipient
  */
 export const useCreateRecipient = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400RecipientsResponse
     | N401Response
     | N403Response
@@ -2352,14 +2443,14 @@ export const useCreateRecipient = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createRecipient>>,
     TError,
-    { data: RecipientRequest },
+    { data: BodyType<RecipientRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof createRecipient>>,
   TError,
-  { data: RecipientRequest },
+  { data: BodyType<RecipientRequest> },
   TContext
 > => {
   const mutationOptions = getCreateRecipientMutationOptions(options);
@@ -2373,9 +2464,13 @@ export const useCreateRecipient = <
  */
 export const getRecipient = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Recipient>> => {
-  return axios.get(`/recipients/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<Recipient>(
+    { url: `/recipients/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetRecipientQueryKey = (id: string) => {
@@ -2384,7 +2479,7 @@ export const getGetRecipientQueryKey = (id: string) => {
 
 export const getGetRecipientQueryOptions = <
   TData = Awaited<ReturnType<typeof getRecipient>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2398,16 +2493,16 @@ export const getGetRecipientQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getRecipient>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetRecipientQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipient>>> = ({
     signal,
-  }) => getRecipient(id, { signal, ...axiosOptions });
+  }) => getRecipient(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -2424,7 +2519,7 @@ export const getGetRecipientQueryOptions = <
 export type GetRecipientQueryResult = NonNullable<
   Awaited<ReturnType<typeof getRecipient>>
 >;
-export type GetRecipientQueryError = AxiosError<
+export type GetRecipientQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2438,7 +2533,7 @@ export type GetRecipientQueryError = AxiosError<
  */
 export const useGetRecipient = <
   TData = Awaited<ReturnType<typeof getRecipient>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2452,7 +2547,7 @@ export const useGetRecipient = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getRecipient>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetRecipientQueryOptions(id, options);
@@ -2472,14 +2567,22 @@ export const useGetRecipient = <
  */
 export const amendRecipient = (
   id: string,
-  updateRecipientRequest: UpdateRecipientRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<Recipient>> => {
-  return axios.post(`/recipients/${id}`, updateRecipientRequest, options);
+  updateRecipientRequest: BodyType<UpdateRecipientRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<Recipient>(
+    {
+      url: `/recipients/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: updateRecipientRequest,
+    },
+    options
+  );
 };
 
 export const getAmendRecipientMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2492,25 +2595,25 @@ export const getAmendRecipientMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof amendRecipient>>,
     TError,
-    { id: string; data: UpdateRecipientRequest },
+    { id: string; data: BodyType<UpdateRecipientRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof amendRecipient>>,
   TError,
-  { id: string; data: UpdateRecipientRequest },
+  { id: string; data: BodyType<UpdateRecipientRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof amendRecipient>>,
-    { id: string; data: UpdateRecipientRequest }
+    { id: string; data: BodyType<UpdateRecipientRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return amendRecipient(id, data, axiosOptions);
+    return amendRecipient(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -2519,8 +2622,8 @@ export const getAmendRecipientMutationOptions = <
 export type AmendRecipientMutationResult = NonNullable<
   Awaited<ReturnType<typeof amendRecipient>>
 >;
-export type AmendRecipientMutationBody = UpdateRecipientRequest;
-export type AmendRecipientMutationError = AxiosError<
+export type AmendRecipientMutationBody = BodyType<UpdateRecipientRequest>;
+export type AmendRecipientMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2533,7 +2636,7 @@ export type AmendRecipientMutationError = AxiosError<
  * @summary Update recipient
  */
 export const useAmendRecipient = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2546,14 +2649,14 @@ export const useAmendRecipient = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof amendRecipient>>,
     TError,
-    { id: string; data: UpdateRecipientRequest },
+    { id: string; data: BodyType<UpdateRecipientRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof amendRecipient>>,
   TError,
-  { id: string; data: UpdateRecipientRequest },
+  { id: string; data: BodyType<UpdateRecipientRequest> },
   TContext
 > => {
   const mutationOptions = getAmendRecipientMutationOptions(options);
@@ -2567,18 +2670,22 @@ export const useAmendRecipient = <
  */
 export const recipientsVerification = (
   id: string,
-  microdepositAmounts: MicrodepositAmounts,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<MicrodepositVerificationResponse>> => {
-  return axios.post(
-    `/recipients/${id}/verify-microdeposit`,
-    microdepositAmounts,
+  microdepositAmounts: BodyType<MicrodepositAmounts>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<MicrodepositVerificationResponse>(
+    {
+      url: `/recipients/${id}/verify-microdeposit`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: microdepositAmounts,
+    },
     options
   );
 };
 
 export const getRecipientsVerificationMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2591,25 +2698,25 @@ export const getRecipientsVerificationMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof recipientsVerification>>,
     TError,
-    { id: string; data: MicrodepositAmounts },
+    { id: string; data: BodyType<MicrodepositAmounts> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof recipientsVerification>>,
   TError,
-  { id: string; data: MicrodepositAmounts },
+  { id: string; data: BodyType<MicrodepositAmounts> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof recipientsVerification>>,
-    { id: string; data: MicrodepositAmounts }
+    { id: string; data: BodyType<MicrodepositAmounts> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return recipientsVerification(id, data, axiosOptions);
+    return recipientsVerification(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -2618,8 +2725,8 @@ export const getRecipientsVerificationMutationOptions = <
 export type RecipientsVerificationMutationResult = NonNullable<
   Awaited<ReturnType<typeof recipientsVerification>>
 >;
-export type RecipientsVerificationMutationBody = MicrodepositAmounts;
-export type RecipientsVerificationMutationError = AxiosError<
+export type RecipientsVerificationMutationBody = BodyType<MicrodepositAmounts>;
+export type RecipientsVerificationMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -2632,7 +2739,7 @@ export type RecipientsVerificationMutationError = AxiosError<
  * @summary Creates a microdeposits verification process.
  */
 export const useRecipientsVerification = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -2645,14 +2752,14 @@ export const useRecipientsVerification = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof recipientsVerification>>,
     TError,
-    { id: string; data: MicrodepositAmounts },
+    { id: string; data: BodyType<MicrodepositAmounts> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof recipientsVerification>>,
   TError,
-  { id: string; data: MicrodepositAmounts },
+  { id: string; data: BodyType<MicrodepositAmounts> },
   TContext
 > => {
   const mutationOptions = getRecipientsVerificationMutationOptions(options);
@@ -2666,12 +2773,13 @@ export const useRecipientsVerification = <
  */
 export const listTransactionsV2 = (
   params?: ListTransactionsV2Params,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListTransactionsSearchResponseV2>> => {
-  return axios.get(`/transactions`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListTransactionsSearchResponseV2>(
+    { url: `/transactions`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getListTransactionsV2QueryKey = (
@@ -2682,7 +2790,7 @@ export const getListTransactionsV2QueryKey = (
 
 export const getListTransactionsV2QueryOptions = <
   TData = Awaited<ReturnType<typeof listTransactionsV2>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2700,17 +2808,17 @@ export const getListTransactionsV2QueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getListTransactionsV2QueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof listTransactionsV2>>
-  > = ({ signal }) => listTransactionsV2(params, { signal, ...axiosOptions });
+  > = ({ signal }) => listTransactionsV2(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof listTransactionsV2>>,
@@ -2722,7 +2830,7 @@ export const getListTransactionsV2QueryOptions = <
 export type ListTransactionsV2QueryResult = NonNullable<
   Awaited<ReturnType<typeof listTransactionsV2>>
 >;
-export type ListTransactionsV2QueryError = AxiosError<
+export type ListTransactionsV2QueryError = ErrorType<
   | N400v2Response
   | N401v2Response
   | N403v2Response
@@ -2736,7 +2844,7 @@ export type ListTransactionsV2QueryError = AxiosError<
  */
 export const useListTransactionsV2 = <
   TData = Awaited<ReturnType<typeof listTransactionsV2>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2754,7 +2862,7 @@ export const useListTransactionsV2 = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getListTransactionsV2QueryOptions(params, options);
@@ -2773,14 +2881,22 @@ export const useListTransactionsV2 = <
  * @summary Create transaction
  */
 export const createTransactionV2 = (
-  postTransactionRequestV2: PostTransactionRequestV2,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<TransactionResponseV2>> => {
-  return axios.post(`/transactions`, postTransactionRequestV2, options);
+  postTransactionRequestV2: BodyType<PostTransactionRequestV2>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<TransactionResponseV2>(
+    {
+      url: `/transactions`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: postTransactionRequestV2,
+    },
+    options
+  );
 };
 
 export const getCreateTransactionV2MutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2793,25 +2909,25 @@ export const getCreateTransactionV2MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createTransactionV2>>,
     TError,
-    { data: PostTransactionRequestV2 },
+    { data: BodyType<PostTransactionRequestV2> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createTransactionV2>>,
   TError,
-  { data: PostTransactionRequestV2 },
+  { data: BodyType<PostTransactionRequestV2> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createTransactionV2>>,
-    { data: PostTransactionRequestV2 }
+    { data: BodyType<PostTransactionRequestV2> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return createTransactionV2(data, axiosOptions);
+    return createTransactionV2(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -2820,8 +2936,9 @@ export const getCreateTransactionV2MutationOptions = <
 export type CreateTransactionV2MutationResult = NonNullable<
   Awaited<ReturnType<typeof createTransactionV2>>
 >;
-export type CreateTransactionV2MutationBody = PostTransactionRequestV2;
-export type CreateTransactionV2MutationError = AxiosError<
+export type CreateTransactionV2MutationBody =
+  BodyType<PostTransactionRequestV2>;
+export type CreateTransactionV2MutationError = ErrorType<
   | N400v2Response
   | N401v2Response
   | N403v2Response
@@ -2834,7 +2951,7 @@ export type CreateTransactionV2MutationError = AxiosError<
  * @summary Create transaction
  */
 export const useCreateTransactionV2 = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2847,14 +2964,14 @@ export const useCreateTransactionV2 = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createTransactionV2>>,
     TError,
-    { data: PostTransactionRequestV2 },
+    { data: BodyType<PostTransactionRequestV2> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof createTransactionV2>>,
   TError,
-  { data: PostTransactionRequestV2 },
+  { data: BodyType<PostTransactionRequestV2> },
   TContext
 > => {
   const mutationOptions = getCreateTransactionV2MutationOptions(options);
@@ -2868,9 +2985,13 @@ export const useCreateTransactionV2 = <
  */
 export const getTransactionV2 = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<TransactionGetResponseV2>> => {
-  return axios.get(`/transactions/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<TransactionGetResponseV2>(
+    { url: `/transactions/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetTransactionV2QueryKey = (id: string) => {
@@ -2879,7 +3000,7 @@ export const getGetTransactionV2QueryKey = (id: string) => {
 
 export const getGetTransactionV2QueryOptions = <
   TData = Awaited<ReturnType<typeof getTransactionV2>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2897,16 +3018,16 @@ export const getGetTransactionV2QueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetTransactionV2QueryKey(id);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getTransactionV2>>
-  > = ({ signal }) => getTransactionV2(id, { signal, ...axiosOptions });
+  > = ({ signal }) => getTransactionV2(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -2923,7 +3044,7 @@ export const getGetTransactionV2QueryOptions = <
 export type GetTransactionV2QueryResult = NonNullable<
   Awaited<ReturnType<typeof getTransactionV2>>
 >;
-export type GetTransactionV2QueryError = AxiosError<
+export type GetTransactionV2QueryError = ErrorType<
   | N400v2Response
   | N401v2Response
   | N403v2Response
@@ -2937,7 +3058,7 @@ export type GetTransactionV2QueryError = AxiosError<
  */
 export const useGetTransactionV2 = <
   TData = Awaited<ReturnType<typeof getTransactionV2>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400v2Response
     | N401v2Response
     | N403v2Response
@@ -2955,7 +3076,7 @@ export const useGetTransactionV2 = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetTransactionV2QueryOptions(id, options);
@@ -2975,9 +3096,13 @@ export const useGetTransactionV2 = <
  */
 export const getStatement = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<string>> => {
-  return axios.get(`/statements/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<string>(
+    { url: `/statements/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetStatementQueryKey = (id: string) => {
@@ -2986,7 +3111,7 @@ export const getGetStatementQueryKey = (id: string) => {
 
 export const getGetStatementQueryOptions = <
   TData = Awaited<ReturnType<typeof getStatement>>,
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
 >(
@@ -2995,16 +3120,16 @@ export const getGetStatementQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getStatement>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetStatementQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatement>>> = ({
     signal,
-  }) => getStatement(id, { signal, ...axiosOptions });
+  }) => getStatement(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -3021,7 +3146,7 @@ export const getGetStatementQueryOptions = <
 export type GetStatementQueryResult = NonNullable<
   Awaited<ReturnType<typeof getStatement>>
 >;
-export type GetStatementQueryError = AxiosError<
+export type GetStatementQueryError = ErrorType<
   N401Response | N403Response | N404Response | N500Response | N503Response
 >;
 
@@ -3030,7 +3155,7 @@ export type GetStatementQueryError = AxiosError<
  */
 export const useGetStatement = <
   TData = Awaited<ReturnType<typeof getStatement>>,
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
 >(
@@ -3039,7 +3164,7 @@ export const useGetStatement = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getStatement>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetStatementQueryOptions(id, options);
@@ -3059,12 +3184,13 @@ export const useGetStatement = <
  */
 export const searchStatements = (
   params: SearchStatementsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<StatementsResponse>> => {
-  return axios.get(`/statements/search`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<StatementsResponse>(
+    { url: `/statements/search`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getSearchStatementsQueryKey = (params: SearchStatementsParams) => {
@@ -3073,7 +3199,7 @@ export const getSearchStatementsQueryKey = (params: SearchStatementsParams) => {
 
 export const getSearchStatementsQueryOptions = <
   TData = Awaited<ReturnType<typeof searchStatements>>,
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
 >(
@@ -3086,17 +3212,17 @@ export const getSearchStatementsQueryOptions = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey =
     queryOptions?.queryKey ?? getSearchStatementsQueryKey(params);
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof searchStatements>>
-  > = ({ signal }) => searchStatements(params, { signal, ...axiosOptions });
+  > = ({ signal }) => searchStatements(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof searchStatements>>,
@@ -3108,7 +3234,7 @@ export const getSearchStatementsQueryOptions = <
 export type SearchStatementsQueryResult = NonNullable<
   Awaited<ReturnType<typeof searchStatements>>
 >;
-export type SearchStatementsQueryError = AxiosError<
+export type SearchStatementsQueryError = ErrorType<
   N401Response | N403Response | N404Response | N500Response | N503Response
 >;
 
@@ -3117,7 +3243,7 @@ export type SearchStatementsQueryError = AxiosError<
  */
 export const useSearchStatements = <
   TData = Awaited<ReturnType<typeof searchStatements>>,
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
 >(
@@ -3130,7 +3256,7 @@ export const useSearchStatements = <
         TData
       >
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getSearchStatementsQueryOptions(params, options);
@@ -3150,12 +3276,13 @@ export const useSearchStatements = <
  */
 export const getCases = (
   params?: GetCasesParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CasesPaginationResponse>> => {
-  return axios.get(`/cases`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<CasesPaginationResponse>(
+    { url: `/cases`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getGetCasesQueryKey = (params?: GetCasesParams) => {
@@ -3164,7 +3291,7 @@ export const getGetCasesQueryKey = (params?: GetCasesParams) => {
 
 export const getGetCasesQueryOptions = <
   TData = Awaited<ReturnType<typeof getCases>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3178,16 +3305,16 @@ export const getGetCasesQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getCases>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetCasesQueryKey(params);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getCases>>> = ({
     signal,
-  }) => getCases(params, { signal, ...axiosOptions });
+  }) => getCases(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getCases>>,
@@ -3199,7 +3326,7 @@ export const getGetCasesQueryOptions = <
 export type GetCasesQueryResult = NonNullable<
   Awaited<ReturnType<typeof getCases>>
 >;
-export type GetCasesQueryError = AxiosError<
+export type GetCasesQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3213,7 +3340,7 @@ export type GetCasesQueryError = AxiosError<
  */
 export const useGetCases = <
   TData = Awaited<ReturnType<typeof getCases>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3227,7 +3354,7 @@ export const useGetCases = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getCases>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetCasesQueryOptions(params, options);
@@ -3246,14 +3373,22 @@ export const useGetCases = <
  * @summary Create a new case
  */
 export const createCase = (
-  caseCreateRequest: CaseCreateRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CaseCreateResponse>> => {
-  return axios.post(`/cases`, caseCreateRequest, options);
+  caseCreateRequest: BodyType<CaseCreateRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<CaseCreateResponse>(
+    {
+      url: `/cases`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: caseCreateRequest,
+    },
+    options
+  );
 };
 
 export const getCreateCaseMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
   TContext = unknown,
@@ -3261,25 +3396,25 @@ export const getCreateCaseMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createCase>>,
     TError,
-    { data: CaseCreateRequest },
+    { data: BodyType<CaseCreateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createCase>>,
   TError,
-  { data: CaseCreateRequest },
+  { data: BodyType<CaseCreateRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createCase>>,
-    { data: CaseCreateRequest }
+    { data: BodyType<CaseCreateRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return createCase(data, axiosOptions);
+    return createCase(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -3288,8 +3423,8 @@ export const getCreateCaseMutationOptions = <
 export type CreateCaseMutationResult = NonNullable<
   Awaited<ReturnType<typeof createCase>>
 >;
-export type CreateCaseMutationBody = CaseCreateRequest;
-export type CreateCaseMutationError = AxiosError<
+export type CreateCaseMutationBody = BodyType<CaseCreateRequest>;
+export type CreateCaseMutationError = ErrorType<
   N401Response | N403Response | N404Response | N500Response | N503Response
 >;
 
@@ -3297,7 +3432,7 @@ export type CreateCaseMutationError = AxiosError<
  * @summary Create a new case
  */
 export const useCreateCase = <
-  TError = AxiosError<
+  TError = ErrorType<
     N401Response | N403Response | N404Response | N500Response | N503Response
   >,
   TContext = unknown,
@@ -3305,14 +3440,14 @@ export const useCreateCase = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createCase>>,
     TError,
-    { data: CaseCreateRequest },
+    { data: BodyType<CaseCreateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof createCase>>,
   TError,
-  { data: CaseCreateRequest },
+  { data: BodyType<CaseCreateRequest> },
   TContext
 > => {
   const mutationOptions = getCreateCaseMutationOptions(options);
@@ -3326,9 +3461,13 @@ export const useCreateCase = <
  */
 export const getCase = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CaseDetails>> => {
-  return axios.get(`/cases/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<CaseDetails>(
+    { url: `/cases/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetCaseQueryKey = (id: string) => {
@@ -3337,7 +3476,7 @@ export const getGetCaseQueryKey = (id: string) => {
 
 export const getGetCaseQueryOptions = <
   TData = Awaited<ReturnType<typeof getCase>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3351,16 +3490,16 @@ export const getGetCaseQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getCase>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetCaseQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getCase>>> = ({
     signal,
-  }) => getCase(id, { signal, ...axiosOptions });
+  }) => getCase(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -3375,7 +3514,7 @@ export const getGetCaseQueryOptions = <
 export type GetCaseQueryResult = NonNullable<
   Awaited<ReturnType<typeof getCase>>
 >;
-export type GetCaseQueryError = AxiosError<
+export type GetCaseQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3389,7 +3528,7 @@ export type GetCaseQueryError = AxiosError<
  */
 export const useGetCase = <
   TData = Awaited<ReturnType<typeof getCase>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3403,7 +3542,7 @@ export const useGetCase = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getCase>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetCaseQueryOptions(id, options);
@@ -3423,14 +3562,22 @@ export const useGetCase = <
  */
 export const updateCase = (
   id: string,
-  caseUpdateRequest: CaseUpdateRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CaseDetails>> => {
-  return axios.post(`/cases/${id}`, caseUpdateRequest, options);
+  caseUpdateRequest: BodyType<CaseUpdateRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<CaseDetails>(
+    {
+      url: `/cases/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: caseUpdateRequest,
+    },
+    options
+  );
 };
 
 export const getUpdateCaseMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3443,25 +3590,25 @@ export const getUpdateCaseMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateCase>>,
     TError,
-    { id: string; data: CaseUpdateRequest },
+    { id: string; data: BodyType<CaseUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateCase>>,
   TError,
-  { id: string; data: CaseUpdateRequest },
+  { id: string; data: BodyType<CaseUpdateRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateCase>>,
-    { id: string; data: CaseUpdateRequest }
+    { id: string; data: BodyType<CaseUpdateRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return updateCase(id, data, axiosOptions);
+    return updateCase(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -3470,8 +3617,8 @@ export const getUpdateCaseMutationOptions = <
 export type UpdateCaseMutationResult = NonNullable<
   Awaited<ReturnType<typeof updateCase>>
 >;
-export type UpdateCaseMutationBody = CaseUpdateRequest;
-export type UpdateCaseMutationError = AxiosError<
+export type UpdateCaseMutationBody = BodyType<CaseUpdateRequest>;
+export type UpdateCaseMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3484,7 +3631,7 @@ export type UpdateCaseMutationError = AxiosError<
  * @summary Update information on a specific case.
  */
 export const useUpdateCase = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3497,14 +3644,14 @@ export const useUpdateCase = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateCase>>,
     TError,
-    { id: string; data: CaseUpdateRequest },
+    { id: string; data: BodyType<CaseUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof updateCase>>,
   TError,
-  { id: string; data: CaseUpdateRequest },
+  { id: string; data: BodyType<CaseUpdateRequest> },
   TContext
 > => {
   const mutationOptions = getUpdateCaseMutationOptions(options);
@@ -3518,12 +3665,13 @@ export const useUpdateCase = <
  */
 export const getDebitCards = (
   params?: GetDebitCardsParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<DebitCardsResponse>> => {
-  return axios.get(`/debit-cards`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<DebitCardsResponse>(
+    { url: `/debit-cards`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getGetDebitCardsQueryKey = (params?: GetDebitCardsParams) => {
@@ -3532,7 +3680,7 @@ export const getGetDebitCardsQueryKey = (params?: GetDebitCardsParams) => {
 
 export const getGetDebitCardsQueryOptions = <
   TData = Awaited<ReturnType<typeof getDebitCards>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3545,16 +3693,16 @@ export const getGetDebitCardsQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getDebitCards>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetDebitCardsQueryKey(params);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getDebitCards>>> = ({
     signal,
-  }) => getDebitCards(params, { signal, ...axiosOptions });
+  }) => getDebitCards(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getDebitCards>>,
@@ -3566,7 +3714,7 @@ export const getGetDebitCardsQueryOptions = <
 export type GetDebitCardsQueryResult = NonNullable<
   Awaited<ReturnType<typeof getDebitCards>>
 >;
-export type GetDebitCardsQueryError = AxiosError<
+export type GetDebitCardsQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3579,7 +3727,7 @@ export type GetDebitCardsQueryError = AxiosError<
  */
 export const useGetDebitCards = <
   TData = Awaited<ReturnType<typeof getDebitCards>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3592,7 +3740,7 @@ export const useGetDebitCards = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getDebitCards>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetDebitCardsQueryOptions(params, options);
@@ -3611,14 +3759,22 @@ export const useGetDebitCards = <
  * @summary Create debit card
  */
 export const createDebitCard = (
-  createDebitCardRequest: CreateDebitCardRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CreateDebitCardResponse>> => {
-  return axios.post(`/debit-cards`, createDebitCardRequest, options);
+  createDebitCardRequest: BodyType<CreateDebitCardRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<CreateDebitCardResponse>(
+    {
+      url: `/debit-cards`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createDebitCardRequest,
+    },
+    options
+  );
 };
 
 export const getCreateDebitCardMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3631,25 +3787,25 @@ export const getCreateDebitCardMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createDebitCard>>,
     TError,
-    { data: CreateDebitCardRequest },
+    { data: BodyType<CreateDebitCardRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createDebitCard>>,
   TError,
-  { data: CreateDebitCardRequest },
+  { data: BodyType<CreateDebitCardRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createDebitCard>>,
-    { data: CreateDebitCardRequest }
+    { data: BodyType<CreateDebitCardRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return createDebitCard(data, axiosOptions);
+    return createDebitCard(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -3658,8 +3814,8 @@ export const getCreateDebitCardMutationOptions = <
 export type CreateDebitCardMutationResult = NonNullable<
   Awaited<ReturnType<typeof createDebitCard>>
 >;
-export type CreateDebitCardMutationBody = CreateDebitCardRequest;
-export type CreateDebitCardMutationError = AxiosError<
+export type CreateDebitCardMutationBody = BodyType<CreateDebitCardRequest>;
+export type CreateDebitCardMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3672,7 +3828,7 @@ export type CreateDebitCardMutationError = AxiosError<
  * @summary Create debit card
  */
 export const useCreateDebitCard = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3685,14 +3841,14 @@ export const useCreateDebitCard = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createDebitCard>>,
     TError,
-    { data: CreateDebitCardRequest },
+    { data: BodyType<CreateDebitCardRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof createDebitCard>>,
   TError,
-  { data: CreateDebitCardRequest },
+  { data: BodyType<CreateDebitCardRequest> },
   TContext
 > => {
   const mutationOptions = getCreateDebitCardMutationOptions(options);
@@ -3706,9 +3862,13 @@ export const useCreateDebitCard = <
  */
 export const getDebitCard = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CardDetailResponse>> => {
-  return axios.get(`/debit-cards/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<CardDetailResponse>(
+    { url: `/debit-cards/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetDebitCardQueryKey = (id: string) => {
@@ -3717,7 +3877,7 @@ export const getGetDebitCardQueryKey = (id: string) => {
 
 export const getGetDebitCardQueryOptions = <
   TData = Awaited<ReturnType<typeof getDebitCard>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3731,16 +3891,16 @@ export const getGetDebitCardQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getDebitCard>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetDebitCardQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getDebitCard>>> = ({
     signal,
-  }) => getDebitCard(id, { signal, ...axiosOptions });
+  }) => getDebitCard(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -3757,7 +3917,7 @@ export const getGetDebitCardQueryOptions = <
 export type GetDebitCardQueryResult = NonNullable<
   Awaited<ReturnType<typeof getDebitCard>>
 >;
-export type GetDebitCardQueryError = AxiosError<
+export type GetDebitCardQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3771,7 +3931,7 @@ export type GetDebitCardQueryError = AxiosError<
  */
 export const useGetDebitCard = <
   TData = Awaited<ReturnType<typeof getDebitCard>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3785,7 +3945,7 @@ export const useGetDebitCard = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getDebitCard>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetDebitCardQueryOptions(id, options);
@@ -3805,14 +3965,22 @@ export const useGetDebitCard = <
  */
 export const updateCard = (
   id: string,
-  cardUpdateRequest: CardUpdateRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<CardUpdateResponse>> => {
-  return axios.post(`/debit-cards/${id}`, cardUpdateRequest, options);
+  cardUpdateRequest: BodyType<CardUpdateRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<CardUpdateResponse>(
+    {
+      url: `/debit-cards/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: cardUpdateRequest,
+    },
+    options
+  );
 };
 
 export const getUpdateCardMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3825,25 +3993,25 @@ export const getUpdateCardMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateCard>>,
     TError,
-    { id: string; data: CardUpdateRequest },
+    { id: string; data: BodyType<CardUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateCard>>,
   TError,
-  { id: string; data: CardUpdateRequest },
+  { id: string; data: BodyType<CardUpdateRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateCard>>,
-    { id: string; data: CardUpdateRequest }
+    { id: string; data: BodyType<CardUpdateRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return updateCard(id, data, axiosOptions);
+    return updateCard(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -3852,8 +4020,8 @@ export const getUpdateCardMutationOptions = <
 export type UpdateCardMutationResult = NonNullable<
   Awaited<ReturnType<typeof updateCard>>
 >;
-export type UpdateCardMutationBody = CardUpdateRequest;
-export type UpdateCardMutationError = AxiosError<
+export type UpdateCardMutationBody = BodyType<CardUpdateRequest>;
+export type UpdateCardMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -3866,7 +4034,7 @@ export type UpdateCardMutationError = AxiosError<
  * @summary Update card
  */
 export const useUpdateCard = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -3879,14 +4047,14 @@ export const useUpdateCard = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateCard>>,
     TError,
-    { id: string; data: CardUpdateRequest },
+    { id: string; data: BodyType<CardUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof updateCard>>,
   TError,
-  { id: string; data: CardUpdateRequest },
+  { id: string; data: BodyType<CardUpdateRequest> },
   TContext
 > => {
   const mutationOptions = getUpdateCardMutationOptions(options);
@@ -3900,12 +4068,13 @@ export const useUpdateCard = <
  */
 export const getAllUsers = (
   params?: GetAllUsersParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListUserResponse>> => {
-  return axios.get(`/users`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListUserResponse>(
+    { url: `/users`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getGetAllUsersQueryKey = (params?: GetAllUsersParams) => {
@@ -3914,7 +4083,7 @@ export const getGetAllUsersQueryKey = (params?: GetAllUsersParams) => {
 
 export const getGetAllUsersQueryOptions = <
   TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | User400ClientIdResponse
     | User401Response
     | User403Response
@@ -3927,16 +4096,16 @@ export const getGetAllUsersQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetAllUsersQueryKey(params);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllUsers>>> = ({
     signal,
-  }) => getAllUsers(params, { signal, ...axiosOptions });
+  }) => getAllUsers(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getAllUsers>>,
@@ -3948,7 +4117,7 @@ export const getGetAllUsersQueryOptions = <
 export type GetAllUsersQueryResult = NonNullable<
   Awaited<ReturnType<typeof getAllUsers>>
 >;
-export type GetAllUsersQueryError = AxiosError<
+export type GetAllUsersQueryError = ErrorType<
   | User400ClientIdResponse
   | User401Response
   | User403Response
@@ -3961,7 +4130,7 @@ export type GetAllUsersQueryError = AxiosError<
  */
 export const useGetAllUsers = <
   TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | User400ClientIdResponse
     | User401Response
     | User403Response
@@ -3974,7 +4143,7 @@ export const useGetAllUsers = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetAllUsersQueryOptions(params, options);
@@ -3993,14 +4162,22 @@ export const useGetAllUsers = <
  * @summary Create user
  */
 export const postUsers = (
-  createUserRequest: CreateUserRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserResponse>> => {
-  return axios.post(`/users`, createUserRequest, options);
+  createUserRequest: BodyType<CreateUserRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<UserResponse>(
+    {
+      url: `/users`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createUserRequest,
+    },
+    options
+  );
 };
 
 export const getPostUsersMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | User400Response
     | User401Response
     | User403Response
@@ -4012,25 +4189,25 @@ export const getPostUsersMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postUsers>>,
     TError,
-    { data: CreateUserRequest },
+    { data: BodyType<CreateUserRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postUsers>>,
   TError,
-  { data: CreateUserRequest },
+  { data: BodyType<CreateUserRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postUsers>>,
-    { data: CreateUserRequest }
+    { data: BodyType<CreateUserRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return postUsers(data, axiosOptions);
+    return postUsers(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -4039,8 +4216,8 @@ export const getPostUsersMutationOptions = <
 export type PostUsersMutationResult = NonNullable<
   Awaited<ReturnType<typeof postUsers>>
 >;
-export type PostUsersMutationBody = CreateUserRequest;
-export type PostUsersMutationError = AxiosError<
+export type PostUsersMutationBody = BodyType<CreateUserRequest>;
+export type PostUsersMutationError = ErrorType<
   | User400Response
   | User401Response
   | User403Response
@@ -4052,7 +4229,7 @@ export type PostUsersMutationError = AxiosError<
  * @summary Create user
  */
 export const usePostUsers = <
-  TError = AxiosError<
+  TError = ErrorType<
     | User400Response
     | User401Response
     | User403Response
@@ -4064,14 +4241,14 @@ export const usePostUsers = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postUsers>>,
     TError,
-    { data: CreateUserRequest },
+    { data: BodyType<CreateUserRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof postUsers>>,
   TError,
-  { data: CreateUserRequest },
+  { data: BodyType<CreateUserRequest> },
   TContext
 > => {
   const mutationOptions = getPostUsersMutationOptions(options);
@@ -4085,9 +4262,13 @@ export const usePostUsers = <
  */
 export const getUserDetails = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserResponse>> => {
-  return axios.get(`/users/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<UserResponse>(
+    { url: `/users/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetUserDetailsQueryKey = (id: string) => {
@@ -4096,7 +4277,7 @@ export const getGetUserDetailsQueryKey = (id: string) => {
 
 export const getGetUserDetailsQueryOptions = <
   TData = Awaited<ReturnType<typeof getUserDetails>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | User401Response
     | User403Response
     | User404Response
@@ -4109,16 +4290,16 @@ export const getGetUserDetailsQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getUserDetails>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetUserDetailsQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserDetails>>> = ({
     signal,
-  }) => getUserDetails(id, { signal, ...axiosOptions });
+  }) => getUserDetails(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -4135,7 +4316,7 @@ export const getGetUserDetailsQueryOptions = <
 export type GetUserDetailsQueryResult = NonNullable<
   Awaited<ReturnType<typeof getUserDetails>>
 >;
-export type GetUserDetailsQueryError = AxiosError<
+export type GetUserDetailsQueryError = ErrorType<
   | User401Response
   | User403Response
   | User404Response
@@ -4148,7 +4329,7 @@ export type GetUserDetailsQueryError = AxiosError<
  */
 export const useGetUserDetails = <
   TData = Awaited<ReturnType<typeof getUserDetails>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | User401Response
     | User403Response
     | User404Response
@@ -4161,7 +4342,7 @@ export const useGetUserDetails = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getUserDetails>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetUserDetailsQueryOptions(id, options);
@@ -4181,14 +4362,22 @@ export const useGetUserDetails = <
  */
 export const updateUserById = (
   id: string,
-  updateUserRequest: UpdateUserRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserResponse>> => {
-  return axios.post(`/users/${id}`, updateUserRequest, options);
+  updateUserRequest: BodyType<UpdateUserRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<UserResponse>(
+    {
+      url: `/users/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: updateUserRequest,
+    },
+    options
+  );
 };
 
 export const getUpdateUserByIdMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | User400Response
     | User401Response
     | User403Response
@@ -4200,25 +4389,25 @@ export const getUpdateUserByIdMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateUserById>>,
     TError,
-    { id: string; data: UpdateUserRequest },
+    { id: string; data: BodyType<UpdateUserRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateUserById>>,
   TError,
-  { id: string; data: UpdateUserRequest },
+  { id: string; data: BodyType<UpdateUserRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateUserById>>,
-    { id: string; data: UpdateUserRequest }
+    { id: string; data: BodyType<UpdateUserRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return updateUserById(id, data, axiosOptions);
+    return updateUserById(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -4227,8 +4416,8 @@ export const getUpdateUserByIdMutationOptions = <
 export type UpdateUserByIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof updateUserById>>
 >;
-export type UpdateUserByIdMutationBody = UpdateUserRequest;
-export type UpdateUserByIdMutationError = AxiosError<
+export type UpdateUserByIdMutationBody = BodyType<UpdateUserRequest>;
+export type UpdateUserByIdMutationError = ErrorType<
   | User400Response
   | User401Response
   | User403Response
@@ -4240,7 +4429,7 @@ export type UpdateUserByIdMutationError = AxiosError<
  * @summary Update user
  */
 export const useUpdateUserById = <
-  TError = AxiosError<
+  TError = ErrorType<
     | User400Response
     | User401Response
     | User403Response
@@ -4252,14 +4441,14 @@ export const useUpdateUserById = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateUserById>>,
     TError,
-    { id: string; data: UpdateUserRequest },
+    { id: string; data: BodyType<UpdateUserRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof updateUserById>>,
   TError,
-  { id: string; data: UpdateUserRequest },
+  { id: string; data: BodyType<UpdateUserRequest> },
   TContext
 > => {
   const mutationOptions = getUpdateUserByIdMutationOptions(options);
@@ -4273,12 +4462,13 @@ export const useUpdateUserById = <
  */
 export const listWebhooks = (
   params?: ListWebhooksParams,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<ListWebhookResponse>> => {
-  return axios.get(`/webhooks`, {
-    ...options,
-    params: { ...params, ...options?.params },
-  });
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<ListWebhookResponse>(
+    { url: `/webhooks`, method: 'GET', params, signal },
+    options
+  );
 };
 
 export const getListWebhooksQueryKey = (params?: ListWebhooksParams) => {
@@ -4287,7 +4477,7 @@ export const getListWebhooksQueryKey = (params?: ListWebhooksParams) => {
 
 export const getListWebhooksQueryOptions = <
   TData = Awaited<ReturnType<typeof listWebhooks>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4301,16 +4491,16 @@ export const getListWebhooksQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof listWebhooks>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getListWebhooksQueryKey(params);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof listWebhooks>>> = ({
     signal,
-  }) => listWebhooks(params, { signal, ...axiosOptions });
+  }) => listWebhooks(params, requestOptions, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof listWebhooks>>,
@@ -4322,7 +4512,7 @@ export const getListWebhooksQueryOptions = <
 export type ListWebhooksQueryResult = NonNullable<
   Awaited<ReturnType<typeof listWebhooks>>
 >;
-export type ListWebhooksQueryError = AxiosError<
+export type ListWebhooksQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -4336,7 +4526,7 @@ export type ListWebhooksQueryError = AxiosError<
  */
 export const useListWebhooks = <
   TData = Awaited<ReturnType<typeof listWebhooks>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4350,7 +4540,7 @@ export const useListWebhooks = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof listWebhooks>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getListWebhooksQueryOptions(params, options);
@@ -4369,14 +4559,22 @@ export const useListWebhooks = <
  * @summary Create a webhook subscription.
  */
 export const createWebhook = (
-  webhookRequest: WebhookRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<WebhookResponse>> => {
-  return axios.post(`/webhooks`, webhookRequest, options);
+  webhookRequest: BodyType<WebhookRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<WebhookResponse>(
+    {
+      url: `/webhooks`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: webhookRequest,
+    },
+    options
+  );
 };
 
 export const getCreateWebhookMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4389,25 +4587,25 @@ export const getCreateWebhookMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createWebhook>>,
     TError,
-    { data: WebhookRequest },
+    { data: BodyType<WebhookRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createWebhook>>,
   TError,
-  { data: WebhookRequest },
+  { data: BodyType<WebhookRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createWebhook>>,
-    { data: WebhookRequest }
+    { data: BodyType<WebhookRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return createWebhook(data, axiosOptions);
+    return createWebhook(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -4416,8 +4614,8 @@ export const getCreateWebhookMutationOptions = <
 export type CreateWebhookMutationResult = NonNullable<
   Awaited<ReturnType<typeof createWebhook>>
 >;
-export type CreateWebhookMutationBody = WebhookRequest;
-export type CreateWebhookMutationError = AxiosError<
+export type CreateWebhookMutationBody = BodyType<WebhookRequest>;
+export type CreateWebhookMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -4430,7 +4628,7 @@ export type CreateWebhookMutationError = AxiosError<
  * @summary Create a webhook subscription.
  */
 export const useCreateWebhook = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4443,14 +4641,14 @@ export const useCreateWebhook = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createWebhook>>,
     TError,
-    { data: WebhookRequest },
+    { data: BodyType<WebhookRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof createWebhook>>,
   TError,
-  { data: WebhookRequest },
+  { data: BodyType<WebhookRequest> },
   TContext
 > => {
   const mutationOptions = getCreateWebhookMutationOptions(options);
@@ -4464,9 +4662,13 @@ export const useCreateWebhook = <
  */
 export const getWebhook = (
   id: string,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<WebhookResponse>> => {
-  return axios.get(`/webhooks/${id}`, options);
+  options?: SecondParameter<typeof ebInstance>,
+  signal?: AbortSignal
+) => {
+  return ebInstance<WebhookResponse>(
+    { url: `/webhooks/${id}`, method: 'GET', signal },
+    options
+  );
 };
 
 export const getGetWebhookQueryKey = (id: string) => {
@@ -4475,7 +4677,7 @@ export const getGetWebhookQueryKey = (id: string) => {
 
 export const getGetWebhookQueryOptions = <
   TData = Awaited<ReturnType<typeof getWebhook>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4489,16 +4691,16 @@ export const getGetWebhookQueryOptions = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getWebhook>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ) => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getGetWebhookQueryKey(id);
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getWebhook>>> = ({
     signal,
-  }) => getWebhook(id, { signal, ...axiosOptions });
+  }) => getWebhook(id, requestOptions, signal);
 
   return {
     queryKey,
@@ -4515,7 +4717,7 @@ export const getGetWebhookQueryOptions = <
 export type GetWebhookQueryResult = NonNullable<
   Awaited<ReturnType<typeof getWebhook>>
 >;
-export type GetWebhookQueryError = AxiosError<
+export type GetWebhookQueryError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -4529,7 +4731,7 @@ export type GetWebhookQueryError = AxiosError<
  */
 export const useGetWebhook = <
   TData = Awaited<ReturnType<typeof getWebhook>>,
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4543,7 +4745,7 @@ export const useGetWebhook = <
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getWebhook>>, TError, TData>
     >;
-    axios?: AxiosRequestConfig;
+    request?: SecondParameter<typeof ebInstance>;
   }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const queryOptions = getGetWebhookQueryOptions(id, options);
@@ -4563,14 +4765,22 @@ export const useGetWebhook = <
  */
 export const updateWebhook = (
   id: string,
-  webhookUpdateRequest: WebhookUpdateRequest,
-  options?: AxiosRequestConfig
-): Promise<AxiosResponse<WebhookResponse>> => {
-  return axios.post(`/webhooks/${id}`, webhookUpdateRequest, options);
+  webhookUpdateRequest: BodyType<WebhookUpdateRequest>,
+  options?: SecondParameter<typeof ebInstance>
+) => {
+  return ebInstance<WebhookResponse>(
+    {
+      url: `/webhooks/${id}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: webhookUpdateRequest,
+    },
+    options
+  );
 };
 
 export const getUpdateWebhookMutationOptions = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4583,25 +4793,25 @@ export const getUpdateWebhookMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateWebhook>>,
     TError,
-    { id: string; data: WebhookUpdateRequest },
+    { id: string; data: BodyType<WebhookUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateWebhook>>,
   TError,
-  { id: string; data: WebhookUpdateRequest },
+  { id: string; data: BodyType<WebhookUpdateRequest> },
   TContext
 > => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {};
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateWebhook>>,
-    { id: string; data: WebhookUpdateRequest }
+    { id: string; data: BodyType<WebhookUpdateRequest> }
   > = (props) => {
     const { id, data } = props ?? {};
 
-    return updateWebhook(id, data, axiosOptions);
+    return updateWebhook(id, data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -4610,8 +4820,8 @@ export const getUpdateWebhookMutationOptions = <
 export type UpdateWebhookMutationResult = NonNullable<
   Awaited<ReturnType<typeof updateWebhook>>
 >;
-export type UpdateWebhookMutationBody = WebhookUpdateRequest;
-export type UpdateWebhookMutationError = AxiosError<
+export type UpdateWebhookMutationBody = BodyType<WebhookUpdateRequest>;
+export type UpdateWebhookMutationError = ErrorType<
   | N400Response
   | N401Response
   | N403Response
@@ -4624,7 +4834,7 @@ export type UpdateWebhookMutationError = AxiosError<
  * @summary Update a webhook by ID.
  */
 export const useUpdateWebhook = <
-  TError = AxiosError<
+  TError = ErrorType<
     | N400Response
     | N401Response
     | N403Response
@@ -4637,14 +4847,14 @@ export const useUpdateWebhook = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateWebhook>>,
     TError,
-    { id: string; data: WebhookUpdateRequest },
+    { id: string; data: BodyType<WebhookUpdateRequest> },
     TContext
   >;
-  axios?: AxiosRequestConfig;
+  request?: SecondParameter<typeof ebInstance>;
 }): UseMutationResult<
   Awaited<ReturnType<typeof updateWebhook>>,
   TError,
-  { id: string; data: WebhookUpdateRequest },
+  { id: string; data: BodyType<WebhookUpdateRequest> },
   TContext
 > => {
   const mutationOptions = getUpdateWebhookMutationOptions(options);

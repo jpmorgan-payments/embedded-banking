@@ -3,8 +3,14 @@ module.exports = {
     input: './api-specs/embedded-banking-solutions-api-v2-external.yml',
     output: {
       mode: 'split',
-      target: './src/generated/embedded-banking.ts',
+      target: './src/api/generated/embedded-banking.ts',
       client: 'react-query',
+      override: {
+        mutator: {
+          path: './src/api/axios-instance.ts',
+          name: 'ebInstance',
+        },
+      },
     },
   },
 };
