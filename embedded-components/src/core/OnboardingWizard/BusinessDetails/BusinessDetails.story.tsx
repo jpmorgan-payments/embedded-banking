@@ -1,3 +1,4 @@
+import { OnboardingFormProvider } from '../context/form.context';
 import { BusinessDetails } from './BusinessDetails';
 
 export default {
@@ -5,9 +6,9 @@ export default {
 };
 
 export const Usage = () => (
+  <OnboardingFormProvider>
   <BusinessDetails
-    onSubmit={(val: any) => {
-      console.log('@@submit', val);
-    }}
+   activeStep={2} setActiveStep={()=> {}}
   />
+  </OnboardingFormProvider>
 );

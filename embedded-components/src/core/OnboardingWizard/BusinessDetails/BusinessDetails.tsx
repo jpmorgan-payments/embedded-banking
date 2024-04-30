@@ -2,9 +2,6 @@ import { FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -16,14 +13,15 @@ import {
 } from '@/components/ui/form';
 import { Grid } from '@/components/ui/grid';
 import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
-import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
 
-import { OnboardingFormContext } from '../context/form.context';
+import { addBusinessDetails } from '../context/form.actions';
+import {
+  OnboardingFormContext,
+  useOnboardingForm,
+} from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import {
@@ -44,14 +42,14 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
-  const { onboardingForm, setOnboardingForm } = useContext(
-    OnboardingFormContext
-  );
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const defaultInitialValues = businessDetailsSchema().cast(
     {}
   ) as BusinessDetailsStepValues;
+
+  console.log('@@onboardingForm', onboardingForm);
 
   const form = useForm<any>({
     defaultValues: defaultInitialValues,
@@ -61,9 +59,12 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    console.log('@@ERR', errors, form.formState.isSubmitted);
-
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+    if (Object.values(errors).length === 0) {
+      const newOnboardingForm = addBusinessDetails(
+        onboardingForm,
+        form.getValues()
+      );
+      setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     }
   };

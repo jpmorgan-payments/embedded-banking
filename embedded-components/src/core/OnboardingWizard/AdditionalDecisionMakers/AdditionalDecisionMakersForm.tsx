@@ -1,7 +1,8 @@
-import { Key, useContext, useEffect, useState } from 'react';
+import { Key, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+
 import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
@@ -13,13 +14,12 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 
+import { useOnboardingForm } from '../context/form.context';
+import { createDecisionMakerFormSchema } from '../DecisionMakersForm/DecisionMakerForm.schema';
 import NavigationButtons from '../Stepper/NavigationButtons';
+import { useContentData } from '../useContentData';
 import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
-import { createDecisionMakerFormSchema } from '../DecisionMakersForm/DecisionMakerForm.schema';
-import { useContentData } from '../useContentData';
-import { OnboardingFormContext } from '../context/form.context';
-
 
 type AdditionalDecisionMakersFormType = {
   setActiveStep: any;
@@ -30,35 +30,25 @@ const AdditionalDecisionMakersForm = ({
   setActiveStep,
   activeStep,
 }: AdditionalDecisionMakersFormType) => {
-
-  const {onboardingForm, setOnboardingForm} = useContext(OnboardingFormContext)
-
-  const [additionalDecisionMakers, setAdditionalDecisionmakers] =
+  const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
-
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+
   const form = useForm<any>({
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
-
-  const handleToggleButton = (val) => {
-    if (val === 'No') setAdditionalDecisionmakers(false);
-    if (val === 'Yes') setAdditionalDecisionmakers(true);
+  const handleToggleButton = (val: string) => {
+    if (val === 'No') setAdditionalDecisionMakers(false);
+    if (val === 'Yes') setAdditionalDecisionMakers(true);
   };
 
   const onSubmit = () => {
-    const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted)
-      setActiveStep(activeStep + 1);
+    setActiveStep(4);
   };
-
-  useEffect(() => {
-console.log(onboardingForm)
-  },[onboardingForm])
-
 
   return (
     <div className="eb-grid eb-grid-row-3">
@@ -103,22 +93,35 @@ console.log(onboardingForm)
               <Title as="h4">Listed business decision makers</Title>
 
               <div className="eb-grid eb-grid-cols-3">
-                {onboardingForm?.owners?.map((individual: any, index: Key) => (
+                {onboardingForm?.controller && (
                   <div
-                    key={index}
+                    key="controllerPanel"
                     className="eb-grid-cols-subgrid eb-grid-cols-2"
                   >
                     <DecisionMakerCard
-                      individual={individual}
-                      key={index}
+                    controller
+                      individual={onboardingForm?.controller}
                     ></DecisionMakerCard>
                   </div>
-                ))}
+                )}
+
+                {onboardingForm?.otherOwners?.map(
+                  (individual: any, index: Key) => (
+                    <div
+                      key={index}
+                      className="eb-grid-cols-subgrid eb-grid-cols-2"
+                    >
+                      <DecisionMakerCard
+                      controller={false}
+                        individual={individual}
+                        key={index}
+                      ></DecisionMakerCard>
+                    </div>
+                  )
+                )}
                 <Dialog>
                   <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
-                  <DialogTrigger >
-                    Click to add a decision maker
-                  </DialogTrigger >
+                    <DialogTrigger>Click to add a decision maker</DialogTrigger>
                   </div>
                   <AdditionalDecisionMakerModalForm form={form} />
                 </Dialog>

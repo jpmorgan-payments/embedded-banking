@@ -1,3 +1,4 @@
+import { OnboardingFormProvider } from '../context/form.context';
 import { EntityTypeForm } from './EntityTypeForm';
 
 export default {
@@ -5,10 +6,10 @@ export default {
 };
 
 export const Usage = () => (
-  <EntityTypeForm
-  activeStep={0} setActiveStep={()=> {}} 
-    onSubmit={(val: any) => {
-      console.log('@@submit', val);
-    }}
-  />
+  <OnboardingFormProvider>
+    <EntityTypeForm
+      activeStep={0}
+      setActiveStep={() => {}}
+    />
+  </OnboardingFormProvider>
 );

@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo,useState } from 'react';
+
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -49,10 +50,15 @@ export const OnboardingWizard = () => {
           {activeStep !== 0 && (
             <StepperHeader activeStep={activeStep}></StepperHeader>
           )}
-          <div className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
-            {/* {steps[activeStep]} */}
-            {ActiveStep}
-          </div>
+
+          {steps?.map((step, index) => (
+            <div
+              key={`panel${index}`}
+              className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
+            >
+              {step}
+            </div>
+          ))}
         </OnboardingFormProvider>
       </CardContent>
       {/* TODO: something breaks in hooks when i try to decople oprs of activeSTeps, day wasted */}

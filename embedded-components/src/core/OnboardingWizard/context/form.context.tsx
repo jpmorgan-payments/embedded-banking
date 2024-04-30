@@ -1,4 +1,5 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
+
 import { BusinessDetailsStepValues } from '../BusinessDetails/BusinessDetails.schema';
 import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm.schema';
 
@@ -11,40 +12,41 @@ import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm
 **/
 
 export type OnboardingForm = {
-  legalStructure: string | null;
-  owners: DecisionMakerFormValues[] | null;
-  businessDetails: BusinessDetailsStepValues | null;
+  legalStructure: string | undefined;
+  controller: DecisionMakerFormValues | undefined;
+  otherOwners: DecisionMakerFormValues[] | undefined;
+  businessDetails: BusinessDetailsStepValues | undefined;
 };
 
-export type OnboardingFormContext = {
-  onboardingForm: OnboardingForm;
-  setOnboardingForm: (form: OnboardingForm) => void;
+export const defaultValues:OnboardingForm = {
+  legalStructure: undefined,
+  controller: undefined,
+  otherOwners: undefined,
+  businessDetails: undefined,
 };
 
-export const defaultValues = {
-  onboardingForm: {
-    legalStructure: null,
-    owners: null,
-    businessDetails: null,
-  },
-  setOnboardingForm: (form: any) => { console.log(form)},
-};
 
 export const OnboardingFormContext = createContext(defaultValues);
+
+export const useOnboardingForm = () => {
+  const context = useContext(OnboardingFormContext);
+  if (context === undefined) {
+    throw new Error('useOnboardingForm must be used within OnboardingFormProvider');
+  }
+  return context;
+};
 
 export const OnboardingFormProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  const [onboardingForm, setOnboardingForm] = useState(defaultValues);
 
-  const [onboardingForm, setOnboardingForm] =
-    useState<OnboardingFormContext>(defaultValues);
-
-  /**const value = useMemo(
-    () => [onboardingForm, setOnboardingForm],
-    [onboardingForm]
-  ); */
+  const valueObject = useMemo(() => {
+    return { onboardingForm, setOnboardingForm };
+  }, [onboardingForm, setOnboardingForm]);
+  
   return (
-    <OnboardingFormContext.Provider value={[onboardingForm, setOnboardingForm]}>
+    <OnboardingFormContext.Provider value={valueObject}>
       {children}
     </OnboardingFormContext.Provider>
   );
