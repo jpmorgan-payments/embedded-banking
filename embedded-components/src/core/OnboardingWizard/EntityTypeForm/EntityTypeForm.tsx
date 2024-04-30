@@ -1,5 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { addBusinessDays } from 'date-fns';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -21,7 +22,8 @@ import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
-
+import { addBusinessType } from '../context/form.actions';
+import { useOnboardingForm } from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import {
@@ -41,6 +43,8 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
 }: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
+
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const defaultInitialValues = createEntityTypeFormValidationSchema().cast(
     {}
   ) as tEntityTypeFormValidationSchemaValues;
@@ -55,8 +59,14 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
 
   const onSubmit = () => {
     const errors = formz?.formState?.errors;
-    if (Object.values(errors).length === 0 && formz.formState.isSubmitted)
+    if (Object.values(errors).length === 0 && formz.formState.isSubmitted) {
+      const newOnboardingForm = addBusinessType(
+        onboardingForm,
+        formz.getValues('legalStructure')
+      );
+      setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
+    }
   };
 
   return (

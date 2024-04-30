@@ -31,6 +31,7 @@ import {
   SoleProprietorBusinessDetailsStepValues,
 } from './BusinessDetails.schema';
 import { BusinessDetailsCommon } from './BusinessDetailsCommon';
+import { useOnboardingForm } from '../context/form.context';
 
 type EntityTypeFormProps = {
   children?: ReactNode;
@@ -44,6 +45,7 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
 }: any) => {
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const defaultInitialValues = businessDetailsSchema().cast(
     {}
   ) as BusinessDetailsStepValues;
@@ -56,7 +58,11 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0) setActiveStep(activeStep + 1);
+    if (Object.values(errors).length === 0)  {
+      const newOnboardingForm = addBusinessDetails(onboardingForm, form.getValues());
+      setOnboardingForm(newOnboardingForm);
+      setActiveStep(activeStep + 1);
+    }
   };
 
   return (

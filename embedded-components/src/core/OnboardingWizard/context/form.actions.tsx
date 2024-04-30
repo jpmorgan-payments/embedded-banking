@@ -60,6 +60,27 @@ export const removeOtherOwner = (
   return form;
 };
 
+//ADD BUSINESS DETAILS
+export const addBusinessDetails = (
+  onboardingForm: OnboardingForm,
+  businessDetails: BusinessDetailsStepValues
+) => {
+  const form = _.cloneDeep(onboardingForm);
+  form.businessDetails = businessDetails;
+  return form;
+};
+
+//ADD BUSINESS TYPE
+export const addBusinessType = (
+  onboardingForm: OnboardingForm,
+  businessType: string
+) => {
+  const form = _.cloneDeep(onboardingForm);
+  form.legalStructure= businessType;
+  return form;
+};
+
+
 export const makeParty = (
   form: any,
   owner: DecisionMakerFormValues,

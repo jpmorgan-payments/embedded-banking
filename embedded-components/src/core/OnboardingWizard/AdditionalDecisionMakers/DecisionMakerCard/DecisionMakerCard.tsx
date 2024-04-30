@@ -11,6 +11,7 @@ import { AdditionalDecisionMakerModalForm } from '../AdditionalDecisionMakersMod
 type DecisionMakersCardProps = {
   individual: any;
   key?: any;
+  controller: boolean;
 };
 
 const fieldsController = (individual: any) => {
@@ -29,10 +30,8 @@ const fieldsOther = (individual: any) => {
   ];
 };
 
-const DecisionMakerCard = ({ individual, key }: DecisionMakersCardProps) => {
-  const controller =
-    individual?.roles?.includes('CONTROLLER') ||
-    individual?.roles?.includes('BENEFICIAL_OWNER');
+const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardProps) => {
+ 
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);

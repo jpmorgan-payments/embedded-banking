@@ -19,21 +19,16 @@ export const OnboardingWizard = () => {
     //      setActiveStep={setActiveStep}
     //      activeStep={activeStep}
     //    />,
-    <DecisionMakerForm
+    // <BusinessDetails setActiveStep={setActiveStep} key={2} activeStep={2} />,
+    <DecisionMakerForm key={0} setActiveStep={setActiveStep} activeStep={0} />,
+    
+    <AdditionalDecisionMakersForm
       key={1}
       setActiveStep={setActiveStep}
       activeStep={1}
     />,
-     // <BusinessDetails setActiveStep={setActiveStep} key={2} activeStep={2} />,
-    <AdditionalDecisionMakersForm
-      key={2}
-      setActiveStep={setActiveStep}
-      activeStep={2}
-    />,
   ];
-  {
-    /**steps ? steps[activeStep] : <></> */
-  }
+
   return (
     <Card>
       <CardHeader>
@@ -46,7 +41,8 @@ export const OnboardingWizard = () => {
           )}
 
           {steps?.map((step, index) => (
-            <div key={`panel${index}`}
+            <div
+              key={`panel${index}`}
               className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
             >
               {step}

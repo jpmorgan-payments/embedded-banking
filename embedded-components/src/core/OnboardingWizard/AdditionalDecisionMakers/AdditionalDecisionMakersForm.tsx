@@ -30,9 +30,8 @@ const AdditionalDecisionMakersForm = ({
   setActiveStep,
   activeStep,
 }: AdditionalDecisionMakersFormType) => {
-  const [additionalDecisionMakers, setAdditionalDecisionmakers] =
+  const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
-
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -42,15 +41,13 @@ const AdditionalDecisionMakersForm = ({
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
-  const handleToggleButton = (val) => {
-    if (val === 'No') setAdditionalDecisionmakers(false);
-    if (val === 'Yes') setAdditionalDecisionmakers(true);
+  const handleToggleButton = (val: string) => {
+    if (val === 'No') setAdditionalDecisionMakers(false);
+    if (val === 'Yes') setAdditionalDecisionMakers(true);
   };
 
   const onSubmit = () => {
-    const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted)
-      setActiveStep(activeStep + 1);
+    setActiveStep(activeStep + 1);
   };
 
   return (
@@ -102,6 +99,7 @@ const AdditionalDecisionMakersForm = ({
                     className="eb-grid-cols-subgrid eb-grid-cols-2"
                   >
                     <DecisionMakerCard
+                    controller
                       individual={onboardingForm?.controller}
                     ></DecisionMakerCard>
                   </div>
@@ -114,6 +112,7 @@ const AdditionalDecisionMakersForm = ({
                       className="eb-grid-cols-subgrid eb-grid-cols-2"
                     >
                       <DecisionMakerCard
+                      controller={false}
                         individual={individual}
                         key={index}
                       ></DecisionMakerCard>

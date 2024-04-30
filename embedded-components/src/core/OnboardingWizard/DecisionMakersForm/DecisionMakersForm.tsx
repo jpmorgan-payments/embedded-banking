@@ -1,10 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
 import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
-
-import { useOnboardingForm} from '../context/form.context';
+import { addController } from '../context/form.actions';
+import { useOnboardingForm } from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useContentData } from '../useContentData';
 import { AddressForm } from './AddressForm/AddressForm';
@@ -13,11 +12,8 @@ import {
   DecisionMakerFormValues,
 } from './DecisionMakerForm.schema';
 import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
-import { addController } from '../context/form.actions';
 
-const defaultInitialValues = createDecisionMakerFormSchema().cast(
-  {}
-) as DecisionMakerFormValues;
+const defaultInitialValues = createDecisionMakerFormSchema().cast({}) ;
 
 type DecisionMakersFormProps = {
   setActiveStep: any;
@@ -29,7 +25,7 @@ const DecisionMakerForm = ({
   activeStep,
 }: DecisionMakersFormProps) => {
   // @ts-ignore
-  const {setOnboardingForm, onboardingForm} = useOnboardingForm();
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -39,14 +35,13 @@ const DecisionMakerForm = ({
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
 
-
   const onSubmit = () => {
     const errors = form?.formState?.errors;
     if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
       setActiveStep(activeStep + 1);
-      const newOnboardingForm = addController(onboardingForm, form.getValues())
+      const newOnboardingForm = addController(onboardingForm, form.getValues());
       setOnboardingForm(newOnboardingForm);
-   }
+    }
   };
 
   return (
