@@ -5,7 +5,7 @@ import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm
 import { OnboardingForm } from './form.context';
 
 export const formToAPIBody = (onboardingForm: OnboardingForm) => {
-  let parties = [];
+  const parties: any[] = [];
   const business = makeBusiness(
     onboardingForm?.businessDetails,
     onboardingForm
@@ -16,10 +16,31 @@ export const formToAPIBody = (onboardingForm: OnboardingForm) => {
     parties.push(party);
   }
   const form = {
-    parties: parties,
+    parties,
     products: ['EMBEDDED_BANKING'],
   };
   return form;
+};
+
+//ADD CONTROLLER TO FORM
+export const addOwner = (
+  onboardingForm: OnboardingForm,
+  owner: DecisionMakerFormValues
+) => {
+  //TODO: pass role type?
+  /*
+  "CLIENT" "PRIMARY_ACCOUNT_OWNER" "BENEFICIAL_OWNER" "CONTROLLER" "DECISION_MAKER" "PRIMARY_CONTACT" "AUTHORIZED_USER" "AUTHORIZED_USER_ADMIN" "AUTHORIZED_USER_OPS" "DIRECTOR"
+  */
+
+  return { ...onboardingForm, owner };
+};
+
+//ADD BUSINESS DETAILS
+export const addBusinessOwner = (
+  onboardingForm: OnboardingForm,
+  owner: DecisionMakerFormValues
+) => {
+  return { ...onboardingForm, owner };
 };
 
 //ADD CONTROLLER TO FORM
@@ -27,6 +48,10 @@ export const addController = (
   onboardingForm: OnboardingForm,
   owner: DecisionMakerFormValues
 ) => {
+  //TODO: pass role type?
+  /*
+  "CLIENT" "PRIMARY_ACCOUNT_OWNER" "BENEFICIAL_OWNER" "CONTROLLER" "DECISION_MAKER" "PRIMARY_CONTACT" "AUTHORIZED_USER" "AUTHORIZED_USER_ADMIN" "AUTHORIZED_USER_OPS" "DIRECTOR"
+  */
   const form = _.cloneDeep(onboardingForm);
   form.controller = owner;
   return form;

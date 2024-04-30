@@ -49,17 +49,15 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
     {}
   ) as BusinessDetailsStepValues;
 
-  console.log('@@onboardingForm', onboardingForm);
-
   const form = useForm<any>({
-    defaultValues: defaultInitialValues,
+    defaultValues: onboardingForm?.businessDetails || defaultInitialValues,
     resolver: yupResolver(businessDetailsSchema(getContentToken)),
     mode: 'onBlur',
   });
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0) {
+    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
       const newOnboardingForm = addBusinessDetails(
         onboardingForm,
         form.getValues()

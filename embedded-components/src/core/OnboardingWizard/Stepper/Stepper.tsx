@@ -3,10 +3,12 @@ import { createContext, FC, ReactNode, useContext, useState } from 'react';
 type yInitValues = {
   activeStep: number;
   setCurrentStep: (val: number) => void;
+  // setActiveStep: any;
 };
 const initValues: yInitValues = {
   activeStep: 0,
   setCurrentStep: () => {},
+  // setActiveStep: () => {},
 };
 const StepperContext = createContext(initValues);
 
@@ -23,18 +25,19 @@ type yStepper = {
 };
 const Stepper: FC<yStepper> = ({ children }) => {
   const [steps, setActiveStep] = useState(initValues);
+  const { activeStep } = steps;
 
-  const stateStepper = {
-    activeStep: steps.activeStep,
-    setCurrentStep(step: number) {
-      setActiveStep((state) => {
-        return { ...state, activeStep: step };
-      });
-    },
+  const setCurrentStep = (step: number) => {
+    setActiveStep((state) => {
+      return {
+        ...state,
+        activeStep: step,
+      };
+    });
   };
 
   return (
-    <StepperContext.Provider value={stateStepper}>
+    <StepperContext.Provider value={{ activeStep, setCurrentStep }}>
       {children}
     </StepperContext.Provider>
   );

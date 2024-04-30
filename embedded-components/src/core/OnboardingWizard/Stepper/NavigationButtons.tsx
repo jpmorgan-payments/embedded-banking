@@ -17,12 +17,12 @@ const NavigationButtons = ({
 
   return (
     <div className="eb-grid eb-grid-cols-2 eb-mt-20">
-        <div className="eb-flex eb-justify-start">
-      {activeStep !== 0 && (
-        <Button className="eb-bg-black eb-w-24" onClick={handleBack}>
-          Back
-        </Button>
-      )}
+      <div className="eb-flex eb-justify-start">
+        {activeStep !== 0 && (
+          <Button className="eb-bg-black eb-w-24" onClick={handleBack}>
+            Back
+          </Button>
+        )}
       </div>
       <div className="eb-flex eb-justify-end">
         <Button

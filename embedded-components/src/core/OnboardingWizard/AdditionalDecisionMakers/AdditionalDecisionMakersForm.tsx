@@ -47,7 +47,7 @@ const AdditionalDecisionMakersForm = ({
   };
 
   const onSubmit = () => {
-    setActiveStep(4);
+    setActiveStep(activeStep + 1);
   };
 
   return (
@@ -99,7 +99,7 @@ const AdditionalDecisionMakersForm = ({
                     className="eb-grid-cols-subgrid eb-grid-cols-2"
                   >
                     <DecisionMakerCard
-                    controller
+                      controller
                       individual={onboardingForm?.controller}
                     ></DecisionMakerCard>
                   </div>
@@ -112,7 +112,7 @@ const AdditionalDecisionMakersForm = ({
                       className="eb-grid-cols-subgrid eb-grid-cols-2"
                     >
                       <DecisionMakerCard
-                      controller={false}
+                        controller={false}
                         individual={individual}
                         key={index}
                       ></DecisionMakerCard>
