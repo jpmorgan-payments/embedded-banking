@@ -17,7 +17,6 @@ export const OnboardingWizard = () => {
       setActiveStep={setActiveStep}
       activeStep={activeStep}
     />,
-
     <DecisionMakerForm
       key={1}
       setActiveStep={setActiveStep}

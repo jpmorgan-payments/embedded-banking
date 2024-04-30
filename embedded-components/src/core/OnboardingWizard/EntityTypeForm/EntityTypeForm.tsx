@@ -65,7 +65,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
         formz.getValues('legalStructure')
       );
       setOnboardingForm(newOnboardingForm);
-      setActiveStep(activeStep + 1);
+      setActiveStep(1);
     }
   };
 

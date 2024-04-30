@@ -32,6 +32,7 @@ import {
 } from './BusinessDetails.schema';
 import { BusinessDetailsCommon } from './BusinessDetailsCommon';
 import { useOnboardingForm } from '../context/form.context';
+import NavigationButtons from '../Stepper/NavigationButtons';
 
 type EntityTypeFormProps = {
   children?: ReactNode;
@@ -61,7 +62,7 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
     if (Object.values(errors).length === 0)  {
       const newOnboardingForm = addBusinessDetails(onboardingForm, form.getValues());
       setOnboardingForm(newOnboardingForm);
-      setActiveStep(activeStep + 1);
+      setActiveStep(3);
     }
   };
 
@@ -75,8 +76,7 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
             setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
-          <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6 ">
-            <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
+         <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
             <Grid
               className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'}  eb-grid-cols-2`}
             >
@@ -137,7 +137,11 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
             </Grid>
             <Separator />
             <BusinessDetailsCommon form={form} />
-          </ScrollArea>
+            <NavigationButtons
+              setActiveStep={setActiveStep}
+              activeStep={activeStep}
+              onSubmit={onSubmit}
+            />
         </form>
       </Form>
     </Stack>
