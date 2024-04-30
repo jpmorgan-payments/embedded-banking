@@ -22,6 +22,22 @@ export const formToAPIBody = (onboardingForm: OnboardingForm) => {
   return form;
 };
 
+export const apiToForm = (apiData) => {
+  const form = {};
+  const apiControllers = apiData?.parties?.filter((party: any) => {
+    return party.individualDetails?.roles?.includes("CONTROLLER")
+  });
+  const otherOwners = apiData?.parties?.filter((party: any) => {
+    return !party.individualDetails?.roles?.includes("CONTROLLER")
+  });
+}
+
+export const apiIndividualToOwner = (party) => {
+  return {
+    
+  }
+}
+
 //ADD CONTROLLER TO FORM
 export const addController = (
   onboardingForm: OnboardingForm,

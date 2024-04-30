@@ -44,6 +44,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
 
+
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const defaultInitialValues = createEntityTypeFormValidationSchema().cast(
     {}
