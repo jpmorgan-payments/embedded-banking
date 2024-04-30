@@ -65,9 +65,7 @@ export const addBusinessDetails = (
   onboardingForm: OnboardingForm,
   businessDetails: BusinessDetailsStepValues
 ) => {
-  const form = _.cloneDeep(onboardingForm);
-  form.businessDetails = businessDetails;
-  return form;
+  return { ...onboardingForm, businessDetails };
 };
 
 //ADD BUSINESS TYPE
@@ -76,10 +74,9 @@ export const addBusinessType = (
   businessType: string
 ) => {
   const form = _.cloneDeep(onboardingForm);
-  form.legalStructure= businessType;
+  form.legalStructure = businessType;
   return form;
 };
-
 
 export const makeParty = (
   form: any,

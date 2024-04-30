@@ -18,15 +18,15 @@ export type OnboardingForm = {
   businessDetails: BusinessDetailsStepValues | undefined;
 };
 
-export const defaultValues = {
+export const defaultValues:OnboardingForm = {
   legalStructure: undefined,
   controller: undefined,
   otherOwners: undefined,
   businessDetails: undefined,
 };
 
-//@ts-ignore
-export const OnboardingFormContext = createContext();
+
+export const OnboardingFormContext = createContext(defaultValues);
 
 export const useOnboardingForm = () => {
   const context = useContext(OnboardingFormContext);
@@ -44,6 +44,7 @@ export const OnboardingFormProvider: React.FC<{
   const valueObject = useMemo(() => {
     return { onboardingForm, setOnboardingForm };
   }, [onboardingForm, setOnboardingForm]);
+  
   return (
     <OnboardingFormContext.Provider value={valueObject}>
       {children}

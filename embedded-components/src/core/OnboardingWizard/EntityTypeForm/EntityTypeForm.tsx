@@ -49,7 +49,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
     {}
   ) as tEntityTypeFormValidationSchemaValues;
 
-  const formz = useForm<any>({
+  const form = useForm<any>({
     defaultValues: defaultInitialValues,
     resolver: yupResolver(
       createEntityTypeFormValidationSchema(getContentToken)
@@ -58,11 +58,11 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
   });
 
   const onSubmit = () => {
-    const errors = formz?.formState?.errors;
-    if (Object.values(errors).length === 0 && formz.formState.isSubmitted) {
+    const errors = form?.formState?.errors;
+    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
       const newOnboardingForm = addBusinessType(
         onboardingForm,
-        formz.getValues('legalStructure')
+        form.getValues('legalStructure')
       );
       setOnboardingForm(newOnboardingForm);
       setActiveStep(1);
@@ -72,11 +72,11 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
   return (
     <Stack>
       <Title as="h3">What Kind of Business do you run?</Title>
-      <Form {...formz}>
+      <Form {...form}>
         <form
-          onSubmit={formz.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => {
-            setSelectedAccountType(formz.getValues().legalStructure);
+            setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
           <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6">
@@ -84,7 +84,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
               className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'}  eb-grid-cols-2`}
             >
               <FormField
-                control={formz.control}
+                control={form.control}
                 name="legalStructure"
                 render={({ field }) => (
                   <FormItem>
@@ -149,7 +149,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
             <Stack className="eb-gap-8">
               <Title as="h2">Additional Questions</Title>
               <FormField
-                control={formz.control}
+                control={form.control}
                 name="businessInSanctionedCountries"
                 render={({ field }) => (
                   <FormItem>
@@ -186,7 +186,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
                 )}
               />
               <FormField
-                control={formz.control}
+                control={form.control}
                 name="relatedToATM"
                 render={({ field }) => (
                   <FormItem>
@@ -218,9 +218,9 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
                   </FormItem>
                 )}
               />
-              {formz.getValues().legalStructure !== 'Sole Proprietorship' && (
+              {form.getValues().legalStructure !== 'Sole Proprietorship' && (
                 <FormField
-                  control={formz.control}
+                  control={form.control}
                   name="entitiesInOwnership"
                   render={({ field }) => (
                     <FormItem>
@@ -255,9 +255,9 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
                   )}
                 />
               )}
-              {formz.getValues().legalStructure !== 'Sole Proprietorship' && (
+              {form.getValues().legalStructure !== 'Sole Proprietorship' && (
                 <FormField
-                  control={formz.control}
+                  control={form.control}
                   name="significantOwnership"
                   render={({ field }) => (
                     <FormItem>
@@ -295,7 +295,7 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
             </Stack>
             <Separator className="eb-my-8" />
             {/* <FormField
-              control={formz.control}
+              control={form.control}
               name="mockEnabled"
               render={({ field }) => (
                 <FormItem className="eb-flex eb-flex-row eb-mt-8">

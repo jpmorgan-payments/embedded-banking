@@ -8,15 +8,15 @@ import { LegalStructure } from '../models';
 
 const businessDetailsSchema = (getContentToken?: any) => {
   return yup.object({
-    legalStructure: yup
-      .mixed<LegalStructure>()
-      .oneOf([
-        'Corporation',
-        'Limited Partnership',
-        'Limited Liability Company',
-        'Sole Proprietorship',
-      ])
-      .default(''),
+    // legalStructure: yup
+    //   .mixed<LegalStructure>()
+    //   .oneOf([
+    //     'Corporation',
+    //     'Limited Partnership',
+    //     'Limited Liability Company',
+    //     'Sole Proprietorship',
+    //   ])
+    //   .default(''),
     significantOwnership: yup.boolean(),
     businessName: yup
       .string()
