@@ -21,10 +21,11 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
-import { AddressForm } from '../AddressForm/AddressForm';
+
 import { industryCategoriesMock as industryCategories } from '../../mocks/industryCategories.mock';
 import type { Step } from '../../models';
 import { useContentData } from '../../useContentData';
+import { AddressForm } from '../AddressForm/AddressForm';
 
 export const BusinessCommonForm: Step = ({ form }: any) => {
   const isLoadingIndustryCategories = false;
@@ -285,7 +286,9 @@ export const BusinessCommonForm: Step = ({ form }: any) => {
                     ?.sort((a, b) => a?.value?.localeCompare?.(b?.value)) ?? []
                 )?.map((items: any) => {
                   return (
-                    <SelectItem value={items.value}>{items.value}</SelectItem>
+                    <SelectItem key={items.value} value={items.value}>
+                      {items.value}
+                    </SelectItem>
                   );
                 })}
               </SelectContent>

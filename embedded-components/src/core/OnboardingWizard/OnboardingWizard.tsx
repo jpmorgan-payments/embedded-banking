@@ -10,6 +10,7 @@ import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
 import { OtherOwnersStep } from './Steps/OtherOwnersStep/OtherOwnersStep';
 import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
 import { QuestionsStep } from './Steps/QuestionsStep/QuestionsStep';
+import { ReviewStep } from './Steps/ReviewStep/ReviewStep';
 
 export const OnboardingWizard = () => {
   const { activeStep, setCurrentStep } = useStepper();
@@ -37,6 +38,11 @@ export const OnboardingWizard = () => {
     />,
     <QuestionsStep
       key={4}
+      setActiveStep={setCurrentStep}
+      activeStep={activeStep}
+    />,
+    <ReviewStep
+      key={5}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,

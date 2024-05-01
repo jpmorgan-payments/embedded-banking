@@ -4,6 +4,7 @@ import { AdditionalDecisionMakersForm } from '@/core/OnboardingWizard/Additional
 import { BusinessDetails } from '@/core/OnboardingWizard/BusinessDetailsStep/BusinessDetailsStep';
 import { DecisionMakerForm } from '@/core/OnboardingWizard/DecisionMakersForm/DecisionMakersForm';
 import { EntityTypeForm } from '@/core/OnboardingWizard/Steps/EntityTypeStep/EntityTypeStep';
+import { ReviewStep } from '@/core/OnboardingWizard/Steps/ReviewStep/ReviewStep';
 
 export const componentRegistry = {
   LinkedAccountWidget,
@@ -12,6 +13,7 @@ export const componentRegistry = {
   DecisionMakerForm,
   AdditionalDecisionMakersForm,
   BusinessDetails,
+  ReviewStep,
 };
 
 export type ComponentRegistry = typeof componentRegistry;

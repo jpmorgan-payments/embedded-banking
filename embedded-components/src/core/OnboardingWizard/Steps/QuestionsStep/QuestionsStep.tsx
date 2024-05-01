@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useOnboardingForm } from '../../context/form.context';
+
 import { smbdoListQuestions } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
 import { Form } from '@/components/ui/form';
@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
 
+import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 
 type QuestionsStepProps = {
@@ -31,7 +32,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
           const res = await smbdoListQuestions(
             onboardingForm?.outstandingItems?.questionIds
           );
-          console.log(res)
+          console.log(res);
           setQuestions(res?.questions);
         }
       } catch (error) {
@@ -59,7 +60,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
         <Separator />
         {questions?.map((question) => (
           <>
-            <Text>{question.content[0].label}</Text>
+            <Text key={question.id}>{question.content[0].label}</Text>
             <Separator />
           </>
         ))}
