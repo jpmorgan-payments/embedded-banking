@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { useContentData } from '../../useContentData';
 
 const BusinessDetailsForm = ({ form }: any) => {
-  const { getContentToken } = useContentData('features.BusinessDetailsStep');
+  const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   return (
     <>
       <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
