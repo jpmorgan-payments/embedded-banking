@@ -1,7 +1,5 @@
 import _ from 'lodash';
-
-import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
-
+import { CreateClientRequestSmbdo, ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { OnboardingForm } from './form.context';
@@ -100,6 +98,10 @@ export const addOtherOwner = (
   }
   return form;
 };
+
+export const addOutstandingItems = (onboardingForm: OnboardingForm, outstandingItems: ClientResponseOutstanding) => {
+  return { ...onboardingForm, outstandingItems};
+}
 
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
