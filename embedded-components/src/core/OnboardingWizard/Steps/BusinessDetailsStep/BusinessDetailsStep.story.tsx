@@ -1,5 +1,5 @@
-import { OnboardingFormProvider } from '../context/form.context';
-import { BusinessDetails } from './BusinessDetails';
+import { OnboardingFormProvider } from '../../context/form.context';
+import { BusinessDetailsStep } from './BusinessDetailsStep';
 
 export default {
   title: 'BusinessDetails',
@@ -7,7 +7,7 @@ export default {
 
 export const Usage = () => (
   <OnboardingFormProvider>
-  <BusinessDetails
+  <BusinessDetailsStep
    activeStep={2} setActiveStep={()=> {}}
   />
   </OnboardingFormProvider>

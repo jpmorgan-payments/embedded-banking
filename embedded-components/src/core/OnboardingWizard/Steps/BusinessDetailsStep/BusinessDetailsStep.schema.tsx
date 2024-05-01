@@ -4,7 +4,6 @@ import * as yup from 'yup';
 // import { GetContentTokenType } from '../../../../../contexts/ContentProvider/useContentData';
 import { createRegExpAndMessage } from '@/lib/utils';
 
-import { LegalStructure } from '../models';
 
 const businessDetailsSchema = (getContentToken?: any) => {
   return yup.object({

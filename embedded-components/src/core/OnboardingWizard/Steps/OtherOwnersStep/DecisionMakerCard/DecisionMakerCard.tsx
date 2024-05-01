@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
-import { AdditionalDecisionMakerModalForm } from '../AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
+import { DecisionMakerModal } from '../DecisionMakerModal/DecisionMakerModal';
 
 type DecisionMakersCardProps = {
   individual: any;
@@ -77,7 +77,7 @@ const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardPr
             </div>
           </CardContent>
         </Card>
-        <AdditionalDecisionMakerModalForm index={key} />
+        <DecisionMakerModal index={key} />
       </div>
     </Dialog>
   );

@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { BusinessDetailsStepValues } from '../BusinessDetails/BusinessDetails.schema';
+import { BusinessDetailsStepValues } from '../BusinessDetailsStep/BusinessDetailsStep.schema';
 import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm.schema';
 
 //import { useListClients } from '../hooks/useListClients';

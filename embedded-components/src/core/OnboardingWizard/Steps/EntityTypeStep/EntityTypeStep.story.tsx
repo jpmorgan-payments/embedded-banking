@@ -1,5 +1,5 @@
-import { OnboardingFormProvider } from '../context/form.context';
-import { EntityTypeForm } from './EntityTypeForm';
+import { OnboardingFormProvider } from '../../context/form.context';
+import { EntityTypeStep } from './EntityTypeStep';
 
 export default {
   title: 'EntityTypeForm',
@@ -7,7 +7,7 @@ export default {
 
 export const Usage = () => (
   <OnboardingFormProvider>
-    <EntityTypeForm
+    <EntityTypeStep
       activeStep={0}
       setActiveStep={() => {}}
     />

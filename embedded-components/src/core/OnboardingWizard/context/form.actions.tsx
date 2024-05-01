@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { BusinessDetailsStepValues } from '../BusinessDetails/BusinessDetails.schema';
+import { BusinessDetailsStepValues } from '../BusinessDetailsStep/BusinessDetailsStep.schema';
 import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm.schema';
 import { OnboardingForm } from './form.context';
 

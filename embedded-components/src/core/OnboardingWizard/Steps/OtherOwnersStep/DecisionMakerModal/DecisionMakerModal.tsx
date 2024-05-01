@@ -11,25 +11,21 @@ import {
   DialogPortal,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
+import { PersonalDetailsValues, createPersonalDetailsSchema } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
+import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
+import { useContentData } from '../../../useContentData';
+import { addOtherOwner } from '../../../context/form.actions';
+import { useOnboardingForm } from '../../../context/form.context';
 
-import { AddressForm } from '../../DecisionMakersForm/AddressForm/AddressForm';
-import {
-  createDecisionMakerFormSchema,
-  DecisionMakerFormValues,
-} from '../../DecisionMakersForm/DecisionMakerForm.schema';
-import { PersonalDetailsForm } from '../../DecisionMakersForm/PersonalDetailsForm/PersonalDetailsForm';
-import { useContentData } from '../../useContentData';
-import { addOtherOwner } from '../../context/form.actions';
-import { useOnboardingForm } from '../../context/form.context';
-
-const defaultInitialValues = createDecisionMakerFormSchema().cast({}) ;
+const defaultInitialValues = createPersonalDetailsSchema().cast({}) ;
 
 
-type AdditionalDecisionMakerModalFormProps = {
+type DecisionMakerModalProps = {
   index?: number
 }
 
-const AdditionalDecisionMakerModalForm = ({index}: AdditionalDecisionMakerModalFormProps) => {
+const DecisionMakerModal = ({index}: DecisionMakerModalProps) => {
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
@@ -44,9 +40,9 @@ const AdditionalDecisionMakerModalForm = ({index}: AdditionalDecisionMakerModalF
 
     console.log(onboardingForm?.otherOwners)
 
-  const form = useForm<DecisionMakerFormValues>({
+  const form = useForm<PersonalDetailsValues>({
     defaultValues: defaultValues,
-    resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
+    resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
   const onSubmit = () => {
     const errors = form?.formState?.errors;
@@ -82,4 +78,4 @@ const AdditionalDecisionMakerModalForm = ({index}: AdditionalDecisionMakerModalF
   );
 };
 
-export { AdditionalDecisionMakerModalForm };
+export { DecisionMakerModal };
