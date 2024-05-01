@@ -17,6 +17,8 @@ import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
+import { smbdoPostClients } from '@/api/generated/embedded-banking';
+import { formToAPIBody } from '../../context/form.actions';
 
 type OtherOwnersStepProp = {
   setActiveStep: any;
@@ -40,8 +42,12 @@ const OtherOwnersStep = ({
     if (val === 'Yes') setAdditionalDecisionMakers(true);
   };
 
-  const onSubmit = () => {
-    setActiveStep(activeStep + 1);
+  const onSubmit = async () => {
+    //setActiveStep(activeStep + 1);
+    console.log(onboardingForm)
+    const apiForm = formToAPIBody(onboardingForm);
+    console.log(apiForm)
+    //await smbdoPostClients(apiForm)
   };
 
   return (
@@ -49,7 +55,7 @@ const OtherOwnersStep = ({
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
-        <form>
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             name="additonalDecisionMakers"
             render={() => (
@@ -81,8 +87,7 @@ const OtherOwnersStep = ({
               </FormItem>
             )}
           />
-        </form>
-      </Form>
+        
       {additionalDecisionMakers && (
         <>
           <Title as="h4">Listed business decision makers</Title>
@@ -114,7 +119,7 @@ const OtherOwnersStep = ({
               <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </div>
-              <DecisionMakerModal />
+              <DecisionMakerModal onOpenChange={setOpen} />
             </Dialog>
           </div>
         </>
@@ -124,6 +129,8 @@ const OtherOwnersStep = ({
         activeStep={activeStep}
         onSubmit={onSubmit}
       />
+      </form>
+      </Form>
     </div>
   );
 };
