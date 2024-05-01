@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { smbdoGetClient } from '@/api/generated/embedded-banking';
 import { Stack, Text, Title } from '@/components/ui';
 
+import NavigationButtons from '../../Stepper/NavigationButtons';
+
 // import { ReviewTable } from './ReviewTable';
 
 type ReviewStepProps = {
@@ -31,6 +33,13 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
       <Stack>
         <Text>{JSON.stringify(data)}</Text>
         {/* <ReviewTable /> */}
+        <NavigationButtons
+          onSubmit={() => {
+            setActiveStep(activeStep + 1);
+          }}
+          setActiveStep={setActiveStep}
+          activeStep={activeStep}
+        />
       </Stack>
     </>
   );
