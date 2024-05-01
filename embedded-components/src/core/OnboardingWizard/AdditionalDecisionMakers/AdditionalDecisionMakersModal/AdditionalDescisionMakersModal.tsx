@@ -1,7 +1,6 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import {  useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Form } from '@/components/ui/form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +10,10 @@ import {
   DialogPortal,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Form } from '@/components/ui/form';
 
+import { addOtherOwner } from '../../context/form.actions';
+import { useOnboardingForm } from '../../context/form.context';
 import { AddressForm } from '../../DecisionMakersForm/AddressForm/AddressForm';
 import {
   createDecisionMakerFormSchema,
@@ -19,42 +21,44 @@ import {
 } from '../../DecisionMakersForm/DecisionMakerForm.schema';
 import { PersonalDetailsForm } from '../../DecisionMakersForm/PersonalDetailsForm/PersonalDetailsForm';
 import { useContentData } from '../../useContentData';
-import { addOtherOwner } from '../../context/form.actions';
-import { useOnboardingForm } from '../../context/form.context';
 
-const defaultInitialValues = createDecisionMakerFormSchema().cast({}) ;
-
+const defaultInitialValues = createDecisionMakerFormSchema().cast({});
 
 type AdditionalDecisionMakerModalFormProps = {
-  index?: number
-}
+  index?: number;
+  onOpenChange: any;
+};
 
-const AdditionalDecisionMakerModalForm = ({index}: AdditionalDecisionMakerModalFormProps) => {
+const AdditionalDecisionMakerModalForm = ({
+  index,
+  onOpenChange,
+}: AdditionalDecisionMakerModalFormProps) => {
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-  const [defaultValues, setDefaultValues] = useState(defaultInitialValues)
+  const [defaultValues, setDefaultValues] = useState(defaultInitialValues);
 
   useEffect(() => {
     if (onboardingForm?.otherOwners?.length) {
-      setDefaultValues(onboardingForm?.otherOwners[index])
+      setDefaultValues(onboardingForm?.otherOwners[index]);
     }
-  },[onboardingForm])
-
-    console.log(onboardingForm?.otherOwners)
+  }, [onboardingForm]);
 
   const form = useForm<DecisionMakerFormValues>({
     defaultValues: defaultValues,
     resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
   });
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<DecisionMakerFormValues> = (
+    data: DecisionMakerFormValues
+  ) => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addOtherOwner(onboardingForm, form.getValues());
       setOnboardingForm(newOnboardingForm);
+      onOpenChange(false);
     }
-
   };
 
   return (
@@ -69,11 +73,9 @@ const AdditionalDecisionMakerModalForm = ({index}: AdditionalDecisionMakerModalF
             <AddressForm form={form} />
 
             <div className="eb-mt-[25px] eb-mb-sm eb-flex eb-justify-end">
-              <DialogClose asChild>
-                <Button type="submit"  onClick={onSubmit} className="eb-bg-black">
-                  Save
-                </Button>
-              </DialogClose>
+              <Button type="submit" className="eb-bg-black">
+                Save
+              </Button>
             </div>
           </form>
         </Form>

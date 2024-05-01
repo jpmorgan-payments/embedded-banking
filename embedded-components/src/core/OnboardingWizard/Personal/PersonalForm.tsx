@@ -38,7 +38,7 @@ const PersonalForm = ({ setActiveStep, activeStep }: PersonalFormProps) => {
   const onSubmit: any = () => {
     const errors = form?.formState?.errors;
 
-    if (!Object.values(errors).length && form.formState.isSubmitted) {
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addBusinessOwner(
         onboardingForm,
         form.getValues()

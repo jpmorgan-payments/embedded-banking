@@ -71,15 +71,8 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
 
   const onSubmit: any = () => {
     const errors = form?.formState?.errors;
-    console.log(
-      '@@errors',
-      activeStep,
-      '::',
-      errors,
-      form.formState.isSubmitted
-    );
-
-    if (!Object.values(errors).length && form.formState.isSubmitted) {
+    
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addBusinessType(
         onboardingForm,
         form.getValues('legalStructure')

@@ -57,7 +57,7 @@ export const BusinessDetails: FC<EntityTypeFormProps> = ({
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addBusinessDetails(
         onboardingForm,
         form.getValues()

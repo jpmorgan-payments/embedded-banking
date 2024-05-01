@@ -27,6 +27,7 @@ const AdditionalDecisionMakersForm = ({
   setActiveStep,
   activeStep,
 }: AdditionalDecisionMakersFormType) => {
+  const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
 
@@ -42,7 +43,6 @@ const AdditionalDecisionMakersForm = ({
   const onSubmit = () => {
     setActiveStep(activeStep + 1);
   };
-
 
   return (
     <div className="eb-grid eb-grid-row-3">
@@ -109,11 +109,12 @@ const AdditionalDecisionMakersForm = ({
                 ></DecisionMakerCard>
               </div>
             ))}
-            <Dialog>
+
+            <Dialog open={open} onOpenChange={setOpen}>
               <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </div>
-              <AdditionalDecisionMakerModalForm />
+              <AdditionalDecisionMakerModalForm onOpenChange={setOpen}/>
             </Dialog>
           </div>
         </>

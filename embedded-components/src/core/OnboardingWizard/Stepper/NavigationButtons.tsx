@@ -28,7 +28,6 @@ const NavigationButtons = ({
         <Button
           className="eb-bg-black eb-w-24 "
           type="submit"
-          onClick={onSubmit}
         >
           Next
         </Button>

@@ -39,7 +39,7 @@ const DecisionMakerForm = ({
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addController(onboardingForm, form.getValues());
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
