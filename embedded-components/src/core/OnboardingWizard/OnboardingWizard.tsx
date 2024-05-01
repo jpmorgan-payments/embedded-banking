@@ -1,20 +1,16 @@
-import { useMemo, useState } from 'react';
-
+import { useMemo } from 'react';
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 
-import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
-import { BusinessDetails } from './BusinessDetails/BusinessDetails';
+import { OtherOwnersStep } from './Steps/OtherOwnersStep/OtherOwnersStep';
+import { BusinessDetailsStep } from './Steps/BusinessDetailsStep/BusinessDetailsStep';
 import { OnboardingFormProvider } from './context/form.context';
-import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
-import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
-import { PersonalForm } from './Personal/PersonalForm';
-import NavigationButtons from './Stepper/NavigationButtons';
+import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
+import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
 
@@ -23,28 +19,23 @@ export const OnboardingWizard = () => {
   console.log('@@activeStep', activeStep);
 
   const steps = [
-    <EntityTypeForm
+    <EntityTypeStep
       key={0}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
-    <PersonalForm
+    <PersonalDetailsStep
       key={1}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
-    <BusinessDetails
+    <BusinessDetailsStep
       setActiveStep={setCurrentStep}
       key={2}
       activeStep={activeStep}
     />,
-    <DecisionMakerForm
+    <OtherOwnersStep
       key={3}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <AdditionalDecisionMakersForm
-      key={4}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,

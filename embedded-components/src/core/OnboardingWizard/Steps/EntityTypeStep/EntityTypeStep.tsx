@@ -1,0 +1,86 @@
+import { FC, ReactNode, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { Form } from '@/components/ui/form';
+import { Stack } from '@/components/ui/stack';
+import { Title } from '@/components/ui/title';
+import { addBusinessType } from '../../context/form.actions';
+import { useOnboardingForm } from '../../context/form.context';
+import NavigationButtons from '../../Stepper/NavigationButtons';
+import { useContentData } from '../../useContentData';
+import {
+  createEntityTypeFormValidationSchema,
+  tEntityTypeFormValidationSchemaValues,
+} from './EntityTypeStep.schema';
+import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
+
+type EntityTypeStepProps = {
+  children?: ReactNode;
+  setActiveStep: any;
+  activeStep: number;
+};
+
+export const EntityTypeStep: FC<EntityTypeStepProps> = ({
+  setActiveStep,
+  activeStep,
+}: any) => {
+  const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
+  const { getContentToken } = useContentData('features.EntityTypeForm');
+
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const defaultInitialValues = createEntityTypeFormValidationSchema().cast(
+    {}
+  ) as tEntityTypeFormValidationSchemaValues;
+
+  const form = useForm<any>({
+    defaultValues: {
+      ...defaultInitialValues,
+      legalStructure: onboardingForm?.legalStructure ?? '',
+    },
+    resolver: yupResolver(
+      createEntityTypeFormValidationSchema(getContentToken)
+    ),
+    mode: 'onBlur',
+  });
+
+  const onSubmit: any = () => {
+    const errors = form?.formState?.errors;
+    console.log(
+      '@@errors',
+      activeStep,
+      '::',
+      errors,
+      form.formState.isSubmitted
+    );
+
+    if (!Object.values(errors).length && form.formState.isSubmitted) {
+      const newOnboardingForm = addBusinessType(
+        onboardingForm,
+        form.getValues('legalStructure')
+      );
+      setOnboardingForm(newOnboardingForm);
+      setActiveStep(activeStep + 1);
+    }
+  };
+
+  return (
+    <Stack>
+      <Title as="h3">What Kind of Business do you run?</Title>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          onChange={() => {
+            setSelectedAccountType(form.getValues().legalStructure);
+          }}
+        >
+          <EntityTypeForm form={form}/>
+          <NavigationButtons
+            setActiveStep={setActiveStep}
+            activeStep={activeStep}
+            onSubmit={onSubmit}
+          />
+        </form>
+      </Form>
+    </Stack>
+  );
+};

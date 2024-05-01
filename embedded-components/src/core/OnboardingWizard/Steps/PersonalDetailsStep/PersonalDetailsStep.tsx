@@ -1,40 +1,38 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
 import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
-
-import { addController } from '../context/form.actions';
-import { useOnboardingForm } from '../context/form.context';
-import NavigationButtons from '../Stepper/NavigationButtons';
-import { useContentData } from '../useContentData';
-import { AddressForm } from './AddressForm/AddressForm';
+import { addController } from '../../context/form.actions';
+import { useOnboardingForm } from '../../context/form.context';
+import NavigationButtons from '../../Stepper/NavigationButtons';
+import { useContentData } from '../../useContentData';
+import { AddressForm } from '../../Forms/AddressForm/AddressForm';
 import {
-  createDecisionMakerFormSchema,
-  DecisionMakerFormValues,
-} from './DecisionMakerForm.schema';
-import { PersonalDetailsForm } from './PersonalDetailsForm/PersonalDetailsForm';
+  PersonalDetailsValues,
+  createPersonalDetailsSchema,
+} from './PersonalDetailsStep.schema';
+import { PersonalDetailsForm } from '../../Forms/PersonalDetailsForm/PersonalDetailsForm';
 
-const defaultInitialValues = createDecisionMakerFormSchema().cast({});
+const defaultInitialValues = createPersonalDetailsSchema().cast({});
 
-type DecisionMakersFormProps = {
+type PersonalDetailsStepProps = {
   setActiveStep: any;
   activeStep: number;
 };
 
-const DecisionMakerForm = ({
+const PersonalDetailsStep = ({
   setActiveStep,
   activeStep,
-}: DecisionMakersFormProps) => {
+}: PersonalDetailsStepProps) => {
   // @ts-ignore
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
 
-  const form = useForm<DecisionMakerFormValues>({
+  const form = useForm<PersonalDetailsValues>({
     defaultValues: onboardingForm?.controller ?? defaultInitialValues,
-    resolver: yupResolver(createDecisionMakerFormSchema(getFormSchema)),
+    resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
 
   const onSubmit = () => {
@@ -69,4 +67,4 @@ const DecisionMakerForm = ({
   );
 };
 
-export { DecisionMakerForm };
+export { PersonalDetailsStep };

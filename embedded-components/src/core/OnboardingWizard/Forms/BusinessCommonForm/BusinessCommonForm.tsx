@@ -1,6 +1,4 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
-
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   FormControl,
@@ -23,13 +21,12 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
+import { AddressForm } from '../AddressForm/AddressForm';
+import { industryCategoriesMock as industryCategories } from '../../mocks/industryCategories.mock';
+import type { Step } from '../../models';
+import { useContentData } from '../../useContentData';
 
-import { AddressForm } from '../DecisionMakersForm/AddressForm/AddressForm';
-import { industryCategoriesMock as industryCategories } from '../mocks/industryCategories.mock';
-import type { Step } from '../models';
-import { useContentData } from '../useContentData';
-
-export const BusinessDetailsCommon: Step = ({ form }: any) => {
+export const BusinessCommonForm: Step = ({ form }: any) => {
   const isLoadingIndustryCategories = false;
   const industryTypes =
     industryCategories?.items

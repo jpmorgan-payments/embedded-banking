@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 import { createRegExpAndMessage } from '@/lib/utils';
 
-const createDecisionMakerFormSchema = (getContentToken?: any) => {
+const createPersonalDetailsSchema = (getContentToken?: any) => {
   return yup.object({
     firstName: yup
       .string()
@@ -221,9 +221,9 @@ const createDecisionMakerFormSchema = (getContentToken?: any) => {
   });
 };
 
-const decisionMakerFormSchema = createDecisionMakerFormSchema();
+const personalDetailsFormSchema = createPersonalDetailsSchema();
 
-type DecisionMakerFormValues = yup.InferType<typeof decisionMakerFormSchema>;
+type PersonalDetailsValues = yup.InferType<typeof personalDetailsFormSchema>;
 
-export { createDecisionMakerFormSchema, decisionMakerFormSchema };
-export type { DecisionMakerFormValues };
+export { createPersonalDetailsSchema, personalDetailsFormSchema };
+export type { PersonalDetailsValues };

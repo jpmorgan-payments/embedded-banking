@@ -1,4 +1,4 @@
-import { Key, useEffect, useState } from 'react';
+import { Key, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 
@@ -13,20 +13,20 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 
-import { useOnboardingForm } from '../context/form.context';
-import NavigationButtons from '../Stepper/NavigationButtons';
-import { AdditionalDecisionMakerModalForm } from './AdditionalDecisionMakersModal/AdditionalDescisionMakersModal';
+import { useOnboardingForm } from '../../context/form.context';
+import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
+import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
-type AdditionalDecisionMakersFormType = {
+type OtherOwnersStepProp = {
   setActiveStep: any;
   activeStep: any;
 };
 
-const AdditionalDecisionMakersForm = ({
+const OtherOwnersStep = ({
   setActiveStep,
   activeStep,
-}: AdditionalDecisionMakersFormType) => {
+}: OtherOwnersStepProp) => {
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
@@ -114,7 +114,7 @@ const AdditionalDecisionMakersForm = ({
               <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </div>
-              <AdditionalDecisionMakerModalForm onOpenChange={setOpen}/>
+              <DecisionMakerModal />
             </Dialog>
           </div>
         </>
@@ -128,4 +128,4 @@ const AdditionalDecisionMakersForm = ({
   );
 };
 
-export { AdditionalDecisionMakersForm };
+export { OtherOwnersStep  };
