@@ -1,9 +1,5 @@
 import { UseFormReturnType } from '@mantine/form';
 
-// import type { TablerIcon } from '@tabler/icons';
-
-// import type { OnboardingValuesBusiness, OnboardingValuesSP } from './Steps';
-
 export type EntityType =
   | 'Privately Owned Business'
   | 'Sole Proprietorship'
