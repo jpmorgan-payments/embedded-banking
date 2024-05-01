@@ -29,6 +29,7 @@ const OtherOwnersStep = ({
   setActiveStep,
   activeStep,
 }: OtherOwnersStepProp) => {
+  const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
 
@@ -47,7 +48,6 @@ const OtherOwnersStep = ({
     console.log(apiForm)
     await smbdoPostClients(apiForm)
   };
-
 
   return (
     <div className="eb-grid eb-grid-row-3">
@@ -114,7 +114,8 @@ const OtherOwnersStep = ({
                 ></DecisionMakerCard>
               </div>
             ))}
-            <Dialog>
+
+            <Dialog open={open} onOpenChange={setOpen}>
               <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </div>
