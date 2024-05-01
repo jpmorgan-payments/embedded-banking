@@ -47,7 +47,8 @@ const OtherOwnersStep = ({
     console.log(onboardingForm)
     const apiForm = formToAPIBody(onboardingForm);
     console.log(apiForm)
-    //await smbdoPostClients(apiForm)
+    await smbdoPostClients(apiForm);
+    
   };
 
   return (
