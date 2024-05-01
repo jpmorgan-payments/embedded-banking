@@ -26,7 +26,7 @@
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "generate-api": "rm -rf ./src/api/generated/requests && openapi-rq -i ./api-specs/embedded-banking-solutions-api-v2-external.yml -o ./src/api/generated -c axios --indent 2 --useUnionTypes"
+    "generate-api": "orval --config ./orval.config.cjs && yarn replace '((?:\\s|\\<))(\\d\\S*)Response' '$1N$2Response' ./src/api/generated/embedded-banking.ts && npx prettier --write './src/api/generated/embedded-banking.*'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -42,7 +42,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
-    "@tanstack/react-query": "^5.20.5",
+    "@tanstack/react-query": "^5.32.1",
     "@tanstack/react-table": "^8.13.0",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
@@ -62,7 +62,6 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@openapi-codegen/typescript": "^8.0.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",
     "@storybook/addon-links": "^8.0.8",
@@ -70,6 +69,7 @@
     "@storybook/react": "^8.0.8",
     "@storybook/react-vite": "^8.0.8",
     "@storybook/testing-library": "^0.2.2",
+    "@tanstack/react-query-devtools": "^5.32.1",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
@@ -92,7 +92,7 @@
     "eslint-plugin-tailwindcss": "^3.15.1",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^23.0.1",
-    "openapi-typescript-codegen": "^0.28.0",
+    "orval": "^6.27.1",
     "postcss": "^8.4.35",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "^7.0.1",
@@ -100,6 +100,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "replace": "^1.2.2",
     "storybook": "^8.0.8",
     "storybook-dark-mode": "^4.0.1",
     "tailwindcss": "^3.4.1",

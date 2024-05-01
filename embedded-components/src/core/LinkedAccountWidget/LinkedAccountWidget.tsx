@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { useGetAllRecipients } from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -13,6 +14,9 @@ export const LinkedAccountWidget = () => {
     console.log(data);
     // Handle account linking logic here
   };
+
+  const { data } = useGetAllRecipients();
+  console.log(data);
 
   return (
     <Card>

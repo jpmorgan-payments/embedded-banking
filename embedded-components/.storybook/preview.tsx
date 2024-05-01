@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { addons } from '@storybook/preview-api';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 
 import { EBComponentsProvider } from '../src/core/EBComponentsProvider';
@@ -19,7 +20,11 @@ function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
   }, [channel]);
 
   return (
-    <EBComponentsProvider apiBaseUrl="" theme={{ colorScheme: colorScheme }}>
+    <EBComponentsProvider
+      apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/ef/v2"
+      theme={{ colorScheme: colorScheme }}
+    >
+      <ReactQueryDevtools />
       {children}
     </EBComponentsProvider>
   );
