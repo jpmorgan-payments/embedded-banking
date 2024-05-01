@@ -1,8 +1,11 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 
 //import { useListClients } from '../hooks/useListClients';
+
+
 
 export type OnboardingForm = {
   legalStructure: string | undefined;
@@ -10,6 +13,7 @@ export type OnboardingForm = {
   controller: PersonalDetailsValues | undefined;
   otherOwners: PersonalDetailsValues[] | undefined;
   businessDetails: BusinessDetailsStepValues | undefined;
+  outstandingItems: ClientResponseOutstanding | undefined;
 };
 
 export const defaultValues: OnboardingForm = {
@@ -18,6 +22,7 @@ export const defaultValues: OnboardingForm = {
   controller: undefined,
   otherOwners: undefined,
   businessDetails: undefined,
+  outstandingItems: undefined
 };
 
 export const OnboardingFormContext = createContext(defaultValues);

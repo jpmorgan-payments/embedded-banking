@@ -1,7 +1,5 @@
 import _ from 'lodash';
-
-import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
-
+import { CreateClientRequestSmbdo, ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { OnboardingForm } from './form.context';
@@ -101,6 +99,10 @@ export const addOtherOwner = (
   return form;
 };
 
+export const addOutstandingItems = (onboardingForm: OnboardingForm, outstandingItems: ClientResponseOutstanding) => {
+  return { ...onboardingForm, outstandingItems};
+}
+
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
   onboardingForm: OnboardingForm,
@@ -134,10 +136,14 @@ export const addBusinessType = (
 };
 
 export const makeIndividual = (
-  form: OnboardingForm,
   owner: PersonalDetailsValues,
+  form: OnboardingForm,
   roles: string[]
 ) => {
+  const addressLines = [];
+  if (owner?.addressLine1) addressLines.push(owner?.addressLine1);
+  if (owner?.addressLine2) addressLines.push(owner?.addressLine2);
+  if (owner?.addressLine3) addressLines.push(owner?.addressLine3);
   const party = {
     partyType: 'INDIVIDUAL',
     email: owner?.email,
@@ -152,11 +158,7 @@ export const makeIndividual = (
       addresses: [
         {
           addressType: 'RESIDENTIAL_ADDRESS',
-          addressLines: _.union(
-            owner?.addressLine1,
-            owner?.addressLine2,
-            owner?.addressLine3
-          ),
+          addressLines,
           city: owner?.city,
           state: owner?.state,
           postalCode: owner?.zip,
@@ -173,12 +175,30 @@ export const makeBusiness = (
   business: BusinessDetailsStepValues,
   form: OnboardingForm
 ) => {
+  const addressLines = [];
+  if (business?.businessAddressLine1)
+    addressLines.push(business?.businessAddressLine1);
+  if (business?.businessAddressLine2)
+    addressLines.push(business?.businessAddressLine2);
+  if (business?.businessAddressLine3)
+    addressLines.push(business?.businessAddressLine3);
+
+  const organizationSwitch = (businessType: string | undefined) => {
+    const map = {
+      'Corporation': 'C_CORPORATION',
+      'Limited Partnership': 'LIMITED_PARTNERSHIP',
+      'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
+      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP'
+    };
+    return businessType? map[businessType]: '';
+  };
+
   const party = {
     partyType: 'ORGANIZATION',
     email: business?.businessEmail,
     roles: ['CLIENT'],
     organizationDetails: {
-      organizationType: form?.legalStructure,
+      organizationType: organizationSwitch(form?.legalStructure),
       organizationName: business?.businessName,
       organizationDescription: business?.businessDescription,
       industryCategory: business?.industryCategory,
@@ -189,14 +209,10 @@ export const makeBusiness = (
       addresses: [
         {
           addressType: 'BUSINESS_ADDRESS',
-          addressLines: _.union(
-            business?.addressLine1,
-            business?.addressLine2,
-            business?.addressLine3
-          ),
-          city: business?.city,
-          state: business?.state,
-          postalCode: business?.zip,
+          addressLines,
+          city: business?.businessCity,
+          state: business?.businessState,
+          postalCode: business?.businessZipCode,
           country: 'US',
         },
       ],

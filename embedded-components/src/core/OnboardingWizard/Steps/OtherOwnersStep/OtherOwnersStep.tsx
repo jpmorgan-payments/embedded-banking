@@ -2,6 +2,7 @@ import { Key, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 
+import { smbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
@@ -13,12 +14,11 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 
+import { addOutstandingItems, formToAPIBody } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
-import { smbdoPostClients } from '@/api/generated/embedded-banking';
-import { formToAPIBody } from '../../context/form.actions';
 
 type OtherOwnersStepProp = {
   setActiveStep: any;
@@ -43,11 +43,18 @@ const OtherOwnersStep = ({
   };
 
   const onSubmit = async () => {
-    //setActiveStep(activeStep + 1);
-    console.log(onboardingForm)
     const apiForm = formToAPIBody(onboardingForm);
-    console.log(apiForm)
-    //await smbdoPostClients(apiForm)
+    try {
+      const res = await smbdoPostClients(apiForm);
+      const newOnboardingForm = addOutstandingItems(
+        onboardingForm,
+        res.outstanding
+      );
+      setOnboardingForm(newOnboardingForm);
+      setActiveStep(activeStep + 1);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,52 +94,57 @@ const OtherOwnersStep = ({
               </FormItem>
             )}
           />
-        
-      {additionalDecisionMakers && (
-        <>
-          <Title as="h4">Listed business decision makers</Title>
 
-          <div className="eb-grid eb-grid-cols-3">
-            {onboardingForm?.controller && (
-              <div
-                key="controllerPanel"
-                className="eb-grid-cols-subgrid eb-grid-cols-2"
-              >
-                <DecisionMakerCard
-                  controller
-                  individual={onboardingForm?.controller}
-                ></DecisionMakerCard>
-              </div>
-            )}
+          {additionalDecisionMakers && (
+            <>
+              <Title as="h4">Listed business decision makers</Title>
 
-            {onboardingForm?.otherOwners?.map((individual: any, index: Key) => (
-              <div key={index} className="eb-grid-cols-subgrid eb-grid-cols-2">
-                <DecisionMakerCard
-                  controller={false}
-                  individual={individual}
-                  key={index}
-                ></DecisionMakerCard>
-              </div>
-            ))}
+              <div className="eb-grid eb-grid-cols-3">
+                {onboardingForm?.controller && (
+                  <div
+                    key="controllerPanel"
+                    className="eb-grid-cols-subgrid eb-grid-cols-2"
+                  >
+                    <DecisionMakerCard
+                      controller
+                      individual={onboardingForm?.controller}
+                    ></DecisionMakerCard>
+                  </div>
+                )}
 
-            <Dialog open={open} onOpenChange={setOpen}>
-              <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
-                <DialogTrigger>Click to add a decision maker</DialogTrigger>
+                {onboardingForm?.otherOwners?.map(
+                  (individual: any, index: Key) => (
+                    <div
+                      key={index}
+                      className="eb-grid-cols-subgrid eb-grid-cols-2"
+                    >
+                      <DecisionMakerCard
+                        controller={false}
+                        individual={individual}
+                        key={index}
+                      ></DecisionMakerCard>
+                    </div>
+                  )
+                )}
+
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
+                    <DialogTrigger>Click to add a decision maker</DialogTrigger>
+                  </div>
+                  <DecisionMakerModal onOpenChange={setOpen} />
+                </Dialog>
               </div>
-              <DecisionMakerModal onOpenChange={setOpen} />
-            </Dialog>
-          </div>
-        </>
-      )}
-      <NavigationButtons
-        setActiveStep={setActiveStep}
-        activeStep={activeStep}
-        onSubmit={onSubmit}
-      />
-      </form>
+            </>
+          )}
+          <NavigationButtons
+            setActiveStep={setActiveStep}
+            activeStep={activeStep}
+            onSubmit={onSubmit}
+          />
+        </form>
       </Form>
     </div>
   );
 };
 
-export { OtherOwnersStep  };
+export { OtherOwnersStep };
