@@ -17,6 +17,8 @@ import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
+import { smbdoPostClients } from '@/api/generated/embedded-banking';
+import { formToAPIBody } from '../../context/form.actions';
 
 type OtherOwnersStepProp = {
   setActiveStep: any;
@@ -39,8 +41,11 @@ const OtherOwnersStep = ({
     if (val === 'Yes') setAdditionalDecisionMakers(true);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setActiveStep(activeStep + 1);
+    const apiForm = formToAPIBody(onboardingForm);
+    console.log(apiForm)
+    await smbdoPostClients(apiForm)
   };
 
 
