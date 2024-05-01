@@ -11,6 +11,7 @@ import { BusinessDetailsStep } from './Steps/BusinessDetailsStep/BusinessDetails
 import { OnboardingFormProvider } from './context/form.context';
 import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
 import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
+import {QuestionsStep} from "./Steps/QuestionsStep/QuestionsStep";
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
 
@@ -36,6 +37,11 @@ export const OnboardingWizard = () => {
     />,
     <OtherOwnersStep
       key={3}
+      setActiveStep={setCurrentStep}
+      activeStep={activeStep}
+    />,
+    <QuestionsStep
+      key={4}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
