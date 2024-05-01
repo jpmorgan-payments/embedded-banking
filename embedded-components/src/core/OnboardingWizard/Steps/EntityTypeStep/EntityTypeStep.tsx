@@ -1,18 +1,20 @@
 import { FC, ReactNode, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+
 import { Form } from '@/components/ui/form';
 import { Stack } from '@/components/ui/stack';
 import { Title } from '@/components/ui/title';
+
 import { addBusinessType } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
+import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useContentData } from '../../useContentData';
 import {
   createEntityTypeFormValidationSchema,
   tEntityTypeFormValidationSchemaValues,
 } from './EntityTypeStep.schema';
-import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 
 type EntityTypeStepProps = {
   children?: ReactNode;
@@ -45,15 +47,8 @@ export const EntityTypeStep: FC<EntityTypeStepProps> = ({
 
   const onSubmit: any = () => {
     const errors = form?.formState?.errors;
-    console.log(
-      '@@errors',
-      activeStep,
-      '::',
-      errors,
-      form.formState.isSubmitted
-    );
 
-    if (!Object.values(errors).length && form.formState.isSubmitted) {
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addBusinessType(
         onboardingForm,
         form.getValues('legalStructure')
@@ -73,7 +68,7 @@ export const EntityTypeStep: FC<EntityTypeStepProps> = ({
             setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
-          <EntityTypeForm form={form}/>
+          <EntityTypeForm form={form} />
           <NavigationButtons
             setActiveStep={setActiveStep}
             activeStep={activeStep}

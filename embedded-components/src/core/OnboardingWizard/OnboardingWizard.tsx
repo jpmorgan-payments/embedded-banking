@@ -1,22 +1,17 @@
 import { useMemo } from 'react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 
-import { OtherOwnersStep } from './Steps/OtherOwnersStep/OtherOwnersStep';
-import { BusinessDetailsStep } from './Steps/BusinessDetailsStep/BusinessDetailsStep';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { OnboardingFormProvider } from './context/form.context';
-import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
-import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
+import { BusinessDetailsStep } from './Steps/BusinessDetailsStep/BusinessDetailsStep';
+import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
+import { OtherOwnersStep } from './Steps/OtherOwnersStep/OtherOwnersStep';
+import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
 
 export const OnboardingWizard = () => {
   const { activeStep, setCurrentStep } = useStepper();
-  console.log('@@activeStep', activeStep);
 
   const steps = [
     <EntityTypeStep
@@ -50,7 +45,10 @@ export const OnboardingWizard = () => {
       <CardContent>
         <OnboardingFormProvider>
           {activeStep !== 0 && (
-            <StepperHeader activeStep={activeStep}></StepperHeader>
+            <StepperHeader
+              activeStep={activeStep}
+              setCurrentStep={setCurrentStep}
+            ></StepperHeader>
           )}
 
           {steps?.map((step, index) => (
