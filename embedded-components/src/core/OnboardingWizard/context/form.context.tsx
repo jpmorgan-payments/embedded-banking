@@ -7,6 +7,7 @@ import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm
 
 export type OnboardingForm = {
   legalStructure: string | undefined;
+  owner: DecisionMakerFormValues | undefined;
   controller: DecisionMakerFormValues | undefined;
   otherOwners: DecisionMakerFormValues[] | undefined;
   businessDetails: BusinessDetailsStepValues | undefined;
@@ -14,6 +15,7 @@ export type OnboardingForm = {
 
 export const defaultValues: OnboardingForm = {
   legalStructure: undefined,
+  owner: undefined,
   controller: undefined,
   otherOwners: undefined,
   businessDetails: undefined,
@@ -21,7 +23,7 @@ export const defaultValues: OnboardingForm = {
 
 export const OnboardingFormContext = createContext(defaultValues);
 
-export const useOnboardingForm = () => {
+export const useOnboardingForm = (): any => {
   const context = useContext(OnboardingFormContext);
   if (context === undefined) {
     throw new Error(

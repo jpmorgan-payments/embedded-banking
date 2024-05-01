@@ -40,7 +40,7 @@ const AdditionalDecisionMakersForm = ({
   };
 
   const onSubmit = () => {
-    setActiveStep(4);
+    setActiveStep(activeStep + 1);
   };
 
 

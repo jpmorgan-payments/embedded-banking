@@ -1,13 +1,19 @@
-import { useMemo,useState } from 'react';
+import { useMemo, useState } from 'react';
 
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 import { AdditionalDecisionMakersForm } from './AdditionalDecisionMakers/AdditionalDecisionMakersForm';
 import { BusinessDetails } from './BusinessDetails/BusinessDetails';
 import { OnboardingFormProvider } from './context/form.context';
 import { DecisionMakerForm } from './DecisionMakersForm/DecisionMakersForm';
 import { EntityTypeForm } from './EntityTypeForm/EntityTypeForm';
+import { PersonalForm } from './Personal/PersonalForm';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
@@ -19,6 +25,11 @@ export const OnboardingWizard = () => {
   const steps = [
     <EntityTypeForm
       key={0}
+      setActiveStep={setCurrentStep}
+      activeStep={activeStep}
+    />,
+    <PersonalForm
+      key={1}
       setActiveStep={setCurrentStep}
       activeStep={activeStep}
     />,
@@ -56,9 +67,14 @@ export const OnboardingWizard = () => {
               key={`panel${index}`}
               className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
             >
-              {step}
+              {activeStep === index && ActiveStep}
             </div>
           ))}
+          {/* <div
+            className={`eb-flex eb-items-center ${'eb-block'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
+          >
+            {steps[activeStep]}
+          </div> */}
         </OnboardingFormProvider>
       </CardContent>
       {/* TODO: something breaks in hooks when i try to decople oprs of activeSTeps, day wasted */}

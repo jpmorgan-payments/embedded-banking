@@ -1,4 +1,11 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import {
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addBusinessDays } from 'date-fns';
 import { useForm } from 'react-hook-form';
@@ -22,6 +29,7 @@ import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
+
 import { addBusinessType } from '../context/form.actions';
 import { useOnboardingForm } from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
@@ -51,22 +59,33 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
   ) as tEntityTypeFormValidationSchemaValues;
 
   const form = useForm<any>({
-    defaultValues: defaultInitialValues,
+    defaultValues: {
+      ...defaultInitialValues,
+      legalStructure: onboardingForm?.legalStructure ?? '',
+    },
     resolver: yupResolver(
       createEntityTypeFormValidationSchema(getContentToken)
     ),
     mode: 'onBlur',
   });
 
-  const onSubmit = () => {
+  const onSubmit: any = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+    console.log(
+      '@@errors',
+      activeStep,
+      '::',
+      errors,
+      form.formState.isSubmitted
+    );
+
+    if (!Object.values(errors).length && form.formState.isSubmitted) {
       const newOnboardingForm = addBusinessType(
         onboardingForm,
         form.getValues('legalStructure')
       );
       setOnboardingForm(newOnboardingForm);
-      setActiveStep(1);
+      setActiveStep(activeStep + 1);
     }
   };
 
@@ -80,87 +99,153 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
             setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
-          <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6">
-            <Grid
-              className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'}  eb-grid-cols-2`}
-            >
+          {/* <ScrollArea className="eb-h-[calc(100vh)] eb-border-t-2 eb-px-6"> */}
+          <Grid
+            className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'}  eb-grid-cols-2`}
+          >
+            <FormField
+              control={form.control}
+              name="legalStructure"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel asterisk>
+                    {getContentToken(`radioLabelLegal`)}
+                  </FormLabel>
+
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="eb-flex eb-flex-col eb-space-y-1"
+                    >
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="Corporation" />
+
+                        <FormLabel className="eb-font-normal">
+                          Business (Corporation)
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="Limited Liability Company" />
+
+                        <FormLabel className="eb-font-normal">
+                          Business (LLC)
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="Limited Partnership" />
+
+                        <FormLabel className="eb-font-normal">
+                          Business (LP)
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="Sole Proprietorship" />
+
+                        <FormLabel className="eb-font-normal">
+                          Sole Proprietor
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Card>
+              <CardContent>
+                <Text size="lg">
+                  {getContentToken('corpText1')}
+                  The information we request from you will help us complete
+                  setting up your account. Please review and update any
+                  information that needs confirmation; and provide any
+                  additional information requested.
+                </Text>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Separator className="eb-my-8" />
+          <Stack className="eb-gap-8">
+            <Title as="h2">Additional Questions</Title>
+            <FormField
+              control={form.control}
+              name="businessInSanctionedCountries"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel asterisk>
+                    Do you have locations, sell goods or services, or have
+                    vendors or suppliers in countries or regions subject to
+                    comprehensive sanctions programs (Iran, North Korea, Cuba,
+                    Syria and the Crimea, Donetsk, Luhansk Regions of Ukraine),
+                    or work with Sanctioned Parties in Russia or Venezuela? *
+                  </FormLabel>
+
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="eb-flex eb-flex-row eb-space-y-1"
+                    >
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="yes" />
+
+                        <FormLabel className="eb-font-normal">Yes</FormLabel>
+                      </FormItem>
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="no" />
+
+                        <FormLabel className="eb-font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="relatedToATM"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel asterisk>
+                    Do you identify as a provider, owner, and/or operator of
+                    private ATM(s) and/or third Party ATM(s) activity?
+                  </FormLabel>
+
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="eb-flex eb-flex-row eb-space-y-1"
+                    >
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="yes" />
+
+                        <FormLabel className="eb-font-normal">Yes</FormLabel>
+                      </FormItem>
+                      <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                        <RadioGroupItem value="no" />
+
+                        <FormLabel className="eb-font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {form.getValues().legalStructure !== 'Sole Proprietorship' && (
               <FormField
                 control={form.control}
-                name="legalStructure"
+                name="entitiesInOwnership"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel asterisk>
-                      {getContentToken(`radioLabelLegal`)}
-                    </FormLabel>
-
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="eb-flex eb-flex-col eb-space-y-1"
-                      >
-                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                          <RadioGroupItem value="Corporation" />
-
-                          <FormLabel className="eb-font-normal">
-                            Business (Corporation)
-                          </FormLabel>
-                        </FormItem>
-                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                          <RadioGroupItem value="Limited Liability Company" />
-
-                          <FormLabel className="eb-font-normal">
-                            Business (LLC)
-                          </FormLabel>
-                        </FormItem>
-                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                          <RadioGroupItem value="Limited Partnership" />
-
-                          <FormLabel className="eb-font-normal">
-                            Business (LP)
-                          </FormLabel>
-                        </FormItem>
-                        <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                          <RadioGroupItem value="Sole Proprietorship" />
-
-                          <FormLabel className="eb-font-normal">
-                            Sole Proprietor
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Card>
-                <CardContent>
-                  <Text size="lg">
-                    {getContentToken('corpText1')}
-                    The information we request from you will help us complete
-                    setting up your account. Please review and update any
-                    information that needs confirmation; and provide any
-                    additional information requested.
-                  </Text>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Separator className="eb-my-8" />
-            <Stack className="eb-gap-8">
-              <Title as="h2">Additional Questions</Title>
-              <FormField
-                control={form.control}
-                name="businessInSanctionedCountries"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel asterisk>
-                      Do you have locations, sell goods or services, or have
-                      vendors or suppliers in countries or regions subject to
-                      comprehensive sanctions programs (Iran, North Korea, Cuba,
-                      Syria and the Crimea, Donetsk, Luhansk Regions of
-                      Ukraine), or work with Sanctioned Parties in Russia or
-                      Venezuela? *
+                      Are there any entities (or non-individuals) in your
+                      ownership hierarchy?
                     </FormLabel>
 
                     <FormControl>
@@ -186,14 +271,16 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
                   </FormItem>
                 )}
               />
+            )}
+            {form.getValues().legalStructure !== 'Sole Proprietorship' && (
               <FormField
                 control={form.control}
-                name="relatedToATM"
+                name="significantOwnership"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel asterisk>
-                      Do you identify as a provider, owner, and/or operator of
-                      private ATM(s) and/or third Party ATM(s) activity?
+                      Are there any individuals who own 25% or more of your
+                      company?
                     </FormLabel>
 
                     <FormControl>
@@ -219,83 +306,10 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
                   </FormItem>
                 )}
               />
-              {form.getValues().legalStructure !== 'Sole Proprietorship' && (
-                <FormField
-                  control={form.control}
-                  name="entitiesInOwnership"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel asterisk>
-                        Are there any entities (or non-individuals) in your
-                        ownership hierarchy?
-                      </FormLabel>
-
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="eb-flex eb-flex-row eb-space-y-1"
-                        >
-                          <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                            <RadioGroupItem value="yes" />
-
-                            <FormLabel className="eb-font-normal">
-                              Yes
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                            <RadioGroupItem value="no" />
-
-                            <FormLabel className="eb-font-normal">No</FormLabel>
-                          </FormItem>
-                        </RadioGroup>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
-              {form.getValues().legalStructure !== 'Sole Proprietorship' && (
-                <FormField
-                  control={form.control}
-                  name="significantOwnership"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel asterisk>
-                        Are there any individuals who own 25% or more of your
-                        company?
-                      </FormLabel>
-
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="eb-flex eb-flex-row eb-space-y-1"
-                        >
-                          <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                            <RadioGroupItem value="yes" />
-
-                            <FormLabel className="eb-font-normal">
-                              Yes
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                            <RadioGroupItem value="no" />
-
-                            <FormLabel className="eb-font-normal">No</FormLabel>
-                          </FormItem>
-                        </RadioGroup>
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
-            </Stack>
-            <Separator className="eb-my-8" />
-            {/* <FormField
+            )}
+          </Stack>
+          <Separator className="eb-my-8" />
+          {/* <FormField
               control={form.control}
               name="mockEnabled"
               render={({ field }) => (
@@ -312,12 +326,12 @@ export const EntityTypeForm: FC<EntityTypeFormProps> = ({
               )}
             /> */}
 
-            <NavigationButtons
-              setActiveStep={setActiveStep}
-              activeStep={activeStep}
-              onSubmit={onSubmit}
-            />
-          </ScrollArea>
+          <NavigationButtons
+            setActiveStep={setActiveStep}
+            activeStep={activeStep}
+            onSubmit={onSubmit}
+          />
+          {/* </ScrollArea> */}
         </form>
       </Form>
     </Stack>
