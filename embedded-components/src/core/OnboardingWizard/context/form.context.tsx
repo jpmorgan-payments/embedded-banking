@@ -1,15 +1,14 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-
-import { BusinessDetailsStepValues } from '../BusinessDetailsStep/BusinessDetailsStep.schema';
-import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm.schema';
+import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 
 //import { useListClients } from '../hooks/useListClients';
 
 export type OnboardingForm = {
   legalStructure: string | undefined;
-  owner: DecisionMakerFormValues | undefined;
-  controller: DecisionMakerFormValues | undefined;
-  otherOwners: DecisionMakerFormValues[] | undefined;
+  owner: PersonalDetailsValues | undefined;
+  controller: PersonalDetailsValues | undefined;
+  otherOwners: PersonalDetailsValues[] | undefined;
   businessDetails: BusinessDetailsStepValues | undefined;
 };
 

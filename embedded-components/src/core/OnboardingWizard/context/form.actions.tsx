@@ -1,28 +1,47 @@
 import _ from 'lodash';
 
-import { BusinessDetailsStepValues } from '../BusinessDetailsStep/BusinessDetailsStep.schema';
-import { DecisionMakerFormValues } from '../DecisionMakersForm/DecisionMakerForm.schema';
+import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+
+import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { OnboardingForm } from './form.context';
 
-export const formToAPIBody = (onboardingForm: OnboardingForm) => {
+export const formToAPIBody = (
+  onboardingForm: OnboardingForm
+): CreateClientRequestSmbdo => {
   const parties: any[] = [];
-  const business = makeBusiness(
-    onboardingForm?.businessDetails,
-    onboardingForm
-  );
-  parties.push(business);
-  for (let owner of onboardingForm?.owners) {
-    const party = makeParty(owner, onboardingForm);
-    parties.push(party);
+  if (
+    onboardingForm.businessDetails &&
+    onboardingForm.controller &&
+    onboardingForm.legalStructure
+  ) {
+    const businessParty = makeBusiness(
+      onboardingForm.businessDetails,
+      onboardingForm
+    );
+    const controllerParty = makeIndividual(
+      onboardingForm.controller,
+      onboardingForm,
+      ['CONTROLLER']
+    );
+    if (onboardingForm?.otherOwners?.length) {
+      for (const owner of onboardingForm.otherOwners) {
+        const decisionMakerParty = makeIndividual(owner, onboardingForm, [
+          'DECISION_MAKER',
+        ]);
+        parties.push(decisionMakerParty);
+      }
+    }
+    const form = {
+      parties: [...parties, businessParty, controllerParty],
+      products: ['EMBEDDED_BANKING'],
+    };
+    return form;
   }
-  const form = {
-    parties,
-    products: ['EMBEDDED_BANKING'],
-  };
-  return form;
+  throw new Error('Invalid onboarding parameters');
 };
 
-export const apiToForm = (apiData) => {
+/* export const apiToForm = (apiData) => {
   const form = {};
   const apiControllers = apiData?.parties?.filter((party: any) => {
     return party.individualDetails?.roles?.includes("CONTROLLER")
@@ -31,17 +50,12 @@ export const apiToForm = (apiData) => {
     return !party.individualDetails?.roles?.includes("CONTROLLER")
   });
 }
-
-export const apiIndividualToOwner = (party) => {
-  return {
-    
-  }
-}
+ */
 
 //ADD CONTROLLER TO FORM
 export const addOwner = (
   onboardingForm: OnboardingForm,
-  owner: DecisionMakerFormValues
+  owner: PersonalDetailsValues
 ) => {
   //TODO: pass role type?
   /*
@@ -54,7 +68,7 @@ export const addOwner = (
 //ADD BUSINESS DETAILS
 export const addBusinessOwner = (
   onboardingForm: OnboardingForm,
-  owner: DecisionMakerFormValues
+  owner: PersonalDetailsValues
 ) => {
   return { ...onboardingForm, owner };
 };
@@ -62,7 +76,7 @@ export const addBusinessOwner = (
 //ADD CONTROLLER TO FORM
 export const addController = (
   onboardingForm: OnboardingForm,
-  owner: DecisionMakerFormValues
+  owner: PersonalDetailsValues
 ) => {
   //TODO: pass role type?
   /*
@@ -76,7 +90,7 @@ export const addController = (
 //ADD OTHER OWNERS
 export const addOtherOwner = (
   onboardingForm: OnboardingForm,
-  owner: DecisionMakerFormValues
+  owner: PersonalDetailsValues
 ) => {
   const form = _.cloneDeep(onboardingForm);
   if (form.otherOwners) {
@@ -119,9 +133,9 @@ export const addBusinessType = (
   return form;
 };
 
-export const makeParty = (
-  form: any,
-  owner: DecisionMakerFormValues,
+export const makeIndividual = (
+  form: OnboardingForm,
+  owner: PersonalDetailsValues,
   roles: string[]
 ) => {
   const party = {
@@ -157,7 +171,7 @@ export const makeParty = (
 
 export const makeBusiness = (
   business: BusinessDetailsStepValues,
-  form: any
+  form: OnboardingForm
 ) => {
   const party = {
     partyType: 'ORGANIZATION',
