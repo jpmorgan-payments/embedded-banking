@@ -1,11 +1,11 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+
 import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 
+import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+
 //import { useListClients } from '../hooks/useListClients';
-
-
 
 export type OnboardingForm = {
   legalStructure: string | undefined;
@@ -16,13 +16,21 @@ export type OnboardingForm = {
   outstandingItems: ClientResponseOutstanding | undefined;
 };
 
+
+
 export const defaultValues: OnboardingForm = {
   legalStructure: undefined,
   owner: undefined,
   controller: undefined,
   otherOwners: undefined,
   businessDetails: undefined,
-  outstandingItems: undefined
+  outstandingItems: {
+    attestationDocumentIds: ['62d29548-f55a-458e-b9bb-ed32a6a05a1b'],
+    documentRequestIds: [],
+    partyIds: [],
+    partyRoles: [],
+    questionIds: ['300001', '300002', '300003'],
+  },
 };
 
 export const OnboardingFormContext = createContext(defaultValues);
