@@ -1,5 +1,12 @@
 import _ from 'lodash';
-import { CreateClientRequestSmbdo, ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
+
+import {
+  ClientResponseOutstanding,
+  CreateClientRequestSmbdo,
+  SchemasQuestionResponse,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/embedded-banking.schemas';
+
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { OnboardingForm } from './form.context';
@@ -99,8 +106,19 @@ export const addOtherOwner = (
   return form;
 };
 
-export const addOutstandingItems = (onboardingForm: OnboardingForm, outstandingItems: ClientResponseOutstanding) => {
-  return { ...onboardingForm, outstandingItems};
+export const addOutstandingItemsAndId = (
+  onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding,
+  id: string
+) => {
+  return { ...onboardingForm, outstandingItems, id };
+};
+
+export const updateOutstandingItems = ( onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding,) => {
+  const form = _.cloneDeep(onboardingForm);
+  form.outstandingItems = outstandingItems;
+  return form;
 }
 
 //REMOVE OTHER OWNERS
@@ -171,6 +189,17 @@ export const makeIndividual = (
   return party;
 };
 
+export const makeQuestionsAPIBody = (questionRes: any): UpdateClientRequestSmbdo => {
+  const responses = [];
+  for (const [key, value] of Object.entries(questionRes)) {
+    responses.push({
+      questionId: key,
+      values: [value],
+    });
+  }
+ return { questionResponses: responses };
+};
+
 export const makeBusiness = (
   business: BusinessDetailsStepValues,
   form: OnboardingForm
@@ -185,12 +214,12 @@ export const makeBusiness = (
 
   const organizationSwitch = (businessType: string | undefined) => {
     const map = {
-      'Corporation': 'C_CORPORATION',
+      Corporation: 'C_CORPORATION',
       'Limited Partnership': 'LIMITED_PARTNERSHIP',
       'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
-      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP'
+      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP',
     };
-    return businessType? map[businessType]: '';
+    return businessType ? map[businessType] : '';
   };
 
   const party = {

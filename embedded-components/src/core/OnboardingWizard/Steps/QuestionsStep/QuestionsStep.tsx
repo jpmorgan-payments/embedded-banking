@@ -3,10 +3,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { smbdoListQuestions } from '@/api/generated/embedded-banking';
+import {
+  smbdoListQuestions,
+  smbdoUpdateClient,
+} from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
 import { Form, Grid, Separator, Title } from '@/components/ui';
-
+import { makeQuestionsAPIBody, updateOutstandingItems } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -19,7 +22,7 @@ type QuestionsStepProps = {
 const getValidationType = (question: SchemasQuestionResponse) => {
   switch (question?.responseSchema?.items?.type) {
     case 'boolean':
-      return yup.string().oneOf(['yes', 'no']).required(question?.description);
+      return yup.string().oneOf(['true', 'false']).required(question?.description);
     case 'string':
       return yup.string().required(question?.description);
     default:
@@ -39,7 +42,7 @@ const shapeSchema = (questions: SchemasQuestionResponse[] | undefined) => {
 };
 
 const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
-  const { onboardingForm } = useOnboardingForm();
+  const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const [questions, setQuestions] = useState<
     SchemasQuestionResponse[] | undefined
   >([]);
@@ -67,10 +70,19 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
     fetchData();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
-      setActiveStep(activeStep + 1);
+      try {
+        const postBody = makeQuestionsAPIBody(form.getValues());
+        const res = await smbdoUpdateClient(onboardingForm?.id, postBody);
+        const newOnboardingForm= updateOutstandingItems(onboardingForm, res.outstanding);
+        setOnboardingForm(newOnboardingForm);
+        setActiveStep(activeStep + 1);
+      } catch (error) {
+        // TODO add error handler
+        console.log(error);
+      }
     }
   };
 
