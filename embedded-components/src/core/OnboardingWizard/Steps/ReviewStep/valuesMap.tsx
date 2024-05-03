@@ -2,10 +2,12 @@
 // eslint-disable-next-line import/no-unresolved
 import { diff, IChange } from 'json-diff-ts';
 
-// import { ValidationResponse } from '@/api/generated/embedded-banking.schemas';
+import { EntityType, ValuesMapType } from '@/core/OnboardingWizard/models';
 
-import { ValuesMapType } from '../../../../../components/ValuesTable/ValuesTable';
-import { EntityType, OnboardingValues } from '../../models';
+// import { VerificationResponse } from '../../../../../generated-api-models';
+// import { EntityType, OnboardingValues } from '../../models';
+// import { BusinessOwnerFormValues } from '../BusinessOwnersStep/validationSchema';
+// import { DecisionMakerFormValues } from '../DecisionMakersStep/validationSchema';
 
 const formatPhone = (phone?: string) =>
   phone?.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
@@ -14,9 +16,9 @@ const formatSsn = (ssn?: string) =>
   ssn?.replace(/(\d{3})(\d{2})(\d{4})/, '$1-$2-$3');
 
 export const valuesMap = (
-  values: OnboardingValues,
-  initialValues?: Partial<OnboardingValues>,
-  verifications?: VerificationResponse[],
+  values: any, //OnboardingValues,
+  initialValues?: any, //Partial<OnboardingValues>,
+  verifications?: any[], //VerificationResponse[]
   entityType?: EntityType,
   getContentToken?: (val: string) => string
 ) => {
@@ -78,7 +80,7 @@ export const valuesMap = (
     field: IChange,
     formatFn: (
       value?: string,
-      valuesObject?: Partial<OnboardingValues>
+      valuesObject?: Partial<any>
     ) => string | undefined
   ) => {
     return formatFn(stringifyFieldValue(field.value), values);
@@ -99,12 +101,11 @@ export const valuesMap = (
 
   const getFieldDiff = (
     fieldKey: keyof Omit<
-      OnboardingValues,
+      any,
       'owners' | 'decisionMakers' | 'verificationResponses'
     >,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    formatFn = (value?: string, valuesObject?: Partial<OnboardingValues>) =>
-      value
+    formatFn = (value?: string, valuesObject?: Partial<any>) => value
   ) => {
     const field = diffArray.find(
       (item) => item.key === fieldKey && item.type !== 'REMOVE'
@@ -119,7 +120,7 @@ export const valuesMap = (
   const getPersonsDiff = (personType: 'owners' | 'decisionMakers') => {
     const persons = diffArray.find((item) => item.key === personType);
 
-    type PersonValues = BusinessOwnerFormValues & DecisionMakerFormValues;
+    type PersonValues = any; //BusinessOwnerFormValues & DecisionMakerFormValues;
 
     const unchangedPersons = (
       diffArray.find((item) => item.key === personType)?.changes ?? []
@@ -537,9 +538,9 @@ export const valuesMap = (
       title: 'Additional Info',
       entries:
         values.verificationResponses?.map(({ id, response }) => {
-          const item: VerificationResponse | undefined = (
-            verifications ?? []
-          ).find((v) => v.verification?.id === id);
+          const item: any | undefined = (verifications ?? []).find(
+            (v) => v.verification?.id === id
+          );
           const label = item?.verification?.label;
           const options =
             item?.response?.answerOptions?.reduce(

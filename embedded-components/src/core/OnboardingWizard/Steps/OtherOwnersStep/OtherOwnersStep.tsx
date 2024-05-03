@@ -129,7 +129,7 @@ const OtherOwnersStep = ({
                   <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                     <DialogTrigger>Click to add a decision maker</DialogTrigger>
                   </div>
-                  <DecisionMakerModal onOpenChange={setOpen} />
+                  {/* <DecisionMakerModal onOpenChange={setOpen} /> */}
                 </Dialog>
               </div>
             </>

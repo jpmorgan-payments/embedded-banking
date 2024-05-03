@@ -81,7 +81,7 @@ const DecisionMakerCard = ({
             </div>
           </CardContent>
         </Card>
-        <DecisionMakerModal index={key} onOpenChange={() => {}} />
+        {/* <DecisionMakerModal index={key} onOpenChange={() => {}} /> */}
       </div>
     </Dialog>
   );

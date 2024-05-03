@@ -30,3 +30,13 @@ export interface Step {
   nextLabel?: string;
   schemaLabel?: string;
 }
+
+export type ValuesMapType = {
+  title?: string | JSX.Element;
+  titleRightContent?: JSX.Element;
+  subtitle?: string | JSX.Element;
+  entries: {
+    label: string;
+    value?: string | JSX.Element;
+  }[];
+}[];

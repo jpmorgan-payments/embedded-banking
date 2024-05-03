@@ -38,7 +38,7 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
     <>
       <Title as="h2">Review</Title>
       <Stack>
-        {/* <Text>{JSON.stringify(data)}</Text> */}
+        <Text>{JSON.stringify(data)}</Text>
         {/* <ReviewTable
           valuesMap={valuesMap(
             data,
