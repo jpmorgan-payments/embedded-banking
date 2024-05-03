@@ -27,7 +27,7 @@ import type { Step } from '../../models';
 import { useContentData } from '../../useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
-export const BusinessCommonForm: Step = ({ form }: any) => {
+export const BusinessCommonForm: any = ({ form }: any) => {
   const isLoadingIndustryCategories = false;
   const industryTypes =
     industryCategories?.items
@@ -56,9 +56,11 @@ export const BusinessCommonForm: Step = ({ form }: any) => {
                     <TextArea
                       {...field}
                       size="md"
-                      placeholder={getContentToken(
-                        `businessDescription.placeholder`
-                      )}
+                      // @ts-ignore
+                      placeholder={
+                        getContentToken?.(`businessDescription.placeholder`) ??
+                        ''
+                      }
                       className="eb-h-40 eb-border-solid eb-border"
                     />
                   </FormControl>
@@ -283,7 +285,9 @@ export const BusinessCommonForm: Step = ({ form }: any) => {
                         label: item.industryCategory,
                       };
                     })
-                    ?.sort((a, b) => a?.value?.localeCompare?.(b?.value)) ?? []
+                    ?.sort((a: any, b: any) =>
+                      a?.value?.localeCompare?.(b?.value)
+                    ) ?? []
                 )?.map((items: any) => {
                   return (
                     <SelectItem key={items.value} value={items.value}>

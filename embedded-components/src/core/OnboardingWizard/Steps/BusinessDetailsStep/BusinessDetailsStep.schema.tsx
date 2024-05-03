@@ -4,7 +4,6 @@ import * as yup from 'yup';
 // import { GetContentTokenType } from '../../../../../contexts/ContentProvider/useContentData';
 import { createRegExpAndMessage } from '@/lib/utils';
 
-
 const businessDetailsSchema = (getContentToken?: any) => {
   return yup.object({
     // legalStructure: yup
@@ -63,42 +62,41 @@ const businessDetailsSchema = (getContentToken?: any) => {
       .default('')
       .matches(/^\d{9}$/, getContentToken?.(`ein`) ?? '')
       .required(getContentToken?.(`einReq`) ?? ''),
-    // yearOfFormation: yup
-    //   .number()
-    //   .default(undefined)
-    //   .typeError(getContentToken?.(`yearOfFormationReq`) ?? '')
-    //   .required(getContentToken?.(`yearOfFormationReq`) ?? '')
-    //   .min(1900, getContentToken?.(`yearOfFormationMin`) ?? '')
-    //   .max(
-    //     new Date().getFullYear(),
-    //     getContentToken?.(`yearOfFormationMax`) ?? ''
-    //   ),
-    // website: yup
-    //   .string()
-    //   .default('')
-    //   .when('websiteNotAvailable', {
-    //     is: false,
-    //     then: (schema) =>
-    //       schema
-    //         .url()
-    //         .required(getContentToken?.(`websiteReq`) ?? '')
-    //         .test(
-    //           'https',
-    //           getContentToken?.(`websiteTest`) ?? '',
-    //           function (value) {
-    //             /*
-    //              - http(s)? - protocol validation
-    //              - www - we require www subdomain
-    //              - [a-zA-Z0-9@:%._+~#=]{2,256} - domain name format validation, https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DomainNameFormat.html
-    //              - [a-z]{2,63} - top level domain https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_domain_name
-    //              - ([a-zA-Z0-9-@:%_+.~#?&/=\\]*) - query validation (e.g. '/test')
-    //             */
-    //             return /^http(s)?:\/\/www\.[a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.]{1,256}\.[a-z]{2,63}\b([a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.\\]*)$/.test(
-    //               value
-    //             );
-    //           }
-    //         ),
-    //   }),
+    yearOfFormation: yup
+      .number()
+      .default(undefined)
+      .typeError(getContentToken?.(`yearOfFormationReq`) ?? '')
+      .required(getContentToken?.(`yearOfFormationReq`) ?? '')
+      .min(1900, getContentToken?.(`yearOfFormationMin`) ?? '')
+      .max(
+        new Date().getFullYear(),
+        getContentToken?.(`yearOfFormationMax`) ?? ''
+      ),
+
+    website: yup
+      .string()
+      .default('')
+      .when('websiteNotAvailable', {
+        is: false,
+        then: (schema) =>
+          schema
+            .url()
+            .required(getContentToken?.(`websiteReq`) ?? '')
+
+            .test('https', getContentToken?.(`websiteTest`) ?? '', (value) => {
+              /*
+                 - http(s)? - protocol validation
+                 - www - we require www subdomain
+                 - [a-zA-Z0-9@:%._+~#=]{2,256} - domain name format validation, https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DomainNameFormat.html
+                 - [a-z]{2,63} - top level domain https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_domain_name
+                 - ([a-zA-Z0-9-@:%_+.~#?&/=\\]*) - query validation (e.g. '/test')
+                */
+
+              return /^http(s)?:\/\/www\.[a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.]{1,256}\.[a-z]{2,63}\b([a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.\\]*)$/.test(
+                value
+              );
+            }),
+      }),
     websiteNotAvailable: yup.boolean().default(false),
     businessDescription: yup
       .string()
@@ -180,31 +178,32 @@ const businessDetailsSchema = (getContentToken?: any) => {
       )
       .default('')
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
-    // businessAddressLine3: yup
-    //   .string()
-    //   .nullable()
-    //   .transform((value, originalValue) =>
-    //     originalValue.trim() === '' ? null : value
-    //   )
-    //   .matches(
-    //     ...createRegExpAndMessage(
-    //       getContentToken?.('addressValidCharacters', undefined, 'common'),
-    //       getContentToken?.(
-    //         'invalidCharactersErrorMessage',
-    //         undefined,
-    //         'common'
-    //       )
-    //     )
-    //   )
-    //   .default('')
-    //   .when('businessAddressLine2', {
-    //     is: (line2: string) => !line2 || line2.trim() === '',
-    //     then: yup
-    //       .string()
-    //       .nullable()
-    //       .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-    //   })
-    //   .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
+    //@ts-ignore
+    businessAddressLine3: yup
+      .string()
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue.trim() === '' ? null : value
+      )
+      .matches(
+        ...createRegExpAndMessage(
+          getContentToken?.('addressValidCharacters', undefined, 'common'),
+          getContentToken?.(
+            'invalidCharactersErrorMessage',
+            undefined,
+            'common'
+          )
+        )
+      )
+      .default('')
+      .when('businessAddressLine2', {
+        is: (line2: string) => !line2 || line2.trim() === '',
+        then: yup
+          .string()
+          .nullable()
+          .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
+      })
+      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
     businessCity: yup
       .string()
       .default('')

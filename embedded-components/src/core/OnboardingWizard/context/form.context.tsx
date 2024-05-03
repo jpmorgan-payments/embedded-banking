@@ -16,8 +16,6 @@ export type OnboardingForm = {
   outstandingItems: ClientResponseOutstanding | undefined;
 };
 
-
-
 export const defaultValues: OnboardingForm = {
   legalStructure: undefined,
   owner: undefined,
@@ -33,7 +31,7 @@ export const defaultValues: OnboardingForm = {
   },
 };
 
-export const OnboardingFormContext = createContext(defaultValues);
+export const OnboardingFormContext: any = createContext(defaultValues);
 
 export const useOnboardingForm = (): any => {
   const context = useContext(OnboardingFormContext);

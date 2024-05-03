@@ -10,6 +10,7 @@ import {
   DialogPortal,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
@@ -20,7 +21,6 @@ import {
   createPersonalDetailsSchema,
   PersonalDetailsValues,
 } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
-import { Form } from '@/components/ui/form';
 
 const defaultInitialValues = createPersonalDetailsSchema().cast({});
 
@@ -40,13 +40,13 @@ const DecisionMakerModal = ({
   const [defaultValues, setDefaultValues] = useState(defaultInitialValues);
 
   useEffect(() => {
-    if (onboardingForm?.otherOwners?.length) {
+    if (onboardingForm?.otherOwners?.length && index) {
       setDefaultValues(onboardingForm?.otherOwners[index]);
     }
   }, [onboardingForm]);
 
   const form = useForm<PersonalDetailsValues>({
-    defaultValues: defaultValues,
+    defaultValues,
     resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
   const onSubmit: SubmitHandler<PersonalDetailsValues> = (

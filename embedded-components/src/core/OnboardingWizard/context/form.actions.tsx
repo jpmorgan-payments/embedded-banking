@@ -1,5 +1,10 @@
 import _ from 'lodash';
-import { CreateClientRequestSmbdo, ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
+
+import {
+  ClientResponseOutstanding,
+  CreateClientRequestSmbdo,
+} from '@/api/generated/embedded-banking.schemas';
+
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { OnboardingForm } from './form.context';
@@ -99,9 +104,12 @@ export const addOtherOwner = (
   return form;
 };
 
-export const addOutstandingItems = (onboardingForm: OnboardingForm, outstandingItems: ClientResponseOutstanding) => {
-  return { ...onboardingForm, outstandingItems};
-}
+export const addOutstandingItems = (
+  onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding
+) => {
+  return { ...onboardingForm, outstandingItems };
+};
 
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
@@ -184,13 +192,13 @@ export const makeBusiness = (
     addressLines.push(business?.businessAddressLine3);
 
   const organizationSwitch = (businessType: string | undefined) => {
-    const map = {
-      'Corporation': 'C_CORPORATION',
+    const map: any = {
+      Corporation: 'C_CORPORATION',
       'Limited Partnership': 'LIMITED_PARTNERSHIP',
       'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
-      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP'
+      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP',
     };
-    return businessType? map[businessType]: '';
+    return businessType ? map[businessType] : '';
   };
 
   const party = {

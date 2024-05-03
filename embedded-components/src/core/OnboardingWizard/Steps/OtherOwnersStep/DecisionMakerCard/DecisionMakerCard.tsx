@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
+
 import { DecisionMakerModal } from '../DecisionMakerModal/DecisionMakerModal';
 
 type DecisionMakersCardProps = {
@@ -25,12 +26,14 @@ const fieldsOther = (individual: any) => {
   ];
 };
 
-const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardProps) => {
- 
+const DecisionMakerCard = ({
+  individual,
+  key,
+  controller,
+}: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);
-
 
   return (
     <Dialog>
@@ -48,8 +51,7 @@ const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardPr
               </div>
 
               <div>
-                {individual?.firstName}{' '}
-                {individual?.lastName}
+                {individual?.firstName} {individual?.lastName}
               </div>
 
               <div>
@@ -71,13 +73,15 @@ const DecisionMakerCard = ({ individual, key, controller }: DecisionMakersCardPr
                 {controller ? (
                   <Text>View/edit details in controller step</Text>
                 ) : (
-                  <DialogTrigger className="eb-bg-black eb-text-white">View/Edit Details</DialogTrigger>
+                  <DialogTrigger className="eb-bg-black eb-text-white">
+                    View/Edit Details
+                  </DialogTrigger>
                 )}
               </div>
             </div>
           </CardContent>
         </Card>
-        <DecisionMakerModal index={key} />
+        <DecisionMakerModal index={key} onOpenChange={() => {}} />
       </div>
     </Dialog>
   );

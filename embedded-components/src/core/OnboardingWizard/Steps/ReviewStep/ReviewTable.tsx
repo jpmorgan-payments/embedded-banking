@@ -1,6 +1,6 @@
 import { Group } from '@/components/ui/group';
-import { Title } from '@/components/ui/title';
 import { Text } from '@/components/ui/text';
+import { Title } from '@/components/ui/title';
 
 import ReviewValues from './ReviewValues';
 
@@ -11,7 +11,7 @@ export type ValuesMapType = {
   entries: {
     label: string;
     value?: string | JSX.Element;
-    color?: DefaultMantineColor | 'dark.3';
+    color?: any | 'dark.3';
     dimmed?: boolean;
   }[];
 }[];
@@ -27,7 +27,7 @@ export function ReviewTable({ valuesMap }: ValuesTableProps) {
         <div key={index}>
           {section.title ? (
             <Group>
-              <Title size="h3" order={2} role={'heading'} aria-live="polite">
+              <Title as="h3" aria-live="polite">
                 {section.title}
               </Title>
               {section?.titleRightContent}
@@ -35,12 +35,12 @@ export function ReviewTable({ valuesMap }: ValuesTableProps) {
           ) : null}
           {section.subtitle ? <Text>{section.subtitle}</Text> : null}
           <div>
-            {section.entries.map((entry, index) => (
+            {section.entries.map((entry, idx: number) => (
               <ReviewValues
-                key={index + entry.label}
+                key={idx + entry.label}
                 fieldLabel={entry.label}
                 fieldValue={entry?.value}
-                index={index}
+                index={idx}
               />
             ))}
           </div>

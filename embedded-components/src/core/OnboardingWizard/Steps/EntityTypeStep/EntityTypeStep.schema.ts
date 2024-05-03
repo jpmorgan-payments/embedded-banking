@@ -27,19 +27,19 @@ const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
     businessInSanctionedCountries: yup
       .string()
       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default('')
+      .default('no')
       .required(),
     relatedToATM: yup
       .string()
       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default('')
+      .default('no')
       .required(),
     entitiesInOwnership: yup.string().when('legalStructure', {
       is: isBusiness,
       then: (schema) =>
         schema
           .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default('')
+          .default('no')
           .required(),
     }),
 
@@ -48,7 +48,7 @@ const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
       then: (schema) =>
         schema
           .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default('')
+          .default('no')
           .required(),
     }),
     mockEnabled: yup.boolean().default(false),

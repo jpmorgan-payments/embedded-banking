@@ -20,15 +20,10 @@ const textareaVariants = cva(
   }
 );
 
-type tText = {
-  asChild?: boolean;
-};
-
 const TextArea = React.forwardRef<
   HTMLTextAreaElement,
   React.HTMLAttributes<HTMLTextAreaElement> &
-    VariantProps<typeof textareaVariants> &
-    tText
+    VariantProps<typeof textareaVariants>
 >(({ className, asChild, size, children, ...props }: any, ref) => (
   <textarea
     ref={ref}

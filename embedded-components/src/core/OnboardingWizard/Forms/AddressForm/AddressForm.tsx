@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import {
   FormControl,
   FormField,
@@ -7,7 +9,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-const AddressForm = ({ form, fieldNames = {} }: any) => {
+type AddressForm = {
+  form: any;
+  fieldNames?: Record<string, string>;
+};
+const AddressForm: FC<AddressForm> = ({ form, fieldNames = {} }: any) => {
   const { addressLine1, addressLine2, addressLine3, city, state, zip } =
     fieldNames;
   return (

@@ -1515,7 +1515,7 @@ export const getSmbdoDownloadDocumentQueryKey = (id: string) => {
   return [`/documents/${id}/file`] as const;
 };
 
-export const getSmbdoDownloadDocukmentQueryOptions = <
+export const getSmbdoDownloadDocumentQueryOptions = <
   TData = Awaited<ReturnType<typeof smbdoDownloadDocument>>,
   TError = ErrorType<
     | N400DoResponse

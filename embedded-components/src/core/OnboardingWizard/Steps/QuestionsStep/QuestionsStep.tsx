@@ -60,7 +60,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
         <Separator />
         {questions?.map((question) => (
           <>
-            <Text key={question.id}>{question.content[0].label}</Text>
+            <Text key={question.id}>{question?.content?.[0].label}</Text>
             <Separator />
           </>
         ))}

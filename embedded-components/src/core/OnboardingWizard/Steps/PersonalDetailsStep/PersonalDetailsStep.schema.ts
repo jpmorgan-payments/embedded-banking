@@ -25,7 +25,7 @@ const createPersonalDetailsSchema = (getContentToken?: any) => {
       .nullable()
       .transform((value, originalValue) =>
         originalValue.trim() === '' ? null : value
-      ) 
+      )
       .matches(
         ...createRegExpAndMessage(
           getContentToken?.('validCharacters', undefined, 'common'),
@@ -103,27 +103,23 @@ const createPersonalDetailsSchema = (getContentToken?: any) => {
           );
         } 
          )*/
-     
+
       .required(getContentToken?.(`phoneReq`) ?? ''),
     birthDate: yup
       .date()
       .nullable()
       .default(null)
       //.required(getContentToken?.(`controllerBirthDateReq`))
-      .test(
-        'birthDate',
-        getContentToken?.(`birthDateTest`) ?? '',
-        (value) => {
-          if (value !== null) {
-            const ageDiffMs = Date.now() - value.valueOf();
-            const ageDate = new Date(ageDiffMs);
-            const ageYears = Math.abs(ageDate.getUTCFullYear() - 1970);
-            return ageYears >= 18;
-          }
-          return true;
+      .test('birthDate', getContentToken?.(`birthDateTest`) ?? '', (value) => {
+        if (value !== null) {
+          const ageDiffMs = Date.now() - value.valueOf();
+          const ageDate = new Date(ageDiffMs);
+          const ageYears = Math.abs(ageDate.getUTCFullYear() - 1970);
+          return ageYears >= 18;
         }
-      ),
-     
+        return true;
+      }),
+
     addressLine1: yup
       .string()
       .default('')
@@ -169,31 +165,32 @@ const createPersonalDetailsSchema = (getContentToken?: any) => {
       )
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
       .default(''),
-    /*       addressLine3: yup
-        .string()
-        .nullable()
-        .transform((value, originalValue) =>
-          originalValue.trim() === '' ? null : value,
+    // @ts-ignore
+    addressLine3: yup
+      .string()
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue.trim() === '' ? null : value
+      )
+      .matches(
+        ...createRegExpAndMessage(
+          getContentToken?.('addressValidCharacters', undefined, 'common'),
+          getContentToken?.(
+            'invalidCharactersErrorMessage',
+            undefined,
+            'common'
+          )
         )
-        .matches(
-          ...createRegExpAndMessage(
-            getContentToken?.('addressValidCharacters', undefined, 'common'),
-            getContentToken?.(
-              'invalidCharactersErrorMessage',
-              undefined,
-              'common',
-            ),
-          ),
-        )
-        .when('addressLine2', {
-          is: (line2: string) => !line2 || line2.trim() === '',
-          then: yup
-            .string()
-            .nullable()
-            .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-        })
-        .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
-        .default(''), */
+      )
+      .when('addressLine2', {
+        is: (line2: string) => !line2 || line2.trim() === '',
+        then: yup
+          .string()
+          .nullable()
+          .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
+      })
+      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
+      .default(''),
     city: yup
       .string()
       .default('')

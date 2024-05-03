@@ -17,7 +17,7 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await smbdoGetClient('1');
+        const res: any = await smbdoGetClient('1');
         setData(res);
         console.log('@@response', res);
       } catch (error) {
