@@ -3,6 +3,8 @@ import _ from 'lodash';
 import {
   ClientResponseOutstanding,
   CreateClientRequestSmbdo,
+  SchemasQuestionResponse,
+  UpdateClientRequestSmbdo,
 } from '@/api/generated/embedded-banking.schemas';
 
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
@@ -104,12 +106,20 @@ export const addOtherOwner = (
   return form;
 };
 
-export const addOutstandingItems = (
+export const addOutstandingItemsAndId = (
   onboardingForm: OnboardingForm,
-  outstandingItems: ClientResponseOutstanding
+  outstandingItems: ClientResponseOutstanding,
+  id: string
 ) => {
-  return { ...onboardingForm, outstandingItems };
+  return { ...onboardingForm, outstandingItems, id };
 };
+
+export const updateOutstandingItems = ( onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding,) => {
+  const form = _.cloneDeep(onboardingForm);
+  form.outstandingItems = outstandingItems;
+  return form;
+}
 
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
@@ -177,6 +187,17 @@ export const makeIndividual = (
   };
 
   return party;
+};
+
+export const makeQuestionsAPIBody = (questionRes: any): UpdateClientRequestSmbdo => {
+  const responses = [];
+  for (const [key, value] of Object.entries(questionRes)) {
+    responses.push({
+      questionId: key,
+      values: [value],
+    });
+  }
+ return { questionResponses: responses };
 };
 
 export const makeBusiness = (

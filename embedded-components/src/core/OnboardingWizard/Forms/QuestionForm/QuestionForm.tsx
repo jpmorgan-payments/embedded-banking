@@ -37,12 +37,12 @@ const QuestionForm = ({ question, form }: QuestionFormProps) => {
                   className="eb-flex eb-flex-row eb-space-y-1"
                 >
                   <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="yes" />
+                    <RadioGroupItem value="true" />
 
                     <FormLabel className="eb-font-normal">Yes</FormLabel>
                   </FormItem>
                   <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="no" />
+                    <RadioGroupItem value="false" />
 
                     <FormLabel className="eb-font-normal">No</FormLabel>
                   </FormItem>

@@ -14,6 +14,7 @@ export type OnboardingForm = {
   otherOwners: PersonalDetailsValues[] | undefined;
   businessDetails: BusinessDetailsStepValues | undefined;
   outstandingItems: ClientResponseOutstanding | undefined;
+  id: string | undefined;
 };
 
 export const defaultValues: OnboardingForm = {
@@ -29,6 +30,7 @@ export const defaultValues: OnboardingForm = {
     partyRoles: [],
     questionIds: ['300001', '300002', '300003'],
   },
+  id: '1000010400'
 };
 
 export const OnboardingFormContext: any = createContext(defaultValues);

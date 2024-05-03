@@ -165,32 +165,32 @@ const createPersonalDetailsSchema = (getContentToken?: any) => {
       )
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
       .default(''),
-    // @ts-ignore
-    addressLine3: yup
-      .string()
-      .nullable()
-      .transform((value, originalValue) =>
-        originalValue.trim() === '' ? null : value
-      )
-      .matches(
-        ...createRegExpAndMessage(
-          getContentToken?.('addressValidCharacters', undefined, 'common'),
-          getContentToken?.(
-            'invalidCharactersErrorMessage',
-            undefined,
-            'common'
-          )
-        )
-      )
-      .when('addressLine2', {
-        is: (line2: string) => !line2 || line2.trim() === '',
-        then: yup
-          .string()
-          .nullable()
-          .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-      })
-      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
-      .default(''),
+
+    // addressLine3: yup
+    //   .string()
+    //   .nullable()
+    //   .transform((value, originalValue) =>
+    //     originalValue.trim() === '' ? null : value
+    //   )
+    //   .matches(
+    //     ...createRegExpAndMessage(
+    //       getContentToken?.('addressValidCharacters', undefined, 'common'),
+    //       getContentToken?.(
+    //         'invalidCharactersErrorMessage',
+    //         undefined,
+    //         'common'
+    //       )
+    //     )
+    //   )
+    //   .when('addressLine2', {
+    //     is: (line2: string) => !line2 || line2.trim() === '',
+    //     then: yup
+    //       .string()
+    //       .nullable()
+    //       .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
+    //   })
+    //   .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
+    //   .default(''),
     city: yup
       .string()
       .default('')

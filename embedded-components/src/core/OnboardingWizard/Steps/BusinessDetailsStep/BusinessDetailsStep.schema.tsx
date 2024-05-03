@@ -64,7 +64,7 @@ const businessDetailsSchema = (getContentToken?: any) => {
       .required(getContentToken?.(`einReq`) ?? ''),
     yearOfFormation: yup
       .number()
-      .default(undefined)
+      .default(1900)
       .typeError(getContentToken?.(`yearOfFormationReq`) ?? '')
       .required(getContentToken?.(`yearOfFormationReq`) ?? '')
       .min(1900, getContentToken?.(`yearOfFormationMin`) ?? '')
@@ -178,32 +178,32 @@ const businessDetailsSchema = (getContentToken?: any) => {
       )
       .default('')
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
-    //@ts-ignore
-    businessAddressLine3: yup
-      .string()
-      .nullable()
-      .transform((value, originalValue) =>
-        originalValue.trim() === '' ? null : value
-      )
-      .matches(
-        ...createRegExpAndMessage(
-          getContentToken?.('addressValidCharacters', undefined, 'common'),
-          getContentToken?.(
-            'invalidCharactersErrorMessage',
-            undefined,
-            'common'
-          )
-        )
-      )
-      .default('')
-      .when('businessAddressLine2', {
-        is: (line2: string) => !line2 || line2.trim() === '',
-        then: yup
-          .string()
-          .nullable()
-          .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-      })
-      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
+
+    // businessAddressLine3: yup
+    //   .string()
+    //   .nullable()
+    //   .transform((value, originalValue) =>
+    //     originalValue.trim() === '' ? null : value
+    //   )
+    //   .matches(
+    //     ...createRegExpAndMessage(
+    //       getContentToken?.('addressValidCharacters', undefined, 'common'),
+    //       getContentToken?.(
+    //         'invalidCharactersErrorMessage',
+    //         undefined,
+    //         'common'
+    //       )
+    //     )
+    //   )
+    //   .default('')
+    //   .when('businessAddressLine2', {
+    //     is: (line2: string) => !line2 || line2.trim() === '',
+    //     then: yup
+    //       .string()
+    //       .nullable()
+    //       .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
+    //   })
+    //   .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
     businessCity: yup
       .string()
       .default('')

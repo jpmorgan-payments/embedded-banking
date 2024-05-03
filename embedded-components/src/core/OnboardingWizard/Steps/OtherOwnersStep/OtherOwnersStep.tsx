@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
-import { addOutstandingItems, formToAPIBody } from '../../context/form.actions';
+import { addOutstandingItems, addOutstandingItemsAndId, formToAPIBody } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
@@ -44,9 +44,10 @@ const OtherOwnersStep = ({
     const apiForm = formToAPIBody(onboardingForm);
     try {
       const res = await smbdoPostClients(apiForm);
-      const newOnboardingForm = addOutstandingItems(
+      const newOnboardingForm = addOutstandingItemsAndId(
         onboardingForm,
-        res.outstanding
+        res.outstanding,
+        res.id
       );
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
