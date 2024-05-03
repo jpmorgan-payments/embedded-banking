@@ -1,6 +1,7 @@
 import { Key, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
+
 import { smbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
@@ -12,7 +13,11 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
-import { addOutstandingItems, addOutstandingItemsAndId, formToAPIBody } from '../../context/form.actions';
+
+import {
+  addOutstandingItemsAndId,
+  formToAPIBody,
+} from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
@@ -130,7 +135,7 @@ const OtherOwnersStep = ({
                   <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
                     <DialogTrigger>Click to add a decision maker</DialogTrigger>
                   </div>
-                  {/* <DecisionMakerModal onOpenChange={setOpen} /> */}
+                  <DecisionMakerModal onOpenChange={setOpen} />
                 </Dialog>
               </div>
             </>

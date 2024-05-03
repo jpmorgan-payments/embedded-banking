@@ -3,7 +3,6 @@ import _ from 'lodash';
 import {
   ClientResponseOutstanding,
   CreateClientRequestSmbdo,
-  SchemasQuestionResponse,
   UpdateClientRequestSmbdo,
 } from '@/api/generated/embedded-banking.schemas';
 
@@ -114,12 +113,14 @@ export const addOutstandingItemsAndId = (
   return { ...onboardingForm, outstandingItems, id };
 };
 
-export const updateOutstandingItems = ( onboardingForm: OnboardingForm,
-  outstandingItems: ClientResponseOutstanding,) => {
+export const updateOutstandingItems = (
+  onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding
+) => {
   const form = _.cloneDeep(onboardingForm);
   form.outstandingItems = outstandingItems;
   return form;
-}
+};
 
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
@@ -161,7 +162,7 @@ export const makeIndividual = (
   const addressLines = [];
   if (owner?.addressLine1) addressLines.push(owner?.addressLine1);
   if (owner?.addressLine2) addressLines.push(owner?.addressLine2);
-  if (owner?.addressLine3) addressLines.push(owner?.addressLine3);
+  // if (owner?.addressLine3) addressLines.push(owner?.addressLine3);
   const party = {
     partyType: 'INDIVIDUAL',
     email: owner?.email,
@@ -189,15 +190,17 @@ export const makeIndividual = (
   return party;
 };
 
-export const makeQuestionsAPIBody = (questionRes: any): UpdateClientRequestSmbdo => {
-  const responses = [];
+export const makeQuestionsAPIBody = (
+  questionRes: any
+): UpdateClientRequestSmbdo => {
+  const responses: any = [];
   for (const [key, value] of Object.entries(questionRes)) {
     responses.push({
       questionId: key,
       values: [value],
     });
   }
- return { questionResponses: responses };
+  return { questionResponses: responses };
 };
 
 export const makeBusiness = (
@@ -209,8 +212,8 @@ export const makeBusiness = (
     addressLines.push(business?.businessAddressLine1);
   if (business?.businessAddressLine2)
     addressLines.push(business?.businessAddressLine2);
-  if (business?.businessAddressLine3)
-    addressLines.push(business?.businessAddressLine3);
+  // if (business?.businessAddressLine3)
+  //   addressLines.push(business?.businessAddressLine3);
 
   const organizationSwitch = (businessType: string | undefined) => {
     const map: any = {
