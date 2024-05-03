@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import { smbdoListQuestions } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
-import { Form } from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
-import { Text } from '@/components/ui/text';
-import { Title } from '@/components/ui/title';
-
+import { Form, Grid, Separator, Title } from '@/components/ui';
 import { useOnboardingForm } from '../../context/form.context';
+import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 
 type QuestionsStepProps = {
@@ -58,12 +54,15 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
         </Title>
 
         <Separator />
-        {questions?.map((question) => (
-          <>
-            <Text key={question.id}>{question?.content?.[0].label}</Text>
-            <Separator />
-          </>
-        ))}
+        <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
+          {questions?.map((question) => (
+            <QuestionForm
+              key={question?.id}
+              question={question}
+              form={form}
+            />
+          ))}
+        </Grid>
         <NavigationButtons
           onSubmit={onSubmit}
           setActiveStep={setActiveStep}
