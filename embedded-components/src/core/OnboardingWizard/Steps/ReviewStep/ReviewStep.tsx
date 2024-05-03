@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { smbdoGetClient } from '@/api/generated/embedded-banking';
 import { Stack, Text, Title } from '@/components/ui';
 
+import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-
-// import { ReviewTable } from './ReviewTable';
+import { useContentData } from '../../useContentData';
+import { ReviewTable } from './ReviewTable';
+import { valuesMap } from './valuesMap';
 
 type ReviewStepProps = {
   setActiveStep: any;
@@ -13,6 +15,9 @@ type ReviewStepProps = {
 };
 
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const { getContentToken } = useContentData('steps.ReviewStep');
+  const { getContentToken: getValueMap } = useContentData('steps.valuesMap');
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -27,12 +32,22 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
     };
     fetchData();
   }, []);
+  console.log('@@onboardingForm', onboardingForm);
+
   return (
     <>
       <Title as="h2">Review</Title>
       <Stack>
-        <Text>{JSON.stringify(data)}</Text>
-        {/* <ReviewTable /> */}
+        {/* <Text>{JSON.stringify(data)}</Text> */}
+        {/* <ReviewTable
+          valuesMap={valuesMap(
+            data,
+            undefined,
+            undefined,
+            undefined,
+            getValueMap
+          )}
+        /> */}
         <NavigationButtons
           onSubmit={() => {
             setActiveStep(activeStep + 1);
