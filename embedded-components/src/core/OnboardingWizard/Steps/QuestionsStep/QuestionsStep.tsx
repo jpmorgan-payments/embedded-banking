@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
 import { smbdoListQuestions } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
 import { Form, Grid, Separator, Title } from '@/components/ui';
+
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -12,14 +16,38 @@ type QuestionsStepProps = {
   activeStep: number;
 };
 
-const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
-  // @ts-ignore
+const getValidationType = (question: SchemasQuestionResponse) => {
+  switch (question?.responseSchema?.items?.type) {
+    case 'boolean':
+      return yup.string().oneOf(['yes', 'no']).required(question?.description);
+    case 'string':
+      return yup.string().required(question?.description);
+    default:
+      return yup.string().required(question?.description);
+  }
+};
 
+const shapeSchema = (questions: SchemasQuestionResponse[] | undefined) => {
+  const schema = {};
+  if (questions) {
+    for (const q of questions) {
+      // @ts-ignore
+      schema[`${q?.id}`] = getValidationType(q);
+    }
+  }
+  return schema;
+};
+
+const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
   const { onboardingForm } = useOnboardingForm();
   const [questions, setQuestions] = useState<
     SchemasQuestionResponse[] | undefined
   >([]);
-  const form = useForm({});
+
+  const form = useForm<any>({
+    resolver: yupResolver(yup.object().shape(shapeSchema(questions))),
+    mode: 'onBlur',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +56,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
           const res = await smbdoListQuestions(
             onboardingForm?.outstandingItems?.questionIds
           );
-          console.log(res);
+
           setQuestions(res?.questions);
         }
       } catch (error) {
@@ -56,11 +84,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
         <Separator />
         <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
           {questions?.map((question) => (
-            <QuestionForm
-              key={question?.id}
-              question={question}
-              form={form}
-            />
+            <QuestionForm key={question?.id} question={question} form={form} />
           ))}
         </Grid>
         <NavigationButtons
