@@ -3,7 +3,7 @@ import { EBTheme } from './config.types';
 export const defaultTheme: EBTheme = {
   colorScheme: 'system',
   variables: {
-    borderRadius: '0.5rem',
+    borderRadius: '0.375rem',
     zIndexOverlay: 100,
   },
   light: {
@@ -11,7 +11,7 @@ export const defaultTheme: EBTheme = {
     foregroundColor: 'hsl(240 10% 3.9%)',
     cardColor: 'hsl(0 0% 100%)',
     cardForegroundColor: 'hsl(240 10% 3.9%)',
-    popoverColor: 'hsl(0 0% 100%);',
+    popoverColor: 'hsl(0 0% 100%)',
     popoverForegroundColor: 'hsl(240 10% 3.9%)',
     primaryColor: '#155C93',
     primaryColorHover: '#2D81BD',
@@ -33,7 +33,7 @@ export const defaultTheme: EBTheme = {
     foregroundColor: 'hsl(0 0% 98%)',
     cardColor: 'hsl(240 10% 3.9%)',
     cardForegroundColor: 'hsl(0 0% 98%)',
-    popoverColor: 'hsl(240 10% 3.9%);',
+    popoverColor: 'hsl(240 10% 3.9%)',
     popoverForegroundColor: 'hsl(0 0% 98%)',
     primaryColor: 'hsl(0 0% 98%)',
     primaryForegroundColor: 'hsl(240 5.9% 10%);',

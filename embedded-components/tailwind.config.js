@@ -18,43 +18,43 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: 'var(--eb-border)',
-        input: 'var(--eb-input)',
-        ring: 'var(--eb-ring)',
-        background: 'var(--eb-background)',
-        foreground: 'var(--eb-foreground)',
+        border: 'hsl(var(--eb-border))',
+        input: 'hsl(var(--eb-input))',
+        ring: 'hsl(var(--eb-ring))',
+        background: 'hsl(var(--eb-background))',
+        foreground: 'hsl(var(--eb-foreground))',
         primary: {
-          DEFAULT: 'var(--eb-primary)',
-          foreground: 'var(--eb-primary-foreground)',
+          DEFAULT: 'hsl(var(--eb-primary))',
+          foreground: 'hsl(var(--eb-primary-foreground))',
         },
         secondary: {
-          DEFAULT: 'var(--eb-secondary)',
-          foreground: 'var(--eb-secondary-foreground)',
+          DEFAULT: 'hsl(var(--eb-secondary))',
+          foreground: 'hsl(var(--eb-secondary-foreground))',
         },
         destructive: {
-          DEFAULT: 'var(--eb-destructive)',
-          foreground: 'var(--eb-destructive-foreground)',
+          DEFAULT: 'hsl(var(--eb-destructive))',
+          foreground: 'hsl(var(--eb-destructive-foreground))',
         },
         muted: {
-          DEFAULT: 'var(--eb-muted)',
-          foreground: 'var(--eb-muted-foreground)',
+          DEFAULT: 'hsl(var(--eb-muted))',
+          foreground: 'hsl(var(--eb-muted-foreground))',
         },
         accent: {
-          DEFAULT: 'var(--eb-accent)',
-          foreground: 'var(--eb-accent-foreground)',
+          DEFAULT: 'hsl(var(--eb-accent))',
+          foreground: 'hsl(var(--eb-accent-foreground))',
         },
         popover: {
-          DEFAULT: 'var(--eb-popover)',
-          foreground: 'var(--eb-popover-foreground)',
+          DEFAULT: 'hsl(var(--eb-popover))',
+          foreground: 'hsl(var(--eb-popover-foreground))',
         },
         card: {
-          DEFAULT: 'var(--eb-card)',
-          foreground: 'var(--eb-card-foreground)',
+          DEFAULT: 'hsl(var(--eb-card))',
+          foreground: 'hsl(var(--eb-card-foreground))',
         },
       },
       borderRadius: {
-        lg: 'var(--eb-radius)',
-        md: 'calc(var(--eb-radius) - 2px)',
+        lg: 'calc(var(--eb-radius) + 2px)',
+        md: 'var(--eb-radius)',
         sm: 'calc(var(--eb-radius) - 4px)',
       },
       keyframes: {
@@ -73,6 +73,9 @@ module.exports = {
       },
       zIndex: {
         overlay: 'var(--eb-z-overlay)',
+      },
+      spacing: {
+        0.25: '0.0625rem',
       },
     },
   },

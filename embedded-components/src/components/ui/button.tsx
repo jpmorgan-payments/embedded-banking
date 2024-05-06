@@ -5,18 +5,18 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'eb-inline-flex eb-items-center eb-justify-center eb-whitespace-nowrap eb-rounded-md eb-text-sm eb-font-medium eb-ring-offset-background eb-transition-colors focus-visible:eb-outline-none focus-visible:eb-ring-2 focus-visible:eb-ring-ring focus-visible:eb-ring-offset-2 disabled:eb-pointer-events-none disabled:eb-opacity-50',
+  'eb-inline-flex eb-items-center eb-justify-center eb-whitespace-nowrap eb-rounded-md eb-text-sm eb-font-medium eb-ring-offset-background eb-transition-colors focus-visible:eb-outline-none focus-visible:eb-ring-2 focus-visible:eb-ring-ring focus-visible:eb-ring-offset-2 active:eb-translate-y-0.25 disabled:eb-pointer-events-none disabled:eb-opacity-50',
   {
     variants: {
       variant: {
         default:
-          'hover:eb-bg-secondary eb-text-primary-foreground',
+          'eb-bg-primary eb-text-primary-foreground hover:eb-bg-primary/90',
         destructive:
-          'hover:eb-bg-destructive/90 eb-bg-destructive eb-text-destructive-foreground',
+          'eb-bg-destructive eb-text-destructive-foreground hover:eb-bg-destructive/90',
         outline:
           'eb-border eb-border-input eb-bg-background eb-text-foreground hover:eb-bg-accent hover:eb-text-accent-foreground',
         secondary:
-          'hover:eb-bg-secondary/80 eb-bg-secondary eb-text-secondary-foreground',
+          'eb-bg-secondary eb-text-secondary-foreground hover:eb-bg-secondary/80',
         ghost: 'hover:eb-bg-accent hover:eb-text-accent-foreground',
         link: 'eb-text-primary eb-underline-offset-4 hover:eb-underline',
       },

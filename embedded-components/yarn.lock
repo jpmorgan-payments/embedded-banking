@@ -2316,6 +2316,7 @@ __metadata:
     axios: "npm:^1.6.7"
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.0"
+    colortranslator: "npm:^4.1.0"
     date-fns: "npm:^3.3.1"
     deepmerge: "npm:^4.3.1"
     eslint: "npm:^8.53.0"
@@ -6573,6 +6574,13 @@ __metadata:
   version: 1.2.5
   resolution: "colors@npm:1.2.5"
   checksum: 10c0/f4acebf2d2da9b4f8afb770361d14c01034bcb43add4cae493e7d186dcd7e0c5e2b440520fbfdf636e872606a0eb86b1f69fcf2f087df2876a4e222612539ee0
+  languageName: node
+  linkType: hard
+
+"colortranslator@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "colortranslator@npm:4.1.0"
+  checksum: 10c0/063496768e15df2cb5f25e775b169ae1e2c62a88c7bb95d538fd7ea1603a2c40329103a9a3819e779921462c5de951ee2d9d9e8d91b45defacb92ccdeb0a7c4c
   languageName: node
   linkType: hard
 
