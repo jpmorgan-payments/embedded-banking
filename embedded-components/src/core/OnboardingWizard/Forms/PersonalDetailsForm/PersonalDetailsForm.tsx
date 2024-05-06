@@ -32,7 +32,7 @@ type PersonalDetailsFormProps = {
 
 const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
-  const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
+  const [ selectedJobTitle, setSelectedJobTitle] = useState('CEO');
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
@@ -45,7 +45,8 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
 
   return (
     <>
-      <div className="eb-grid eb-grid-cols-3 eb-gap-6 eb-pt-4">
+     
+      <div className="eb-grid eb-grid-cols-3  eb-grid-flow-row eb-gap-6 eb-pt-4">
         <FormField
           control={form.control}
           name="firstName"

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
+import { Button, Stack } from '@/components/ui';
 
 import {
   addOutstandingItemsAndId,
@@ -62,7 +63,7 @@ const OtherOwnersStep = ({
   };
 
   return (
-    <div className="eb-grid eb-grid-row-3">
+    <Stack className="eb-w-full eb-gap-2">
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
@@ -101,7 +102,9 @@ const OtherOwnersStep = ({
 
           {additionalDecisionMakers && (
             <>
-              <Title as="h4">Listed business decision makers</Title>
+              <Title as="h4" className="eb-my-5">
+                Listed business decision makers
+              </Title>
 
               <div className="eb-grid eb-grid-cols-3">
                 {onboardingForm?.controller && (
@@ -132,9 +135,9 @@ const OtherOwnersStep = ({
                 )}
 
                 <Dialog open={open} onOpenChange={setOpen}>
-                  <div className="eb-bg-black eb-w-24 eb-h-20 eb-text-white eb-rounded-md ">
+                  <Button variant="secondary">
                     <DialogTrigger>Click to add a decision maker</DialogTrigger>
-                  </div>
+                  </Button>
                   <DecisionMakerModal onOpenChange={setOpen} />
                 </Dialog>
               </div>
@@ -147,7 +150,7 @@ const OtherOwnersStep = ({
           />
         </form>
       </Form>
-    </div>
+    </Stack>
   );
 };
 

@@ -55,9 +55,9 @@ export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   };
 
   return (
-    <Stack>
+    <Stack className="eb-w-full eb-gap-2">
       <Form {...form}>
-        <form
+        <form noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => {
             setSelectedAccountType(form.getValues().legalStructure);

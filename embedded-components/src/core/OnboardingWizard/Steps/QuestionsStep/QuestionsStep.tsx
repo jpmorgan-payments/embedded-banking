@@ -8,7 +8,7 @@ import {
   smbdoUpdateClient,
 } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
-import { Form, Grid, Separator, Title } from '@/components/ui';
+import { Form, Grid, Separator, Stack, Title } from '@/components/ui';
 import { makeQuestionsAPIBody, updateOutstandingItems } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
@@ -87,13 +87,14 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
   };
 
   return (
+    <Stack className="eb-w-full eb-gap-2">
     <Form {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-        <Title as="h2">
+        <Title as="h3">
           Based on what you told us so far, we need additional info
         </Title>
 
-        <Separator />
+       
         <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
           {questions?.map((question) => (
             <QuestionForm key={question?.id} question={question} form={form} />
@@ -106,6 +107,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
         />
       </form>
     </Form>
+    </Stack>
   );
 };
 
