@@ -3,7 +3,7 @@ import { EBTheme } from './config.types';
 export const defaultTheme: EBTheme = {
   colorScheme: 'system',
   variables: {
-    borderRadius: '0.5rem',
+    borderRadius: '0.375rem',
     zIndexOverlay: 100,
   },
   light: {

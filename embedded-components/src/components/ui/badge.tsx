@@ -4,16 +4,16 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'eb-inline-flex eb-items-center eb-rounded-full eb-border eb-border-border eb-px-2.5 eb-py-0.5 eb-text-xs eb-font-semibold eb-transition-colors focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2',
+  'eb-inline-flex eb-items-center eb-rounded-full eb-border eb-px-2.5 eb-py-0.5 eb-text-xs eb-font-semibold eb-transition-colors focus:eb-outline-none focus:eb-ring-2 focus:eb-ring-ring focus:eb-ring-offset-2',
   {
     variants: {
       variant: {
         default:
-          'hover:eb-bg-primary/80 eb-border-transparent eb-bg-primary eb-text-primary-foreground',
+          'eb-border-transparent eb-bg-primary eb-text-primary-foreground hover:eb-opacity-90',
         secondary:
-          'hover:eb-bg-secondary/80 eb-border-transparent eb-bg-secondary eb-text-secondary-foreground',
+          'eb-border-transparent eb-bg-secondary eb-text-secondary-foreground hover:eb-opacity-80',
         destructive:
-          'hover:eb-bg-destructive/80 eb-border-transparent eb-bg-destructive eb-text-destructive-foreground',
+          'eb-border-transparent eb-bg-destructive eb-text-destructive-foreground hover:eb-opacity-80',
         outline: 'eb-text-foreground',
       },
     },

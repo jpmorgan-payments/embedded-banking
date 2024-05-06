@@ -53,8 +53,8 @@ module.exports = {
         },
       },
       borderRadius: {
-        lg: 'var(--eb-radius)',
-        md: 'calc(var(--eb-radius) - 2px)',
+        lg: 'calc(var(--eb-radius) + 2px)',
+        md: 'var(--eb-radius)',
         sm: 'calc(var(--eb-radius) - 4px)',
       },
       keyframes: {
@@ -73,6 +73,9 @@ module.exports = {
       },
       zIndex: {
         overlay: 'var(--eb-z-overlay)',
+      },
+      spacing: {
+        0.25: '0.0625rem',
       },
     },
   },
