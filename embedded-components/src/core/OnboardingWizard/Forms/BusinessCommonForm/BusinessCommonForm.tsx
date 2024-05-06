@@ -41,14 +41,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   return (
     <>
-      <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
+      <Grid className={`eb-gap-4 eb-pt-4 eb-grid-flow-row `}>
         <Stack>
           <FormField
             control={form.control}
             name="businessDescription"
             render={({ field }) => (
               <FormItem>
-                <Stack>
+                <Stack className={`eb-gap-4 eb-pt-4 eb-grid-flow-row `}>
                   <FormLabel asterisk>
                     {getContentToken(`businessDescription.label`)}
                   </FormLabel>
@@ -70,7 +70,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             )}
           />
 
-          <Group className="eb-justify-between">
+          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
             <FormField
               control={form.control}
               name="businessEmail"
@@ -114,8 +114,8 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                 </FormItem>
               )}
             />
-          </Group>
-          <Group className="eb-justify-between">
+          </Grid>
+          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
             <FormField
               control={form.control}
               name="website"
@@ -169,8 +169,8 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                 )}
               />
             </Group>
-          </Group>
-          <Group className="eb-justify-between">
+          </Grid>
+          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
             <FormField
               control={form.control}
               name="website"
@@ -215,7 +215,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                 </FormItem>
               )}
             />
-          </Group>
+          </Grid>
           <Stack>
             <Title as="h2" className="eb-my-2">
               {getContentToken(`addressSectionTitle`)}

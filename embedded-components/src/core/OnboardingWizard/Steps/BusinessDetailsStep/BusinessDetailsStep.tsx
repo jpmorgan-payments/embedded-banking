@@ -71,7 +71,6 @@ export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
             setActiveStep={setActiveStep}
             activeStep={activeStep}
           />
-          {/* </ScrollArea> */}
         </form>
       </Form>
     </Stack>

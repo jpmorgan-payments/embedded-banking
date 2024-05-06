@@ -135,7 +135,7 @@ const OtherOwnersStep = ({
                 )}
 
                 <Dialog open={open} onOpenChange={setOpen}>
-                  <Button variant="secondary">
+                  <Button type="button" variant="outline">
                     <DialogTrigger>Click to add a decision maker</DialogTrigger>
                   </Button>
                   <DecisionMakerModal onOpenChange={setOpen} />
