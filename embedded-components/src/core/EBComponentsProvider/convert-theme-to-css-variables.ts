@@ -1,3 +1,4 @@
+import { ColorTranslator } from 'colortranslator';
 import merge from 'deepmerge';
 
 import { EBTheme, EBThemeVariables } from './config.types';
@@ -7,30 +8,42 @@ export type CSSVariable = `--${string}`;
 
 export type CSSVariables = Record<CSSVariable, string | undefined>;
 
+function colorToHsl(colorString?: string) {
+  if (colorString === undefined) return undefined;
+  try {
+    const color = new ColorTranslator(colorString);
+    return `${color.H} ${color.S}% ${color.L}%`;
+  } catch {
+    return undefined;
+  }
+}
+
 const convertThemeVariablesToCssVariables = (
   variables: EBThemeVariables
 ): CSSVariables => {
   const cssVariablesObject: CSSVariables = {
-    '--eb-background': variables.backgroundColor,
-    '--eb-foreground': variables.foregroundColor,
-    '--eb-card': variables.cardColor,
-    '--eb-card-foreground': variables.cardForegroundColor,
-    '--eb-popover': variables.popoverColor,
-    '--eb-popover-foreground': variables.popoverForegroundColor,
-    '--eb-primary': variables.primaryColor,
-    '--eb-primary-foreground': variables.primaryForegroundColor,
-    '--eb-secondary': variables.secondaryColor,
-    '--eb-secondary-foreground': variables.secondaryForegroundColor,
-    '--eb-muted': variables.mutedColor,
-    '--eb-muted-foreground': variables.mutedForegroundColor,
-    '--eb-accent': variables.accentColor,
-    '--eb-accent-foreground': variables.accentForegroundColor,
-    '--eb-destructive': variables.destructiveColor,
-    '--eb-destructive-foreground': variables.destructiveForegroundColor,
+    '--eb-background': colorToHsl(variables.backgroundColor),
+    '--eb-foreground': colorToHsl(variables.foregroundColor),
+    '--eb-card': colorToHsl(variables.cardColor),
+    '--eb-card-foreground': colorToHsl(variables.cardForegroundColor),
+    '--eb-popover': colorToHsl(variables.popoverColor),
+    '--eb-popover-foreground': colorToHsl(variables.popoverForegroundColor),
+    '--eb-primary': colorToHsl(variables.primaryColor),
+    '--eb-primary-foreground': colorToHsl(variables.primaryForegroundColor),
+    '--eb-secondary': colorToHsl(variables.secondaryColor),
+    '--eb-secondary-foreground': colorToHsl(variables.secondaryForegroundColor),
+    '--eb-muted': colorToHsl(variables.mutedColor),
+    '--eb-muted-foreground': colorToHsl(variables.mutedForegroundColor),
+    '--eb-accent': colorToHsl(variables.accentColor),
+    '--eb-accent-foreground': colorToHsl(variables.accentForegroundColor),
+    '--eb-destructive': colorToHsl(variables.destructiveColor),
+    '--eb-destructive-foreground': colorToHsl(
+      variables.destructiveForegroundColor
+    ),
     '--eb-radius': variables.borderRadius,
-    '--eb-border': variables.borderColor,
-    '--eb-input': variables.inputColor,
-    '--eb-ring': variables.ringColor,
+    '--eb-border': colorToHsl(variables.borderColor),
+    '--eb-input': colorToHsl(variables.inputColor),
+    '--eb-ring': colorToHsl(variables.ringColor),
     '--eb-z-overlay': variables.zIndexOverlay
       ? String(variables.zIndexOverlay)
       : undefined,
