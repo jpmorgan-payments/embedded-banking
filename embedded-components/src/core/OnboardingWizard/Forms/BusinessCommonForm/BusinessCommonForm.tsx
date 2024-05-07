@@ -141,13 +141,13 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
 
-            <Group className="">
-              <Text className="eb-font-bold">{getContentToken(`text.or`)}</Text>
+            <Group className="eb-flex eb-flex-row eb-content-center eb-flex-wrap  eb-gap-2">
+              <Text className="eb-font-bold eb-mx-3">{getContentToken(`text.or`)}</Text>
               <FormField
                 control={form.control}
                 name="websiteNotAvailable"
                 render={({ field }) => (
-                  <FormItem className="eb-flex eb-flex-row eb-mt-8">
+                  <FormItem >
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -161,7 +161,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                         }}
                       />
                     </FormControl>
-                    <FormLabel>My business does not have a website</FormLabel>
+                    <FormLabel className="eb-p-3">My business does not have a website</FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -215,33 +215,34 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             />
           </Grid>
           <Stack>
-            <Title as="h2" className="eb-my-2">
+            <Title as="h2" className="eb-my-5">
               {getContentToken(`addressSectionTitle`)}
             </Title>
-
+            <Group className="eb-flex eb-flex-row eb-content-center eb-flex-wrap  eb-gap-2">
             <FormField
               control={form.control}
               name="businessAddressSameAsController"
               render={({ field }) => (
-                <FormItem className="eb-flex eb-flex-row eb-mt-8">
+                <FormItem >
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <FormLabel>
+                  <FormLabel className="eb-px-3">
                     {getContentToken(`businessAddressSameAsController.label`)}
                   </FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            </Group>
           </Stack>
         </Stack>
       </Grid>
 
-      <Title as="h2" className="eb-my-8">
+      <Title as="h2" className="eb-my-3">
         {getContentToken(`title2`)}
       </Title>
       <AddressForm
@@ -256,10 +257,11 @@ export const BusinessCommonForm: any = ({ form }: any) => {
         }}
       />
       <FormField
+      
         control={form.control}
         name="industryCategory"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="eb-mt-5">
             <FormLabel>Account Type</FormLabel>
             <Select
               onValueChange={(value) => {
@@ -303,7 +305,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
         control={form.control}
         name="industryType"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="eb-mt-5">
             <FormLabel>Account Type</FormLabel>
             <Select
               onValueChange={(value) => {
