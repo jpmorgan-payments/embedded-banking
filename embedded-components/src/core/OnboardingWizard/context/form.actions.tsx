@@ -129,7 +129,8 @@ export const removeOtherOwner = (
 ) => {
   const form = _.cloneDeep(onboardingForm);
   if (form.otherOwners) {
-    form.otherOwners = _.remove(form.otherOwners, otherOwnerIndex);
+    const newOtherOwners = form.otherOwners.splice(otherOwnerIndex, 1)
+    form.otherOwners = newOtherOwners
   } else {
     throw Error('Invalid use of function removeOtherOwner');
   }

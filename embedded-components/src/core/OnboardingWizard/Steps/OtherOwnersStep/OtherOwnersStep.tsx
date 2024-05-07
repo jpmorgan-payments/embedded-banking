@@ -106,7 +106,7 @@ const OtherOwnersStep = ({
                 Listed business decision makers
               </Title>
 
-              <div className="eb-grid eb-grid-cols-3">
+              <div className="eb-grid lg:eb-grid-cols-3 eb-gap-5 md:eb-grid-cols-2 ">
                 {onboardingForm?.controller && (
                   <div
                     key="controllerPanel"
@@ -120,22 +120,27 @@ const OtherOwnersStep = ({
                 )}
 
                 {onboardingForm?.otherOwners?.map(
-                  (individual: any, index: Key) => (
+                  (individual: any, index: number) => (
                     <div
-                      key={index}
+                      key={individual?.firstName}
                       className="eb-grid-cols-subgrid eb-grid-cols-2"
                     >
                       <DecisionMakerCard
                         controller={false}
                         individual={individual}
-                        key={index}
+                        index={index}
                       ></DecisionMakerCard>
                     </div>
                   )
                 )}
 
                 <Dialog open={open} onOpenChange={setOpen}>
-                  <Button type="button" variant="outline">
+                  <Button
+                    onClick={() => setOpen(true)}
+                    type="button"
+                    variant="outline"
+                    className="eb-max-w-52"
+                  >
                     <DialogTrigger>Click to add a decision maker</DialogTrigger>
                   </Button>
                   <DecisionMakerModal onOpenChange={setOpen} />

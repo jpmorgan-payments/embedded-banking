@@ -13,7 +13,7 @@ import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
-import { addOtherOwner } from '../../../context/form.actions';
+import { addOtherOwner, removeOtherOwner } from '../../../context/form.actions';
 import { useOnboardingForm } from '../../../context/form.context';
 import { useContentData } from '../../../useContentData';
 import {
@@ -39,22 +39,30 @@ const DecisionMakerModal = ({
   const [defaultValues, setDefaultValues] = useState(defaultInitialValues);
 
   useEffect(() => {
-    if (onboardingForm?.otherOwners?.length && index) {
+    console.log(onboardingForm);
+    if (onboardingForm?.otherOwners?.length && index != null && index >= 0) {
       setDefaultValues(onboardingForm?.otherOwners[index]);
     }
-  }, [onboardingForm]);
+  }, [onboardingForm, onOpenChange]);
 
   const form = useForm<PersonalDetailsValues>({
     defaultValues,
     resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
-  const onSubmit: SubmitHandler<PersonalDetailsValues> = (
-    data: PersonalDetailsValues
-  ) => {
+
+  const onSubmit: SubmitHandler<PersonalDetailsValues> = () => {
     const errors = form?.formState?.errors;
 
     if (!Object.values(errors).length) {
       const newOnboardingForm = addOtherOwner(onboardingForm, form.getValues());
+      setOnboardingForm(newOnboardingForm);
+      onOpenChange(false);
+    }
+  };
+
+  const handleRemoveOwner = () => {
+    if (index != null) {
+      const newOnboardingForm = removeOtherOwner(onboardingForm, index);
       setOnboardingForm(newOnboardingForm);
       onOpenChange(false);
     }
@@ -72,9 +80,19 @@ const DecisionMakerModal = ({
             <AddressForm form={form} />
 
             <div className="eb-mt-[25px] eb-mb-sm eb-flex eb-justify-end">
-              <Button type="submit" className="eb-bg-black">
-                Save
-              </Button>
+              {index != null && index >= 0 ? (
+                <Button
+                  onClick={handleRemoveOwner}
+                  type="button"
+                  variant="destructive"
+                  className="eb-mr-5"
+                >
+                  Remove
+                </Button>
+              ) : (
+                <></>
+              )}
+              <Button type="submit">Save</Button>
             </div>
           </form>
         </Form>
