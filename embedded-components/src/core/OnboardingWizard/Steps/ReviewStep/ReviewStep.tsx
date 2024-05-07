@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { smbdoGetClient } from '@/api/generated/embedded-banking';
+import {
+  getSmbdoPostClientVerificationsMutationOptions,
+  smbdoGetClient,
+  smbdoPostClientVerifications,
+} from '@/api/generated/embedded-banking';
 import { Stack, Text, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
+import { formCompleteMock } from '../../mocks/reviewStep.mock';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useContentData } from '../../useContentData';
 import { ReviewTable } from './ReviewTable';
@@ -17,14 +22,17 @@ type ReviewStepProps = {
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken } = useContentData('steps.ReviewStep');
-  const { getContentToken: getValueMap } = useContentData('steps.valuesMap');
-  const [data, setData] = useState(null);
+  const { getContentToken: getValueMap }: any =
+    useContentData('steps.valuesMap');
+  const [data, setData] = useState(onboardingForm);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res: any = await smbdoGetClient('1');
-        setData(res);
-        console.log('@@response', res);
+        const resp: any = await smbdoPostClientVerifications('1');
+        // setData(res);
+        console.log('@@response', res, '::', resp);
       } catch (error) {
         // TODO add error handler
         console.log('@@', error);
@@ -32,22 +40,29 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
     };
     fetchData();
   }, []);
-  console.log('@@onboardingForm', onboardingForm);
+
+  const newSet = {
+    ...data?.businessDetails,
+    owners: [{ ...data?.owner }],
+    decisionMakers: [{ ...data?.owner }],
+  };
+
+  // TODO: personal information requires the controllerKEY name
 
   return (
     <>
       <Title as="h2">Review</Title>
       <Stack>
         <Text>{JSON.stringify(data)}</Text>
-        {/* <ReviewTable
+        <ReviewTable
           valuesMap={valuesMap(
-            data,
+            newSet,
+            formCompleteMock,
             undefined,
-            undefined,
-            undefined,
+            onboardingForm?.entityType ?? 'Sole Proprietorship',
             getValueMap
           )}
-        /> */}
+        />
         <NavigationButtons
           onSubmit={() => {
             setActiveStep(activeStep + 1);

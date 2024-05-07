@@ -34,8 +34,8 @@ export const valuesMap = (
       : [],
     decisionMakers:
       entityType === 'Sole Proprietorship' ||
-      values.decisionMakersExist === 'yes'
-        ? values.decisionMakers.map((decisionMaker, index) => {
+      values?.decisionMakersExist === 'yes'
+        ? values?.decisionMakers?.map((decisionMaker, index) => {
             const decisionMakerCopy = Object.assign({}, decisionMaker);
             if (!decisionMakerCopy.id) {
               decisionMakerCopy.id = `NEW_${index}`;
@@ -50,7 +50,7 @@ export const valuesMap = (
     {
       ...values,
       owners: newValues.owners,
-      decisionMakers: newValues.decisionMakers,
+      decisionMakers: newValues?.decisionMakers,
     },
     {
       owners: 'id',
@@ -131,7 +131,7 @@ export const valuesMap = (
         }
         return persons;
       },
-      (newValues[personType] as PersonValues[]).filter(
+      (newValues[personType] as PersonValues[])?.filter(
         (person) => !person.id.startsWith('NEW')
       )
     );

@@ -147,6 +147,41 @@ const verificationsMock = [
   },
 ];
 
+const controllerMock = {
+  firstName: 'Mary',
+  middleName: 'James',
+  lastName: 'Sue',
+  jobTitle: 'COO',
+  email: 'maryjamessue@fake.website',
+  addressLine1: '2468 Real Ave',
+  city: 'New Fake City',
+  state: 'NY',
+  zip: '24680',
+  phone: '2017700500',
+  birthDate: '1933-03-03T05:00:00.000Z',
+  ssn9: '394943213',
+};
+const businessDetailsMock = {
+  businessName: 'A Fake LLC',
+  businessAliasName: 'ZZ',
+  businessEmail: 'ceo@fake.website',
+  ein: '123456789',
+  businessDescription: 'We do stuff',
+  businessAddressLine1: '123 Business Street',
+  businessAddressLine2: '',
+  businessAddressLine3: '',
+  businessCity: 'Companytown',
+  businessState: 'NY',
+  businessZipCode: '12345',
+  businessPhone: '2017700500',
+  website: '',
+  websiteNotAvailable: true,
+  industryCategory: 'Accommodation and Food Services',
+  industryType: 'Caterers',
+  yearOfFormation: 2000,
+  businessIdentification: 'ein',
+  controllerIsOwner: 'yes',
+};
 const formCompleteMock = {
   controllerBirthDate: '1984-07-23T04:00:00.000Z',
   controllerPhone: '2017700500',
@@ -257,4 +292,12 @@ const formCompleteMock = {
   attestedAuthorized: false,
   attestedDataCorrect: false,
 };
-export { verificationsMock, formCompleteMock };
+
+const personalDetialsMock = {};
+export {
+  verificationsMock,
+  formCompleteMock,
+  businessDetailsMock,
+  personalDetialsMock,
+  controllerMock,
+};

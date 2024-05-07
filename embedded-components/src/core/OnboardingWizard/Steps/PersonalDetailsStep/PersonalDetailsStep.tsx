@@ -52,12 +52,14 @@ const PersonalDetailsStep = ({
       <Title as="h2">Tell us about yourself</Title>
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <Text size="lg" >
+          <Text size="lg">
             Please provide your personal information. We will verify that you
             are a controller of the business.
           </Text>
           <PersonalDetailsForm form={form} />
-          <Text size="lg" className="eb-my-3">What is your personal address?</Text>
+          <Text size="lg" className="eb-my-3">
+            What is your personal address?
+          </Text>
 
           <AddressForm form={form} />
           <NavigationButtons
