@@ -18,7 +18,7 @@ import { Button, Stack } from '@/components/ui';
 import {
   addOutstandingItemsAndId,
   formToAPIBody,
-} from '../../context/form.actions';
+} from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';

@@ -8,7 +8,7 @@ import {
 
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
-import { OnboardingForm } from './form.context';
+import { OnboardingForm } from '../context/form.context';
 
 export const formToAPIBody = (
   onboardingForm: OnboardingForm

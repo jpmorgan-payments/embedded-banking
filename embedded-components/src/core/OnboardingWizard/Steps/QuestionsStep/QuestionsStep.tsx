@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-
 import {
   smbdoListQuestions,
   smbdoUpdateClient,
 } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
-import { Form, Grid, Separator, Stack, Title } from '@/components/ui';
-import { makeQuestionsAPIBody, updateOutstandingItems } from '../../context/form.actions';
+import { Form, Grid, Stack, Title } from '@/components/ui';
+import { makeQuestionsAPIBody, updateOutstandingItems } from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';

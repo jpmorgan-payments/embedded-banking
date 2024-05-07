@@ -13,7 +13,7 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
 
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 
 const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');

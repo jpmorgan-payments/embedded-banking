@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
 import { OnboardingFormProvider } from './context/form.context';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
-import { BusinessDetailsStep } from './Steps/BusinessDetailsStep/BusinessDetailsStep';
-import { EntityTypeStep } from './Steps/EntityTypeStep/EntityTypeStep';
-import { OtherOwnersStep } from './Steps/OtherOwnersStep/OtherOwnersStep';
-import { PersonalDetailsStep } from './Steps/PersonalDetailsStep/PersonalDetailsStep';
-import { QuestionsStep } from './Steps/QuestionsStep/QuestionsStep';
-import { ReviewStep } from './Steps/ReviewStep/ReviewStep';
+import {
+  BusinessDetailsStep,
+  EntityTypeStep,
+  OtherOwnersStep,
+  PersonalDetailsStep,
+  QuestionsStep,
+  ReviewStep,
+} from './Steps';
 
 export const OnboardingWizard = () => {
   const { activeStep, setCurrentStep } = useStepper();
@@ -71,50 +71,8 @@ export const OnboardingWizard = () => {
               {activeStep === index && ActiveStep}
             </div>
           ))}
-          {/* <div
-            className={`eb-flex eb-items-center ${'eb-block'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
-          >
-            {steps[activeStep]}
-          </div> */}
         </OnboardingFormProvider>
       </CardContent>
-      {/* TODO: something breaks in hooks when i try to decople oprs of activeSTeps, day wasted */}
-      {/* <CardFooter>
-        <NavigationButtons
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-          onSubmit={() => {
-            console.log(
-              '@@on Submit',
-
-              ActiveStep.form
-              // ActiveStep.form.trigger,
-              // ActiveStep.label
-              // ActiveStep.form.formState,
-              // ActiveStep.form.formState.isSubmitted
-            );
-            const { handleSubmit } = ActiveStep.form;
-            handleSubmit((data: any) => {
-              // const errors = control._formSate;
-              // setTimeout(() => {
-              const { formState } = ActiveStep.form;
-              const { errors } = formState;
-              console.log(
-                '@@form',
-                formState,
-                ActiveStep.form.formState.isSubmitted,
-                '>>>',
-                errors,
-                formState.isSubmitted,
-                !Object.values(errors).length && formState.isSubmitted
-              );
-              if (!Object.values(errors).length && formState.isSubmitted)
-                setCurrentStep(activeStep + 1 ?? 0);
-              // }, 0);
-            })();
-          }}
-        />
-      </CardFooter> */}
     </Card>
   );
 };

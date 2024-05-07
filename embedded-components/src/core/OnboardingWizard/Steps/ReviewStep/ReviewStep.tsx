@@ -5,7 +5,7 @@ import { Stack, Text, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import { ReviewTable } from './ReviewTable';
 import { valuesMap } from './valuesMap';
 

@@ -23,8 +23,8 @@ import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
 
 import { industryCategoriesMock as industryCategories } from '../../mocks/industryCategories.mock';
-import type { Step } from '../../models';
-import { useContentData } from '../../useContentData';
+import type { Step } from '../../utils/models';
+import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
 export const BusinessCommonForm: any = ({ form }: any) => {

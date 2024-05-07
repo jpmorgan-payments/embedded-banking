@@ -6,11 +6,11 @@ import { Form } from '@/components/ui/form';
 import { Stack } from '@/components/ui/stack';
 import { Title } from '@/components/ui/title';
 
-import { addBusinessType } from '../../context/form.actions';
+import { addBusinessType } from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import {
   createEntityTypeFormValidationSchema,
   tEntityTypeFormValidationSchemaValues,
@@ -22,7 +22,7 @@ type EntityTypeStepProps = {
   activeStep: number;
 };
 
-export const EntityTypeStep: FC<EntityTypeStepProps> = ({
+const EntityTypeStep: FC<EntityTypeStepProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
@@ -79,3 +79,5 @@ export const EntityTypeStep: FC<EntityTypeStepProps> = ({
     </Stack>
   );
 };
+
+export { EntityTypeStep };

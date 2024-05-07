@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { diff, IChange } from 'json-diff-ts';
 
-import { EntityType, ValuesMapType } from '@/core/OnboardingWizard/models';
+import { EntityType, ValuesMapType } from '@/core/OnboardingWizard/utils/models';
 
 // import { VerificationResponse } from '../../../../../generated-api-models';
 // import { EntityType, OnboardingValues } from '../../models';

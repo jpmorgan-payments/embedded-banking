@@ -6,12 +6,12 @@ import {
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
-import { addBusinessDetails } from '../../context/form.actions';
+import { addBusinessDetails } from '../../utils/actions';
 import {
   useOnboardingForm,
 } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import {
   businessDetailsSchema,
   BusinessDetailsStepValues,
@@ -25,7 +25,7 @@ type BusinessDetailsProps = {
   activeStep: number;
 };
 
-export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
+ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
@@ -76,3 +76,5 @@ export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
     </Stack>
   );
 };
+
+export { BusinessDetailsStep };

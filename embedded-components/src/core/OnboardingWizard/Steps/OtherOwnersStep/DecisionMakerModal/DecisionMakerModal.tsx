@@ -13,9 +13,9 @@ import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
-import { addOtherOwner, removeOtherOwner, updateOtherOwner } from '../../../context/form.actions';
+import { addOtherOwner, removeOtherOwner, updateOtherOwner } from '../../../utils/actions';
 import { useOnboardingForm } from '../../../context/form.context';
-import { useContentData } from '../../../useContentData';
+import { useContentData } from '../../../utils/useContentData';
 import {
   createPersonalDetailsSchema,
   PersonalDetailsValues,

@@ -5,12 +5,12 @@ import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
 import { Stack, Title } from '@/components/ui';
 
-import { addController } from '../../context/form.actions';
+import { addController } from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { AddressForm } from '../../Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '../../Forms/PersonalDetailsForm/PersonalDetailsForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import {
   createPersonalDetailsSchema,
   PersonalDetailsValues,
