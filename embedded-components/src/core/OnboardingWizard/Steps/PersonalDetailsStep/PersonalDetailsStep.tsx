@@ -5,11 +5,11 @@ import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
 import { Stack, Title } from '@/components/ui';
 
-import { addController } from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { AddressForm } from '../../Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '../../Forms/PersonalDetailsForm/PersonalDetailsForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
+import { addController } from '../../utils/actions';
 import { useContentData } from '../../utils/useContentData';
 import {
   createPersonalDetailsSchema,
@@ -52,16 +52,17 @@ const PersonalDetailsStep = ({
       <Title as="h2">Tell us about yourself</Title>
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <Text size="lg" >
+          <Text size="lg">
             Please provide your personal information. We will verify that you
             are a controller of the business.
           </Text>
           <PersonalDetailsForm form={form} />
-          <Text size="lg" className="eb-my-3">What is your personal address?</Text>
+          <Text size="lg" className="eb-my-3">
+            What is your personal address?
+          </Text>
 
           <AddressForm form={form} />
           <NavigationButtons
-            onSubmit={onSubmit}
             setActiveStep={setActiveStep}
             activeStep={activeStep}
           />

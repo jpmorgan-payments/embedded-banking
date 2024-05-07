@@ -15,12 +15,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
 
-import {
-  addOutstandingItemsAndId,
-  formToAPIBody,
-} from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
+import { addOutstandingItemsAndId, formToAPIBody } from '../../utils/actions';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
@@ -153,7 +150,6 @@ const OtherOwnersStep = ({
       <NavigationButtons
         setActiveStep={setActiveStep}
         activeStep={activeStep}
-        onSubmit={onSubmit}
       />
     </Stack>
   );

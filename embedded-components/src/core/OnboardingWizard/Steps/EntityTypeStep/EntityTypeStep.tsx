@@ -6,10 +6,10 @@ import { Form } from '@/components/ui/form';
 import { Stack } from '@/components/ui/stack';
 import { Title } from '@/components/ui/title';
 
-import { addBusinessType } from '../../utils/actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
+import { addBusinessType } from '../../utils/actions';
 import { useContentData } from '../../utils/useContentData';
 import {
   createEntityTypeFormValidationSchema,
@@ -72,7 +72,6 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
           <NavigationButtons
             setActiveStep={setActiveStep}
             activeStep={activeStep}
-            onSubmit={onSubmit}
           />
         </form>
       </Form>

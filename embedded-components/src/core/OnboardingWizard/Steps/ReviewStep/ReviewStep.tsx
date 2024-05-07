@@ -49,9 +49,6 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
           )}
         /> */}
         <NavigationButtons
-          onSubmit={() => {
-            setActiveStep(activeStep + 1);
-          }}
           setActiveStep={setActiveStep}
           activeStep={activeStep}
         />
