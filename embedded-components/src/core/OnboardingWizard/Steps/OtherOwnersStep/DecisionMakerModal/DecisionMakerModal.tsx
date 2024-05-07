@@ -1,7 +1,6 @@
 import {useCallback} from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -12,7 +11,6 @@ import {
 import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
-
 import { addOtherOwner, removeOtherOwner, updateOtherOwner } from '../../../utils/actions';
 import { useOnboardingForm } from '../../../context/form.context';
 import { useContentData } from '../../../utils/useContentData';
@@ -39,9 +37,6 @@ const DecisionMakerModal = ({
 
   const defaultInitialValues =
     owner?.firstName ? owner : createPersonalDetailsSchema().cast({});
-
-    console.log(onboardingForm)
-    //console.log(defaultInitialValues)
 
   const form = useForm<PersonalDetailsValues>({
    defaultValues: defaultInitialValues,
@@ -71,7 +66,6 @@ const DecisionMakerModal = ({
       onOpenChange(false);
     } else {
       //TODO handle error
-      console.log(index)
     }
 
    },[onboardingForm]);

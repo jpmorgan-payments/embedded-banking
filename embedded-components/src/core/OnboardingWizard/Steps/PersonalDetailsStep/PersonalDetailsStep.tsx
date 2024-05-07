@@ -1,10 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
 import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
 import { Stack, Title } from '@/components/ui';
-
 import { useOnboardingForm } from '../../context/form.context';
 import { AddressForm } from '../../Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '../../Forms/PersonalDetailsForm/PersonalDetailsForm';

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { OnboardingFormProvider } from './context/form.context';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
@@ -50,7 +52,7 @@ export const OnboardingWizard = () => {
   const ActiveStep: any = useMemo(() => steps[activeStep], [steps, activeStep]);
 
   return (
-    <Card>
+    <Card className="eb-flex eb-flex-col eb-wrap eb-overflow-clip">
       <CardHeader>
         <CardTitle>Onboarding Wizards</CardTitle>
       </CardHeader>

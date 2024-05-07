@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { User } from 'tabler-icons-react';
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
-
 import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 import { DecisionMakerModal } from '../DecisionMakerModal/DecisionMakerModal';
 
@@ -83,14 +81,14 @@ const DecisionMakerCard = ({
                   </Text>
                 ) : (
                   <Dialog onOpenChange={setOpen} open={open}>
-                    <Button
+                    <DialogTrigger><Button
                       onClick={() => setOpen(true)}
                       type="button"
                       className="eb-mt-1"
                       variant="outline"
                     >
-                      <DialogTrigger>View/Edit Details</DialogTrigger>
-                    </Button>
+                     View/Edit Details
+                    </Button></DialogTrigger>
                     <DecisionMakerModal owner={individual} index={index} onOpenChange={setOpen} />
                   </Dialog>
                 )}
