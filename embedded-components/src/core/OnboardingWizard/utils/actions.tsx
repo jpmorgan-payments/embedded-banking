@@ -91,13 +91,6 @@ export const addController = (
   return form;
 };
 
-export const addOutstandingItemsAndId = (
-  onboardingForm: OnboardingForm,
-  outstandingItems: ClientResponseOutstanding,
-  id: string
-) => {
-  return { ...onboardingForm, outstandingItems, id };
-};
 
 export const updateOutstandingItems = (
   onboardingForm: OnboardingForm,

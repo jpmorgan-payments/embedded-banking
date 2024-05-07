@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 type NavigationButtonsProps = {
   activeStep: number;
   setActiveStep: any;
+  onSubmit?: any;
 };
 
 const NavigationButtons = ({
   activeStep,
   setActiveStep,
+  onSubmit
 }: NavigationButtonsProps) => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -23,7 +25,7 @@ const NavigationButtons = ({
         )}
       </div>
       <div className="eb-flex eb-justify-end">
-        <Button type="submit">Next</Button>
+        <Button onClick={onSubmit} type="submit">Next</Button>
       </div>
     </div>
   );

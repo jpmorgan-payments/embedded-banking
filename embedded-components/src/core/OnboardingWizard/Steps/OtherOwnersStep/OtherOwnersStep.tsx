@@ -17,9 +17,10 @@ import { Button, Stack } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { addOutstandingItemsAndId, formToAPIBody } from '../../utils/actions';
+import { formToAPIBody } from '../../utils/actions';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
+import _ from 'lodash';
 
 type OtherOwnersStepProp = {
   setActiveStep: any;
@@ -46,12 +47,12 @@ const OtherOwnersStep = ({
   const onSubmit = async () => {
     const apiForm = formToAPIBody(onboardingForm);
     try {
-      const res = await smbdoPostClients(apiForm);
-      const newOnboardingForm = addOutstandingItemsAndId(
-        onboardingForm,
-        res.outstanding,
-        res.id
-      );
+      //@ts-ignore
+      const res = JSON.parse(await smbdoPostClients(apiForm));
+      const newOnboardingForm = _.cloneDeep(onboardingForm);
+      newOnboardingForm.id = res.id;
+      newOnboardingForm.outstandingItems = res.outstanding;
+      console.log(newOnboardingForm)
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     } catch (error) {
@@ -150,6 +151,7 @@ const OtherOwnersStep = ({
       <NavigationButtons
         setActiveStep={setActiveStep}
         activeStep={activeStep}
+        onSubmit={onSubmit}
       />
     </Stack>
   );
