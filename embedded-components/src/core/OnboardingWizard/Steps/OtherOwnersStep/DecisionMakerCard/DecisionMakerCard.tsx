@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { User } from 'tabler-icons-react';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
+
 import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 import { DecisionMakerModal } from '../DecisionMakerModal/DecisionMakerModal';
 
@@ -31,8 +33,8 @@ const fieldsOther = (individual: any) => {
 
 const DecisionMakerCard = ({
   individual,
-  index,
   controller,
+  index
 }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
@@ -80,15 +82,16 @@ const DecisionMakerCard = ({
                     View/edit details in prior step
                   </Text>
                 ) : (
-                  <Dialog onOpenChange={setOpen} open={open} >
-                    <Button onClick={() => setOpen(true)} type="button" className="eb-mt-1" variant="outline">
-                    <DialogTrigger>
-                     
-                        View/Edit Details
-                   
-                    </DialogTrigger>
+                  <Dialog onOpenChange={setOpen} open={open}>
+                    <Button
+                      onClick={() => setOpen(true)}
+                      type="button"
+                      className="eb-mt-1"
+                      variant="outline"
+                    >
+                      <DialogTrigger>View/Edit Details</DialogTrigger>
                     </Button>
-                    <DecisionMakerModal index={index} onOpenChange={setOpen} />
+                    <DecisionMakerModal owner={individual} index={index} onOpenChange={setOpen} />
                   </Dialog>
                 )}
               </div>

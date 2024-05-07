@@ -67,7 +67,7 @@ const OtherOwnersStep = ({
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
-        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form noValidate>
           <FormField
             name="additonalDecisionMakers"
             render={() => (
@@ -99,62 +99,62 @@ const OtherOwnersStep = ({
               </FormItem>
             )}
           />
-
-          {additionalDecisionMakers && (
-            <>
-              <Title as="h4" className="eb-my-5">
-                Listed business decision makers
-              </Title>
-
-              <div className="eb-grid lg:eb-grid-cols-3 eb-gap-5 md:eb-grid-cols-2 ">
-                {onboardingForm?.controller && (
-                  <div
-                    key="controllerPanel"
-                    className="eb-grid-cols-subgrid eb-grid-cols-2"
-                  >
-                    <DecisionMakerCard
-                      controller
-                      individual={onboardingForm?.controller}
-                    ></DecisionMakerCard>
-                  </div>
-                )}
-
-                {onboardingForm?.otherOwners?.map(
-                  (individual: any, index: number) => (
-                    <div
-                      key={individual?.firstName}
-                      className="eb-grid-cols-subgrid eb-grid-cols-2"
-                    >
-                      <DecisionMakerCard
-                        controller={false}
-                        individual={individual}
-                        index={index}
-                      ></DecisionMakerCard>
-                    </div>
-                  )
-                )}
-
-                <Dialog open={open} onOpenChange={setOpen}>
-                  <Button
-                    onClick={() => setOpen(true)}
-                    type="button"
-                    variant="outline"
-                    className="eb-max-w-52"
-                  >
-                    <DialogTrigger>Click to add a decision maker</DialogTrigger>
-                  </Button>
-                  <DecisionMakerModal onOpenChange={setOpen} />
-                </Dialog>
-              </div>
-            </>
-          )}
-          <NavigationButtons
-            setActiveStep={setActiveStep}
-            activeStep={activeStep}
-            onSubmit={onSubmit}
-          />
         </form>
       </Form>
+
+      {additionalDecisionMakers && (
+        <>
+          <Title as="h4" className="eb-my-5">
+            Listed business decision makers
+          </Title>
+
+          <div className="eb-grid lg:eb-grid-cols-3 eb-gap-5 md:eb-grid-cols-2 ">
+            {onboardingForm?.controller && (
+              <div
+                key="controllerPanel"
+                className="eb-grid-cols-subgrid eb-grid-cols-2"
+              >
+                <DecisionMakerCard
+                  controller
+                  individual={onboardingForm?.controller}
+                ></DecisionMakerCard>
+              </div>
+            )}
+
+            {onboardingForm?.otherOwners?.map(
+              (individual: any, index: number) => (
+                <div
+                  key={individual?.firstName}
+                  className="eb-grid-cols-subgrid eb-grid-cols-2"
+                >
+                  <DecisionMakerCard
+                    controller={false}
+                    individual={individual}
+                    index={index}
+                  ></DecisionMakerCard>
+                </div>
+              )
+            )}
+
+            <Dialog open={open} onOpenChange={setOpen}>
+              <Button
+                onClick={() => setOpen(true)}
+                type="button"
+                variant="outline"
+                className="eb-max-w-56"
+              >
+                <DialogTrigger>Click to add a decision maker</DialogTrigger>
+              </Button>
+              <DecisionMakerModal onOpenChange={setOpen} />
+            </Dialog>
+          </div>
+        </>
+      )}
+      <NavigationButtons
+        setActiveStep={setActiveStep}
+        activeStep={activeStep}
+        onSubmit={onSubmit}
+      />
     </Stack>
   );
 };

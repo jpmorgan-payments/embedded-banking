@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -13,7 +12,7 @@ import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
-import { addOtherOwner, removeOtherOwner } from '../../../context/form.actions';
+import { addOtherOwner, removeOtherOwner, updateOtherOwner } from '../../../context/form.actions';
 import { useOnboardingForm } from '../../../context/form.context';
 import { useContentData } from '../../../useContentData';
 import {
@@ -21,50 +20,55 @@ import {
   PersonalDetailsValues,
 } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
-const defaultInitialValues = createPersonalDetailsSchema().cast({});
-
 type DecisionMakerModalProps = {
-  index?: number;
+  owner?: PersonalDetailsValues;
   onOpenChange: any;
+  index?: number;
 };
 
 const DecisionMakerModal = ({
-  index,
+  owner,
   onOpenChange,
+  index
 }: DecisionMakerModalProps) => {
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-  const [defaultValues, setDefaultValues] = useState(defaultInitialValues);
 
-  useEffect(() => {
-    console.log(onboardingForm);
-    if (onboardingForm?.otherOwners?.length && index != null && index >= 0) {
-      setDefaultValues(onboardingForm?.otherOwners[index]);
-    }
-  }, [onboardingForm, onOpenChange]);
+  const defaultInitialValues =
+    owner?.firstName ? owner : createPersonalDetailsSchema().cast({});
+
+    //console.log(defaultInitialValues)
 
   const form = useForm<PersonalDetailsValues>({
-    defaultValues,
+    defaultInitialValues,
     resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
 
-  const onSubmit: SubmitHandler<PersonalDetailsValues> = () => {
+  const onSave: SubmitHandler<PersonalDetailsValues> = () => {
     const errors = form?.formState?.errors;
-
     if (!Object.values(errors).length) {
-      const newOnboardingForm = addOtherOwner(onboardingForm, form.getValues());
-      setOnboardingForm(newOnboardingForm);
-      onOpenChange(false);
+      if (owner && index!=null) {
+        const newOnboardingForm = updateOtherOwner(onboardingForm, form.getValues(), index);
+        setOnboardingForm(newOnboardingForm);
+        onOpenChange(false);
+      } else {
+        const newOnboardingForm = addOtherOwner(onboardingForm, form.getValues());
+        setOnboardingForm(newOnboardingForm);
+        onOpenChange(false);
+      }
+     
     }
   };
 
   const handleRemoveOwner = () => {
-    if (index != null) {
+    if (owner && index!=null) {
       const newOnboardingForm = removeOtherOwner(onboardingForm, index);
       setOnboardingForm(newOnboardingForm);
       onOpenChange(false);
+    } else {
+      console.log(index)
     }
   };
 
@@ -75,12 +79,12 @@ const DecisionMakerModal = ({
       <DialogContent>
         <DialogTitle>Enter decision maker details</DialogTitle>
         <Form {...form}>
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+          <form noValidate onSubmit={form.handleSubmit(onSave)}>
             <PersonalDetailsForm form={form} />
             <AddressForm form={form} />
 
             <div className="eb-mt-[25px] eb-mb-sm eb-flex eb-justify-end">
-              {index != null && index >= 0 ? (
+              {owner ? (
                 <Button
                   onClick={handleRemoveOwner}
                   type="button"

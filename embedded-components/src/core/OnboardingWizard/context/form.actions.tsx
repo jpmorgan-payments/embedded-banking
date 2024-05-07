@@ -91,20 +91,6 @@ export const addController = (
   return form;
 };
 
-//ADD OTHER OWNERS
-export const addOtherOwner = (
-  onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
-) => {
-  const form = _.cloneDeep(onboardingForm);
-  if (form.otherOwners) {
-    form.otherOwners = [...form.otherOwners, owner];
-  } else {
-    form.otherOwners = [owner];
-  }
-  return form;
-};
-
 export const addOutstandingItemsAndId = (
   onboardingForm: OnboardingForm,
   outstandingItems: ClientResponseOutstanding,
@@ -122,19 +108,50 @@ export const updateOutstandingItems = (
   return form;
 };
 
-//REMOVE OTHER OWNERS
-export const removeOtherOwner = (
+//ADD OTHER OWNERS
+export const addOtherOwner = (
   onboardingForm: OnboardingForm,
-  otherOwnerIndex: number
+  owner: PersonalDetailsValues
 ) => {
   const form = _.cloneDeep(onboardingForm);
   if (form.otherOwners) {
-    const newOtherOwners = form.otherOwners.splice(otherOwnerIndex, 1)
-    form.otherOwners = newOtherOwners
+    form.otherOwners = [...form.otherOwners, owner];
   } else {
-    throw Error('Invalid use of function removeOtherOwner');
+    form.otherOwners = [owner];
   }
   return form;
+};
+
+//ADD OTHER OWNERS
+export const updateOtherOwner = (
+  onboardingForm: OnboardingForm,
+  owner: PersonalDetailsValues,
+  index: number
+) => {
+  const form = _.cloneDeep(onboardingForm);
+  const newOtherOwners = form?.otherOwners;
+  if (newOtherOwners != null) {
+    newOtherOwners[index] = owner;
+    form.otherOwners = newOtherOwners;
+    return form;
+  }
+
+  throw new Error('invalid onboarding form structure');
+};
+
+//REMOVE OTHER OWNERS
+export const removeOtherOwner = (
+  onboardingForm: OnboardingForm,
+  index: number
+) => {
+  const form = _.cloneDeep(onboardingForm);
+  let newOtherOwners = form?.otherOwners;
+  if (newOtherOwners != null) {
+    newOtherOwners = newOtherOwners?.splice(1,index);
+    form.otherOwners = newOtherOwners;
+    return form;
+  }
+  throw new Error('invalid onboarding form structure');
 };
 
 //ADD BUSINESS DETAILS
