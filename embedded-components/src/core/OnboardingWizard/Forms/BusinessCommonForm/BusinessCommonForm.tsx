@@ -21,9 +21,7 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
-
-import { industryCategoriesMock as industryCategories } from '../../mocks/industryCategories.mock';
-import type { Step } from '../../utils/models';
+import { industryCategoriesMock as industryCategories } from '../../utils/industryCategories.mock';
 import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
