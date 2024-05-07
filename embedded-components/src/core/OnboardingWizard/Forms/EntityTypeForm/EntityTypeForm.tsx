@@ -15,7 +15,7 @@ import { Title } from '@/components/ui/title';
 import { Checkbox } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import { businessDetailsMock, controllerMock } from '../../mocks/reviewStep.mock';
 
 const EntityTypeForm = ({ form }: any) => {

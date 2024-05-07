@@ -8,7 +8,7 @@ import {
 
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
-import { OnboardingForm } from './form.context';
+import { OnboardingForm } from '../context/form.context';
 
 export const formToAPIBody = (
   onboardingForm: OnboardingForm
@@ -91,6 +91,16 @@ export const addController = (
   return form;
 };
 
+
+export const updateOutstandingItems = (
+  onboardingForm: OnboardingForm,
+  outstandingItems: ClientResponseOutstanding
+) => {
+  const form = _.cloneDeep(onboardingForm);
+  form.outstandingItems = outstandingItems;
+  return form;
+};
+
 //ADD OTHER OWNERS
 export const addOtherOwner = (
   onboardingForm: OnboardingForm,
@@ -105,36 +115,38 @@ export const addOtherOwner = (
   return form;
 };
 
-export const addOutstandingItemsAndId = (
+//ADD OTHER OWNERS
+export const updateOtherOwner = (
   onboardingForm: OnboardingForm,
-  outstandingItems: ClientResponseOutstanding,
-  id: string
-) => {
-  return { ...onboardingForm, outstandingItems, id };
-};
-
-export const updateOutstandingItems = (
-  onboardingForm: OnboardingForm,
-  outstandingItems: ClientResponseOutstanding
+  owner: PersonalDetailsValues,
+  index: number
 ) => {
   const form = _.cloneDeep(onboardingForm);
-  form.outstandingItems = outstandingItems;
-  return form;
+  const newOtherOwners = form?.otherOwners;
+  if (newOtherOwners != null) {
+    newOtherOwners[index] = owner;
+    form.otherOwners = newOtherOwners;
+    return form;
+  }
+
+  throw new Error('invalid onboarding form structure');
 };
 
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
   onboardingForm: OnboardingForm,
-  otherOwnerIndex: number
+  owner: PersonalDetailsValues
 ) => {
-  const form = _.cloneDeep(onboardingForm);
-  if (form.otherOwners) {
-    const newOtherOwners = form.otherOwners.splice(otherOwnerIndex, 1)
-    form.otherOwners = newOtherOwners
-  } else {
-    throw Error('Invalid use of function removeOtherOwner');
+  const form = JSON.parse(JSON.stringify(onboardingForm));
+  let newOtherOwners = form?.otherOwners;
+  if (newOtherOwners !== null) {
+    newOtherOwners = newOtherOwners.filter((x: PersonalDetailsValues) => {
+      return x.firstName!==owner?.firstName
+    })
+    form.otherOwners = newOtherOwners;
+    return form;
   }
-  return form;
+  throw new Error('invalid onboarding form structure');
 };
 
 //ADD BUSINESS DETAILS

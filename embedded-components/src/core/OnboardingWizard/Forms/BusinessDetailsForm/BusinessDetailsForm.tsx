@@ -8,7 +8,7 @@ import {
 import { Grid } from '@/components/ui/grid';
 import { Title } from '@/components/ui/title';
 import { Input } from '@/components/ui/input';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 
 const BusinessDetailsForm = ({ form }: any) => {
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');

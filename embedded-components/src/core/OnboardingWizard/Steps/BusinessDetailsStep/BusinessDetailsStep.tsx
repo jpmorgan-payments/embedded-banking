@@ -1,23 +1,21 @@
 import { FC, ReactNode, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import {
-  Form
-} from '@/components/ui/form';
+
+import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
-import { addBusinessDetails } from '../../context/form.actions';
-import {
-  useOnboardingForm,
-} from '../../context/form.context';
+
+import { useOnboardingForm } from '../../context/form.context';
+import { BusinessCommonForm } from '../../Forms/BusinessCommonForm/BusinessCommonForm';
+import { BusinessForm } from '../../Forms/BusinessDetailsForm/BusinessDetailsForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { addBusinessDetails } from '../../utils/actions';
+import { useContentData } from '../../utils/useContentData';
 import {
   businessDetailsSchema,
   BusinessDetailsStepValues,
 } from './BusinessDetailsStep.schema';
-import { BusinessCommonForm } from '../../Forms/BusinessCommonForm/BusinessCommonForm';
-import { BusinessForm } from '../../Forms/BusinessDetailsForm/BusinessDetailsForm';
 
 type BusinessDetailsProps = {
   children?: ReactNode;
@@ -25,7 +23,7 @@ type BusinessDetailsProps = {
   activeStep: number;
 };
 
-export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
+const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
@@ -57,17 +55,17 @@ export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   return (
     <Stack className="eb-w-full eb-gap-2">
       <Form {...form}>
-        <form noValidate
+        <form
+          noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => {
             setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
-         <BusinessForm form={form} />
+          <BusinessForm form={form} />
           <Separator />
           <BusinessCommonForm form={form} />
           <NavigationButtons
-            onSubmit={onSubmit}
             setActiveStep={setActiveStep}
             activeStep={activeStep}
           />
@@ -76,3 +74,5 @@ export const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
     </Stack>
   );
 };
+
+export { BusinessDetailsStep };

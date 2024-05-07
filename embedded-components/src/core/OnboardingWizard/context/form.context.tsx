@@ -23,14 +23,8 @@ export const defaultValues: OnboardingForm = {
   controller: undefined,
   otherOwners: undefined,
   businessDetails: undefined,
-  outstandingItems: {
-    attestationDocumentIds: ['62d29548-f55a-458e-b9bb-ed32a6a05a1b'],
-    documentRequestIds: [],
-    partyIds: [],
-    partyRoles: [],
-    questionIds: ['300001', '300002', '300003'],
-  },
-  id: '1000010400'
+  outstandingItems: undefined,
+  id: '1000010400',
 };
 
 export const OnboardingFormContext: any = createContext(defaultValues);

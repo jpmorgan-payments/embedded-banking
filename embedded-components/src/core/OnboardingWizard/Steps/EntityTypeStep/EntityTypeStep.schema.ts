@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { LegalStructure } from '../../models';
+import { LegalStructure } from '../../utils/models';
 
 const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
   const isBusiness = (value?: LegalStructure) => {

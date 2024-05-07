@@ -10,7 +10,7 @@ import { Stack, Text, Title } from '@/components/ui';
 import { useOnboardingForm } from '../../context/form.context';
 import { formCompleteMock } from '../../mocks/reviewStep.mock';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { useContentData } from '../../utils/useContentData';
 import { ReviewTable } from './ReviewTable';
 import { valuesMap } from './valuesMap';
 
@@ -64,9 +64,6 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
           )}
         />
         <NavigationButtons
-          onSubmit={() => {
-            setActiveStep(activeStep + 1);
-          }}
           setActiveStep={setActiveStep}
           activeStep={activeStep}
         />

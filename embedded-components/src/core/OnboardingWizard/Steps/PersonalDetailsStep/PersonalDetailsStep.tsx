@@ -1,16 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
 import { Form } from '@/components/ui/form';
 import { Text } from '@/components/ui/text';
 import { Stack, Title } from '@/components/ui';
-
-import { addController } from '../../context/form.actions';
 import { useOnboardingForm } from '../../context/form.context';
 import { AddressForm } from '../../Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '../../Forms/PersonalDetailsForm/PersonalDetailsForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { useContentData } from '../../useContentData';
+import { addController } from '../../utils/actions';
+import { useContentData } from '../../utils/useContentData';
 import {
   createPersonalDetailsSchema,
   PersonalDetailsValues,
@@ -63,7 +61,6 @@ const PersonalDetailsStep = ({
 
           <AddressForm form={form} />
           <NavigationButtons
-            onSubmit={onSubmit}
             setActiveStep={setActiveStep}
             activeStep={activeStep}
           />

@@ -7,7 +7,7 @@ const useContentData = (prefixes: string) => {
     key: string,
     customPrefix?: string
   ) => {
-    const compoundKey = (customPrefix ?? prefixes) + '.' + key;
+    const compoundKey = `${customPrefix ?? prefixes  }.${  key}`;
 
     const content = contentTokensList[compoundKey];
 

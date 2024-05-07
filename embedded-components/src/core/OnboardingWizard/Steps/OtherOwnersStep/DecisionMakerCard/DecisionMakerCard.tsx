@@ -31,8 +31,8 @@ const fieldsOther = (individual: any) => {
 
 const DecisionMakerCard = ({
   individual,
-  index,
   controller,
+  index
 }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
@@ -80,15 +80,16 @@ const DecisionMakerCard = ({
                     View/edit details in prior step
                   </Text>
                 ) : (
-                  <Dialog onOpenChange={setOpen} open={open} >
-                    <Button onClick={() => setOpen(true)} type="button" className="eb-mt-1" variant="outline">
-                    <DialogTrigger>
-                     
-                        View/Edit Details
-                   
-                    </DialogTrigger>
-                    </Button>
-                    <DecisionMakerModal index={index} onOpenChange={setOpen} />
+                  <Dialog onOpenChange={setOpen} open={open}>
+                    <DialogTrigger><Button
+                      onClick={() => setOpen(true)}
+                      type="button"
+                      className="eb-mt-1"
+                      variant="outline"
+                    >
+                     View/Edit Details
+                    </Button></DialogTrigger>
+                    <DecisionMakerModal owner={individual} index={index} onOpenChange={setOpen} />
                   </Dialog>
                 )}
               </div>
