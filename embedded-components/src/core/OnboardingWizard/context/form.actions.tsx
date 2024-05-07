@@ -142,12 +142,14 @@ export const updateOtherOwner = (
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
   onboardingForm: OnboardingForm,
-  index: number
+  owner: PersonalDetailsValues
 ) => {
-  const form = _.cloneDeep(onboardingForm);
+  const form = JSON.parse(JSON.stringify(onboardingForm));
   let newOtherOwners = form?.otherOwners;
-  if (newOtherOwners != null) {
-    newOtherOwners = newOtherOwners?.splice(1,index);
+  if (newOtherOwners !== null) {
+    newOtherOwners = form?.onboardingForm.filter((x: PersonalDetailsValues) => {
+      return x.firstName!==owner?.firstName
+    })
     form.otherOwners = newOtherOwners;
     return form;
   }

@@ -1,3 +1,4 @@
+import {useCallback} from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -39,10 +40,11 @@ const DecisionMakerModal = ({
   const defaultInitialValues =
     owner?.firstName ? owner : createPersonalDetailsSchema().cast({});
 
+    console.log(onboardingForm)
     //console.log(defaultInitialValues)
 
   const form = useForm<PersonalDetailsValues>({
-    defaultInitialValues,
+   defaultValues: defaultInitialValues,
     resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
 
@@ -62,15 +64,19 @@ const DecisionMakerModal = ({
     }
   };
 
-  const handleRemoveOwner = () => {
-    if (owner && index!=null) {
-      const newOnboardingForm = removeOtherOwner(onboardingForm, index);
+  const handleRemoveOwner = useCallback(() => {
+    if (owner) {
+      const newOnboardingForm = removeOtherOwner(onboardingForm, owner);
       setOnboardingForm(newOnboardingForm);
       onOpenChange(false);
     } else {
+      //TODO handle error
       console.log(index)
     }
-  };
+
+   },[onboardingForm]);
+   
+  
 
   return (
     <DialogPortal>
@@ -106,3 +112,4 @@ const DecisionMakerModal = ({
 };
 
 export { DecisionMakerModal };
+ 
