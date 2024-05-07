@@ -147,7 +147,7 @@ export const removeOtherOwner = (
   const form = JSON.parse(JSON.stringify(onboardingForm));
   let newOtherOwners = form?.otherOwners;
   if (newOtherOwners !== null) {
-    newOtherOwners = form?.onboardingForm.filter((x: PersonalDetailsValues) => {
+    newOtherOwners = newOtherOwners.filter((x: PersonalDetailsValues) => {
       return x.firstName!==owner?.firstName
     })
     form.otherOwners = newOtherOwners;
