@@ -2,6 +2,7 @@ import { Key, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 
+import _ from 'lodash';
 import { smbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
@@ -20,7 +21,6 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 import { formToAPIBody } from '../../utils/actions';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
-import _ from 'lodash';
 
 type OtherOwnersStepProp = {
   setActiveStep: any;

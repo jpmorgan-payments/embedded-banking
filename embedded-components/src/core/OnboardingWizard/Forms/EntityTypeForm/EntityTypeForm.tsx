@@ -19,9 +19,7 @@ const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');
   return (
     <>
-      <Grid
-        className='eb-gap-4 eb-pt-4 eb-grid-flow-row eb-grid-cols-2'
-      >
+      <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-grid-cols-2">
         <FormField
           control={form.control}
           name="legalStructure"
@@ -73,14 +71,24 @@ const EntityTypeForm = ({ form }: any) => {
           )}
         />
         <Card>
-          <CardContent>
-            <Text size="lg">
-              {getContentToken('corpText1')}
-              The information we request from you will help us complete setting
-              up your account. Please review and update any information that
-              needs confirmation; and provide any additional information
-              requested.
-            </Text>
+          <CardContent className="eb-bg-slate-200 eb-rounded">
+            <Grid className="eb-gap-2 eb-bg-slate-200 eb-p-5 eb-flex">
+              <Text>{getContentToken('corpText1')}</Text>
+              <Text>{getContentToken('corpText2')}</Text>
+              <Text className="eb-font-bold">
+                {getContentToken('corpText3')}
+              </Text>
+              <Text className="eb-px-4">
+                <ul className="eb-list-disc">
+                  {getContentToken('corpTextList')
+                    .toString()
+                    .split(',')
+                    .map((val) => (
+                      <li>{val}</li>
+                    ))}
+                </ul>
+              </Text>
+            </Grid>
           </CardContent>
         </Card>
       </Grid>
