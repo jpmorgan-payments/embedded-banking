@@ -60,9 +60,8 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'features.EntityTypeForm.radioValueSOLE': `Sole Proprietorship"`,
   'features.EntityTypeForm.radioValueSOLELabel': `Sole Proprietor`,
   'features.EntityTypeForm.radioValueSOLEDesc': `You are the sole owner of an incorporated business.`,
-  'features.EntityTypeForm.corpText': `The information we request from you will help us complete setting up your account.`,
-  'features.EntityTypeForm.corpText1': `Please review and update any information that needs confirmation; and provide any additional information requested.`,
-  'features.EntityTypeForm.corpText2': `Select a legal structure to get started.`,
+  'features.EntityTypeForm.corpText1': `The information we request from you will help us complete setting up your account.`,
+  'features.EntityTypeForm.corpText2': `Please review and update any information that needs confirmation; and provide any additional information requested.`,
   'features.EntityTypeForm.corpText3': `As a privately owned business, make sure to confirm the following in the relevant sections:`,
   'features.EntityTypeForm.corpTextList': `
     Employer Identification Number (EIN),
@@ -74,6 +73,7 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
     All Owners' Date of Birth,
     Any additional senior managers in the business
   `,
+  'features.EntityTypeForm.selectText': `Select a legal structure to get started.`,
   'features.EntityTypeForm.soloText': `As a sole proprietor, make sure to confirm the following in the relevant sections:`,
   'features.EntityTypeForm.soloListText': `
     Employer Identification Number (EIN) or SSN,
