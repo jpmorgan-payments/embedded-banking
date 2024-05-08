@@ -8,7 +8,11 @@ import {
 import { Stack, Text, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
-import { formCompleteMock } from '../../mocks/reviewStep.mock';
+import {
+  businessDetailsMock,
+  controllerMock,
+  formCompleteMock,
+} from '../../mocks/reviewStep.mock';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useContentData } from '../../utils/useContentData';
 import { ReviewTable } from './ReviewTable';
@@ -24,7 +28,23 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   const { getContentToken } = useContentData('steps.ReviewStep');
   const { getContentToken: getValueMap }: any =
     useContentData('steps.valuesMap');
-  const [data, setData] = useState(onboardingForm);
+  const [data, setData] = useState(
+    onboardingForm?.legalStructure || {
+      businessDetails: businessDetailsMock,
+      controller: controllerMock,
+      id: '1000010400',
+      legalStructure: undefined,
+      decisionMakers: undefined,
+      outstandingItems: {
+        attestationDocumentIds: Array(1),
+        documentRequestIds: Array(0),
+        partyIds: Array(0),
+        partyRoles: Array(0),
+        questionIds: Array(3),
+      },
+      owner: controllerMock,
+    }
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,12 +68,12 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   };
 
   // TODO: personal information requires the controllerKEY name
+  console.log('@@data', data, onboardingForm);
 
   return (
     <>
       <Title as="h2">Review</Title>
       <Stack>
-        <Text>{JSON.stringify(data)}</Text>
         <ReviewTable
           valuesMap={valuesMap(
             newSet,
