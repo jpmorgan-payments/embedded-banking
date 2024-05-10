@@ -40,7 +40,7 @@ const ReviewValues = ({
       valueToBeDisplayed = fieldValue;
     }
     return (
-      <Group>
+      <Group className="eb-border-b eb-border-dotted eb-p-1">
         <Group>
           <Text>{fieldLabel}</Text>
           {/* {fieldLabelTooltip && (
@@ -58,7 +58,7 @@ const ReviewValues = ({
     );
   }
   return (
-    <Grid>
+    <Grid className="eb-grid-cols-2 eb-border-b-2 eb-border-dotted eb-p-1">
       <Group>
         <Text size="sm">{fieldLabel}</Text>
         {/* {fieldLabelTooltip && (

@@ -1,8 +1,8 @@
 import { Key, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
+import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 
-import _ from 'lodash';
 import { smbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
@@ -18,7 +18,7 @@ import { Button, Stack } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { formToAPIBody } from '../../utils/actions';
+import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
@@ -52,7 +52,7 @@ const OtherOwnersStep = ({
       const newOnboardingForm = _.cloneDeep(onboardingForm);
       newOnboardingForm.id = res.id;
       newOnboardingForm.outstandingItems = res.outstanding;
-      console.log(newOnboardingForm)
+      console.log(newOnboardingForm);
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     } catch (error) {

@@ -12,11 +12,15 @@ import { Separator } from '@/components/ui/separator';
 import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { Title } from '@/components/ui/title';
+import { Checkbox } from '@/components/ui';
 
+import { useOnboardingForm } from '../../context/form.context';
 import { useContentData } from '../../utils/useContentData';
+import { businessDetailsMock, controllerMock } from '../../mocks/reviewStep.mock';
 
 const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');
+  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   return (
     <>
       <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-grid-cols-2">
@@ -233,6 +237,43 @@ const EntityTypeForm = ({ form }: any) => {
             )}
           />
         )}
+
+        <FormField
+          control={form.control}
+          name="significantOwnership"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>Auto-fill forms with mock data</FormLabel>
+
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={(value) => {
+                    if (value) {
+                      setOnboardingForm({
+                        businessDetails: businessDetailsMock,
+                        controller: controllerMock,
+                        id: '1000010400',
+                        legalStructure: undefined,
+                        decisionMakers: undefined,
+                        outstandingItems: {
+                          attestationDocumentIds: Array(1),
+                          documentRequestIds: Array(0),
+                          partyIds: Array(0),
+                          partyRoles: Array(0),
+                          questionIds: Array(3),
+                        },
+                        owner: controllerMock,
+                      });
+                    }
+                  }}
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </Stack>
       <Separator className="eb-my-8" />
     </>

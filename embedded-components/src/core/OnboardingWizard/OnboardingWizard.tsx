@@ -52,7 +52,7 @@ export const OnboardingWizard = () => {
   const ActiveStep: any = useMemo(() => steps[activeStep], [steps, activeStep]);
 
   return (
-    <Card className="eb-flex eb-flex-col eb-wrap eb-overflow-clip">
+    <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
       <CardHeader>
         <CardTitle>Onboarding Wizards</CardTitle>
       </CardHeader>

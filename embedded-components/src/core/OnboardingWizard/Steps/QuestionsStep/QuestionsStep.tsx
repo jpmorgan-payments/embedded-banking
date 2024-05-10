@@ -13,10 +13,8 @@ import { Form, Grid, Stack, Title } from '@/components/ui';
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import {
-  makeQuestionsAPIBody,
-  updateOutstandingItems,
-} from '../../utils/actions';
+import { updateOutstandingItems } from '../../utils/actions';
+import { makeQuestionsAPIBody } from '../../utils/apiUtilsParsers';
 
 type QuestionsStepProps = {
   setActiveStep: any;
