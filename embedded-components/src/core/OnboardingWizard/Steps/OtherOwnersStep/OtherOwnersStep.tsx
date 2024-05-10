@@ -3,7 +3,6 @@ import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 
-import _ from 'lodash';
 import { smbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {

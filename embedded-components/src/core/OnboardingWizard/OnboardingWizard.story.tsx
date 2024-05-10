@@ -1,12 +1,7 @@
-import { OnboardingWizard } from './OnboardingWizard';
-import { Stepper } from './Stepper/Stepper';
+import { OnboardingWizardRoot } from './OnboardingWizardRoot';
 
 export default {
   title: 'Onboarding Wizard',
 };
 
-export const Usage = () => (
-  <Stepper>
-    <OnboardingWizard />
-  </Stepper>
-);
+export const Usage = () => <OnboardingWizardRoot />;
