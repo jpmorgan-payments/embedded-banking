@@ -4,6 +4,7 @@ export type EBThemeVariables = {
   backgroundColor?: string;
   foregroundColor?: string;
   primaryColor?: string;
+  primaryColorHover?: string;
   primaryForegroundColor?: string;
   secondaryColor?: string;
   secondaryForegroundColor?: string;

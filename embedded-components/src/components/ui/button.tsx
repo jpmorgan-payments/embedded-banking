@@ -10,13 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'eb-bg-primary eb-text-primary-foreground hover:eb-bg-primary/90',
+          'eb-bg-primary eb-text-primary-foreground hover:eb-bg-primary/90 hover:eb-drop-shadow-md',
         destructive:
-          'eb-bg-destructive eb-text-destructive-foreground hover:eb-bg-destructive/90',
+          'eb-bg-destructive eb-text-destructive-foreground hover:eb-bg-destructive/90 hover:eb-drop-shadow-md',
         outline:
-          'eb-border eb-border-input eb-bg-background eb-text-foreground hover:eb-bg-accent hover:eb-text-accent-foreground',
+          'eb-border eb-border-input eb-bg-background eb-text-foreground hover:eb-bg-accent hover:eb-text-accent-foreground hover:eb-drop-shadow-md',
         secondary:
-          'eb-bg-secondary eb-text-secondary-foreground hover:eb-bg-secondary/80',
+          'eb-bg-secondary eb-text-secondary-foreground hover:eb-bg-secondary/80 hover:eb-drop-shadow-md',
         ghost: 'hover:eb-bg-accent hover:eb-text-accent-foreground',
         link: 'eb-text-primary eb-underline-offset-4 hover:eb-underline',
       },
@@ -40,18 +40,19 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
+const Button = React.forwardRef<
+  HTMLButtonElement,
+  React.HTMLAttributes<HTMLButtonElement> & ButtonProps
+>(({ className, variant, size, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : 'button';
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size }), className)}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };

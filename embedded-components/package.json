@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "license": "Apache-2.0",
   "type": "module",
+  "description": "EB components",
   "files": [
     "dist"
   ],
@@ -37,6 +38,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-radio-group": "^1.1.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
@@ -49,12 +51,16 @@
     "colortranslator": "^4.1.0",
     "date-fns": "^3.3.1",
     "deepmerge": "^4.3.1",
+    "json-diff-ts": "^4.0.1",
+    "libphonenumber-js": "^1.10.61",
     "lucide-react": "^0.294.0",
+    "public-ip": "^6.0.2",
     "react-day-picker": "^8.10.0",
     "react-hook-form": "^7.50.1",
+    "tabler-icons-react": "^1.56.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "yup": "^1.3.3",
+    "yup": "^1.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
