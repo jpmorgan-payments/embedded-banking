@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Box } from '@/components/ui';
 
 import { OnboardingFormProvider } from './context/form.context';
 import { useStepper } from './Stepper/Stepper';
@@ -66,12 +67,12 @@ export const OnboardingWizard = () => {
           )}
 
           {steps?.map((step, index) => (
-            <div
+            <Box
               key={`panel${index}`}
               className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
             >
               {activeStep === index && ActiveStep}
-            </div>
+            </Box>
           ))}
         </OnboardingFormProvider>
       </CardContent>

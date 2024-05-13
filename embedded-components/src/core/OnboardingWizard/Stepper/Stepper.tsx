@@ -23,7 +23,7 @@ const useStepper = () => {
 type yStepper = {
   children: ReactNode;
 };
-const Stepper: FC<yStepper> = ({ children }) => {
+const StepperProvider: FC<yStepper> = ({ children }) => {
   const [steps, setActiveStep] = useState(initValues);
   const { activeStep } = steps;
 
@@ -43,4 +43,4 @@ const Stepper: FC<yStepper> = ({ children }) => {
   );
 };
 
-export { Stepper, useStepper };
+export { StepperProvider, useStepper };

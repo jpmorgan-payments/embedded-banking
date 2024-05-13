@@ -1,11 +1,11 @@
 import { OnboardingWizard } from './OnboardingWizard';
-import { Stepper } from './Stepper/Stepper';
+import { StepperProvider } from './Stepper/Stepper';
 
 const OnboardingWizardRoot = () => {
   return (
-    <Stepper>
-      <OnboardingWizard />;
-    </Stepper>
+    <StepperProvider>
+      <OnboardingWizard />
+    </StepperProvider>
   );
 };
 
