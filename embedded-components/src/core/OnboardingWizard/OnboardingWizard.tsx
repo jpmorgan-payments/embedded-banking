@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Box } from '@/components/ui';
+import { Box, Button, Text } from '@/components/ui';
 
 import { OnboardingFormProvider } from './context/form.context';
 import { useStepper } from './Stepper/Stepper';
@@ -33,7 +35,7 @@ export const OnboardingWizard = () => {
       setActiveStep={setCurrentStep}
       key={2}
       activeStep={activeStep}
-    />,
+  />,
     <OtherOwnersStep
       key={3}
       setActiveStep={setCurrentStep}
@@ -53,29 +55,53 @@ export const OnboardingWizard = () => {
   const ActiveStep: any = useMemo(() => steps[activeStep], [steps, activeStep]);
 
   return (
-    <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
-      <CardHeader>
-        <CardTitle>Onboarding Wizards</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <OnboardingFormProvider>
-          {activeStep !== 0 && (
-            <StepperHeader
-              activeStep={activeStep}
-              setCurrentStep={setCurrentStep}
-            ></StepperHeader>
-          )}
-
-          {steps?.map((step, index) => (
-            <Box
-              key={`panel${index}`}
-              className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <>
+          <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
+            <CardHeader>
+              <CardTitle>Onboarding Wizards</CardTitle>
+            </CardHeader>
+            <ErrorBoundary
+              onReset={reset}
+              fallbackRender={({ resetErrorBoundary, error }) => (
+                <>
+                  <Text>
+                    There was an error while trying to load this page.
+                  </Text>
+                  <Text className={`eb-text-gray-600`} size="lg">
+                    {error.name}
+                  </Text>
+                  <Text className={`eb-text-red-600`}>{error.message}</Text>
+                  <Button onClick={() => resetErrorBoundary()}>
+                    Try again
+                  </Button>
+                </>
+              )}
             >
-              {activeStep === index && ActiveStep}
-            </Box>
-          ))}
-        </OnboardingFormProvider>
-      </CardContent>
-    </Card>
+              <CardContent>
+                <OnboardingFormProvider>
+                  {activeStep !== 0 && (
+                    <StepperHeader
+                      activeStep={activeStep}
+                      setCurrentStep={setCurrentStep}
+                    ></StepperHeader>
+                  )}
+
+                  {steps?.map((step, index) => (
+                    <Box
+                      key={`panel${index}`}
+                      className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
+                    >
+                      {activeStep === index && ActiveStep}
+                    </Box>
+                  ))}
+                </OnboardingFormProvider>
+              </CardContent>
+            </ErrorBoundary>
+          </Card>
+        </>
+      )}
+    </QueryErrorResetBoundary>
   );
 };

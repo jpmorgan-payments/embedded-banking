@@ -39,10 +39,11 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
     resolver: yupResolver(businessDetailsSchema(getContentToken)),
     mode: 'onBlur',
   });
+  console.log('@@vals', defaultInitialValues);
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    if (Object.values(errors).length === 0 && form.formState.isSubmitted) {
+    if (!Object.values(errors).length) {
       const newOnboardingForm = addBusinessDetails(
         onboardingForm,
         form.getValues()

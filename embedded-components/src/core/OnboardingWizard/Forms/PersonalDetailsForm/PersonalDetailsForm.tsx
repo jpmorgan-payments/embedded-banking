@@ -15,6 +15,11 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/components/ui/select';
+import { BirthDateSelector } from '@/components/ux/BirthDateSelector';
+import { PhoneInput } from '@/components/ux/PhoneInput';
+import { Ssn9Input } from '@/components/ux/SocialSecurity';
+
+import { useContentData } from '../../utils/useContentData';
 
 const jobTitles = [
   'CEO',
@@ -32,8 +37,8 @@ type PersonalDetailsFormProps = {
 
 const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
-  const [ selectedJobTitle, setSelectedJobTitle] = useState('CEO');
-
+  const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
+  const { getContentToken } = useContentData(`components.CustomDatePicker`);
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
     if (jobTitle === 'Other') {
@@ -45,8 +50,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
 
   return (
     <>
-     
-      <div className="eb-grid eb-grid-cols-3  eb-grid-flow-row eb-gap-6 eb-pt-4">
+      <div className="eb-grid eb-grid-flow-row  eb-grid-cols-3 eb-gap-6 eb-pt-4">
         <FormField
           control={form.control}
           name="firstName"
@@ -141,9 +145,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="jobTitleDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel asterisk={jobTitleIsOther}>
-                Job Description
-              </FormLabel>
+              <FormLabel asterisk={jobTitleIsOther}>Job Description</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -158,28 +160,36 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
         <FormField
           control={form.control}
           name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel asterisk>Phone</FormLabel>
-              <FormControl>
-                <Input {...field} required />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel asterisk>Phone</FormLabel>
+                <FormControl>
+                  <PhoneInput {...field} required />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <FormField
           control={form.control}
           name="birthDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel asterisk>Date of Birth</FormLabel>
-              <FormControl>
-                <Input {...field} required />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            console.log('@@field', field);
+            return (
+              <FormItem>
+                <FormLabel asterisk>Date of Birth</FormLabel>
+                <FormControl>
+                  <BirthDateSelector
+                    getContentToken={getContentToken}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
       </div>
       <div className="eb-grid eb-grid-cols-1 eb-gap-4 eb-pt-4">
@@ -190,7 +200,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
             <FormItem>
               <FormLabel asterisk>Social Security Number</FormLabel>
               <FormControl>
-                <Input {...field} required />
+                <Ssn9Input {...field} required />
               </FormControl>
               <FormMessage />
             </FormItem>

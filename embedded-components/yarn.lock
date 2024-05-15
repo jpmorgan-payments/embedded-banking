@@ -2293,6 +2293,7 @@ __metadata:
     "@radix-ui/react-select": "npm:^2.0.0"
     "@radix-ui/react-separator": "npm:^1.0.3"
     "@radix-ui/react-slot": "npm:^1.0.2"
+    "@radix-ui/react-switch": "npm:^1.0.3"
     "@storybook/addon-essentials": "npm:^8.0.8"
     "@storybook/addon-interactions": "npm:^8.0.8"
     "@storybook/addon-links": "npm:^8.0.8"
@@ -2345,7 +2346,9 @@ __metadata:
     react: "npm:^18.2.0"
     react-day-picker: "npm:^8.10.0"
     react-dom: "npm:^18.2.0"
+    react-error-boundary: "npm:^4.0.13"
     react-hook-form: "npm:^7.50.1"
+    react-number-format: "npm:^5.3.4"
     replace: "npm:^1.2.2"
     storybook: "npm:^8.0.8"
     storybook-dark-mode: "npm:^4.0.1"
@@ -3289,6 +3292,32 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/3af6ea4891e6fa8091e666802adffe7718b3cd390a10fa9229a5f40f8efded9f3918ea01b046103d93923d41cc32119505ebb6bde76cad07a87b6cf4f2119347
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-switch@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@radix-ui/react-switch@npm:1.0.3"
+  dependencies:
+    "@babel/runtime": "npm:^7.13.10"
+    "@radix-ui/primitive": "npm:1.0.1"
+    "@radix-ui/react-compose-refs": "npm:1.0.1"
+    "@radix-ui/react-context": "npm:1.0.1"
+    "@radix-ui/react-primitive": "npm:1.0.3"
+    "@radix-ui/react-use-controllable-state": "npm:1.0.1"
+    "@radix-ui/react-use-previous": "npm:1.0.1"
+    "@radix-ui/react-use-size": "npm:1.0.1"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/e7c65aeedf9d3cd47320fd3759b8c7f3777619cd847a96f2c52841488ad1745fa35335e2877a4f839902942410a7ffe9baf05ec1c249a0401a2b1b9363dbf343
   languageName: node
   linkType: hard
 
@@ -12026,6 +12055,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-error-boundary@npm:^4.0.13":
+  version: 4.0.13
+  resolution: "react-error-boundary@npm:4.0.13"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.5"
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 10c0/6f3e0e4d7669f680ccf49c08c9571519c6e31f04dcfc30a765a7136c7e6fbbbe93423dd5a9fce12107f8166e54133e9dd5c2079a00c7a38201ac811f7a28b8e7
+  languageName: node
+  linkType: hard
+
 "react-hook-form@npm:^7.50.1":
   version: 7.50.1
   resolution: "react-hook-form@npm:7.50.1"
@@ -12060,6 +12100,18 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: 10c0/6eb5e4b28028c23e2bfcf73371e72cd4162e4ac7ab445ddae2afe24e347a37d6dc22fae6e1748632cd43c6d4f9b8f86dcf26bf9275e1874f436d129952528ae0
+  languageName: node
+  linkType: hard
+
+"react-number-format@npm:^5.3.4":
+  version: 5.3.4
+  resolution: "react-number-format@npm:5.3.4"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/a9ab7ed90cfc74eb07c3dce1916c17f3f068db29f069c1cae361c8340b860ccf5a7e6cb9048f68dd698d7ed6fe0ad04d987670d50589d1f17b113f546c35d719
   languageName: node
   linkType: hard
 

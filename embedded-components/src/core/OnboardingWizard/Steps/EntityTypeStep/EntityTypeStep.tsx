@@ -61,6 +61,7 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   return (
     <Stack>
       <Title as="h3">What Kind of Business do you run?</Title>
+      
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
