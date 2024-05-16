@@ -1,6 +1,11 @@
 import Axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
-export const AXIOS_INSTANCE = Axios.create();
+export const AXIOS_INSTANCE = Axios.create({
+  // transitional: {
+  //   silentJSONParsing: false,
+  // },
+  // responseType: 'json',
+});
 
 export const ebInstance = <T>(
   config: AxiosRequestConfig,
@@ -11,7 +16,11 @@ export const ebInstance = <T>(
     ...config,
     ...options,
     cancelToken: source.token,
-  }).then(({ data }) => data);
+  }).then(({ data }) => {
+    console.log('@@config', config, '>>', da);
+
+    return data;
+  });
 
   // @ts-ignore
   promise.cancel = () => {

@@ -72,7 +72,7 @@ export const makeBusiness = (
           ]
         : [],
       websiteAvailable: !business?.websiteNotAvailable,
-      website: business?.website,
+      ...(business?.website ? { website: business?.website } : {}),
     },
   };
   return party;

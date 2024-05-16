@@ -3,7 +3,11 @@ import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 
-import { smbdoPostClients } from '@/api/generated/embedded-banking';
+import {
+  smbdoPostClients,
+  useSmbdoListClients,
+  useSmbdoPostClients,
+} from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
   Form,
@@ -36,6 +40,9 @@ const OtherOwnersStep = ({
     useState(false);
 
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const { mutateAsync: postClient } = useSmbdoPostClients();
+  const data = useSmbdoListClients();
+  console.log('@@data', data);
 
   const form = useForm<any>({});
 
@@ -46,13 +53,15 @@ const OtherOwnersStep = ({
 
   const onSubmit = async () => {
     const apiForm = formToAPIBody(onboardingForm);
+    //TODO: should we load next api call everytime we go next?
     try {
       //@ts-ignore
-      const res = JSON.parse(await smbdoPostClients(apiForm));
+      // const res = JSON.parse(await smbdoPostClients(apiForm));
+      const res = JSON.parse(await postClient({ data: apiForm }));
       const newOnboardingForm = _.cloneDeep(onboardingForm);
       newOnboardingForm.id = res.id;
       newOnboardingForm.outstandingItems = res.outstanding;
-      console.log(newOnboardingForm);
+      console.log('@@>>res', typeof res, newOnboardingForm);
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     } catch (error) {
@@ -106,12 +115,9 @@ const OtherOwnersStep = ({
             Listed business decision makers
           </Title>
 
-          <div className="eb-grid lg:eb-grid-cols-3 eb-gap-5 md:eb-grid-cols-2 ">
+          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
             {onboardingForm?.controller && (
-              <div
-                key="controllerPanel"
-                className="eb-grid-cols-subgrid eb-grid-cols-2"
-              >
+              <div key="controllerPanel" className=" eb-grid-cols-subgrid">
                 <DecisionMakerCard
                   controller
                   individual={onboardingForm?.controller}
@@ -123,7 +129,7 @@ const OtherOwnersStep = ({
               (individual: any, index: number) => (
                 <div
                   key={individual?.firstName}
-                  className="eb-grid-cols-subgrid eb-grid-cols-2"
+                  className=" eb-grid-cols-subgrid"
                 >
                   <DecisionMakerCard
                     controller={false}

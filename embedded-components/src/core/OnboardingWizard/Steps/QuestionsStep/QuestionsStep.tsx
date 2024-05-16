@@ -59,6 +59,8 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('@@onboar', onboardingForm);
+
       try {
         if (onboardingForm?.outstandingItems?.questionIds) {
           const res = await smbdoListQuestions(
