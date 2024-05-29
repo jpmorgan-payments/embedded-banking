@@ -22,14 +22,16 @@ import { Text } from '@/components/ui/text';
 import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
 import { PhoneInput } from '@/components/ux/PhoneInput';
-import { YearSelect } from '@/components/ux/YearSelect';
 
 import { industryCategoriesMock as industryCategories } from '../../utils/industryCategories.mock';
 import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
-export const BusinessCommonForm: any = ({ form }: any) => {
-  const isLoadingIndustryCategories = false;
+export const BusinessCommonForm: any = ({
+  form,
+  hasWebsite,
+  setHasWebsite,
+}: any) => {
   const industryTypes =
     industryCategories?.items
       ?.find?.(
@@ -131,6 +133,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                           : (getContentToken(`text.notAvailable`) as string)
                       }
                       className="eb-lowercase"
+                      disabled={!hasWebsite}
                     />
                   </FormControl>
                   <FormMessage />
@@ -191,8 +194,6 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               control={form.control}
               name="yearOfFormation"
               render={({ field }) => {
-                console.log('@@vafield', field);
-
                 return (
                   <FormItem>
                     <FormLabel asterisk>

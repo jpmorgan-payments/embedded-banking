@@ -9,23 +9,33 @@ type NavigationButtonsProps = {
 const NavigationButtons = ({
   activeStep,
   setActiveStep,
-  onSubmit
+  onSubmit,
 }: NavigationButtonsProps) => {
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
   return (
-    <div className="eb-grid eb-grid-cols-2 eb-mt-20">
+    <div className="eb-mt-20 eb-grid eb-grid-cols-2">
       <div className="eb-flex eb-justify-start">
         {activeStep !== 0 && (
-          <Button variant="outline" onClick={handleBack}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setActiveStep(activeStep - 1);
+            }}
+          >
             Back
           </Button>
         )}
       </div>
       <div className="eb-flex eb-justify-end">
-        <Button onClick={onSubmit} type="submit">Next</Button>
+        <Button
+          type="submit"
+          onClick={() => {
+            if (onSubmit) {
+              onSubmit();
+            }
+          }}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );

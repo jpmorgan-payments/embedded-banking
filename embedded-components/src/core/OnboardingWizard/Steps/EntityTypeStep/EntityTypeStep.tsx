@@ -9,7 +9,11 @@ import { Title } from '@/components/ui/title';
 import { useOnboardingForm } from '../../context/form.context';
 import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { addBusinessType } from '../../utils/actions';
+import {
+  addBusinessDetails,
+  addBusinessType,
+  addQuestionAnswers,
+} from '../../utils/actions';
 import { useContentData } from '../../utils/useContentData';
 import {
   createEntityTypeFormValidationSchema,
@@ -38,6 +42,12 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
     defaultValues: {
       ...defaultInitialValues,
       legalStructure: onboardingForm?.legalStructure ?? '',
+      ...(onboardingForm?.businessDetails?.entitiesInOwnership
+        ? onboardingForm?.businessDetails
+        : {
+            entitiesInOwnership: 'no',
+            significantOwnership: 'no',
+          }),
     },
     resolver: yupResolver(
       createEntityTypeFormValidationSchema(getContentToken)
@@ -48,11 +58,41 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   const onSubmit: any = () => {
     const errors = form?.formState?.errors;
 
+    const isSolo = form.getValues('legalStructure').includes('Sole');
     if (!Object.values(errors).length) {
-      const newOnboardingForm = addBusinessType(
+      /*
+      ...(isSolo
+            ? {}
+            : {
+                relatedToATM: form.getValues('relatedToATM'),
+                businessInSanctionedCountries: form.getValues(
+                  'businessInSanctionedCountries'
+                ),
+              }),
+      */
+      let newOnboardingForm = addBusinessType(
         onboardingForm,
         form.getValues('legalStructure')
       );
+
+      //TODO: Fix the types and improve the addition for business Type
+
+      //@ts-ignore
+
+      newOnboardingForm = addQuestionAnswers(newOnboardingForm, {
+        significantOwnership: form.getValues('significantOwnership'),
+        //@ts-ignore
+        entitiesInOwnership: form.getValues('entitiesInOwnership'),
+        ...(isSolo
+          ? {}
+          : {
+              relatedToATM: form.getValues('relatedToATM'),
+              businessInSanctionedCountries: form.getValues(
+                'businessInSanctionedCountries'
+              ),
+            }),
+      });
+
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     }
@@ -61,7 +101,7 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   return (
     <Stack>
       <Title as="h3">What Kind of Business do you run?</Title>
-      
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

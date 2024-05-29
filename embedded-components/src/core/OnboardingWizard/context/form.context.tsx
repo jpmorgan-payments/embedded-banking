@@ -15,6 +15,7 @@ export type OnboardingForm = {
   businessDetails: BusinessDetailsStepValues | undefined;
   outstandingItems: ClientResponseOutstanding | undefined;
   id: string | undefined;
+  questionsAnswers: any;
 };
 
 export const defaultValues: OnboardingForm = {
@@ -24,7 +25,8 @@ export const defaultValues: OnboardingForm = {
   otherOwners: undefined,
   businessDetails: undefined,
   outstandingItems: undefined,
-  id: '1000010400',
+  id: undefined,
+  questionsAnswers: undefined,
 };
 
 export const OnboardingFormContext: any = createContext(defaultValues);

@@ -274,7 +274,11 @@ const businessDetailsSchema = (getContentToken?: any) => {
   });
 };
 const valBusinessDetailsSchema = businessDetailsSchema();
-type BusinessDetailsStepValues = yup.InferType<typeof valBusinessDetailsSchema>;
+type BusinessDetailsStepValues = yup.InferType<
+  Omit<typeof valBusinessDetailsSchema, 'yearOfFormation'> & {
+    yearOfFormation: string;
+  }
+>;
 
 const soleProprietorBusinessDetailsSchema = (
   getContentToken?: (

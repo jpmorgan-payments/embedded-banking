@@ -179,7 +179,7 @@ export function BirthDateSelector({
   return (
     <>
       <Input {...props} className="eb-hidden" />
-      <Group className='eb-align-baseline'>
+      <Group className='eb-items-baseline'>
         {format.split('').map((type, index) => (
           <React.Fragment key={type}>
             {renderSelect(type)}

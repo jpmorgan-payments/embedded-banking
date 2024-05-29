@@ -40,8 +40,6 @@ const PersonalDetailsStep = ({
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
-    console.log('@@form', form.getValues());
-
     if (!Object.values(errors).length) {
       const newOnboardingForm = addController(onboardingForm, form.getValues());
       setOnboardingForm(newOnboardingForm);

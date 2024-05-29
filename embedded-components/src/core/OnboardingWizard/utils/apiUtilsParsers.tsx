@@ -46,7 +46,9 @@ export const makeBusiness = (
       industryType: business?.industryType,
       yearOfFormation: business?.yearOfFormation,
       countryOfFormation: 'US',
-      significantOwnership: business?.significantOwnership,
+      significantOwnership:
+        form?.questionsAnswers?.significantOwnership === 'no',
+      entitiesInOwnership: form?.questionsAnswers?.entitiesInOwnership === 'no',
       addresses: [
         {
           addressType: 'BUSINESS_ADDRESS',

@@ -1,10 +1,13 @@
+import { OnboardingFormProvider } from './context/form.context';
 import { OnboardingWizard } from './OnboardingWizard';
 import { StepperProvider } from './Stepper/Stepper';
 
-const OnboardingWizardRoot = () => {
+const OnboardingWizardRoot = (props: any) => {
   return (
     <StepperProvider>
-      <OnboardingWizard />
+      <OnboardingFormProvider>
+        <OnboardingWizard {...props} />
+      </OnboardingFormProvider>
     </StepperProvider>
   );
 };

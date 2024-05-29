@@ -114,7 +114,19 @@ export const addBusinessDetails = (
   onboardingForm: OnboardingForm,
   businessDetails: BusinessDetailsStepValues
 ) => {
-  return { ...onboardingForm, businessDetails };
+  return {
+    ...onboardingForm,
+    businessDetails: { ...onboardingForm.businessDetails, ...businessDetails },
+  };
+};
+export const addQuestionAnswers = (
+  onboardingForm: OnboardingForm,
+  questions: any
+) => {
+  return {
+    ...onboardingForm,
+    questionsAnswers: { ...onboardingForm.questionsAnswers, ...questions },
+  };
 };
 
 //ADD BUSINESS TYPE
@@ -122,7 +134,7 @@ export const addBusinessType = (
   onboardingForm: OnboardingForm,
   businessType: string
 ) => {
-  const form = _.cloneDeep(onboardingForm);
-  form.legalStructure = businessType;
+  const form = { ...onboardingForm, legalStructure: businessType };
+  // form.legalStructure = businessType;
   return form;
 };

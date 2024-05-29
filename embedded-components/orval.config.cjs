@@ -6,7 +6,6 @@ module.exports = {
       mock: true,
       target: './src/api/generated/embedded-banking.ts',
       client: 'react-query',
-      headers: true,
       override: {
         mutator: {
           path: './src/api/axios-instance.ts',

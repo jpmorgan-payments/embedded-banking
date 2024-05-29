@@ -17,14 +17,10 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   theme = {},
 }) => {
   const queryClient = new QueryClient();
-  // TODO: set up api instance
 
-  AXIOS_INSTANCE.interceptors.request.use((config) => {
-    return {
-      ...config,
-      baseURL: apiBaseUrl,
-    };
-  });
+  useEffect(() => {
+    AXIOS_INSTANCE.defaults.baseURL = apiBaseUrl;
+  }, [apiBaseUrl]);
 
   useEffect(() => {
     const root = window.document.documentElement;

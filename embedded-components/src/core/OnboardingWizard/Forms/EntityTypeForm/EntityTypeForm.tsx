@@ -24,7 +24,9 @@ import { useContentData } from '../../utils/useContentData';
 
 const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+
+  const { setOnboardingForm } = useOnboardingForm();
+
   return (
     <>
       <Grid className="eb-grid-flow-row eb-grid-cols-2 eb-gap-4 eb-pt-4">
@@ -103,84 +105,18 @@ const EntityTypeForm = ({ form }: any) => {
       <Separator className="eb-my-8" />
       <Stack className="eb-gap-8">
         <Title as="h2">Additional Questions</Title>
-        <FormField
-          control={form.control}
-          name="businessInSanctionedCountries"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel asterisk>
-                Do you have locations, sell goods or services, or have vendors
-                or suppliers in countries or regions subject to comprehensive
-                sanctions programs (Iran, North Korea, Cuba, Syria and the
-                Crimea, Donetsk, Luhansk Regions of Ukraine), or work with
-                Sanctioned Parties in Russia or Venezuela? *
-              </FormLabel>
-
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="eb-flex eb-flex-row eb-space-y-1"
-                >
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="yes" />
-
-                    <FormLabel className="eb-font-normal">Yes</FormLabel>
-                  </FormItem>
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="no" />
-
-                    <FormLabel className="eb-font-normal">No</FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="relatedToATM"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel asterisk>
-                Do you identify as a provider, owner, and/or operator of private
-                ATM(s) and/or third Party ATM(s) activity?
-              </FormLabel>
-
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="eb-flex eb-flex-row eb-space-y-1"
-                >
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="yes" />
-
-                    <FormLabel className="eb-font-normal">Yes</FormLabel>
-                  </FormItem>
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="no" />
-
-                    <FormLabel className="eb-font-normal">No</FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         {form.getValues().legalStructure !== 'Sole Proprietorship' && (
           <FormField
             control={form.control}
-            name="entitiesInOwnership"
+            name="businessInSanctionedCountries"
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>
-                  Are there any entities (or non-individuals) in your ownership
-                  hierarchy?
+                  Do you have locations, sell goods or services, or have vendors
+                  or suppliers in countries or regions subject to comprehensive
+                  sanctions programs (Iran, North Korea, Cuba, Syria and the
+                  Crimea, Donetsk, Luhansk Regions of Ukraine), or work with
+                  Sanctioned Parties in Russia or Venezuela? *
                 </FormLabel>
 
                 <FormControl>
@@ -210,11 +146,12 @@ const EntityTypeForm = ({ form }: any) => {
         {form.getValues().legalStructure !== 'Sole Proprietorship' && (
           <FormField
             control={form.control}
-            name="significantOwnership"
+            name="relatedToATM"
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>
-                  Are there any individuals who own 25% or more of your company?
+                  Do you identify as a provider, owner, and/or operator of
+                  private ATM(s) and/or third Party ATM(s) activity?
                 </FormLabel>
 
                 <FormControl>
@@ -241,10 +178,77 @@ const EntityTypeForm = ({ form }: any) => {
             )}
           />
         )}
+
+        <FormField
+          control={form.control}
+          name="entitiesInOwnership"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>
+                Are there any entities (or non-individuals) in your ownership
+                hierarchy?
+              </FormLabel>
+
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="eb-flex eb-flex-row eb-space-y-1"
+                >
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <RadioGroupItem value="yes" />
+
+                    <FormLabel className="eb-font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <RadioGroupItem value="no" />
+
+                    <FormLabel className="eb-font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
           name="significantOwnership"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>
+                Are there any individuals who own 25% or more of your company?
+              </FormLabel>
+
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="eb-flex eb-flex-row eb-space-y-1"
+                >
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <RadioGroupItem value="yes" />
+
+                    <FormLabel className="eb-font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <RadioGroupItem value="no" />
+
+                    <FormLabel className="eb-font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+{/* 
+        <FormField
+          control={form.control}
+          name="mock"
           render={({ field }) => (
             <FormItem>
               <FormLabel asterisk>Auto-fill forms with mock data</FormLabel>
@@ -277,11 +281,11 @@ const EntityTypeForm = ({ form }: any) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         {/* <FormField
           control={form.control}
-          name="clentExist"
+          name="mock"
           render={({ field }) => {
             console.log('@@field', field);
             return (
@@ -292,14 +296,11 @@ const EntityTypeForm = ({ form }: any) => {
 
                 <FormControl>
                   <Switch
-                    id="clentExist"
                     variant="default"
-                    // checked={field.value}
+                    checked={field.value}
                     onCheckedChange={(value) => {
                       console.log('@@value', value);
                     }}
-                    labelLeft
-                    labelRight={false}
                   />
                 </FormControl>
 

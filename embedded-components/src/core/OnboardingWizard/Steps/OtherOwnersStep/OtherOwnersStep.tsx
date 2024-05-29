@@ -41,9 +41,7 @@ const OtherOwnersStep = ({
 
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { mutateAsync: postClient } = useSmbdoPostClients();
-  const data = useSmbdoListClients();
-  console.log('@@data', data);
-
+  // const data = useSmbdoListClients();
   const form = useForm<any>({});
 
   const handleToggleButton = (val: string) => {
@@ -53,15 +51,17 @@ const OtherOwnersStep = ({
 
   const onSubmit = async () => {
     const apiForm = formToAPIBody(onboardingForm);
+
     //TODO: should we load next api call everytime we go next?
     try {
-      //@ts-ignore
-      // const res = JSON.parse(await smbdoPostClients(apiForm));
-      const res = JSON.parse(await postClient({ data: apiForm }));
+      const res = await postClient({ data: apiForm });
+      
+
+      // TODO: do we need clone here?
       const newOnboardingForm = _.cloneDeep(onboardingForm);
       newOnboardingForm.id = res.id;
       newOnboardingForm.outstandingItems = res.outstanding;
-      console.log('@@>>res', typeof res, newOnboardingForm);
+
       setOnboardingForm(newOnboardingForm);
       setActiveStep(activeStep + 1);
     } catch (error) {

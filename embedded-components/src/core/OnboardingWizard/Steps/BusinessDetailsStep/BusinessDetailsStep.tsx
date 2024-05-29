@@ -27,9 +27,11 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
-  const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const [hasWebsite, setHasWebsite] = useState(
+    onboardingForm?.businessDetails?.websiteNotAvailable
+  ); // Default to individual
   const defaultInitialValues = businessDetailsSchema().cast(
     {}
   ) as BusinessDetailsStepValues;
@@ -39,7 +41,6 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
     resolver: yupResolver(businessDetailsSchema(getContentToken)),
     mode: 'onBlur',
   });
-  console.log('@@vals', defaultInitialValues);
 
   const onSubmit = () => {
     const errors = form?.formState?.errors;
@@ -56,16 +57,10 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   return (
     <Stack className="eb-w-full eb-gap-2">
       <Form {...form}>
-        <form
-          noValidate
-          onSubmit={form.handleSubmit(onSubmit)}
-          onChange={() => {
-            setSelectedAccountType(form.getValues().legalStructure);
-          }}
-        >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <BusinessForm form={form} />
           <Separator />
-          <BusinessCommonForm form={form} />
+          <BusinessCommonForm form={form} hasWebsite={hasWebsite} />
           <NavigationButtons
             setActiveStep={setActiveStep}
             activeStep={activeStep}
