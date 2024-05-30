@@ -1,6 +1,6 @@
 {
-  "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.3.14",
+  "name": "@t3mpo/embedded-banking-components",
+  "version": "0.3.19",
   "license": "Apache-2.0",
   "type": "module",
   "description": "EB components",
@@ -56,12 +56,13 @@
     "json-diff-ts": "^4.0.1",
     "libphonenumber-js": "^1.10.61",
     "lucide-react": "^0.294.0",
+    "msw": "^2.3.0",
     "public-ip": "^6.0.2",
     "react-day-picker": "^8.10.0",
     "react-error-boundary": "^4.0.13",
     "react-hook-form": "^7.50.1",
     "react-number-format": "^5.3.4",
-    "react-pdf": "^8.0.2",
+    "react-pdf": "^9.0.0",
     "tabler-icons-react": "^1.56.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
@@ -69,6 +70,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",
@@ -130,7 +132,7 @@
   "packageManager": "yarn@4.1.1",
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://artifacts-publish.gkp.jpmchase.net/artifactory/api/npm/npm-sandbox"
   },
   "repository": {
     "type": "git",

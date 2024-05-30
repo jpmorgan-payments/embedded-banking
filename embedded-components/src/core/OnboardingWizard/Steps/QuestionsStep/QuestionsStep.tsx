@@ -61,9 +61,10 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
     const fetchData = async () => {
       try {
         if (onboardingForm?.outstandingItems?.questionIds) {
-          const res = await smbdoListQuestions(
-            onboardingForm?.outstandingItems?.questionIds
-          );
+          const res = await smbdoListQuestions({
+            questionIds:
+              onboardingForm?.outstandingItems?.questionIds.join(','),
+          });
 
           setQuestions(res?.questions);
         }
@@ -81,11 +82,16 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
       try {
         const postBody = makeQuestionsAPIBody(form.getValues());
         const res = await smbdoUpdateClient(onboardingForm?.id, postBody);
+        console.log('@@resQ', res);
+
         const newOnboardingForm = updateOutstandingItems(
           onboardingForm,
           res.outstanding
         );
-        setOnboardingForm(newOnboardingForm);
+        setOnboardingForm({
+          ...newOnboardingForm,
+          attestations: res?.attestations?.map((map) => map.documentId) || [],
+        });
         setActiveStep(activeStep + 1);
       } catch (error) {
         // TODO add error handler

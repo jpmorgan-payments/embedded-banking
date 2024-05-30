@@ -55,14 +55,17 @@ const OtherOwnersStep = ({
     //TODO: should we load next api call everytime we go next?
     try {
       const res = await postClient({ data: apiForm });
-      
 
       // TODO: do we need clone here?
       const newOnboardingForm = _.cloneDeep(onboardingForm);
       newOnboardingForm.id = res.id;
       newOnboardingForm.outstandingItems = res.outstanding;
 
-      setOnboardingForm(newOnboardingForm);
+      console.log('@@docs?', res);
+      setOnboardingForm({
+        ...newOnboardingForm,
+        attestations: res.outstanding.attestationDocumentIds || [],
+      });
       setActiveStep(activeStep + 1);
     } catch (error) {
       console.log(error);

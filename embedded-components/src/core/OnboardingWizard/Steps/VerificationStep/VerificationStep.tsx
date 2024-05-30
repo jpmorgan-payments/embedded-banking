@@ -1,11 +1,5 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
-import {
-  IconCheck,
-  IconClipboardCheck,
-  IconExternalLink,
-  IconX,
-} from '@tabler/icons';
 
 import {
   useSmbdoDownloadDocument,
@@ -14,20 +8,8 @@ import {
   useSmbdoGetDocumentRequest,
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
-import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
-import {
-  Anchor,
-  Badge,
-  Checkbox,
-  Group,
-  Input,
-  Separator,
-  Space,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@/components/ui';
+// import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
+import { Separator, Text, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -78,9 +60,12 @@ const VerificationsStep = ({
   //   };
   //   fetch();
   // }, []);
+  console.log('@@document', onboardingForm);
 
   const { data: termsAndConditionsDoc, isError: termsIsError } =
-    useSmbdoDownloadDocument(termsAndConditionsDocId);
+    useSmbdoDownloadDocument(
+      termsAndConditionsDocId || onboardingForm.attestations[0]
+    );
 
   // const { data: disclosureAndConsentDoc } = useSmbdoDownloadDocument(
   //   disclosureAndConsentDocId
@@ -121,7 +106,9 @@ const VerificationsStep = ({
         //     ? '/assets/docs/terms.pdf'
         //     : undefined)
         // }
-        file="/assets/docs/terms.pdf"
+        //TODO: why undefined err
+        // @ts-ignore
+        file={termsAndConditionsDoc}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           // if (pdfLoaded) {

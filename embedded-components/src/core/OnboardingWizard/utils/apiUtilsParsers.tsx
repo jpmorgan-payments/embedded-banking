@@ -146,7 +146,7 @@ export const formToAPIBody = (
     }
     const form = {
       parties: [...parties, businessParty, controllerParty],
-      products: ['EMBEDDED_BANKING'],
+      products: ['EMBEDDED_PAYMENTS'],
     };
 
     return form;

@@ -10,7 +10,7 @@ import { useContentData } from '../../utils/useContentData';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface PdfDisplayProps {
-  file: undefined;
+  file: any;
   onLoad: VoidFunction;
   onScrolledToBottom: VoidFunction;
 }

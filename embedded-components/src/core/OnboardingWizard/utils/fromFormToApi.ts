@@ -67,8 +67,9 @@ export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
 
   return orgParty;
 };
-
-export const fromFormToIndParty = (form: PersonalDetailsValues) => {
+// TODO: update proper types
+// PersonalDetailsValues
+export const fromFormToIndParty = (form: any) => {
   let indParty: IndividualDetails = {};
 
   const addressLines = [

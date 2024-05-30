@@ -58,6 +58,7 @@ export const updateOutstandingItems = (
 ) => {
   const form = _.cloneDeep(onboardingForm);
   form.outstandingItems = outstandingItems;
+
   return form;
 };
 
