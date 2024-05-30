@@ -15,12 +15,33 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
   theme = {},
+  headers,
 }) => {
   const queryClient = new QueryClient();
 
   useEffect(() => {
     AXIOS_INSTANCE.defaults.baseURL = apiBaseUrl;
   }, [apiBaseUrl]);
+
+  useEffect(() => {
+    if (!headers) return;
+    console.log('@@headers', headers);
+
+    AXIOS_INSTANCE.interceptors.request.use(
+      (config: any) => {
+        return {
+          ...config,
+          headers: {
+            ...config.headers,
+            ...headers,
+          },
+        };
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, [headers]);
 
   useEffect(() => {
     const root = window.document.documentElement;

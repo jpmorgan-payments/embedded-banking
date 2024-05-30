@@ -30,6 +30,9 @@ function ColorSchemeWrapper({
     <EBComponentsProvider
       apiBaseUrl={baseUrl}
       theme={{ colorScheme: colorScheme }}
+      headers={{
+        api_gateway_client_id: 'OBTSTSTCL1',
+      }}
     >
       <ReactQueryDevtools />
       {children}
