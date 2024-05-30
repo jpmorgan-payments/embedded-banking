@@ -1,5 +1,5 @@
 {
-  "name": "@t3mpo/embedded-banking-components",
+  "name": "@jpmorgan-payments/embedded-banking-components",
   "version": "0.3.19",
   "license": "Apache-2.0",
   "type": "module",
@@ -132,7 +132,7 @@
   "packageManager": "yarn@4.1.1",
   "publishConfig": {
     "access": "public",
-    "registry": "https://artifacts-publish.gkp.jpmchase.net/artifactory/api/npm/npm-sandbox"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
