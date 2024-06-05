@@ -4,12 +4,14 @@ type NavigationButtonsProps = {
   activeStep: number;
   setActiveStep: any;
   onSubmit?: any;
+  disableNext?: boolean;
 };
 
 const NavigationButtons = ({
   activeStep,
   setActiveStep,
   onSubmit,
+  disableNext,
 }: NavigationButtonsProps) => {
   return (
     <div className="eb-mt-20 eb-grid eb-grid-cols-2">
@@ -33,6 +35,7 @@ const NavigationButtons = ({
               onSubmit();
             }
           }}
+          disabled={disableNext}
         >
           Next
         </Button>

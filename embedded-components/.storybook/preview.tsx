@@ -45,7 +45,9 @@ export const decorators = [
     // TODO: we can use global Params
     const url = allArgs?.isMockBaseUrl
       ? 'https://api-mock.payments.jpmorgan.com/tsapi/ef/v2'
-      : 'https://t3mpo-api-gateway-service-dev.jpmchase.net/api-gateway/api/ef/v2';
+      : // : 'https://t3mpo-api-gateway-service-dev.jpmchase.net/api-gateway/api/ef/v2';
+        '/ef';
+    console.log('@@url', url);
 
     return (
       <ColorSchemeWrapper baseUrl={url}>{renderStory()}</ColorSchemeWrapper>

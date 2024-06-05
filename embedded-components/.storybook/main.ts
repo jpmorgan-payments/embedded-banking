@@ -17,6 +17,25 @@ const config: StorybookConfig = {
         fs: {
           allow: ['../'],
         },
+        proxy: {
+          '/ef': {
+            target: 'https://t3mpo-api-gateway-service-dev.jpmchase.net',
+            changeOrigin: true,
+            secure: false,
+            rewrite: (path) => path.replace(/^\/ef/, '/api-gateway/api/ef/v2'),
+            configure: (proxy, opt) => {
+              proxy.on('error', (err, _req, _res) => {
+                console.log('@@ERR');
+              });
+              proxy.on('proxyReq', (err, _req, _res) => {
+                console.log('@@REQ1');
+              });
+              proxy.on('proxyRes', (err, _req, _res) => {
+                console.log('@@RES1');
+              });
+            },
+          },
+        },
       },
     });
   },

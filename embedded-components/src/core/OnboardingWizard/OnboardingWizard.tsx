@@ -9,6 +9,7 @@ import {
   OnboardingFormProvider,
   useOnboardingForm,
 } from './context/form.context';
+import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
@@ -25,7 +26,8 @@ import { VerificationsStep } from './Steps/VerificationStep/VerificationStep';
 export const OnboardingWizard = (props: any) => {
   const { activeStep, setCurrentStep } = useStepper();
   const { setOnboardingForm } = useOnboardingForm();
-  console.log('@@props', props);
+  const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
+  console.log('@@IPs', ipAddress, ipFetchStatus);
 
   useEffect(() => {
     if (props?.isMock) {
@@ -130,7 +132,6 @@ export const OnboardingWizard = (props: any) => {
               </CardContent>
             </ErrorBoundary>
           </Card>
-        
         </>
       )}
     </QueryErrorResetBoundary>

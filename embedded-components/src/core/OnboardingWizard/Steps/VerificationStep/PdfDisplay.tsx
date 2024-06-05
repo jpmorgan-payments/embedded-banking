@@ -7,7 +7,15 @@ import { Box } from '@/components/ui';
 
 import { useContentData } from '../../utils/useContentData';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+const options = {
+  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+};
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.mjs',
+//   import.meta.url
+// ).toString();
 
 interface PdfDisplayProps {
   file: any;
@@ -54,6 +62,7 @@ export const PdfDisplay = ({
           onLoad();
         }}
         noData={getContentToken(`Document`)}
+        options={options}
       >
         {[...Array(numPages)].map((_value, index) => (
           <Box className="" key={index} tabIndex={0}>

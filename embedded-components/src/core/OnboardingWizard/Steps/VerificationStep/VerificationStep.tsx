@@ -27,7 +27,7 @@ const VerificationsStep = ({
   activeStep,
 }: VerificationsStepProps) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-  const [docs, setDocs] = useState({});
+  const [docs, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm.id,
   });
@@ -62,11 +62,19 @@ const VerificationsStep = ({
   // }, []);
   console.log('@@document', onboardingForm);
 
-  const { data: termsAndConditionsDoc, isError: termsIsError } =
+  const { data: termsAndConditionsDoc, isError: termsIsError }: any =
     useSmbdoDownloadDocument(
       termsAndConditionsDocId || onboardingForm.attestations[0]
     );
 
+  useEffect(() => {
+    const newBlob = new Blob([termsAndConditionsDoc], {
+      type: 'application/pdf',
+    });
+    const urlBlob = URL.createObjectURL(newBlob);
+    console.log('@@urlBlob', urlBlob);
+    setDocs(urlBlob,);
+  }, [termsAndConditionsDoc]);
   // const { data: disclosureAndConsentDoc } = useSmbdoDownloadDocument(
   //   disclosureAndConsentDocId
   // );
@@ -98,24 +106,27 @@ const VerificationsStep = ({
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
       <Title as="h3">{getContentToken(`title1`)}</Title>
-      <PdfDisplay
-        data-testid="pdf-display"
-        // file={
-        //   termsAndConditionsDoc ||
-        //   (!termsAndConditionsDocId || termsIsError
-        //     ? '/assets/docs/terms.pdf'
-        //     : undefined)
-        // }
-        //TODO: why undefined err
-        // @ts-ignore
-        file={termsAndConditionsDoc}
-        onLoad={() => setPdfLoaded(true)}
-        onScrolledToBottom={() => {
-          // if (pdfLoaded) {
-          //   form.setFieldValue('reviewedTerms', true);
+      {docs && (
+        <PdfDisplay
+          data-testid="pdf-display"
+          // file={
+          //   termsAndConditionsDoc ||
+          //   (!termsAndConditionsDocId || termsIsError
+          //     ? '/assets/docs/terms.pdf'
+          //     : undefined)
           // }
-        }}
-      />
+          //TODO: why undefined err
+          // @ts-ignore
+          // file={urlBlob}
+          file={docs}
+          onLoad={() => setPdfLoaded(true)}
+          onScrolledToBottom={() => {
+            // if (pdfLoaded) {
+            //   form.setFieldValue('reviewedTerms', true);
+            // }
+          }}
+        />
+      )}
       <Separator />
       <>
         {/*  <Group>

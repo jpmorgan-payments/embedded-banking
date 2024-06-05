@@ -2,18 +2,12 @@ import { FC, ReactNode, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
-import { Form } from '@/components/ui/form';
-import { Stack } from '@/components/ui/stack';
-import { Title } from '@/components/ui/title';
+import { Form, Stack, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import { EntityTypeForm } from '../../Forms/EntityTypeForm/EntityTypeForm';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import {
-  addBusinessDetails,
-  addBusinessType,
-  addQuestionAnswers,
-} from '../../utils/actions';
+import { addBusinessType, addQuestionAnswers } from '../../utils/actions';
 import { useContentData } from '../../utils/useContentData';
 import {
   createEntityTypeFormValidationSchema,
@@ -30,7 +24,7 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
-  const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
+  const [, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
 
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
@@ -60,28 +54,13 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
 
     const isSolo = form.getValues('legalStructure').includes('Sole');
     if (!Object.values(errors).length) {
-      /*
-      ...(isSolo
-            ? {}
-            : {
-                relatedToATM: form.getValues('relatedToATM'),
-                businessInSanctionedCountries: form.getValues(
-                  'businessInSanctionedCountries'
-                ),
-              }),
-      */
       let newOnboardingForm = addBusinessType(
         onboardingForm,
         form.getValues('legalStructure')
       );
 
-      //TODO: Fix the types and improve the addition for business Type
-
-      //@ts-ignore
-
       newOnboardingForm = addQuestionAnswers(newOnboardingForm, {
         significantOwnership: form.getValues('significantOwnership'),
-        //@ts-ignore
         entitiesInOwnership: form.getValues('entitiesInOwnership'),
         ...(isSolo
           ? {}
@@ -100,12 +79,13 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
 
   return (
     <Stack>
-      <Title as="h3">What Kind of Business do you run?</Title>
+      <Title as="h3">{getContentToken(`title`)}</Title>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => {
+            // State change trigger
             setSelectedAccountType(form.getValues().legalStructure);
           }}
         >
@@ -113,6 +93,10 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
           <NavigationButtons
             setActiveStep={setActiveStep}
             activeStep={activeStep}
+            disableNext={
+              form.getValues().businessInSanctionedCountries === 'yes' ||
+              form.getValues().relatedToATM === 'yes'
+            }
           />
         </form>
       </Form>

@@ -139,3 +139,10 @@ export const addBusinessType = (
   // form.legalStructure = businessType;
   return form;
 };
+
+// AD IP
+export const addIp = (onboardingForm: OnboardingForm, ip: string) => {
+  const form = { ...onboardingForm, ip };
+  // form.legalStructure = businessType;
+  return form;
+};

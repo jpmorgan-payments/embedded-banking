@@ -8,7 +8,7 @@ import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDeta
 //import { useListClients } from '../hooks/useListClients';
 
 export type OnboardingForm = {
-  legalStructure: string | undefined;
+  legalStructure: string;
   owner: PersonalDetailsValues | undefined;
   controller: PersonalDetailsValues | undefined;
   otherOwners: PersonalDetailsValues[] | undefined;
@@ -16,10 +16,11 @@ export type OnboardingForm = {
   outstandingItems: ClientResponseOutstanding | undefined;
   id: string | undefined;
   questionsAnswers: any;
+  ip: string | undefined;
 };
 
 export const defaultValues: OnboardingForm = {
-  legalStructure: undefined,
+  legalStructure: '',
   owner: undefined,
   controller: undefined,
   otherOwners: undefined,
@@ -27,6 +28,7 @@ export const defaultValues: OnboardingForm = {
   outstandingItems: undefined,
   id: undefined,
   questionsAnswers: undefined,
+  ip: undefined,
 };
 
 export const OnboardingFormContext: any = createContext(defaultValues);

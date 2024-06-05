@@ -51,7 +51,7 @@ const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
           .default('no')
           .required(),
     }),
-    mockEnabled: yup.boolean().default(false),
+    // mockEnabled: yup.boolean().default(false),
   });
 };
 const entityTypeFormValidationSchema = createEntityTypeFormValidationSchema();

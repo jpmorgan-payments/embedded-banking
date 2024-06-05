@@ -9,7 +9,7 @@ import { OnboardingWizardRoot } from './OnboardingWizardRoot';
 // export const Usage = () => <OnboardingWizardRoot />;
 
 const meta: Meta<typeof OnboardingWizardRoot> = {
-  title: 'Onboarding Wizar',
+  title: 'Onboarding Wizard',
   component: OnboardingWizardRoot,
 };
 export default meta;

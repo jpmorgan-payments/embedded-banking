@@ -1506,7 +1506,12 @@ export const smbdoDownloadDocument = (
   signal?: AbortSignal
 ) => {
   return ebInstance<string | SmbdoDownloadDocument200Six>(
-    { url: `/documents/${id}/file`, method: 'GET', signal },
+    {
+      url: `/documents/${id}/file`,
+      method: 'GET',
+      signal,
+      responseType: 'blob',
+    },
     options
   );
 };
