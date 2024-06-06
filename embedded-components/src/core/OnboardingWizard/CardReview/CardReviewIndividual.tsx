@@ -33,20 +33,22 @@ const CardReviewIndividual = ({
   title,
   onEdit,
 }: CardReviewIndividualProps) => {
- 
   const [open, setOpen] = useState(false);
   const { email, indDetails } = data;
   const {
     city,
     countryOfResidence,
     firstName,
-    individualAdreessLine1,
-    individualAdreessLine2,
-    individualAdreessLine3,
+    addressLine1,
+    addressLine2,
+    addressLine3,
     lastName,
     postalCode,
     state,
   } = indDetails;
+
+  console.log('@@indDetails', indDetails);
+
   return (
     <>
       <Title as="h5" className="eb-my-2 eb-uppercase">
@@ -73,9 +75,9 @@ const CardReviewIndividual = ({
           <Group>
             <Text size="sm">
               {[
-                individualAdreessLine1,
-                individualAdreessLine2,
-                individualAdreessLine3,
+                addressLine1,
+                addressLine2,
+                addressLine3,
               ].join(' ')}
             </Text>
           </Group>

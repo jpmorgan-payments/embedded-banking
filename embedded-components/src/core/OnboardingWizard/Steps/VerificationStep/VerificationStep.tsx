@@ -10,6 +10,7 @@ import {
 } from '@/api/generated/embedded-banking';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import { Separator, Text, Title } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -26,10 +27,11 @@ const VerificationsStep = ({
   setActiveStep,
   activeStep,
 }: VerificationsStepProps) => {
+  const { clientId } = useRootConfig();
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const [docs, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
-    clientId: onboardingForm.id,
+    clientId: onboardingForm?.id || clientId,
   });
 
   // TODO: we need to list this?
@@ -73,8 +75,9 @@ const VerificationsStep = ({
     });
     const urlBlob = URL.createObjectURL(newBlob);
     console.log('@@urlBlob', urlBlob);
-    setDocs(urlBlob,);
+    setDocs(urlBlob);
   }, [termsAndConditionsDoc]);
+
   // const { data: disclosureAndConsentDoc } = useSmbdoDownloadDocument(
   //   disclosureAndConsentDocId
   // );
@@ -106,27 +109,20 @@ const VerificationsStep = ({
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
       <Title as="h3">{getContentToken(`title1`)}</Title>
-      {docs && (
-        <PdfDisplay
-          data-testid="pdf-display"
-          // file={
-          //   termsAndConditionsDoc ||
-          //   (!termsAndConditionsDocId || termsIsError
-          //     ? '/assets/docs/terms.pdf'
-          //     : undefined)
-          // }
-          //TODO: why undefined err
-          // @ts-ignore
-          // file={urlBlob}
-          file={docs}
-          onLoad={() => setPdfLoaded(true)}
-          onScrolledToBottom={() => {
-            // if (pdfLoaded) {
-            //   form.setFieldValue('reviewedTerms', true);
-            // }
-          }}
-        />
-      )}
+
+      <PdfDisplay
+        data-testid="pdf-display"
+        file={termsAndConditionsDoc}
+        onLoad={() => setPdfLoaded(true)}
+        onScrolledToBottom={() => {
+          if (pdfLoaded) {
+            console.log('@@pdfAtBottom');
+
+            // form.setFieldValue('reviewedTerms', true);
+          }
+        }}
+      />
+
       <Separator />
       <>
         {/*  <Group>

@@ -19,6 +19,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -38,6 +39,8 @@ const OtherOwnersStep = ({
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
+
+  const { onRegistration } = useRootConfig();
 
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { mutateAsync: postClient } = useSmbdoPostClients();
@@ -60,6 +63,10 @@ const OtherOwnersStep = ({
       const newOnboardingForm = _.cloneDeep(onboardingForm);
       newOnboardingForm.id = res.id;
       newOnboardingForm.outstandingItems = res.outstanding;
+
+      if (onRegistration) {
+        onRegistration({ clientId: res.id });
+      }
 
       console.log('@@docs?', res);
       setOnboardingForm({

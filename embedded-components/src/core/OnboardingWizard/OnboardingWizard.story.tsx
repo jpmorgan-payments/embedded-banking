@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizardRoot } from './OnboardingWizardRoot';
 
 // export default {
@@ -17,8 +18,19 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardRoot>;
 
 export const Default: Story = {
-  // parameters: {
-  //   baseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/ef/v2',
-  // },
+  args: {
+  onRegistration: ({ clientId }: onRegistrationProp) => {
+    console.log('@@clientId', clientId);
+  },
+}
 };
 
+export const OnboardingWithClientID: Story = {
+  args: {
+    title: 'Welcome back',
+    clientId: '1000010400',
+    onRegistration: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+  },
+};

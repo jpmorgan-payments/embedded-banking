@@ -10,10 +10,12 @@ import {
   Button,
   Dialog,
   DialogTrigger,
+  Group,
   Stack,
   Text,
   Title,
 } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
 import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
@@ -39,7 +41,10 @@ type ReviewStepProps = {
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken } = useContentData('steps.ReviewStep');
-  const { data } = useSmbdoGetClient(onboardingForm.id);
+  const { clientId } = useRootConfig();
+  const { data } = useSmbdoGetClient(
+    (onboardingForm?.id || clientId) as string
+  );
   const [edit, onEditBusiness] = useState(false);
   const [editIndividual, onEditIndividual] = useState(false);
   const [indData, setModalData] = useState(null);
@@ -92,11 +97,16 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
     return data && fromApiToForm(data);
   }, [data]);
 
-
   return (
     <>
       <Stack>
         <Title as="h2">Review</Title>
+        <Group>
+          <Title as="h5">STATUS: &nbsp;</Title>
+          <Title as="h5" className="eb-text-green-500">
+            {reviewData?.status}
+          </Title>
+        </Group>
         {/* {reviewData && reviewData?.organizationDetails} */}
         {reviewData?.organizationDetails && (
           <CardReviewBusiness

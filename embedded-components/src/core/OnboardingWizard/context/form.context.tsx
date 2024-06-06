@@ -17,24 +17,37 @@ export type OnboardingForm = {
   id: string | undefined;
   questionsAnswers: any;
   ip: string | undefined;
+  attestations: string[] | undefined;
 };
 
-export const defaultValues: OnboardingForm = {
-  legalStructure: '',
-  owner: undefined,
-  controller: undefined,
-  otherOwners: undefined,
-  businessDetails: undefined,
-  outstandingItems: undefined,
-  id: undefined,
-  questionsAnswers: undefined,
-  ip: undefined,
+export type defaultVluesFormContext = {
+  onboardingForm: OnboardingForm;
+  setOnboardingForm: any | null;
+};
+export const defaultValues: defaultVluesFormContext = {
+  onboardingForm: {
+    attestations: undefined,
+    legalStructure: '',
+    owner: undefined,
+    controller: undefined,
+    otherOwners: undefined,
+    businessDetails: undefined,
+    outstandingItems: undefined,
+    id: undefined,
+    questionsAnswers: undefined,
+    ip: undefined,
+  },
+  setOnboardingForm: null,
 };
 
 export const OnboardingFormContext: any = createContext(defaultValues);
 
-export const useOnboardingForm = (): any => {
-  const context = useContext(OnboardingFormContext);
+export const useOnboardingForm = (): {
+  onboardingForm: OnboardingForm;
+  setOnboardingForm: any;
+} => {
+  const context: defaultVluesFormContext = useContext(OnboardingFormContext);
+
   if (context === undefined) {
     throw new Error(
       'useOnboardingForm must be used within OnboardingFormProvider'
@@ -46,7 +59,9 @@ export const useOnboardingForm = (): any => {
 export const OnboardingFormProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [onboardingForm, setOnboardingForm] = useState(defaultValues);
+  const [onboardingForm, setOnboardingForm] = useState(
+    defaultValues.onboardingForm
+  );
 
   // TODO, put client data here if user already has a client
   //const {data} = useListClients();

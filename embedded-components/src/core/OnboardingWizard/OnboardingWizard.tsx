@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box, Button, Text } from '@/components/ui';
 
+import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import {
   OnboardingFormProvider,
   useOnboardingForm,
@@ -23,10 +24,11 @@ import {
 } from './Steps';
 import { VerificationsStep } from './Steps/VerificationStep/VerificationStep';
 
-export const OnboardingWizard = (props: any) => {
+export const OnboardingWizard = ({ title, ...props }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
-  const { setOnboardingForm } = useOnboardingForm();
+  const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
+  const { clientId } = useRootConfig();
   console.log('@@IPs', ipAddress, ipFetchStatus);
 
   useEffect(() => {
@@ -49,43 +51,69 @@ export const OnboardingWizard = (props: any) => {
     }
   }, [props?.isMock]);
 
-  const steps = [
-    <EntityTypeStep
-      key={0}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <PersonalDetailsStep
-      key={1}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <BusinessDetailsStep
-      setActiveStep={setCurrentStep}
-      key={2}
-      activeStep={activeStep}
-    />,
-    <OtherOwnersStep
-      key={3}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <QuestionsStep
-      key={4}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <ReviewStep
-      key={5}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-    <VerificationsStep
-      key={6}
-      setActiveStep={setCurrentStep}
-      activeStep={activeStep}
-    />,
-  ];
+  useEffect(() => {
+    if (ipAddress) {
+      setOnboardingForm({ ...onboardingForm, ip: ipAddress });
+    }
+  }, [ipAddress]);
+
+  useEffect(() => {
+    if (clientId) {
+      console.log('@@clientID', clientId);
+    }
+  }, clientId);
+
+  const steps = clientId
+    ? [
+        <ReviewStep
+          key={1}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <VerificationsStep
+          key={2}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+      ]
+    : [
+        <EntityTypeStep
+          key={0}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <BusinessDetailsStep
+          setActiveStep={setCurrentStep}
+          key={1}
+          activeStep={activeStep}
+        />,
+        <PersonalDetailsStep
+          key={2}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <OtherOwnersStep
+          key={3}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <QuestionsStep
+          key={4}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <ReviewStep
+          key={5}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+        <VerificationsStep
+          key={6}
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+        />,
+      ];
+
   const ActiveStep: any = useMemo(() => steps[activeStep], [steps, activeStep]);
 
   return (
@@ -94,13 +122,14 @@ export const OnboardingWizard = (props: any) => {
         <>
           <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
             <CardHeader>
-              <CardTitle>Onboarding Wizards</CardTitle>
+              <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
             </CardHeader>
             <ErrorBoundary
               onReset={reset}
               fallbackRender={({ resetErrorBoundary, error }) => (
                 <>
                   <Text>
+                    {/* TODO: should it be tokenized? */}
                     There was an error while trying to load this page.
                   </Text>
                   <Text className={`eb-text-gray-600`} size="lg">

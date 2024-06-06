@@ -42,11 +42,11 @@ function ColorSchemeWrapper({
 
 export const decorators = [
   (renderStory: any, { parameters, allArgs, ...props }: any) => {
+    
     // TODO: we can use global Params
     const url = allArgs?.isMockBaseUrl
       ? 'https://api-mock.payments.jpmorgan.com/tsapi/ef/v2'
-      : // : 'https://t3mpo-api-gateway-service-dev.jpmchase.net/api-gateway/api/ef/v2';
-        '/ef';
+      : '/ef';
     console.log('@@url', url);
 
     return (

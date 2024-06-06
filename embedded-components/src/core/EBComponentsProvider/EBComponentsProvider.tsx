@@ -20,12 +20,26 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   const queryClient = new QueryClient();
 
   useEffect(() => {
+    AXIOS_INSTANCE.interceptors.request.use(
+      (config: any) => {
+        if (config.url.includes('/file')) {
+          config.responseType = 'blob';
+        }
+
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
     AXIOS_INSTANCE.defaults.baseURL = apiBaseUrl;
   }, [apiBaseUrl]);
 
   useEffect(() => {
     if (!headers) return;
-    console.log('@@headers', headers);
 
     AXIOS_INSTANCE.interceptors.request.use(
       (config: any) => {
@@ -68,6 +82,7 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
           __html: css,
         }}
       />
+
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </>
   );

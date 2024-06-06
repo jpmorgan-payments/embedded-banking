@@ -62,7 +62,6 @@ export const PdfDisplay = ({
           onLoad();
         }}
         noData={getContentToken(`Document`)}
-        options={options}
       >
         {[...Array(numPages)].map((_value, index) => (
           <Box className="" key={index} tabIndex={0}>
