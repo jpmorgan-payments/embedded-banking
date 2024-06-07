@@ -37,7 +37,92 @@ type ReviewStepProps = {
   setActiveStep: any;
   activeStep: number;
 };
-
+const parties = [
+  {
+    id: '2000000111',
+    partyType: 'ORGANIZATION',
+    externalId: 'TCU1234',
+    email: 'monica@cpgetaways.com',
+    roles: ['CLIENT'],
+    profileStatus: 'APPROVED',
+    status: 'ACTIVE',
+    createdAt: '2024-06-07T14:39:15.253Z',
+    organizationDetails: {
+      organizationType: 'SOLE_PROPRIETORSHIP',
+      organizationName: 'Central Park Getaways',
+      dbaName: 'CP Getaways',
+      organizationDescription:
+        'Relax, unwind and experience the comforting charm of our apartment while exploring New York',
+      industryCategory: 'Accommodation and Food Services',
+      industryType: 'All Other Traveler Accommodation',
+      countryOfFormation: 'US',
+      yearOfFormation: '2023',
+      significantOwnership: true,
+      entitiesInOwnership: false,
+      addresses: [
+        {
+          addressType: 'BUSINESS_ADDRESS',
+          addressLines: ['90 Bedford Street', 'Apt 2E'],
+          city: 'New York',
+          state: 'NY',
+          postalCode: '10014',
+          country: 'US',
+        },
+      ],
+      phone: {
+        phoneType: 'BUSINESS_PHONE',
+        countryCode: 'US',
+        phoneNumber: '6316215110',
+      },
+      organizationIds: [
+        {
+          idType: 'EIN',
+          issuer: 'US',
+          value: '00-0000001',
+        },
+      ],
+      websiteAvailable: false,
+    },
+  },
+  {
+    id: '2000000112',
+    partyType: 'INDIVIDUAL',
+    parentPartyId: '2000000111',
+    parentExternalId: 'TCU1234',
+    externalId: 'TCU12344',
+    email: 'monica@cpgetaways.com',
+    profileStatus: 'APPROVED',
+    status: 'ACTIVE',
+    createdAt: '2024-06-07T14:39:15.253Z',
+    roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
+    individualDetails: {
+      firstName: 'Monica',
+      lastName: 'Gellar',
+      countryOfResidence: 'US',
+      natureOfOwnership: 'Direct',
+      jobTitle: 'Other',
+      jobTitleDescription: 'CEO',
+      soleOwner: true,
+      addresses: [
+        {
+          addressType: 'RESIDENTIAL_ADDRESS',
+          addressLines: ['90 Bedford Street', 'Apt 2E'],
+          city: 'New York',
+          state: 'NY',
+          postalCode: '10014',
+          country: 'US',
+        },
+      ],
+      individualIds: [
+        {
+          idType: 'SSN',
+          issuer: 'US',
+          value: '100-01-0001',
+        },
+      ],
+    },
+  },
+];
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken } = useContentData('steps.ReviewStep');
@@ -45,6 +130,12 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   const { data } = useSmbdoGetClient(
     (onboardingForm?.id || clientId) as string
   );
+
+  // TODO: remove once the API is fixed
+  if (data) {
+    //@ts-ignore
+    data.parties = parties;
+  }
   const [edit, onEditBusiness] = useState(false);
   const [editIndividual, onEditIndividual] = useState(false);
   const [indData, setModalData] = useState(null);
@@ -91,6 +182,15 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
   //   owners: [{ ...data?.owner }],
   //   decisionMakers: [{ ...data?.owner }],
   // };
+
+  useEffect(() => {
+    if (data?.id) {
+      setOnboardingForm({
+        ...onboardingForm,
+        attestations: data.outstanding.attestationDocumentIds || [],
+      });
+    }
+  }, [data]);
 
   // TODO: personal information requires the controllerKEY name
   const reviewData = useMemo(() => {
@@ -180,5 +280,7 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
     </>
   );
 };
+
+ReviewStep.title = 'Review';
 
 export { ReviewStep };

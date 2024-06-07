@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext } from 'react';
 
 export type onRegistrationProp = {
   clientId: string;
@@ -27,19 +27,6 @@ export const RootConfigProvider: React.FC<{
   children: React.ReactNode;
   clientOptions: RootConfig;
 }> = ({ children, clientOptions }) => {
-  console.log('@@clientOptions', clientOptions);
-
-  //   const [onboardingForm, setOnboardingForm] = useState(
-  //     defaultValues.onboardingForm
-  //   );
-
-  // TODO, put client data here if user already has a client
-  //const {data} = useListClients();
-
-  //   const valueObject = useMemo(() => {
-  //     return { onboardingForm, setOnboardingForm };
-  //   }, [onboardingForm, setOnboardingForm]);
-
   return (
     <RootConfigContext.Provider value={clientOptions}>
       {children}

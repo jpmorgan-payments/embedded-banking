@@ -23,10 +23,10 @@ type BusinessDetailsProps = {
   activeStep: number;
 };
 
-const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
+const BusinessDetailsStep = ({
   setActiveStep,
   activeStep,
-}: any) => {
+}: BusinessDetailsProps) => {
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const [hasWebsite, setHasWebsite] = useState(
@@ -70,5 +70,7 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
     </Stack>
   );
 };
+
+BusinessDetailsStep.title = 'Business';
 
 export { BusinessDetailsStep };

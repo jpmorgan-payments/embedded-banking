@@ -173,4 +173,6 @@ const OtherOwnersStep = ({
   );
 };
 
+OtherOwnersStep.title = 'Decision Makers';
+
 export { OtherOwnersStep };

@@ -127,4 +127,6 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
   );
 };
 
+QuestionsStep.title = 'Additional Info';
+
 export { QuestionsStep };

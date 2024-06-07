@@ -244,4 +244,6 @@ const VerificationsStep = ({
   );
 };
 
+VerificationsStep.title = 'Verifications';
+
 export { VerificationsStep };

@@ -54,7 +54,6 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
 
     const isSolo = form.getValues('legalStructure').includes('Sole');
 
-    
     if (!Object.values(errors).length) {
       let newOnboardingForm = addBusinessType(
         onboardingForm,

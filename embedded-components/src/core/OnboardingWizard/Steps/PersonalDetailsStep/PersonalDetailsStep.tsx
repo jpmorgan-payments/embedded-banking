@@ -72,4 +72,6 @@ const PersonalDetailsStep = ({
   );
 };
 
+PersonalDetailsStep.title = 'Personal';
+
 export { PersonalDetailsStep };

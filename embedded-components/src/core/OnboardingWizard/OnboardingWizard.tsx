@@ -61,7 +61,7 @@ export const OnboardingWizard = ({ title, ...props }: any) => {
     if (clientId) {
       console.log('@@clientID', clientId);
     }
-  }, clientId);
+  }, [clientId]);
 
   const steps = clientId
     ? [
@@ -117,52 +117,55 @@ export const OnboardingWizard = ({ title, ...props }: any) => {
   const ActiveStep: any = useMemo(() => steps[activeStep], [steps, activeStep]);
 
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <>
-          <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
-            <CardHeader>
-              <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
-            </CardHeader>
-            <ErrorBoundary
-              onReset={reset}
-              fallbackRender={({ resetErrorBoundary, error }) => (
-                <>
-                  <Text>
-                    {/* TODO: should it be tokenized? */}
-                    There was an error while trying to load this page.
-                  </Text>
-                  <Text className={`eb-text-gray-600`} size="lg">
-                    {error.name}
-                  </Text>
-                  <Text className={`eb-text-red-600`}>{error.message}</Text>
-                  <Button onClick={() => resetErrorBoundary()}>
-                    Try again
-                  </Button>
-                </>
+    <>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <>
+            <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
+              <CardHeader>
+                <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
+              </CardHeader>
+              {(activeStep !== 0 || clientId) && (
+                <StepperHeader
+                  activeStep={activeStep}
+                  setCurrentStep={setCurrentStep}
+                  steps={steps.map((step) => step.type.title)}
+                ></StepperHeader>
               )}
-            >
-              <CardContent>
-                {activeStep !== 0 && (
-                  <StepperHeader
-                    activeStep={activeStep}
-                    setCurrentStep={setCurrentStep}
-                  ></StepperHeader>
-                )}
 
-                {steps?.map((step, index) => (
-                  <Box
-                    key={`panel${index}`}
-                    className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
-                  >
-                    {activeStep === index && ActiveStep}
-                  </Box>
-                ))}
-              </CardContent>
-            </ErrorBoundary>
-          </Card>
-        </>
-      )}
-    </QueryErrorResetBoundary>
+              <ErrorBoundary
+                onReset={reset}
+                fallbackRender={({ resetErrorBoundary, error }) => (
+                  <>
+                    <Text>
+                      {/* TODO: should it be tokenized? */}
+                      There was an error while trying to load this page.
+                    </Text>
+                    <Text className={`eb-text-gray-600`} size="lg">
+                      {error.name}
+                    </Text>
+                    <Text className={`eb-text-red-600`}>{error.message}</Text>
+                    <Button onClick={() => resetErrorBoundary()}>
+                      Try again
+                    </Button>
+                  </>
+                )}
+              >
+                <CardContent>
+                  {steps?.map((step, index) => (
+                    <Box
+                      key={`panel${index}`}
+                      className={`eb-flex eb-items-center ${activeStep === index ? 'eb-block' : 'eb-hidden'} eb-space-x-4 eb-rounded-md eb-border eb-p-5`}
+                    >
+                      {activeStep === index && ActiveStep}
+                    </Box>
+                  ))}
+                </CardContent>
+              </ErrorBoundary>
+            </Card>
+          </>
+        )}
+      </QueryErrorResetBoundary>
+    </>
   );
 };

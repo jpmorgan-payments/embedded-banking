@@ -10,9 +10,9 @@ import {
 
 const fromApiToForm = (client: ClientResponse) => {
   if (!client?.parties) {
+    console.log('@@NO PARTIES DETECTED!!');
     throw new Error('API Response failed, reset');
   }
-
   const flattened: any = {
     id: client.id,
     attestations: client.attestations,
@@ -25,7 +25,7 @@ const fromApiToForm = (client: ClientResponse) => {
     individualDetails: {},
   };
 
-  client.parties.forEach((party: PartyResponse) => {
+  client?.parties?.forEach((party: PartyResponse) => {
     if (party.organizationDetails) {
       const org = flattened.organizationDetails;
 
