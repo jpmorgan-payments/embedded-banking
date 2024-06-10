@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
 
-export type onRegistrationProp = {
+export interface onRegistrationProp {
   clientId: string;
-};
+}
 export interface RootConfig {
-  clientId: string | undefined;
+  clientId?: string;
   onRegistration: ({ clientId }: onRegistrationProp) => void;
 }
 

@@ -9,6 +9,7 @@ import {
 } from '@/api/generated/embedded-banking';
 import { SchemasQuestionResponse } from '@/api/generated/embedded-banking.schemas';
 import { Form, Grid, Stack, Title } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../../context/form.context';
 import { QuestionForm } from '../../Forms/QuestionForm/QuestionForm';
@@ -57,6 +58,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
     mode: 'onBlur',
   });
 
+  const { clientId } = useRootConfig();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +83,11 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
     if (!Object.values(errors).length) {
       try {
         const postBody = makeQuestionsAPIBody(form.getValues());
-        const res = await smbdoUpdateClient(onboardingForm?.id, postBody);
+        const res = await smbdoUpdateClient(
+          //TODO: imprive this
+          (onboardingForm?.id || clientId) as string,
+          postBody
+        );
         console.log('@@resQ', res);
 
         const newOnboardingForm = updateOutstandingItems(

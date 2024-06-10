@@ -6,9 +6,11 @@ import { OnboardingFormProvider } from './context/form.context';
 import { OnboardingWizard } from './OnboardingWizard';
 import { StepperProvider } from './Stepper/Stepper';
 
-export interface OnboardingWizardRoot extends RootConfig {
+export interface OnboardingWizardRootProps extends RootConfig {
   isMock?: boolean;
-  title: string;
+  title?: string;
+  // clientId?: string;
+  // onResigtration: ({ clientId }: { clientId: string }) => void;
 }
 
 //TODO: props types needs to have
@@ -16,7 +18,7 @@ const OnboardingWizardRoot = ({
   clientId,
   onRegistration,
   ...props
-}: OnboardingWizardRoot) => {
+}: OnboardingWizardRootProps) => {
   console.log('@@clientOptions', props);
 
   return (

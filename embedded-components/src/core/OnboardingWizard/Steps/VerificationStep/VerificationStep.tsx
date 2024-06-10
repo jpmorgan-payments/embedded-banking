@@ -63,10 +63,12 @@ const VerificationsStep = ({
   //   fetch();
   // }, []);
   console.log('@@document', onboardingForm);
-
+  const attestationID: string[] | undefined = onboardingForm?.attestations;
   const { data: termsAndConditionsDoc, isError: termsIsError }: any =
     useSmbdoDownloadDocument(
-      termsAndConditionsDocId || onboardingForm.attestations[0]
+      // TODO: We need to resolve the type undefined on attestionID
+      //@ts-ignore
+      termsAndConditionsDocId || (attestationID[0] as string)
     );
 
   useEffect(() => {

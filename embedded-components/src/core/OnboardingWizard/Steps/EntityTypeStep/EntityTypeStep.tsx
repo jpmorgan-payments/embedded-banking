@@ -36,6 +36,8 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
     defaultValues: {
       ...defaultInitialValues,
       legalStructure: onboardingForm?.legalStructure ?? '',
+      //TODO:Type check for OrganizationDetails, form is not structured right
+      //@ts-ignore
       ...(onboardingForm?.businessDetails?.entitiesInOwnership
         ? onboardingForm?.businessDetails
         : {
