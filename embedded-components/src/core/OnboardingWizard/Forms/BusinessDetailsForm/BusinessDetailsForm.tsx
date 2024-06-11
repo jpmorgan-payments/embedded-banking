@@ -5,9 +5,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Grid } from '@/components/ui/grid';
-import { Input } from '@/components/ui/input';
-import { Title } from '@/components/ui/title';
+import { Grid, Input, Title } from '@/components/ui';
 import { EinInput } from '@/components/ux/EinInput';
 
 import { useContentData } from '../../utils/useContentData';

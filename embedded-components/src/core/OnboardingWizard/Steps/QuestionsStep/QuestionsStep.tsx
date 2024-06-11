@@ -63,6 +63,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
     const fetchData = async () => {
       try {
         if (onboardingForm?.outstandingItems?.questionIds) {
+          // TODO: make sure that is done via useHook
           const res = await smbdoListQuestions({
             questionIds:
               onboardingForm?.outstandingItems?.questionIds.join(','),

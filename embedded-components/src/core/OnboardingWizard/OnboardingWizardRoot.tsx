@@ -19,8 +19,6 @@ const OnboardingWizardRoot = ({
   onRegistration,
   ...props
 }: OnboardingWizardRootProps) => {
-  console.log('@@clientOptions', props);
-
   return (
     <RootConfigProvider clientOptions={{ clientId, onRegistration }}>
       <StepperProvider>

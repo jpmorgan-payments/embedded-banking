@@ -53,14 +53,18 @@ const BusinessDetailsStep = ({
       setActiveStep(activeStep + 1);
     }
   };
-
+  console.log('@@hasWebsite@@', hasWebsite);
   return (
     <Stack className="eb-w-full eb-gap-2">
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <BusinessForm form={form} />
           <Separator />
-          <BusinessCommonForm form={form} hasWebsite={hasWebsite} />
+          <BusinessCommonForm
+            form={form}
+            hasWebsite={hasWebsite}
+            setHasWebite={setHasWebsite}
+          />
           <NavigationButtons
             setActiveStep={setActiveStep}
             activeStep={activeStep}

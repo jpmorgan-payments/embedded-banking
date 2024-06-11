@@ -181,6 +181,7 @@ const businessDetailsMock = {
   yearOfFormation: '2000',
   businessIdentification: 'ein',
   controllerIsOwner: 'yes',
+  countryOfFormation: 'US',
 };
 const formCompleteMock = {
   controllerBirthDate: new Date('07-23-1984'),

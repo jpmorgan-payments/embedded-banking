@@ -72,7 +72,6 @@ const businessDetailsSchema = (getContentToken?: any) => {
         new Date().getFullYear(),
         getContentToken?.(`yearOfFormationMax`) ?? ''
       ),
-
     website: yup
       .string()
       .default('')
@@ -98,6 +97,12 @@ const businessDetailsSchema = (getContentToken?: any) => {
             }),
       }),
     websiteNotAvailable: yup.boolean().default(false),
+    countryOfFormation: yup
+      .mixed()
+      .oneOf(['US', 'Canada', 'UK'])
+      .default('')
+      // TODO: update to token
+      .required('Country required'),
     businessDescription: yup
       .string()
       .default('')
