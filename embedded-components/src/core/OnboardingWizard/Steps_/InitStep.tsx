@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { Box } from '@/components/ui';
+
 import { useContentData } from '../utils/useContentData';
 import { RenderForms } from './utils/RenderForms';
 
@@ -33,9 +35,9 @@ const InitStep = ({ schema, form }: any) => {
   }, [orgTypesFormFields, countryFormFields]);
 
   return (
-    <>
+    <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
       <RenderForms {...{ formSchema: schema.form, getContentToken, form }} />
-    </>
+    </Box>
   );
 };
 
