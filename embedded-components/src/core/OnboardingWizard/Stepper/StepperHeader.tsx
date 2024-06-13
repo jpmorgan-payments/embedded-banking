@@ -24,7 +24,7 @@ const icons = [
     icon: <Users key="userIcon" size={20} color="black"></Users>,
   },
   {
-    title: 'Additional Info',
+    title: 'Outstanding Questions',
     icon: <FileInfo key="fileIcon" size={20} color="black"></FileInfo>,
   },
   {
@@ -38,7 +38,7 @@ const icons = [
     ),
   },
   {
-    title: 'Verifications',
+    title: 'Attestitation',
     icon: <Checklist key="checklistIcon" size={20} color="black"></Checklist>,
   },
 ];

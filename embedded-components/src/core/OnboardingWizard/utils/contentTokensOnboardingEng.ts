@@ -1,4 +1,14 @@
 const contentTokensOnboardingEng: Record<string, string | string[]> = {
+  'common.validCharacters': "-_.,'+/?%&()[]",
+  'common.numbersStartFirst': '(!) Address must start with numbers',
+  'common.line2Empty':
+    '(!) Address Line 3 must be empty if Address Line 2 is empty',
+  'common.addressValidCharacters': "-.,'/&#@%",
+  'common.invalidCharactersErrorMessage':
+    '(!) Invalid characters. Please use only letters, numbers, and allowed characters ',
+  'common.startWithNumber': 'Address has to start with a number',
+  'common.justDigits': '(!) Address is incomplete',
+
   // START - Page Onboarding
   'pages.OnboardingPage.reviewInProgressTitle': `Thank you for submitting your additional details.`,
   'pages.OnboardingPage.reviewInProgressLine1': `We are processing your application and will contact you once complete.`,

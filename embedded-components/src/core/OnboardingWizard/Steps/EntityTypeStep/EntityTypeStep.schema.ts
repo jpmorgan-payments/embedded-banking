@@ -24,33 +24,33 @@ const createEntityTypeFormValidationSchema = (getContentToken?: any) => {
       )
       .default('')
       .required(),
-    businessInSanctionedCountries: yup
-      .string()
-      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default('no')
-      .required(),
-    relatedToATM: yup
-      .string()
-      .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-      .default('no')
-      .required(),
-    entitiesInOwnership: yup.string().when('legalStructure', {
-      is: isBusiness,
-      then: (schema) =>
-        schema
-          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default('no')
-          .required(),
-    }),
+    // businessInSanctionedCountries: yup
+    //   .string()
+    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //   .default('no')
+    //   .required(),
+    // relatedToATM: yup
+    //   .string()
+    //   .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //   .default('no')
+    //   .required(),
+    // entitiesInOwnership: yup.string().when('legalStructure', {
+    //   is: isBusiness,
+    //   then: (schema) =>
+    //     schema
+    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //       .default('no')
+    //       .required(),
+    // }),
 
-    significantOwnership: yup.string().when('legalStructure', {
-      is: isBusiness,
-      then: (schema) =>
-        schema
-          .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
-          .default('no')
-          .required(),
-    }),
+    // significantOwnership: yup.string().when('legalStructure', {
+    //   is: isBusiness,
+    //   then: (schema) =>
+    //     schema
+    //       .oneOf(['yes', 'no'], getContentToken?.(`schemaAnswerQuestion`) ?? '')
+    //       .default('no')
+    //       .required(),
+    // }),
     // mockEnabled: yup.boolean().default(false),
   });
 };

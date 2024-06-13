@@ -182,7 +182,7 @@ const EntityTypeForm = ({ form }: any) => {
 
       <Separator className="eb-my-8" />
 
-      <Stack className="eb-gap-8">
+      {/* <Stack className="eb-gap-8">
         <Title as="h2"> {getContentToken(`titleQ`)}</Title>
         {form.getValues().legalStructure !== 'Sole Proprietorship' && (
           <FormField
@@ -346,7 +346,7 @@ const EntityTypeForm = ({ form }: any) => {
             </FormItem>
           )}
         />
-      </Stack>
+      </Stack> */}
       <Separator className="eb-my-8" />
     </>
   );

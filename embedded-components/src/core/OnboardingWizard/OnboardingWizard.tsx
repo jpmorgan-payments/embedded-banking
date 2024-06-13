@@ -6,10 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box, Button, Text } from '@/components/ui';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
-import {
-  OnboardingFormProvider,
-  useOnboardingForm,
-} from './context/form.context';
+import { useOnboardingForm } from './context/form.context';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import { useStepper } from './Stepper/Stepper';
