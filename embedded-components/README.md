@@ -4,6 +4,14 @@ Seamlessly integrate sophisticated UI components into your existing applications
 
 This library is a works-in-progress.
 
+## Usage
+
+***
+
+:warning: This SDK is undergoing active development towards a stable release. While the version remains < 1.0.0 there may be some changes to the public API. We will endeavour to avoid that or keep to a minimum where possible
+
+***
+
 ## Contributing
 
 ### Recommended VSCode plugins:
