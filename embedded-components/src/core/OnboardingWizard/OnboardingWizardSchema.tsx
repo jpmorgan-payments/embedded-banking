@@ -1,45 +1,34 @@
-import { useEffect, useMemo } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useCallback, useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Box, Button, Form, Text } from '@/components/ui';
+import { Box, Button, Text } from '@/components/ui';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useOnboardingForm } from './context/form.context';
+import { FormProvider } from './context/formProvider.contex';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import NavigationButtons from './Stepper/NavigationButtons';
-import { useStepper } from './Stepper/Stepper';
-import StepperHeader from './Stepper/StepperHeader';
-import {
-  BusinessDetailsStep,
-  EntityTypeStep,
-  OtherOwnersStep,
-  PersonalDetailsStep,
-  QuestionsStep,
-  ReviewStep,
-} from './Steps';
-import { IndDetails, InitStep, OrgDetails } from './Steps_';
-import { StepsSchema } from './Steps_/StepsSchema';
+import { useStepper } from './Stepper/useStepper';
 import { createYupSchema } from './Steps_/utils/createYupSchema';
-import { VerificationsStep } from './Steps/VerificationStep/VerificationStep';
-import { formToAPIBody } from './utils/apiUtilsParsers';
 import { useContentData } from './utils/useContentData';
 
 export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
-  const { onRegistration } = useRootConfig();
-  const { mutateAsync: postClient } = useSmbdoPostClients();
-  const { activeStep, setCurrentStep } = useStepper();
+  const {
+    activeStep,
+    setCurrentStep,
+    buildStepper,
+    CurrentStep,
+    currentSchema,
+    ...rest
+  } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
-  const { clientId } = useRootConfig();
-  console.log('@@IPs', ipAddress, ipFetchStatus);
-  const actualSchema = schema || StepsSchema({});
+  const { clientId, jurisdictions, products } = useRootConfig();
+  console.log('@@IPs', ipAddress, jurisdictions, products, clientId);
+  // const actualSchema = schema || StepsSchema;
 
   useEffect(() => {
     if (props?.isMock) {
@@ -61,6 +50,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     }
   }, [props?.isMock]);
 
+  //TODO: Turn all the below effects, and Memoes into a hook
   useEffect(() => {
     if (ipAddress) {
       setOnboardingForm({ ...onboardingForm, ip: ipAddress });
@@ -73,171 +63,24 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     }
   }, [clientId]);
 
-  const stepsWizard: any = {
-    Init: InitStep,
-    // Business: OrgDetails,
-    Individual: IndDetails,
-  };
+  // const { currentSchema, CurrentStep } = buildStepper(clientId);
 
-  const steps = clientId
-    ? [
-        <ReviewStep
-          key={1}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <VerificationsStep
-          key={2}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-      ]
-    : [
-        <EntityTypeStep
-          key={0}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <BusinessDetailsStep
-          setActiveStep={setCurrentStep}
-          key={1}
-          activeStep={activeStep}
-        />,
-        <PersonalDetailsStep
-          key={2}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <OtherOwnersStep
-          key={3}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <QuestionsStep
-          key={4}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <ReviewStep
-          key={5}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-        <VerificationsStep
-          key={6}
-          setActiveStep={setCurrentStep}
-          activeStep={activeStep}
-        />,
-      ];
-
-  const currentSchema: any = useMemo(
-    () => actualSchema[activeStep],
-    [activeStep]
-  );
-  const ActiveStep: any = useMemo(
-    () => stepsWizard[currentSchema.stepName],
-    [activeStep]
-  );
+  useEffect(() => {
+    buildStepper(clientId);
+  }, [clientId]);
 
   const { getContentToken } = useContentData(
-    `schema.${ActiveStep?.contentData ?? ''}`
+    `schema.${CurrentStep?.contentData ?? ''}`
   );
 
-  const validationSchema = createYupSchema({
-    formSchema: currentSchema.form,
-    getContentToken,
-  });
+  const validationSchema = currentSchema?.form
+    ? createYupSchema({
+        formSchema: currentSchema.form,
+        getContentToken,
+      })
+    : ({} as any);
+  console.log('@@CurrentStep', CurrentStep, currentSchema, rest, activeStep);
 
-  //   yupSchema[currentSchema.stepName](getContentToken) ?? yup.object({});
-
-  type FormData = yup.InferType<typeof validationSchema>;
-  const form = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
-    mode: 'onBlur',
-  });
-
-  console.log(
-    '@@ActiveStep',
-    form,
-    activeStep,
-    '::',
-    ActiveStep.contentData,
-    currentSchema.stepName,
-    stepsWizard,
-    '>>',
-    getContentToken
-  );
-
-  const onSubmit = async () => {
-    const errors = form?.formState?.errors;
-
-    if (!Object.values(errors).length) {
-      if (currentSchema.stepName === 'Individual') {
-        // TODO: update this 
-        // const apiForm = formToAPIBody(form.getValues());
-        const {
-          organizationName,
-          countryOfFormation,
-          firstName,
-          lastName,
-          businessEmail,
-          countryOfResidence,
-        } = form.getValues();
-        try {
-          // TODO: RAW, will need to Update this
-          const res = await postClient({
-            data: {
-              parties: [
-                {
-                  partyType: 'ORGANIZATION',
-                  email: businessEmail,
-                  roles: ['CLIENT'],
-                  organizationDetails: {
-                    organizationName,
-                    organizationType: 'LIMITED_LIABILITY_COMPANY',
-                    countryOfFormation,
-                  },
-                },
-                {
-                  partyType: 'INDIVIDUAL',
-                  email: businessEmail,
-                  roles: ['CONTROLLER'],
-                  individualDetails: {
-                    firstName,
-                    lastName,
-                    countryOfResidence,
-                  },
-                },
-              ],
-              products: ['EMBEDDED_PAYMENTS'],
-            },
-          });
-
-          // TODO: do we need clone here?
-          // const newOnboardingForm = _.cloneDeep(onboardingForm);
-          // newOnboardingForm.id = res.id;
-          // newOnboardingForm.outstandingItems = res.outstanding;
-
-          if (onRegistration) {
-            onRegistration({ clientId: res.id });
-          }
-
-          console.log('@@docs?', res);
-          // setOnboardingForm({
-          //   ...newOnboardingForm,
-          //   attestations: res.outstanding.attestationDocumentIds || [],
-          // });
-          // setActiveStep(activeStep + 1);
-        } catch (error) {
-          console.log(error);
-        }
-       
-      } else {
-        setCurrentStep(activeStep + 1);
-      }
-      
-    }
-  };
   return (
     <>
       <QueryErrorResetBoundary>
@@ -247,13 +90,13 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
               <CardHeader>
                 <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
               </CardHeader>
-              {(activeStep !== 0 || clientId) && (
+              {/* {(activeStep !== 0 || clientId) && (
                 <StepperHeader
                   activeStep={activeStep}
                   setCurrentStep={setCurrentStep}
                   steps={steps.map((step) => step.type.title)}
                 ></StepperHeader>
-              )}
+              )} */}
 
               <ErrorBoundary
                 onReset={reset}
@@ -275,17 +118,21 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
               >
                 <CardContent>
                   <Box className="eb-flex eb-items-center  eb-space-x-4 eb-rounded-md eb-border eb-p-5">
-                    <Form {...form}>
-                      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-                        {form?.control && (
-                          <ActiveStep {...{ schema: currentSchema, form }} />
-                        )}
-                        <NavigationButtons
-                          setActiveStep={setCurrentStep}
-                          activeStep={activeStep}
-                        />
-                      </form>
-                    </Form>
+                    <FormProvider>
+                      {CurrentStep && (
+                        <CurrentStep
+                          {...{
+                            formSchema: currentSchema,
+                            yupSchema: validationSchema,
+                          }}
+                        >
+                          <NavigationButtons
+                            setActiveStep={setCurrentStep}
+                            activeStep={activeStep}
+                          />
+                        </CurrentStep>
+                      )}
+                    </FormProvider>
                   </Box>
                 </CardContent>
               </ErrorBoundary>

@@ -9,7 +9,7 @@ import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useOnboardingForm } from './context/form.context';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
-import { useStepper } from './Stepper/Stepper';
+import { useStepper } from './Stepper/useStepper';
 import StepperHeader from './Stepper/StepperHeader';
 import {
   BusinessDetailsStep,

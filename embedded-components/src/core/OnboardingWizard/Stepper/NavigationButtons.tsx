@@ -5,6 +5,7 @@ type NavigationButtonsProps = {
   setActiveStep: any;
   onSubmit?: any;
   disableNext?: boolean;
+  disabled?: boolean;
 };
 
 const NavigationButtons = ({
@@ -12,16 +13,19 @@ const NavigationButtons = ({
   setActiveStep,
   onSubmit,
   disableNext,
+  disabled,
 }: NavigationButtonsProps) => {
   return (
     <div className="eb-mt-20 eb-grid eb-grid-cols-2">
       <div className="eb-flex eb-justify-start">
         {activeStep !== 0 && (
           <Button
+            type="button"
             variant="outline"
             onClick={() => {
               setActiveStep(activeStep - 1);
             }}
+            disabled={disabled}
           >
             Back
           </Button>
@@ -37,7 +41,7 @@ const NavigationButtons = ({
               onSubmit();
             }
           }}
-          disabled={disableNext}
+          disabled={disableNext || disabled}
         >
           Next
         </Button>

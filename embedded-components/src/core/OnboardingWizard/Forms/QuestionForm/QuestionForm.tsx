@@ -18,40 +18,45 @@ type QuestionFormProps = {
 };
 
 const QuestionForm = ({ question, form }: QuestionFormProps) => {
+  console.log('@@question', question);
+
   return (
     <>
       {question?.responseSchema?.items?.type === 'boolean' ? (
         <FormField
           control={form.control}
           name={`${question?.id}`}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="eb-my-5" asterisk>
-                {question?.content && question.content[0].label}
-              </FormLabel>
+          render={({ field }) => {
+            console.log('@@field', field);
+            return (
+              <FormItem>
+                <FormLabel className="eb-my-5" asterisk>
+                  {question?.content && question.content[0].label}
+                </FormLabel>
 
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="eb-flex eb-flex-row eb-space-y-1"
-                >
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="true" />
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="eb-flex eb-flex-row eb-space-y-1"
+                  >
+                    <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                      <RadioGroupItem value="true" />
 
-                    <FormLabel className="eb-font-normal">Yes</FormLabel>
-                  </FormItem>
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="false" />
+                      <FormLabel className="eb-font-normal">Yes</FormLabel>
+                    </FormItem>
+                    <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                      <RadioGroupItem value="false" />
 
-                    <FormLabel className="eb-font-normal">No</FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
+                      <FormLabel className="eb-font-normal">No</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
       ) : (
         <FormField
@@ -76,7 +81,6 @@ const QuestionForm = ({ question, form }: QuestionFormProps) => {
           )}
         />
       )}
-      <Separator />
     </>
   );
 };

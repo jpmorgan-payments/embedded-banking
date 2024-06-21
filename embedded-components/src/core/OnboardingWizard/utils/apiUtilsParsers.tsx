@@ -156,14 +156,24 @@ export const formToAPIBody = (
 };
 
 export const makeQuestionsAPIBody = (
-  questionRes: any
+  questionRes: any,
+  questionList?: string[]
 ): UpdateClientRequestSmbdo => {
   const responses: any = [];
   for (const [key, value] of Object.entries(questionRes)) {
-    responses.push({
-      questionId: key,
-      values: [value],
-    });
+    if (!questionList) {
+      responses.push({
+        questionId: key,
+        values: [value],
+      });
+    }
+
+    if (questionList?.includes(key) && value) {
+      responses.push({
+        questionId: key,
+        values: [value],
+      });
+    }
   }
   return { questionResponses: responses };
 };

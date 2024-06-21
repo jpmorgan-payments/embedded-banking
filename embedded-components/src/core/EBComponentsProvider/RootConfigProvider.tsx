@@ -5,12 +5,18 @@ export interface onRegistrationProp {
 }
 export interface RootConfig {
   clientId?: string;
+  jurisdictions?: string[];
+  products?: string[];
+  mockSteps?: any;
   onRegistration: ({ clientId }: onRegistrationProp) => void;
+  isMockResponse?: boolean;
 }
 
 export const defaultRootConfig = {
   clientId: undefined,
   onRegistration: undefined,
+  jurisdictions: undefined,
+  products: undefined,
 };
 
 export const RootConfigContext: any = createContext(defaultRootConfig);

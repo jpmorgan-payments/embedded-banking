@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
+import {
+  stepReviewMockNoQuestions,
+  stepReviewMockWithQuestions,
+} from './mocks/stepReview.mock';
 import { OnboardingWizardInit } from './OboardingWizardInit';
 
 // export default {
@@ -25,12 +29,18 @@ export const Default: Story = {
   },
 };
 
-export const OnboardingWithClientID: Story = {
+export const OnboardingWithClientIDWithoutQuestions: Story = {
   args: {
+    isMockResponse: false,
     title: 'Welcome back',
-    clientId: '1000010400',
+    jurisdictions: ['US', 'Canada'],
+    clientId: '3000000316',
+    products: [],
     onRegistration: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
+    },
+    mockSteps: {
+      review: stepReviewMockWithQuestions,
     },
   },
 };

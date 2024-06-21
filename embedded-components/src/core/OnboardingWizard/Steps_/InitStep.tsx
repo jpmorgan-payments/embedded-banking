@@ -1,21 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Box } from '@/components/ui';
 
+import { useFormSchema } from '../context/formProvider.contex';
+import { useStepper } from '../Stepper/useStepper';
 import { useContentData } from '../utils/useContentData';
 import { RenderForms } from './utils/RenderForms';
 
-const InitStep = ({ schema, form }: any) => {
+const InitStep = ({ formSchema, yupSchema, children }: any) => {
+  const form = useFormContext();
+  const { updateSchema } = useFormSchema();
+  const { activeStep, setCurrentStep } = useStepper();
+
   const [blank, setUpdate] = useState(0);
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
-  const orgTypesFormFields = schema?.form?.filter(
+
+  const orgTypesFormFields = formSchema?.form?.filter(
     (field: any) => field.name === 'organizationType'
   )[0];
-  const countryFormFields = schema?.form?.filter(
+  const countryFormFields = formSchema?.form?.filter(
     (field: any) => field.name === 'countryOfFormation'
   )[0];
 
-  console.log('@@STEP1', schema, form, orgTypesFormFields);
+  console.log('@@STEP1', formSchema, form, yupSchema);
+
+  useEffect(() => {
+    updateSchema(yupSchema);
+  }, [yupSchema]);
 
   useEffect(() => {
     if (!orgTypesFormFields?.optionsList) {
@@ -34,10 +46,22 @@ const InitStep = ({ schema, form }: any) => {
     }
   }, [orgTypesFormFields, countryFormFields]);
 
+  const onSuby = useCallback(async () => {
+    const errors = form?.formState?.errors;
+    console.log('@@ON SUBMIT', errors);
+
+    setCurrentStep(activeStep + 1);
+  }, [activeStep]);
+
   return (
-    <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
-      <RenderForms {...{ formSchema: schema.form, getContentToken, form }} />
-    </Box>
+    <form noValidate onSubmit={form.handleSubmit(onSuby)}>
+      <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
+        <RenderForms
+          {...{ formSchema: formSchema.form, getContentToken, form }}
+        />
+      </Box>
+      {children}
+    </form>
   );
 };
 
