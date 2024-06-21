@@ -11,8 +11,8 @@ import { LinkAccountFormSchema } from './LinkAccountForm/LinkAccountForm.schema'
 export const LinkedAccountWidget = () => {
   const accountStatus = 'notLinked';
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = (data: z.infer<typeof LinkAccountFormSchema>) => {
-    console.log(data);
     // Handle account linking logic here
   };
 
