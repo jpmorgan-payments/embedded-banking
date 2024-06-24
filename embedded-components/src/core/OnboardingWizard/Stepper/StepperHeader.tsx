@@ -12,6 +12,10 @@ import { Box } from '@/components/ui';
 
 const icons = [
   {
+    title: 'Init',
+    icon: <User key="userIcon" size={20} color="black"></User>,
+  },
+  {
     title: 'Personal',
     icon: <User key="userIcon" size={20} color="black"></User>,
   },
@@ -24,7 +28,7 @@ const icons = [
     icon: <Users key="userIcon" size={20} color="black"></Users>,
   },
   {
-    title: 'Outstanding Questions',
+    title: 'Questions',
     icon: <FileInfo key="fileIcon" size={20} color="black"></FileInfo>,
   },
   {
@@ -58,26 +62,29 @@ const StepperHeader = ({
 
   return (
     <Box className="eb-my-5 eb-flex eb-cursor-pointer eb-flex-row eb-justify-center sm:eb-hidden md:eb-flex">
-      {icons
+      {steps
         ?.filter((step) => {
-          return steps.includes(step.title);
+          return icons.filter((i: any) => i.title === step);
         })
         .map((val, idx) => {
+          const icon: any = icons.filter((i: any) => i?.title === val)[0];
+          console.log('@@ICON', icon, val);
+
           return (
             <Box
               className="eb-flex eb-flex-row eb-items-center eb-gap-2"
-              key={val.title}
+              key={icon?.title}
               onClick={() => {
-                setCurrentStep(idx + 1);
+                setCurrentStep(idx);
               }}
             >
               <Box
-                className={`eb-flex eb-h-12 eb-w-12 eb-place-content-center eb-justify-center eb-rounded-full eb-border-2 hover:eb-drop-shadow-sm ${activeStep === idx + 1 ? 'eb-border-primary/90' : 'eb-border-gray-500/80'} eb-place-content-center eb-items-center eb-justify-center eb-justify-items-center`}
+                className={`eb-flex eb-h-12 eb-w-12 eb-place-content-center eb-justify-center eb-rounded-full eb-border-2 hover:eb-drop-shadow-sm ${activeStep === idx ? 'eb-border-primary/90' : 'eb-border-gray-500/80'} eb-place-content-center eb-items-center eb-justify-center eb-justify-items-center`}
               >
-                {val?.icon}
+                {icon?.icon}
               </Box>
 
-              <Text className="eb-mr-2 eb-text-sm">{val?.title}</Text>
+              <Text className="eb-mr-2 eb-text-sm">{icon?.title}</Text>
 
               {idx !== icons.length - 1 && (
                 <Box className="eb-mr-2 eb-grid eb-grid-rows-2 sm:eb-hidden lg:eb-grid">

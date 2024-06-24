@@ -11,6 +11,7 @@ import { FormProvider } from './context/formProvider.contex';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import NavigationButtons from './Stepper/NavigationButtons';
+import StepperHeader from './Stepper/StepperHeader';
 import { useStepper } from './Stepper/useStepper';
 import { createYupSchema } from './Steps_/utils/createYupSchema';
 import { useContentData } from './utils/useContentData';
@@ -18,10 +19,11 @@ import { useContentData } from './utils/useContentData';
 export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
   const {
     activeStep,
+    stepsList,
     setCurrentStep,
     buildStepper,
     CurrentStep,
-    currentSchema,
+    currentFormSchema,
     ...rest
   } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
@@ -59,27 +61,35 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
 
   useEffect(() => {
     if (clientId) {
-      console.log('@@clientID', clientId);
+      buildStepper(['Review']);
+    } else {
+      buildStepper();
     }
-  }, [clientId]);
-
-  // const { currentSchema, CurrentStep } = buildStepper(clientId);
-
-  useEffect(() => {
-    buildStepper(clientId);
   }, [clientId]);
 
   const { getContentToken } = useContentData(
     `schema.${CurrentStep?.contentData ?? ''}`
   );
 
-  const validationSchema = currentSchema?.form
+  const validationSchema = currentFormSchema?.form
     ? createYupSchema({
-        formSchema: currentSchema.form,
+        formSchema: currentFormSchema.form,
         getContentToken,
       })
     : ({} as any);
-  console.log('@@CurrentStep', CurrentStep, currentSchema, rest, activeStep);
+
+  console.log(
+    '@@CurrentStep',
+    CurrentStep,
+    CurrentStep?.title,
+    '::',
+    currentFormSchema,
+    '>>',
+    rest,
+    activeStep,
+    '><',
+    stepsList
+  );
 
   return (
     <>
@@ -90,13 +100,15 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
               <CardHeader>
                 <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
               </CardHeader>
-              {/* {(activeStep !== 0 || clientId) && (
+
+              {stepsList?.length && (
                 <StepperHeader
                   activeStep={activeStep}
                   setCurrentStep={setCurrentStep}
-                  steps={steps.map((step) => step.type.title)}
+                  steps={stepsList?.map((step: any) => step?.title)}
+                  key={stepsList?.length}
                 ></StepperHeader>
-              )} */}
+              )}
 
               <ErrorBoundary
                 onReset={reset}
@@ -122,7 +134,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
                       {CurrentStep && (
                         <CurrentStep
                           {...{
-                            formSchema: currentSchema,
+                            formSchema: currentFormSchema,
                             yupSchema: validationSchema,
                           }}
                         >

@@ -40,6 +40,22 @@ export const OnboardingWithClientIDWithoutQuestions: Story = {
       console.log('@@clientId', clientId);
     },
     mockSteps: {
+      review: stepReviewMockNoQuestions,
+    },
+  },
+};
+
+export const OnboardingWithClientIDWithQuestions: Story = {
+  args: {
+    isMockResponse: true,
+    title: 'Welcome back',
+    jurisdictions: ['US', 'Canada'],
+    clientId: '3000000316',
+    products: [],
+    onRegistration: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+    mockSteps: {
       review: stepReviewMockWithQuestions,
     },
   },

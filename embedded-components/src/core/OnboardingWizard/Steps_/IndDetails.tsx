@@ -10,6 +10,7 @@ import { useFormSchema } from '../context/formProvider.contex';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useStepper } from '../Stepper/useStepper';
 import { useContentData } from '../utils/useContentData';
+import { individaulSchema } from './StepsSchema';
 import { RenderForms } from './utils/RenderForms';
 
 const IndDetails = ({ formSchema, yupSchema }: any) => {
@@ -41,7 +42,7 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
     }
   }, [countryFormFields]);
 
-  const onSuby = useCallback(async () => {
+  const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
     console.log('@@ON SUBMIT');
 
@@ -116,7 +117,7 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
   }, [activeStep]);
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSuby)}>
+    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
       <Box className="eb-grid eb-grid-cols-3 eb-gap-4">
         <RenderForms
           {...{ formSchema: formSchema.form, getContentToken, form }}
@@ -130,7 +131,8 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
     </form>
   );
 };
-
+IndDetails.title = 'Personal';
 IndDetails.contentData = 'controllerDetailsSchema';
+IndDetails.formSchema = individaulSchema;
 
 export { IndDetails };

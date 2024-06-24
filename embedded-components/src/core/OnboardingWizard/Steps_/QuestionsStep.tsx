@@ -26,8 +26,8 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
-	
-	//TODO: When questions are answered, and no questions found, we need to say something here
+
+  //TODO: When questions are answered, and no questions found, we need to say something here
   const { data: questionsList, isSuccess } = useSmbdoListQuestions({
     questionIds:
       questionsIds?.join(',') ||
@@ -116,7 +116,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
     }
   }, [isSuccess]);
 
-  const onSuby = useCallback(async () => {
+  const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
     console.log('@@ON SUBMIT', errors, form.getValues());
     const questionList =
@@ -144,7 +144,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
   return (
     <Stack>
       <Title as="h3">Questions</Title>
-      <form noValidate onSubmit={form.handleSubmit(onSuby)}>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
           {((questionsList || q) as QuestionListResponse)?.questions?.map(
             (question: SchemasQuestionResponse) => (
@@ -161,5 +161,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
     </Stack>
   );
 };
+
+QuestionsStep.title = 'Questions';
 
 export { QuestionsStep };

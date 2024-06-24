@@ -6,6 +6,7 @@ import { Box } from '@/components/ui';
 import { useFormSchema } from '../context/formProvider.contex';
 import { useStepper } from '../Stepper/useStepper';
 import { useContentData } from '../utils/useContentData';
+import { initSchema } from './StepsSchema';
 import { RenderForms } from './utils/RenderForms';
 
 const InitStep = ({ formSchema, yupSchema, children }: any) => {
@@ -26,7 +27,12 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   console.log('@@STEP1', formSchema, form, yupSchema);
 
   useEffect(() => {
-    updateSchema(yupSchema);
+    console.log('@@SCHEMA', yupSchema, initSchema);
+    if (yupSchema) {
+      updateSchema(yupSchema);
+    } else {
+      updateSchema(initSchema);
+    }
   }, [yupSchema]);
 
   useEffect(() => {
@@ -46,7 +52,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [orgTypesFormFields, countryFormFields]);
 
-  const onSuby = useCallback(async () => {
+  const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
     console.log('@@ON SUBMIT', errors);
 
@@ -54,7 +60,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   }, [activeStep]);
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSuby)}>
+    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
       <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
         <RenderForms
           {...{ formSchema: formSchema.form, getContentToken, form }}
@@ -65,6 +71,8 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   );
 };
 
+InitStep.title = 'Init';
 InitStep.contentData = 'BusinessDetailsStep';
+InitStep.formSchema = initSchema;
 
 export { InitStep };

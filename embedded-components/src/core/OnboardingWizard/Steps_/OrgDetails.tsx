@@ -1,4 +1,5 @@
 import { useContentData } from '../utils/useContentData';
+import { businessSchema } from './StepsSchema';
 import { RenderForms } from './utils/RenderForms';
 
 const OrgDetails = ({ schema, form }: any) => {
@@ -11,5 +12,6 @@ const OrgDetails = ({ schema, form }: any) => {
 };
 
 OrgDetails.contentData = 'BusinessDetailsStep';
+OrgDetails.formSchema = businessSchema;
 
 export { OrgDetails };

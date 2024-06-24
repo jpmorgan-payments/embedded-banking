@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import {
   getSmbdoPostClientVerificationsMutationOptions,
   smbdoGetClient,
   smbdoPostClientVerifications,
   useSmbdoGetClient,
+  useSmbdoPostClients,
 } from '@/api/generated/embedded-banking';
 import {
   Button,
@@ -20,24 +22,34 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { CardReviewBusiness } from '../CardReview/CardReviewBusiness';
 import { CardReviewIndividual } from '../CardReview/CardReviewIndividual';
 import { useOnboardingForm } from '../context/form.context';
-import {
-  businessDetailsMock,
-  controllerMock,
-  formCompleteMock,
-} from '../mocks/reviewStep.mock';
 import { BusinessDetailsModal } from '../Modals/BusinessDetailsModal';
 import { IndividualDetailsModal } from '../Modals/IndividualDetailsModal';
 import NavigationButtons from '../Stepper/NavigationButtons';
+import { useStepper } from '../Stepper/useStepper';
 import { fromApiToForm } from '../utils/fromApitoForm';
 import { useContentData } from '../utils/useContentData';
+import { reviewSchema } from './StepsSchema';
 
-const ReviewStep = ({ activeStep, setActiveStep }: any) => {
+const ReviewStep = ({ setActiveStep }: any) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const form = useFormContext();
+  const {
+    setCurrentStep,
+    setStepState,
+    buildStepper,
+    CurrentStep,
+    currentSchema,
+    activeStep,
+  } = useStepper();
   const { getContentToken } = useContentData('steps.ReviewStep');
-  const { clientId, mockSteps, isMockResponse } = useRootConfig();
+
+  const { clientId, mockSteps, isMockResponse, onRegistration } =
+    useRootConfig();
   const { data } = isMockResponse
     ? { data: mockSteps.review }
     : useSmbdoGetClient((clientId || onboardingForm?.id) as string);
+  const { mutateAsync: postClient, isPending: isPendingClientPost } =
+    useSmbdoPostClients();
 
   console.log('@@data', data);
 
@@ -95,12 +107,90 @@ const ReviewStep = ({ activeStep, setActiveStep }: any) => {
         attestations: data.outstanding.attestationDocumentIds || [],
       });
     }
+
+    if (data?.outstanding?.questionIds?.length) {
+      buildStepper(['Review', 'Questions']);
+    }
   }, [data]);
 
   // TODO: personal information requires the controllerKEY name
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
+
+  const onSubmit = useCallback(async () => {
+    const errors = form?.formState?.errors;
+    console.log('@@ON SUBMIT');
+
+    if (!Object.values(errors).length) {
+      // TODO: update this
+      // const apiForm = formToAPIBody(form.getValues());
+      const {
+        organizationName,
+        countryOfFormation,
+        firstName,
+        lastName,
+        businessEmail,
+        countryOfResidence,
+      } = form.getValues();
+
+      try {
+        // TODO: RAW, will need to Update this
+        const res = await postClient({
+          data: {
+            parties: [
+              {
+                partyType: 'ORGANIZATION',
+                email: businessEmail,
+                roles: ['CLIENT'],
+                organizationDetails: {
+                  organizationName,
+                  // TODO: update organization Type
+                  organizationType: 'LIMITED_LIABILITY_COMPANY',
+                  countryOfFormation,
+                },
+              },
+              {
+                partyType: 'INDIVIDUAL',
+                email: businessEmail,
+                roles: ['CONTROLLER'],
+                individualDetails: {
+                  firstName,
+                  lastName,
+                  countryOfResidence,
+                },
+              },
+            ],
+            products: ['EMBEDDED_PAYMENTS'],
+          },
+        });
+
+        // TODO: do we need clone here?
+        // const newOnboardingForm = _.cloneDeep(onboardingForm);
+        // newOnboardingForm.id = res.id;
+        // newOnboardingForm.outstandingItems = res.outstanding;
+
+        if (onRegistration) {
+          onRegistration({ clientId: res.id });
+        }
+
+        setCurrentStep(activeStep + 1);
+        console.log('@@docs?', res);
+        setOnboardingForm({
+          ...onboardingForm,
+          id: res.id,
+          outstandingItems: res?.outstanding || [],
+        });
+        // setOnboardingForm({
+        //   ...newOnboardingForm,
+        //   attestations: res.outstanding.attestationDocumentIds || [],
+        // });
+        // setActiveStep(activeStep + 1);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [activeStep]);
 
   console.log('@@reivewData', reviewData);
 
@@ -180,19 +270,22 @@ const ReviewStep = ({ activeStep, setActiveStep }: any) => {
             create
           />
         </Dialog>
-
-        <NavigationButtons
-          setActiveStep={setActiveStep}
-          activeStep={activeStep}
-          onSubmit={() => {
-            setActiveStep(activeStep + 1);
-          }}
-        />
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+          <NavigationButtons
+            setActiveStep={setCurrentStep}
+            activeStep={activeStep}
+            disabled={isPendingClientPost}
+            // onSubmit={() => {
+            //   setCurrentStep(activeStep + 1);
+            // }}
+          />
+        </form>
       </Stack>
     </>
   );
 };
 
 ReviewStep.title = 'Review';
+ReviewStep.validationSchema = reviewSchema;
 
 export { ReviewStep };
