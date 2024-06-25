@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -28,10 +28,23 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
   } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
-  const { clientId, jurisdictions, products } = useRootConfig();
-  console.log('@@IPs', ipAddress, jurisdictions, products, clientId);
-  // const actualSchema = schema || StepsSchema;
+  const { clientId, jurisdictions, products, entityType } = useRootConfig();
 
+  console.log(
+    '@@IPs',
+    ipAddress,
+    jurisdictions,
+    products,
+    clientId,
+    '>>',
+    entityType,
+    'ipFetchStatus',
+    ipFetchStatus
+  );
+  // const actualSchema = schema || StepsSchema;
+  console.log('@@schema', schema);
+
+  // TODO: remove maybe
   useEffect(() => {
     if (props?.isMock) {
       setOnboardingForm({
@@ -59,6 +72,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     }
   }, [ipAddress]);
 
+  // Building stepsF
   useEffect(() => {
     if (clientId) {
       buildStepper(['Review']);

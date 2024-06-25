@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useFormSchema } from '../context/formProvider.contex';
 import { useStepper } from '../Stepper/useStepper';
@@ -10,6 +11,7 @@ import { initSchema } from './StepsSchema';
 import { RenderForms } from './utils/RenderForms';
 
 const InitStep = ({ formSchema, yupSchema, children }: any) => {
+  const { clientId, jurisdictions, products, entityType } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -24,10 +26,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     (field: any) => field.name === 'countryOfFormation'
   )[0];
 
-  console.log('@@STEP1', formSchema, form, yupSchema);
-
   useEffect(() => {
-    console.log('@@SCHEMA', yupSchema, initSchema);
     if (yupSchema) {
       updateSchema(yupSchema);
     } else {
@@ -38,20 +37,56 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   useEffect(() => {
     if (!orgTypesFormFields?.optionsList) {
       orgTypesFormFields.optionsList = [
-        'Corporation',
-        'Limited Partnership',
-        'Limited Liability Company',
-        'Sole Proprietorship',
+        { value: 'SOLE_PROPRIETORSHIP', label: 'Sole Proprietorship' },
+        {
+          value: 'LIMITED_LIABILITY_COMPANY',
+          label: 'Limited Liability Company',
+        },
+        { value: 'S_CORPORATION', label: 'S Corporation' },
+        { value: 'C_CORPORATION', label: 'C Corporation' },
+        {
+          value: 'UNINCORPORATED_ASSOCIATION',
+          label: 'Unincorporate Association',
+        },
+        { value: 'PARTNERSHIP', label: 'Partnership' },
+        { value: 'PUBLICLY_TRADED_COMPANY', label: 'Publicly Traded Company' },
+        { value: 'NON_PROFIT_CORPORATION', label: 'Non Profit Corporation' },
+        { value: 'GOVERNMENT_ENTITY', label: 'Government Entity' },
       ];
+
       setUpdate(blank + 1);
     }
 
     if (!countryFormFields?.optionsList) {
-      countryFormFields.optionsList = ['US', 'Canada', 'UK'];
+      countryFormFields.optionsList = [
+        { value: 'US', label: 'US' },
+        { value: 'Canada', label: 'Canada' },
+        { value: 'UK', label: 'UK' },
+      ];
+
       setUpdate(blank + 1);
     }
-  }, [orgTypesFormFields, countryFormFields]);
+    if (jurisdictions) {
+      countryFormFields.defaultValue = jurisdictions;
+      setUpdate(blank + 1);
+      // form.setValue('countryOfFormation', jurisdictions);
+    }
+    if (entityType) {
+      orgTypesFormFields.defaultValue = entityType;
+      setUpdate(blank + 1);
+      // form.setValue('organizationType', entityType);
+    }
+  }, [orgTypesFormFields, countryFormFields, entityType]);
 
+  console.log(
+    '@@jurisdictions',
+    jurisdictions,
+    entityType,
+    form.getValues(),
+    countryFormFields.defaultValue,
+    orgTypesFormFields.defaultValue,
+    formSchema?.form
+  );
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
     console.log('@@ON SUBMIT', errors);

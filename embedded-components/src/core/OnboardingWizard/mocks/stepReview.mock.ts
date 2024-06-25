@@ -215,3 +215,84 @@ export const stepReviewMockWithQuestions = {
   questionResponses: [],
   status: 'NEW',
 };
+
+export const stepReviewMockWithAttestations = {
+  attestations: [],
+  entityCategory: 'OPCO',
+  parties: [
+    {
+      id: '2000001195',
+      createdAt: '2024-06-25T15:26:50.472Z',
+      email: 'aleshintsev@gmail.com',
+      partyType: 'ORGANIZATION',
+      platformId: '6000000001',
+      profileStatus: 'INFORMATION_REQUESTED',
+      roles: ['CLIENT'],
+      active: true,
+      status: 'ACTIVE',
+      organizationDetails: {
+        countryOfFormation: 'US',
+        organizationName: 'Tester LL',
+        organizationType: 'LIMITED_LIABILITY_COMPANY',
+        organizationIds: [],
+        significantOwnership: false,
+        websiteAvailable: false,
+      },
+      validationResponse: [
+        {
+          validationStatus: 'NEEDS_INFO',
+          validationType: 'ENTITY_VALIDATION',
+          fields: [
+            {
+              name: 'naics',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '2000001196',
+      createdAt: '2024-06-25T15:26:50.869Z',
+      email: 'aleshintsev@gmail.com',
+      partyType: 'INDIVIDUAL',
+      parentPartyId: '2000001195',
+      platformId: '6000000001',
+      profileStatus: 'NEW',
+      roles: ['CONTROLLER'],
+      active: true,
+      status: 'ACTIVE',
+      individualDetails: {
+        countryOfResidence: 'US',
+        firstName: 'Andrey',
+        lastName: 'Aleshintsev',
+        individualIds: [],
+      },
+    },
+  ],
+  questionResponses: [
+    {
+      questionId: '30005',
+      values: ['1234'],
+    },
+    {
+      questionId: '30026',
+      values: ['false'],
+    },
+  ],
+  productConfiguration: [],
+  createdAt: '2024-06-25T15:26:51.183Z',
+  id: '3000000335',
+  partyId: '2000001195',
+  products: ['EMBEDDED_PAYMENTS'],
+  outstanding: {
+    attestationDocumentIds: ['1e7df4ff-0c22-4974-bbdf-983d05755de3'],
+    documentRequestIds: [],
+    questionIds: [],
+    partyRoles: [],
+    partyIds: ['2000001195'],
+  },
+  status: 'NEW',
+  results: {
+    customerIdentityStatus: 'NOT_STARTED',
+  },
+};

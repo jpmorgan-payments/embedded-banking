@@ -110,6 +110,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
     )
   );
 
+  // Update form scema for questions after load
   useEffect(() => {
     if (isSuccess) {
       updateSchema(yupObject);
@@ -124,7 +125,14 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
       onboardingForm?.outstandingItems?.questionIds?.join(',');
 
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
-    console.log('postBody', postBody);
+    console.log(
+      '@@postBody',
+      postBody,
+      questionList,
+      form.getValues(),
+      '>>',
+      questionsList
+    );
 
     const res = await submitQuestions({
       id: onboardingForm?.id || clientId,
@@ -143,7 +151,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
 
   return (
     <Stack>
-      <Title as="h3">Questions</Title>
+      <Title as="h3"> {getContentToken(`title`)}</Title>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
           {((questionsList || q) as QuestionListResponse)?.questions?.map(

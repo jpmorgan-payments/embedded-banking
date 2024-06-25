@@ -6,6 +6,7 @@ export interface onRegistrationProp {
 export interface RootConfig {
   clientId?: string;
   jurisdictions?: string[];
+  entityType?: string;
   products?: string[];
   mockSteps?: any;
   onRegistration: ({ clientId }: onRegistrationProp) => void;
@@ -17,6 +18,7 @@ export const defaultRootConfig = {
   onRegistration: undefined,
   jurisdictions: undefined,
   products: undefined,
+  entityType: undefined,
 };
 
 export const RootConfigContext: any = createContext(defaultRootConfig);
@@ -33,6 +35,8 @@ export const RootConfigProvider: React.FC<{
   children: React.ReactNode;
   clientOptions: RootConfig;
 }> = ({ children, clientOptions }) => {
+  console.log('@@clientOptions', clientOptions);
+
   return (
     <RootConfigContext.Provider value={clientOptions}>
       {children}

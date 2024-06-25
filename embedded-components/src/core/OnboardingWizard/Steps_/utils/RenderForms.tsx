@@ -1,3 +1,4 @@
+import { defaultValues } from '../../context/form.context';
 import { InputFormField } from '../../formFields/InputFormField';
 import { SelectFormField } from '../../formFields/SelectFormField';
 
@@ -12,6 +13,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
           placeholderToken,
           required,
           optionsList,
+          defaultValue,
         }: any) => {
           console.log('@@optionsList', formSchema, optionsList);
 
@@ -27,6 +29,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
                       getContentToken(placeholderToken) ?? placeholderToken,
                     required,
                     form,
+                    defaultValue,
                   }}
                 />
               );
@@ -42,6 +45,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
                     required,
                     form,
                     optionsList: optionsList || [],
+                    defaultValues,
                   }}
                 />
               );

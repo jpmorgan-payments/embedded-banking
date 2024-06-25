@@ -131,7 +131,7 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
     </form>
   );
 };
-IndDetails.title = 'Personal';
+IndDetails.title = 'Individual';
 IndDetails.contentData = 'controllerDetailsSchema';
 IndDetails.formSchema = individaulSchema;
 

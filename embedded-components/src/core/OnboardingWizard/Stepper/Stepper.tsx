@@ -74,7 +74,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
   const buildStepper = (
     stepNames: string[] = ['Init', 'Individual', 'Questions', 'Review']
   ): any => {
-    console.log('@@SCbuildStepper', stepNames);
+    console.log('@@LIST::', stepNames);
 
     const stepsListSchemaTemp: any = () => {
       return stepNames.map((name: string) => {

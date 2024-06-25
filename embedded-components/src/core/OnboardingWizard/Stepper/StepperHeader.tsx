@@ -16,7 +16,7 @@ const icons = [
     icon: <User key="userIcon" size={20} color="black"></User>,
   },
   {
-    title: 'Personal',
+    title: 'Individual',
     icon: <User key="userIcon" size={20} color="black"></User>,
   },
   {
