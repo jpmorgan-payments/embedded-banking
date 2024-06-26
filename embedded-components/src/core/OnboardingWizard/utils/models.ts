@@ -11,12 +11,17 @@ export type LegalStructure =
   | 'Limited Liability Company'
   | 'Sole Proprietorship'
   | '';
-  
+
 export type organizationType =
-  | 'Corporation'
-  | 'Limited Partnership'
-  | 'Limited Liability Company'
-  | 'Sole Proprietorship'
+  | 'SOLE_PROPRIETORSHIP'
+  | 'LIMITED_LIABILITY_COMPANY'
+  | 'S_CORPORATION'
+  | 'C_CORPORATION'
+  | 'UNINCORPORATED_ASSOCIATION'
+  | 'PARTNERSHIP'
+  | 'PUBLICLY_TRADED_COMPANY'
+  | 'NON_PROFIT_CORPORATION'
+  | 'GOVERNMENT_ENTITY'
   | '';
 
 // export type OnboardingValues = OnboardingValuesBusiness & OnboardingValuesSP;

@@ -11,6 +11,15 @@ import {
   SelectValue,
 } from '@/components/ui';
 
+export interface SelectFormFieldProps {
+  name: string;
+  form: any;
+  labelToken: string;
+  placeholderToken: string;
+  required: boolean;
+  optionsList: any[];
+  defaultValue: string;
+}
 const SelectFormField = ({
   name,
   form,
@@ -20,14 +29,11 @@ const SelectFormField = ({
   optionsList,
   defaultValue,
 }: any) => {
-  console.log('@@optionsList', optionsList, '>>', placeholderToken);
-
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => {
-        console.log('@@field', field, defaultValue);
         return (
           <FormItem className="">
             <FormLabel asterisk={required}>{labelToken}</FormLabel>

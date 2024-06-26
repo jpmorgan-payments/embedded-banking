@@ -68,15 +68,15 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
     if (jurisdictions) {
       countryFormFields.defaultValue = jurisdictions;
+      form.setValue('countryOfFormation', jurisdictions);
       setUpdate(blank + 1);
-      // form.setValue('countryOfFormation', jurisdictions);
     }
     if (entityType) {
       orgTypesFormFields.defaultValue = entityType;
+      form.setValue('organizationType', entityType);
       setUpdate(blank + 1);
-      // form.setValue('organizationType', entityType);
     }
-  }, [orgTypesFormFields, countryFormFields, entityType]);
+  }, [orgTypesFormFields, countryFormFields, entityType, jurisdictions]);
 
   console.log(
     '@@jurisdictions',

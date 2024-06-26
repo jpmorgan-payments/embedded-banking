@@ -35,8 +35,7 @@ export const RootConfigProvider: React.FC<{
   children: React.ReactNode;
   clientOptions: RootConfig;
 }> = ({ children, clientOptions }) => {
-  console.log('@@clientOptions', clientOptions);
-
+  //TODO: It maybe needed to have a state set up for trigering rerenders for clientOptions changes
   return (
     <RootConfigContext.Provider value={clientOptions}>
       {children}

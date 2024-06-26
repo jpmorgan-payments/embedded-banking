@@ -5,13 +5,13 @@ import { createRegExpAndMessage } from '@/lib/utils';
 import { organizationType } from '../../utils/models';
 
 const schemaShapes: any = (getContentToken: any) => {
-  const isBusiness = (value?: organizationType) => {
-    return (
-      value === 'Corporation' ||
-      value === 'Limited Partnership' ||
-      value === 'Limited Liability Company'
-    );
-  };
+  // const isBusiness = (value?: organizationType) => {
+  //   return (
+  //     value === 'Corporation' ||
+  //     value === 'Limited Partnership' ||
+  //     value === 'Limited Liability Company'
+  //   );
+  // };
   return {
     organizationName: yup
       .string()
@@ -53,10 +53,15 @@ const schemaShapes: any = (getContentToken: any) => {
       .mixed<organizationType>()
       .oneOf(
         [
-          'Corporation',
-          'Limited Partnership',
-          'Limited Liability Company',
-          'Sole Proprietorship',
+          'SOLE_PROPRIETORSHIP',
+          'LIMITED_LIABILITY_COMPANY',
+          'S_CORPORATION',
+          'C_CORPORATION',
+          'UNINCORPORATED_ASSOCIATION',
+          'PARTNERSHIP',
+          'PUBLICLY_TRADED_COMPANY',
+          'NON_PROFIT_CORPORATION',
+          'GOVERNMENT_ENTITY',
         ],
         getContentToken?.(`schemaLegal`) ?? ''
       )

@@ -1,6 +1,12 @@
-import { defaultValues } from '../../context/form.context';
 import { InputFormField } from '../../formFields/InputFormField';
-import { SelectFormField } from '../../formFields/SelectFormField';
+import {
+  SelectFormField,
+  SelectFormFieldProps,
+} from '../../formFields/SelectFormField';
+
+export interface FormScham extends SelectFormFieldProps {
+  fieldType: 'input' | 'select';
+}
 
 const RenderForms = ({ formSchema, getContentToken, form }: any) => {
   return (
@@ -14,9 +20,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
           required,
           optionsList,
           defaultValue,
-        }: any) => {
-          console.log('@@optionsList', formSchema, optionsList);
-
+        }: FormScham) => {
           switch (fieldType) {
             case 'input':
               return (
@@ -45,7 +49,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
                     required,
                     form,
                     optionsList: optionsList || [],
-                    defaultValues,
+                    defaultValue,
                   }}
                 />
               );
