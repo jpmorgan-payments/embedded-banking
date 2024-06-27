@@ -42,7 +42,7 @@ const icons = [
     ),
   },
   {
-    title: 'Attestitation',
+    title: 'Verification',
     icon: <Checklist key="checklistIcon" size={20} color="black"></Checklist>,
   },
 ];

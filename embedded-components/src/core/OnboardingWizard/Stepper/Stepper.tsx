@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import uniq from 'lodash/uniq';
 
 import {
   IndDetails,
@@ -15,11 +16,12 @@ import {
   QuestionsStep,
   ReviewStep,
 } from '../Steps_';
+import { VerificationStep } from '../Steps_/VerificationStep';
 
 type yInitValues = {
   activeStep: number;
   setCurrentStep: (val: number) => void;
-  stepsList: string[] | undefined;
+  stepsList: string[];
   stepsListSchema: any[];
   currentFormSchema: any;
   CurrentStep: any;
@@ -30,7 +32,7 @@ type yInitValues = {
 const initValues: yInitValues = {
   activeStep: 0,
   setCurrentStep: () => {},
-  stepsList: undefined,
+  stepsList: [],
   stepsListSchema: [],
   CurrentStep: null,
   currentFormSchema: null,
@@ -50,6 +52,7 @@ const stepsWizard: any = {
   Individual: IndDetails,
   Questions: QuestionsStep,
   Review: ReviewStep,
+  Verification: VerificationStep,
 };
 const StepperProvider: FC<yStepper> = ({ children }) => {
   const [steps, setStepState] = useState(initValues);
@@ -72,14 +75,23 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
   };
 
   const buildStepper = (
-    stepNames: string[] = ['Init', 'Individual', 'Questions', 'Review']
+    stepNames: string[] = [
+      'Init',
+      'Individual',
+      'Questions',
+      'Review',
+      'Verification',
+    ]
   ): any => {
     console.log('@@LIST::', stepNames);
 
     const stepsListSchemaTemp: any = () => {
-      return stepNames.map((name: string) => {
-        return stepsWizard[name];
-      });
+      return [
+        ...stepsList,
+        ...stepNames.map((name: string) => {
+          return stepsWizard[name];
+        }),
+      ].filter((item) => item);
     };
 
     const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;
@@ -95,9 +107,14 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
     );
 
     setStepState((state) => {
+      console.log(
+        '@@LIST>$',
+        uniq([...state.stepsList, ...stepsListSchemaTemp()])
+      );
+
       return {
         ...state,
-        stepsList: stepsListSchemaTemp(),
+        stepsList: uniq([...state.stepsList, ...stepsListSchemaTemp()]),
         currentFormSchema: currentSchemaTemp,
         CurrentStep: CurrentStepTemp,
       };

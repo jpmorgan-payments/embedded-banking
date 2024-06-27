@@ -1,6 +1,6 @@
 {
-  "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.3.28",
+  "name": "@t3mpo/embedded-banking-components",
+  "version": "0.3.31",
   "license": "Apache-2.0",
   "type": "module",
   "description": "EB components",
@@ -55,6 +55,7 @@
     "deepmerge": "^4.3.1",
     "json-diff-ts": "^4.0.1",
     "libphonenumber-js": "^1.10.61",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.294.0",
     "msw": "^2.3.0",
     "public-ip": "^6.0.2",
@@ -84,6 +85,7 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
+    "@types/lodash": "^4",
     "@types/react": "^18.2.36",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
@@ -132,7 +134,7 @@
   "packageManager": "yarn@4.1.1",
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://artifacts-publish.gkp.jpmchase.net/artifactory/api/npm/npm-sandbox"
   },
   "repository": {
     "type": "git",

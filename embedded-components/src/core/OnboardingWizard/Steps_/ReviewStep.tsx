@@ -30,7 +30,7 @@ import { fromApiToForm } from '../utils/fromApitoForm';
 import { useContentData } from '../utils/useContentData';
 import { reviewSchema } from './StepsSchema';
 
-const ReviewStep = ({ setActiveStep }: any) => {
+const ReviewStep = () => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const form = useFormContext();
   const {
@@ -38,7 +38,6 @@ const ReviewStep = ({ setActiveStep }: any) => {
     setStepState,
     buildStepper,
     CurrentStep,
-    currentSchema,
     activeStep,
   } = useStepper();
   const { getContentToken } = useContentData('steps.ReviewStep');
@@ -57,6 +56,7 @@ const ReviewStep = ({ setActiveStep }: any) => {
   const [editIndividual, onEditIndividual] = useState(false);
   const [indData, setModalData] = useState(null);
   const [open, setOpen] = useState(false);
+
   // const { getContentToken: getValueMap }: any =
   //   useContentData('steps.valuesMap');
 
@@ -111,6 +111,9 @@ const ReviewStep = ({ setActiveStep }: any) => {
     if (data?.outstanding?.questionIds?.length) {
       buildStepper(['Review', 'Questions']);
     }
+    if (data?.outstanding?.attestationDocumentIds?.length) {
+      buildStepper(['Verification']);
+    }
   }, [data]);
 
   // TODO: personal information requires the controllerKEY name
@@ -136,34 +139,34 @@ const ReviewStep = ({ setActiveStep }: any) => {
 
       try {
         // TODO: RAW, will need to Update this
-        const res = await postClient({
-          data: {
-            parties: [
-              {
-                partyType: 'ORGANIZATION',
-                email: businessEmail,
-                roles: ['CLIENT'],
-                organizationDetails: {
-                  organizationName,
-                  // TODO: update organization Type
-                  organizationType: 'LIMITED_LIABILITY_COMPANY',
-                  countryOfFormation,
-                },
-              },
-              {
-                partyType: 'INDIVIDUAL',
-                email: businessEmail,
-                roles: ['CONTROLLER'],
-                individualDetails: {
-                  firstName,
-                  lastName,
-                  countryOfResidence,
-                },
-              },
-            ],
-            products: ['EMBEDDED_PAYMENTS'],
-          },
-        });
+        // const res = await postClient({
+        //   data: {
+        //     parties: [
+        //       {
+        //         partyType: 'ORGANIZATION',
+        //         email: businessEmail,
+        //         roles: ['CLIENT'],
+        //         organizationDetails: {
+        //           organizationName,
+        //           // TODO: update organization Type
+        //           organizationType: 'LIMITED_LIABILITY_COMPANY',
+        //           countryOfFormation,
+        //         },
+        //       },
+        //       {
+        //         partyType: 'INDIVIDUAL',
+        //         email: businessEmail,
+        //         roles: ['CONTROLLER'],
+        //         individualDetails: {
+        //           firstName,
+        //           lastName,
+        //           countryOfResidence,
+        //         },
+        //       },
+        //     ],
+        //     products: ['EMBEDDED_PAYMENTS'],
+        //   },
+        // });
 
         // TODO: do we need clone here?
         // const newOnboardingForm = _.cloneDeep(onboardingForm);
@@ -171,21 +174,19 @@ const ReviewStep = ({ setActiveStep }: any) => {
         // newOnboardingForm.outstandingItems = res.outstanding;
 
         if (onRegistration) {
-          onRegistration({ clientId: res.id });
+          // onRegistration({ clientId: res.id });
         }
 
-        setCurrentStep(activeStep + 1);
-        console.log('@@docs?', res);
-        setOnboardingForm({
-          ...onboardingForm,
-          id: res.id,
-          outstandingItems: res?.outstanding || [],
-        });
+        // setOnboardingForm({
+        //   ...onboardingForm,
+        //   id: res.id,
+        //   outstandingItems: res?.outstanding || [],
+        // });
         // setOnboardingForm({
         //   ...newOnboardingForm,
         //   attestations: res.outstanding.attestationDocumentIds || [],
         // });
-        // setActiveStep(activeStep + 1);
+        setCurrentStep(activeStep + 1);
       } catch (error) {
         console.log(error);
       }
@@ -270,6 +271,7 @@ const ReviewStep = ({ setActiveStep }: any) => {
             create
           />
         </Dialog>
+
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <NavigationButtons
             setActiveStep={setCurrentStep}

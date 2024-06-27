@@ -151,7 +151,7 @@ export const OnboardingWithClientIDWithAttestation: Story = {
     isMockResponse: true,
     title: 'Welcome back',
     jurisdictions: ['US', 'Canada'],
-    clientId: '3000000316',
+    clientId: '3000000350',
     products: [],
     onRegistration: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);

@@ -37,7 +37,11 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
 
   useEffect(() => {
     if (!countryFormFields?.optionsList) {
-      countryFormFields.optionsList = ['US', 'Canada', 'UK'];
+      countryFormFields.optionsList = [
+        { value: 'US', label: 'US' },
+        { value: 'Canada', label: 'Canada' },
+        { value: 'UK', label: 'UK' },
+      ];
       setUpdate(blank + 1);
     }
   }, [countryFormFields]);

@@ -1,5 +1,8 @@
 import { LinkedAccountWidget } from '@/core/LinkedAccountWidget';
-import { OnboardingWizard } from '@/core/OnboardingWizard';
+import {
+  OnboardingWizard,
+  OnboardingWizardInit,
+} from '@/core/OnboardingWizard';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { BusinessDetailsStep } from '@/core/OnboardingWizard/Steps/BusinessDetailsStep/BusinessDetailsStep';
 import { EntityTypeStep } from '@/core/OnboardingWizard/Steps/EntityTypeStep/EntityTypeStep';
@@ -12,6 +15,7 @@ export const componentRegistry = {
   AddressForm,
   ReviewStep,
   BusinessDetailsStep,
+  OnboardingWizardInit,
 };
 
 export type ComponentRegistry = typeof componentRegistry;

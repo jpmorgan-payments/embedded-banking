@@ -115,7 +115,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
                 <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
               </CardHeader>
 
-              {stepsList?.length && (
+              {!!stepsList?.length && (
                 <StepperHeader
                   activeStep={activeStep}
                   setCurrentStep={setCurrentStep}
