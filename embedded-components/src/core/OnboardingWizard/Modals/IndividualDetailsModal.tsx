@@ -71,7 +71,7 @@ const IndividualDetailsModal = ({
         });
 
         if (res?.id) {
-          onCancel();
+          onCancel(res?.id);
         }
       } else {
         const res = await createParty({
@@ -89,7 +89,7 @@ const IndividualDetailsModal = ({
         setOnboardingForm(newOnboardingForm);
 
         if (res?.id) {
-          onCancel();
+          onCancel(res?.id);
         }
       }
 

@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { UsStateSelect } from '@/components/ux/UsStateSelect';
 
 type AddressForm = {
   form: any;
@@ -74,7 +75,8 @@ const AddressForm: FC<AddressForm> = ({ form, fieldNames = {} }: any) => {
           )}
         />
 
-        <FormField
+        <UsStateSelect {...{ form, name: state ?? 'state' }} />
+        {/* <FormField
           control={form.control}
           name={state ?? 'state'}
           render={({ field }) => (
@@ -86,7 +88,7 @@ const AddressForm: FC<AddressForm> = ({ form, fieldNames = {} }: any) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name={zip ?? 'zip'}

@@ -21,6 +21,12 @@ import { Ssn9Input } from '@/components/ux/SocialSecurity';
 
 import { useContentData } from '../../utils/useContentData';
 
+const parseUTCDate = (dateString: string) => {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+//TODO: Job Titles need to API driven
 const jobTitles = [
   'CEO',
   'CFO',
@@ -176,7 +182,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           control={form.control}
           name="birthDate"
           render={({ field }) => {
-            console.log('@@field', field);
+            console.log('@@birthDate', field);
             return (
               <FormItem>
                 <FormLabel asterisk>Date of Birth</FormLabel>
@@ -184,6 +190,8 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
                   <BirthDateSelector
                     getContentToken={getContentToken}
                     {...field}
+                    value={parseUTCDate(field.value)}
+                    maxDate={new Date()}
                   />
                 </FormControl>
                 <FormMessage />

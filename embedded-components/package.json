@@ -66,6 +66,7 @@
     "tabler-icons-react": "^1.56.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
+    "usa-states": "^0.0.6",
     "yup": "^1.4.0",
     "zod": "^3.22.4"
   },

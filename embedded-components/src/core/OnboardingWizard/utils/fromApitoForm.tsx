@@ -100,9 +100,12 @@ const fromApiToForm = (client: ClientResponse) => {
       indDetails.lastName = indD.lastName;
       indDetails.countryOfResidence = indD.countryOfResidence;
       indDetails.natureOfOwnership = indD.natureOfOwnership;
+      indDetails.birthDate = indD.birthDate;
       indDetails.jobTitle = indD.jobTitle;
       indDetails.jobTitleDescription = indD.jobTitleDescription;
       indDetails.soleOwner = indD.soleOwner;
+      indDetails.countryCode = indD?.phone?.countryCode || '';
+      indDetails.phone = indD?.phone?.phoneNumber || '';
 
       indD?.addresses?.forEach((address: AddressDtoSmbdo) => {
         indDetails.addressType = address.addressType;

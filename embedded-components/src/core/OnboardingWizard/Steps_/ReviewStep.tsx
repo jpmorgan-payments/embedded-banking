@@ -237,8 +237,11 @@ const ReviewStep = () => {
           {reviewData?.organizationDetails && (
             <BusinessDetailsModal
               formData={reviewData?.organizationDetails}
-              onCancel={() => {
+              onCancel={(id: string) => {
                 onEditBusiness(false);
+                if (id) {
+                  console.log('@@id', id);
+                }
               }}
             />
           )}
@@ -248,8 +251,11 @@ const ReviewStep = () => {
           {indData && (
             <IndividualDetailsModal
               formData={indData}
-              onCancel={() => {
+              onCancel={(id: string) => {
                 onEditIndividual(false);
+                if (id) {
+                  console.log('@@id', id);
+                }
               }}
             />
           )}

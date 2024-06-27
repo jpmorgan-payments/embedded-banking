@@ -38,7 +38,7 @@ export function BirthDateSelector({
     value ? (value.getMonth() + 1).toString() : ''
   );
   const [year, setYear] = useState(value ? value.getFullYear().toString() : '');
-  console.log('@@value', value, year);
+  console.log('@@value', value, year, month, day);
 
   // Update internal stat when selectedDate changes
   useEffect(() => {
@@ -179,7 +179,7 @@ export function BirthDateSelector({
   return (
     <>
       <Input {...props} className="eb-hidden" />
-      <Group className='eb-items-baseline'>
+      <Group className="eb-items-baseline">
         {format.split('').map((type, index) => (
           <React.Fragment key={type}>
             {renderSelect(type)}

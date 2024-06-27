@@ -68,7 +68,7 @@ const BusinessDetailsModal = ({
       });
      
       if (res?.id) {
-        onCancel();
+        onCancel(res?.id);
       }
       //   if (owner && index != null) {
       //     const newOnboardingForm = updateOtherOwner(
