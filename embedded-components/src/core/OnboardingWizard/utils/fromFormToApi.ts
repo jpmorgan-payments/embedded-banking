@@ -3,6 +3,7 @@ import {
   OrganizationDetails,
 } from '@/api/generated/embedded-banking.schemas';
 
+import { fromDateToString } from '../Steps_/utils/fromDateToString';
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 
@@ -12,6 +13,7 @@ export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
   const addressLines = [
     form?.businessAddressLine1,
     form?.businessAddressLine2,
+    // TODO: correct 3rd line
     // form?.businessAddressLine3,
   ]
     .filter((val) => val)
@@ -67,28 +69,33 @@ export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
 
   return orgParty;
 };
+
 // TODO: update proper types
 // PersonalDetailsValues
-export const fromFormToIndParty = (form: any) => {
+export const fromFormToIndParty = (form: PersonalDetailsValues) => {
   let indParty: IndividualDetails = {};
 
   const addressLines = [
     form?.addressLine1,
     form?.addressLine2,
-    // form?.addressLine3,
+    form?.addressLine3,
   ]
     .filter((val) => val)
     .join(' ');
 
   indParty = {
     firstName: form.firstName,
-    middleName: form?.middleName,
+
     lastName: form.lastName,
-    birthDate: form?.birthDate,
+    birthDate:
+      typeof form?.birthDate === 'string'
+        ? form?.birthDate
+        : fromDateToString(form?.birthDate as Date),
     jobTitle: form?.jobTitle,
     jobTitleDescription: form?.jobTitleDescription,
     addresses: [
       {
+        //TODO: Address types have options: EGAL_ADDRESS, MAILING_ADDRESS, BUSINESS_ADDRESS, RESIDENTIAL_ADDRESS
         addressType: 'BUSINESS_ADDRESS',
         addressLines: [addressLines],
         city: form.city,
@@ -99,6 +106,7 @@ export const fromFormToIndParty = (form: any) => {
     ],
     countryOfResidence: 'US',
     phone: {
+      //TODO: this is one of three options BUSINESS_PHONE, MOBILE_PHONE,ALTERNATE_PHONE
       phoneType: 'MOBILE_PHONE',
       countryCode: '+1',
       phoneNumber: form?.phone,
@@ -107,7 +115,17 @@ export const fromFormToIndParty = (form: any) => {
     natureOfOwnership: 'Direct',
     //TODO: no desicion maker
     soleOwner: true,
+    individualIds: [
+      {
+        idType: 'SSN',
+        issuer: 'US',
+        value: form.ssn,
+      },
+    ],
   };
+  if (form?.middleName) {
+    indParty.middleName = form?.middleName as string;
+  }
 
   return indParty;
 };

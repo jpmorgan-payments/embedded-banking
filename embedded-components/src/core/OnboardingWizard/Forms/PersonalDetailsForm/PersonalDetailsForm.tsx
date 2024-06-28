@@ -19,12 +19,8 @@ import { BirthDateSelector } from '@/components/ux/BirthDateSelector';
 import { PhoneInput } from '@/components/ux/PhoneInput';
 import { Ssn9Input } from '@/components/ux/SocialSecurity';
 
+import { parseUTCDate } from '../../Steps_/utils/parseUTCDate';
 import { useContentData } from '../../utils/useContentData';
-
-const parseUTCDate = (dateString: string) => {
-  const [year, month, day] = dateString.split('-').map(Number);
-  return new Date(year, month - 1, day);
-};
 
 //TODO: Job Titles need to API driven
 const jobTitles = [
@@ -182,7 +178,6 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           control={form.control}
           name="birthDate"
           render={({ field }) => {
-            console.log('@@birthDate', field);
             return (
               <FormItem>
                 <FormLabel asterisk>Date of Birth</FormLabel>
@@ -190,7 +185,11 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
                   <BirthDateSelector
                     getContentToken={getContentToken}
                     {...field}
-                    value={parseUTCDate(field.value)}
+                    value={
+                      typeof field?.value === 'string'
+                        ? parseUTCDate(field.value)
+                        : field.value
+                    }
                     maxDate={new Date()}
                   />
                 </FormControl>
@@ -203,7 +202,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
       <div className="eb-grid eb-grid-cols-1 eb-gap-4 eb-pt-4">
         <FormField
           control={form.control}
-          name="ssn9"
+          name="ssn"
           render={({ field }) => (
             <FormItem>
               <FormLabel asterisk>Social Security Number</FormLabel>

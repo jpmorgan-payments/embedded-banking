@@ -2372,7 +2372,7 @@ __metadata:
     "@storybook/react": "npm:^8.0.8"
     "@storybook/react-vite": "npm:^8.0.8"
     "@storybook/testing-library": "npm:^0.2.2"
-    "@tabler/icons": "npm:^3.5.0"
+    "@tabler/icons-react": "npm:^3.7.0"
     "@tanstack/react-query": "npm:^5.32.1"
     "@tanstack/react-query-devtools": "npm:^5.32.1"
     "@tanstack/react-table": "npm:^8.13.0"
@@ -4799,10 +4799,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "@tabler/icons@npm:3.5.0"
-  checksum: 10c0/0d6b15266e116dcf56bca417d013f1027b57404e5ed7f9a2a14e216eabdd04980ff971129491b666ffdc11953107c0b4540033c92d611fa74e127fc9d443fc4f
+"@tabler/icons-react@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "@tabler/icons-react@npm:3.7.0"
+  dependencies:
+    "@tabler/icons": "npm:3.7.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/928572aeeecd04df0788e0d6643499a540861bcbf81ded2fd05ebd64ee54a5013bfba8ba7966345ebc3bb81ccccd8335440208eceda8eb4858d48736599b6ab1
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.7.0":
+  version: 3.7.0
+  resolution: "@tabler/icons@npm:3.7.0"
+  checksum: 10c0/062b308ff94e127fd051b7ed5d050c25fcb8bcfa4b5ef55071c66b4485beeefce463cbf5088ff25340b5239288bcbc8f4bf65bb73450e668c225ab39fcd923c8
   languageName: node
   linkType: hard
 

@@ -58,6 +58,11 @@ const createPersonalDetailsSchema = (getContentToken?: any) => {
       .string()
       .default('')
       .required(getContentToken?.(`jobTitle`) ?? ''),
+    ssn: yup
+      .string()
+      .default('')
+      .matches(/^\d{9}$/, getContentToken?.(`controllerSsn9Match`) ?? '')
+      .required(getContentToken?.(`controllerSsn9Req`) ?? ''),
     jobTitleDescription: yup
       .string()
       .default('')

@@ -1,5 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
+import {
+  IconCheck,
+  IconClipboardCheck,
+  IconExternalLink,
+  IconX,
+} from '@tabler/icons-react';
+import { useFormContext } from 'react-hook-form';
 
 import {
   useSmbdoDownloadDocument,
@@ -9,26 +16,34 @@ import {
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
-import { Separator, Text, Title } from '@/components/ui';
+import {
+  Badge,
+  Checkbox,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Group,
+  Separator,
+  Stack,
+  Text,
+  Title,
+} from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../context/form.context';
 import NavigationButtons from '../Stepper/NavigationButtons';
+import { useStepper } from '../Stepper/useStepper';
 import { PdfDisplay } from '../Steps/VerificationStep/PdfDisplay';
 import { verificationsStepSchema } from '../Steps/VerificationStep/validationSchema';
 import { useContentData } from '../utils/useContentData';
 
-type VerificationStepProps = {
-  setActiveStep: any;
-  activeStep: number;
-};
-
-const VerificationStep = ({
-  setActiveStep,
-  activeStep,
-}: VerificationStepProps) => {
+const VerificationStep = () => {
+  const form = useFormContext();
   const { clientId } = useRootConfig();
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const { setCurrentStep, buildStepper, activeStep } = useStepper();
+  const { setOnboardingForm, onboardingForm }: any = useOnboardingForm();
   const [docs, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
@@ -106,6 +121,12 @@ const VerificationStep = ({
   //   form.setFieldValue('attestedAuthorized', false);
   // }, []);
 
+  const onSubmit = () => {
+    console.log('@@onSubmit');
+  };
+
+  const { organizationType } = onboardingForm.onganizationDetails.orgDetails;
+  const { businessName } = onboardingForm.onganizationDetails.orgDetails;
   return (
     <section>
       <Title as="h2">{getContentToken(`title`)}</Title>
@@ -120,123 +141,129 @@ const VerificationStep = ({
           if (pdfLoaded) {
             console.log('@@pdfAtBottom');
 
-            // form.setFieldValue('reviewedTerms', true);
+            form.setValue('reviewedTerms', true);
           }
         }}
       />
 
       <Separator />
       <>
-        {/*  <Group>
-          <Text size="md">Trouble viewing the document, click here: </Text>
-          <Anchor
-            href={termsAndConditionsDoc ?? '/assets/docs/terms.pdf'}
-            target="_blank"
-            size={18}
-            onClick={() => form.setFieldValue('reviewedTerms', true)}
-          >
-            <Group>
-              <IconExternalLink size={18} />
-              <Text> Terms and Conditions</Text>
-            </Group>
-          </Anchor>
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+          <Group>
+            <Text size="md">Trouble viewing the document, click here: </Text>
+            {/* TODO: Anchor component */}
+            {/* <Anchor
+              href={termsAndConditionsDoc ?? '/assets/docs/terms.pdf'}
+              target="_blank"
+              size={18}
+              onClick={() => form.setFieldValue('reviewedTerms', true)}
+            >
+              <Group>
+                <IconExternalLink size={18} />
+                <Text> Terms and Conditions</Text>
+              </Group>
+            </Anchor> */}
 
-          {form.values.reviewedTerms ? (
-            <Badge color={theme.colors.teal[9]}>
+            {form.getValues().reviewedTerms ? (
+              <Badge>
+                <Group>
+                  <IconCheck size={14} /> {getContentToken(`group`)}
+                </Group>
+              </Badge>
+            ) : (
+              <Badge>
+                <Group>
+                  <IconX size={14} /> {getContentToken(`groupX`)}
+                </Group>
+              </Badge>
+            )}
+          </Group>
+          <Separator />
+          <Text>{form.getValues().error}</Text>
+          <Title as="h3">{getContentToken(`title2`)}</Title>
+          <Group>
+            {/* <Anchor
+              href={disclosureAndConsentDoc ?? '/assets/docs/disclosure.pdf'}
+              target="_blank"
+              size={18}
+              onClick={() => form.setFieldValue('reviewedDisclosure', true)}
+            >
               <Group>
-                <IconCheck size={14} /> {getContentToken(`group`)}
+                <IconExternalLink size={18} />
+                {getContentToken(`anchor`)}
               </Group>
-            </Badge>
-          ) : (
-            <Badge color={theme.colors.red[9]}>
-              <Group>
-                <IconX size={14} /> {getContentToken(`groupX`)}
-              </Group>
-            </Badge>
-          )}
-        </Group>
-        <Space h="xs" />
-        <Text>{form.getInputProps('reviewedTerms').error}</Text>
-        <Title as="h3">{getContentToken(`title2`)}</Title>
-        <Group>
-          <Anchor
-            href={disclosureAndConsentDoc ?? '/assets/docs/disclosure.pdf'}
-            target="_blank"
-            size={18}
-            onClick={() => form.setFieldValue('reviewedDisclosure', true)}
-          >
-            <Group>
-              <IconExternalLink size={18} />
-              {getContentToken(`anchor`)}
-            </Group>
-          </Anchor>
+            </Anchor> */}
 
-          {form.values.reviewedDisclosure ? (
-            <Badge color={theme.colors.teal[9]}>
-              <Group>
-                <IconCheck size={14} /> {getContentToken(`badge`)}
-              </Group>
-            </Badge>
-          ) : (
-            <Badge color={theme.colors.red[9]}>
-              <Group>
-                <IconX size={14} /> {getContentToken(`badgeX`)}
-              </Group>
-            </Badge>
-          )}
-        </Group>
-        <Text color={theme.colors.red[9]} size={12}>
-          {form.getInputProps('reviewedDisclosure').error}
-        </Text>
+            {form.getValues().reviewedDisclosure ? (
+              <Badge>
+                <Group>
+                  <IconCheck size={14} /> {getContentToken(`badge`)}
+                </Group>
+              </Badge>
+            ) : (
+              <Badge>
+                <Group>
+                  <IconX size={14} /> {getContentToken(`badgeX`)}
+                </Group>
+              </Badge>
+            )}
+          </Group>
+          <Text>{form.getValues().error}</Text>
 
-        <Stack mt="lg">
-          <Input.Wrapper>
-            <Checkbox
-              label={
-                <span>
-                  {getContentToken(`attestedDataCorrectI`)}{' '}
-                  <b>{controllerFullName}</b>
-                  {getContentToken(`attestedDataCorrectDesc`)}
-                </span>
-              }
-              {...form.getInputProps('attestedDataCorrect', {
-                type: 'checkbox',
-              })}
+          <Stack>
+            <FormField
+              control={form.control}
+              name="attestedAuthorized"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(value) => {}}
+                    />
+                  </FormControl>
+                  <FormLabel className="eb-p-3">
+                    {organizationType === 'SOLE_PROPRIETORSHIP' ? (
+                      getContentToken(`solePropAttestationLabel`)
+                    ) : (
+                      <span>
+                        {getContentToken(`attestationLabelBeforeName`)}
+                        <b>{businessName}</b>
+                        {getContentToken(`attestationLabelAfterName`)}
+                      </span>
+                    )}
+                  </FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </Input.Wrapper>
-          <Input.Wrapper>
-            <Checkbox
-              label={
-                entityType === 'Sole Proprietorship' ? (
-                  getContentToken(`solePropAttestationLabel`)
-                ) : (
-                  <span>
-                    {getContentToken(`attestationLabelBeforeName`)}
-                    <b>{form.values.businessName}</b>
-                    {getContentToken(`attestationLabelAfterName`)}
-                  </span>
-                )
-              }
-              {...form.getInputProps('attestedAuthorized', {
-                type: 'checkbox',
-              })}
+            <FormField
+              control={form.control}
+              name="attestedReadDocuments"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(value: any) => {}}
+                      disabled={
+                        !form.getValues().reviewedDisclosure ||
+                        !form.getValues().reviewedTerms
+                      }
+                    />
+                  </FormControl>
+                  <FormLabel className="eb-p-3">
+                    {getContentToken(`attestedReadDocuments`)}
+                  </FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </Input.Wrapper>
-          <Input.Wrapper>
-            <Checkbox
-              label={getContentToken(`attestedReadDocuments`)}
-              {...form.getInputProps('attestedReadDocuments', {
-                type: 'checkbox',
-              })}
-              disabled={
-                !form.values.reviewedDisclosure || !form.values.reviewedTerms
-              }
-            />
-          </Input.Wrapper>
-        </Stack> */}
+          </Stack>
+        </form>
       </>
       <NavigationButtons
-        setActiveStep={setActiveStep}
+        setActiveStep={setCurrentStep}
         activeStep={activeStep}
         onSubmit={() => {
           // setActiveStep(activeStep + 1);

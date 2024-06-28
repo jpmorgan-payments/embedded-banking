@@ -51,9 +51,7 @@ const CardReviewIndividual = ({
 
   return (
     <>
-      <Title as="h5" className="eb-my-2 eb-uppercase">
-        Management & Ownership
-      </Title>
+      
       <Card className="eb-min-w-96">
         <CardHeader className="">
           <CardTitle></CardTitle>

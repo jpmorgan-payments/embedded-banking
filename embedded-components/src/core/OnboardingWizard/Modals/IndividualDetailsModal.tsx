@@ -14,31 +14,30 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { Group, Separator, Stack } from '@/components/ui';
+import { Group } from '@/components/ui';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
 import { useOnboardingForm } from '../context/form.context';
-import { BusinessCommonForm } from '../Forms/BusinessCommonForm/BusinessCommonForm';
-import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
 import {
   createPersonalDetailsSchema,
   PersonalDetailsValues,
 } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
-import { addOtherOwner } from '../utils/actions';
-import { fromFormToIndParty, fromFormToOrgParty } from '../utils/fromFormToApi';
+import { fromFormToIndParty } from '../utils/fromFormToApi';
 import { useContentData } from '../utils/useContentData';
 
 type IndividualDetailsModalProps = {
   formData?: any;
   onCancel: any;
   create?: boolean;
+  parentPartyId?: string;
 };
 
 const IndividualDetailsModal = ({
   formData,
   onCancel,
   create = false,
+  parentPartyId,
 }: IndividualDetailsModalProps) => {
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken: getFormSchema } = useContentData(
@@ -78,37 +77,16 @@ const IndividualDetailsModal = ({
           data: {
             partyType: 'INDIVIDUAL',
             email: formData?.email,
+            parentPartyId,
             individualDetails: data,
             roles: ['DECISION_MAKER'],
           },
         });
-        const newOnboardingForm = addOtherOwner(
-          onboardingForm,
-          form.getValues()
-        );
-        setOnboardingForm(newOnboardingForm);
 
         if (res?.id) {
           onCancel(res?.id);
         }
       }
-
-      //   if (owner && index != null) {
-      //     const newOnboardingForm = updateOtherOwner(
-      //       onboardFFingForm,
-      //       form.getValues(),
-      //       index
-      //     );
-      //     setOnboardingForm(newOnboardingForm);
-      //     onOpenChange(false);
-      //   } else {
-      //     const newOnboardingForm = addOtherOwner(
-      //       onboardingForm,
-      //       form.getValues()
-      //     );
-      //     setOnboardingForm(newOnboardingForm);
-      //     onOpenChange(false);
-      //   }
     }
   };
 

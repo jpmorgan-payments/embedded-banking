@@ -1,20 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  getSmbdoPostClientVerificationsMutationOptions,
-  smbdoGetClient,
-  smbdoPostClientVerifications,
-  useSmbdoGetClient,
-  useSmbdoPostClients,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
   Button,
   Dialog,
   DialogTrigger,
   Group,
   Stack,
-  Text,
   Title,
 } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
@@ -31,81 +24,29 @@ import { useContentData } from '../utils/useContentData';
 import { reviewSchema } from './StepsSchema';
 
 const ReviewStep = () => {
+  const { getContentToken } = useContentData('steps.ReviewStep');
+
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const form = useFormContext();
-  const {
-    setCurrentStep,
-    setStepState,
-    buildStepper,
-    CurrentStep,
-    activeStep,
-  } = useStepper();
-  const { getContentToken } = useContentData('steps.ReviewStep');
+  const { setCurrentStep, buildStepper, activeStep } = useStepper();
 
   const { clientId, mockSteps, isMockResponse, onRegistration } =
     useRootConfig();
-  const { data } = isMockResponse
-    ? { data: mockSteps.review }
-    : useSmbdoGetClient((clientId || onboardingForm?.id) as string);
-  const { mutateAsync: postClient, isPending: isPendingClientPost } =
-    useSmbdoPostClients();
 
-  console.log('@@data', data);
+  const { data, refetch, isPending } = isMockResponse
+    ? { data: mockSteps.review, refetch: () => null, isPending: false }
+    : useSmbdoGetClient((clientId || onboardingForm?.id) as string);
 
   const [edit, onEditBusiness] = useState(false);
   const [editIndividual, onEditIndividual] = useState(false);
   const [indData, setModalData] = useState(null);
   const [open, setOpen] = useState(false);
 
-  // const { getContentToken: getValueMap }: any =
-  //   useContentData('steps.valuesMap');
-
-  // const [data, setData] = useState(
-  //   onboardingForm?.legalStructure || {
-  //     businessDetails: businessDetailsMock,
-  //     controller: controllerMock,
-  //     id: '1000010400',
-  //     legalStructure: undefined,
-  //     decisionMakers: undefined,
-  //     outstandingItems: {
-  //       attestationDocumentIds: Array(1),
-  //       documentRequestIds: Array(0),
-  //       partyIds: Array(0),
-  //       partyRoles: Array(0),
-  //       questionIds: Array(3),
-  //     },
-  //     owner: controllerMock,
-  //   }
-  // );
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res: any = await smbdoGetClient(onboardingForm.id);
-  //       // const resp: any = await smbdoPostClientVerifications('1');
-  //       // setData(res);
-  //       console.log('@@res', res, '>> \n', fromApiToForm(res));
-  //       setData(fromApiToForm(res));
-  //     } catch (error) {
-  //       // TODO add error handler
-  //       console.log('@@Err', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // const newSet = {
-  //   ...data?.businessDetails,
-  //   owners: [{ ...data?.owner }],
-  //   decisionMakers: [{ ...data?.owner }],
-  // };
-
+  // STEP BUILDER, setOnboaring Form is not requried
   useEffect(() => {
     if (data?.id) {
-      setOnboardingForm({
-        ...onboardingForm,
-        attestations: data.outstanding.attestationDocumentIds || [],
-      });
+      const reviewData = fromApiToForm(data);
+      setOnboardingForm(reviewData);
     }
 
     if (data?.outstanding?.questionIds?.length) {
@@ -123,77 +64,10 @@ const ReviewStep = () => {
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
-    console.log('@@ON SUBMIT');
-
     if (!Object.values(errors).length) {
-      // TODO: update this
-      // const apiForm = formToAPIBody(form.getValues());
-      const {
-        organizationName,
-        countryOfFormation,
-        firstName,
-        lastName,
-        businessEmail,
-        countryOfResidence,
-      } = form.getValues();
-
-      try {
-        // TODO: RAW, will need to Update this
-        // const res = await postClient({
-        //   data: {
-        //     parties: [
-        //       {
-        //         partyType: 'ORGANIZATION',
-        //         email: businessEmail,
-        //         roles: ['CLIENT'],
-        //         organizationDetails: {
-        //           organizationName,
-        //           // TODO: update organization Type
-        //           organizationType: 'LIMITED_LIABILITY_COMPANY',
-        //           countryOfFormation,
-        //         },
-        //       },
-        //       {
-        //         partyType: 'INDIVIDUAL',
-        //         email: businessEmail,
-        //         roles: ['CONTROLLER'],
-        //         individualDetails: {
-        //           firstName,
-        //           lastName,
-        //           countryOfResidence,
-        //         },
-        //       },
-        //     ],
-        //     products: ['EMBEDDED_PAYMENTS'],
-        //   },
-        // });
-
-        // TODO: do we need clone here?
-        // const newOnboardingForm = _.cloneDeep(onboardingForm);
-        // newOnboardingForm.id = res.id;
-        // newOnboardingForm.outstandingItems = res.outstanding;
-
-        if (onRegistration) {
-          // onRegistration({ clientId: res.id });
-        }
-
-        // setOnboardingForm({
-        //   ...onboardingForm,
-        //   id: res.id,
-        //   outstandingItems: res?.outstanding || [],
-        // });
-        // setOnboardingForm({
-        //   ...newOnboardingForm,
-        //   attestations: res.outstanding.attestationDocumentIds || [],
-        // });
-        setCurrentStep(activeStep + 1);
-      } catch (error) {
-        console.log(error);
-      }
+      setCurrentStep(activeStep + 1);
     }
   }, [activeStep]);
-
-  console.log('@@reivewData', reviewData);
 
   return (
     <>
@@ -214,25 +88,28 @@ const ReviewStep = () => {
             onEdit={onEditBusiness}
           />
         )}
+        <Title as="h5" className="eb-my-6 eb-uppercase ">
+          Management & Ownership
+        </Title>
+        <Stack className="eb-gap-4">
+          {reviewData?.individualDetails &&
+            Object.keys(reviewData?.individualDetails).map((key: any) => {
+              const indDetails = reviewData.individualDetails[key];
 
-        {reviewData?.individualDetails &&
-          Object.keys(reviewData?.individualDetails).map((key: any) => {
-            const indDetails = reviewData.individualDetails[key];
-
-            return (
-              <CardReviewIndividual
-                data={indDetails}
-                title="Individual & Managament"
-                type="individual"
-                onEdit={() => {
-                  onEditIndividual(true);
-                  setModalData(indDetails);
-                }}
-                key={indDetails?.id}
-              />
-            );
-          })}
-
+              return (
+                <CardReviewIndividual
+                  data={indDetails}
+                  title="Individual & Managament"
+                  type="individual"
+                  onEdit={() => {
+                    onEditIndividual(true);
+                    setModalData(indDetails);
+                  }}
+                  key={indDetails?.id}
+                />
+              );
+            })}
+        </Stack>
         <Dialog open={edit} onOpenChange={onEditBusiness}>
           {reviewData?.organizationDetails && (
             <BusinessDetailsModal
@@ -240,7 +117,7 @@ const ReviewStep = () => {
               onCancel={(id: string) => {
                 onEditBusiness(false);
                 if (id) {
-                  console.log('@@id', id);
+                  refetch();
                 }
               }}
             />
@@ -254,7 +131,7 @@ const ReviewStep = () => {
               onCancel={(id: string) => {
                 onEditIndividual(false);
                 if (id) {
-                  console.log('@@id', id);
+                  refetch();
                 }
               }}
             />
@@ -266,14 +143,18 @@ const ReviewStep = () => {
             onClick={() => setOpen(true)}
             type="button"
             variant="outline"
-            className="eb-max-w-56"
+            className="eb-mt-4 eb-max-w-56"
           >
             <DialogTrigger>Click to add a decision maker</DialogTrigger>
           </Button>
           <IndividualDetailsModal
-            onCancel={() => {
+            onCancel={(id: string) => {
               setOpen(false);
+              if (id) {
+                refetch();
+              }
             }}
+            parentPartyId={reviewData?.partyId}
             create
           />
         </Dialog>
@@ -282,10 +163,7 @@ const ReviewStep = () => {
           <NavigationButtons
             setActiveStep={setCurrentStep}
             activeStep={activeStep}
-            disabled={isPendingClientPost}
-            // onSubmit={() => {
-            //   setCurrentStep(activeStep + 1);
-            // }}
+            disabled={isPending}
           />
         </form>
       </Stack>

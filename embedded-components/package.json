@@ -1,6 +1,6 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.3.30",
+  "version": "0.3.32",
   "license": "Apache-2.0",
   "type": "module",
   "description": "EB components",
@@ -44,7 +44,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
-    "@tabler/icons": "^3.5.0",
+    "@tabler/icons-react": "^3.7.0",
     "@tanstack/react-query": "^5.32.1",
     "@tanstack/react-table": "^8.13.0",
     "axios": "^1.6.7",
