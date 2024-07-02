@@ -10,6 +10,7 @@ import { Prism, PrismProps } from '@mantine/prism';
 export interface ObjectDisplayProps extends PaperProps {
   request?: object;
   response?: object;
+  sampleCode?: string;
   isLoading?: boolean;
   scrollAreaHeight?: number;
 }
@@ -17,6 +18,7 @@ export interface ObjectDisplayProps extends PaperProps {
 export const ObjectDisplay = ({
   request,
   response,
+  sampleCode,
   isLoading = false,
   scrollAreaHeight,
   ...rest
@@ -46,7 +48,7 @@ export const ObjectDisplay = ({
       >
         <LoadingOverlay visible={isLoading} />
         <Tabs
-          defaultValue={request ? 'request' : 'response'}
+          defaultValue={request ? 'request' : response ? 'response' : 'sample'}
           styles={(theme) => ({
             tabsList: {
               backgroundColor: theme.colors.dark[6],
@@ -58,6 +60,7 @@ export const ObjectDisplay = ({
             {(response || isLoading) && (
               <Prism.Tab value="response">Sample Response</Prism.Tab>
             )}
+            {sampleCode && <Prism.Tab value="sample">Sample Code</Prism.Tab>}
           </Tabs.List>
           {request && (
             <Tabs.Panel value="request">
@@ -68,6 +71,13 @@ export const ObjectDisplay = ({
             <Tabs.Panel value="response">
               <Prism {...prismProps}>
                 {isLoading ? '' : JSON.stringify(response, null, 4)}
+              </Prism>
+            </Tabs.Panel>
+          )}
+          {sampleCode && (
+            <Tabs.Panel value="sample">
+              <Prism {...prismProps} language="jsx">
+                {sampleCode ?? ''}
               </Prism>
             </Tabs.Panel>
           )}

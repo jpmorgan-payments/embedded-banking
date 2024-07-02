@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Embedded Components demo - HTML+JS</title>
+  </head>
+  <body>
+    <div
+      id="component-container"
+      style="border: 1px solid black; padding: 4px; width: 300px"
+    ></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="ttps://unpkg.com/@jpmorgan-payments/embedded-banking-components@latest/umd/EBComponents.js"
+    ></script>
+    <script type="module">
+      const EBComponentsManager = EBComponents.initEBComponentsManager();
+      EBComponentsManager.mountComponent(
+        'LinkAccountForm',
+        null,
+        'component-container'
+      );
+    </script>
+  </body>
+</html>

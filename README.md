@@ -64,7 +64,7 @@ This example requires Yarn.
 
 To start our client code with mocked responses:
 
-1. Clone this repo.
+1. Clone this repo
 
 2. Install the `client` folder:
 
