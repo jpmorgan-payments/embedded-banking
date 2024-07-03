@@ -7,10 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 
 export function createRegExpAndMessage(
   specialCharacters?: string,
-  prependedMessage?: string,
+  prependedMessage?: string
 ): [RegExp, string] {
   const escapedChars = (specialCharacters ?? '').split('').map((char) => {
-   
     if ('^-]\\'.includes(char)) {
       return '\\' + char;
     }

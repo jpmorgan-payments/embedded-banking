@@ -6,8 +6,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Grid } from '@/components/ui/grid';
-import { Title } from '@/components/ui/title';
 import { Input } from '@/components/ui/input';
+import { Title } from '@/components/ui/title';
+
 import { useContentData } from '../../utils/useContentData';
 
 const BusinessDetailsForm = ({ form }: any) => {
@@ -16,7 +17,7 @@ const BusinessDetailsForm = ({ form }: any) => {
     <>
       <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
       <Grid
-        className={`eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2`}
+        className={`eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4`}
       >
         <FormField
           control={form.control}

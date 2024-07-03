@@ -3,11 +3,8 @@ import { contentTokensOnboardingEng } from './contentTokensOnboardingEng';
 const useContentData = (prefixes: string) => {
   const contentTokensList = contentTokensOnboardingEng;
 
-  const getContentToken = (
-    key: string,
-    customPrefix?: string
-  ) => {
-    const compoundKey = `${customPrefix ?? prefixes  }.${  key}`;
+  const getContentToken = (key: string, customPrefix?: string) => {
+    const compoundKey = `${customPrefix ?? prefixes}.${key}`;
 
     const content = contentTokensList[compoundKey];
 

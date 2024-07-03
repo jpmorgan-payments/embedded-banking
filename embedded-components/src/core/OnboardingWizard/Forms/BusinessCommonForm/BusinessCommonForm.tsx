@@ -21,6 +21,7 @@ import { Stack } from '@/components/ui/stack';
 import { Text } from '@/components/ui/text';
 import { TextArea } from '@/components/ui/textarea';
 import { Title } from '@/components/ui/title';
+
 import { industryCategoriesMock as industryCategories } from '../../utils/industryCategories.mock';
 import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
@@ -39,14 +40,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   return (
     <>
-      <Grid className={`eb-gap-4 eb-pt-4 eb-grid-flow-row `}>
+      <Grid className={`eb-grid-flow-row eb-gap-4 eb-pt-4 `}>
         <Stack>
           <FormField
             control={form.control}
             name="businessDescription"
             render={({ field }) => (
               <FormItem>
-                <Stack className={`eb-gap-4 eb-pt-4 eb-grid-flow-row `}>
+                <Stack className={`eb-grid-flow-row eb-gap-4 eb-pt-4 `}>
                   <FormLabel asterisk>
                     {getContentToken(`businessDescription.label`)}
                   </FormLabel>
@@ -59,7 +60,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                         getContentToken?.(`businessDescription.placeholder`) ??
                         ''
                       }
-                      className="eb-h-40 eb-border-solid eb-border"
+                      className="eb-h-40 eb-border eb-border-solid"
                     />
                   </FormControl>
                   <FormMessage />
@@ -68,7 +69,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             )}
           />
 
-          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
             <FormField
               control={form.control}
               name="businessEmail"
@@ -113,7 +114,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
           </Grid>
-          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
             <FormField
               control={form.control}
               name="website"
@@ -141,13 +142,15 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
 
-            <Group className="eb-flex eb-flex-row eb-content-center eb-flex-wrap  eb-gap-2">
-              <Text className="eb-font-bold eb-mx-3">{getContentToken(`text.or`)}</Text>
+            <Group className="eb-flex eb-flex-row eb-flex-wrap eb-content-center  eb-gap-2">
+              <Text className="eb-mx-3 eb-font-bold">
+                {getContentToken(`text.or`)}
+              </Text>
               <FormField
                 control={form.control}
                 name="websiteNotAvailable"
                 render={({ field }) => (
-                  <FormItem >
+                  <FormItem>
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -161,14 +164,16 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                         }}
                       />
                     </FormControl>
-                    <FormLabel className="eb-p-3">My business does not have a website</FormLabel>
+                    <FormLabel className="eb-p-3">
+                      My business does not have a website
+                    </FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </Group>
           </Grid>
-          <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-mb-5  eb-grid-cols-2">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
             <FormField
               control={form.control}
               name="website"
@@ -218,25 +223,25 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             <Title as="h2" className="eb-my-5">
               {getContentToken(`addressSectionTitle`)}
             </Title>
-            <Group className="eb-flex eb-flex-row eb-content-center eb-flex-wrap  eb-gap-2">
-            <FormField
-              control={form.control}
-              name="businessAddressSameAsController"
-              render={({ field }) => (
-                <FormItem >
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel className="eb-px-3">
-                    {getContentToken(`businessAddressSameAsController.label`)}
-                  </FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Group className="eb-flex eb-flex-row eb-flex-wrap eb-content-center  eb-gap-2">
+              <FormField
+                control={form.control}
+                name="businessAddressSameAsController"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className="eb-px-3">
+                      {getContentToken(`businessAddressSameAsController.label`)}
+                    </FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </Group>
           </Stack>
         </Stack>
@@ -257,7 +262,6 @@ export const BusinessCommonForm: any = ({ form }: any) => {
         }}
       />
       <FormField
-      
         control={form.control}
         name="industryCategory"
         render={({ field }) => (

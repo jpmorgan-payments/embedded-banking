@@ -67,7 +67,7 @@ const QuestionForm = ({ question, form }: QuestionFormProps) => {
                   <TextArea
                     {...field}
                     size="md"
-                    className="eb-h-30 eb-border-solid eb-border"
+                    className="eb-h-30 eb-border eb-border-solid"
                   />
                 </FormControl>
                 <FormMessage />

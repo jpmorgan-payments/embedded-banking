@@ -1,6 +1,7 @@
-import {useCallback} from "react";
+import { useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -11,8 +12,13 @@ import {
 import { Form } from '@/components/ui/form';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
-import { addOtherOwner, removeOtherOwner, updateOtherOwner } from '../../../utils/actions';
+
 import { useOnboardingForm } from '../../../context/form.context';
+import {
+  addOtherOwner,
+  removeOtherOwner,
+  updateOtherOwner,
+} from '../../../utils/actions';
 import { useContentData } from '../../../utils/useContentData';
 import {
   createPersonalDetailsSchema,
@@ -28,34 +34,41 @@ type DecisionMakerModalProps = {
 const DecisionMakerModal = ({
   owner,
   onOpenChange,
-  index
+  index,
 }: DecisionMakerModalProps) => {
   const { getContentToken: getFormSchema } = useContentData(
     'schema.businessOwnerFormSchema'
   );
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const defaultInitialValues =
-    owner?.firstName ? owner : createPersonalDetailsSchema().cast({});
+  const defaultInitialValues = owner?.firstName
+    ? owner
+    : createPersonalDetailsSchema().cast({});
 
   const form = useForm<PersonalDetailsValues>({
-   defaultValues: defaultInitialValues,
+    defaultValues: defaultInitialValues,
     resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
   });
 
   const onSave: SubmitHandler<PersonalDetailsValues> = () => {
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
-      if (owner && index!=null) {
-        const newOnboardingForm = updateOtherOwner(onboardingForm, form.getValues(), index);
+      if (owner && index != null) {
+        const newOnboardingForm = updateOtherOwner(
+          onboardingForm,
+          form.getValues(),
+          index
+        );
         setOnboardingForm(newOnboardingForm);
         onOpenChange(false);
       } else {
-        const newOnboardingForm = addOtherOwner(onboardingForm, form.getValues());
+        const newOnboardingForm = addOtherOwner(
+          onboardingForm,
+          form.getValues()
+        );
         setOnboardingForm(newOnboardingForm);
         onOpenChange(false);
       }
-     
     }
   };
 
@@ -67,10 +80,7 @@ const DecisionMakerModal = ({
     } else {
       //TODO handle error
     }
-
-   },[onboardingForm]);
-   
-  
+  }, [onboardingForm]);
 
   return (
     <DialogPortal>
@@ -83,7 +93,7 @@ const DecisionMakerModal = ({
             <PersonalDetailsForm form={form} />
             <AddressForm form={form} />
 
-            <div className="eb-mt-[25px] eb-mb-sm eb-flex eb-justify-end">
+            <div className="eb-mb-sm eb-mt-[25px] eb-flex eb-justify-end">
               {owner ? (
                 <Button
                   onClick={handleRemoveOwner}
@@ -106,4 +116,3 @@ const DecisionMakerModal = ({
 };
 
 export { DecisionMakerModal };
- 

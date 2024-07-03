@@ -15,15 +15,18 @@ import { Title } from '@/components/ui/title';
 import { Checkbox } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
+import {
+  businessDetailsMock,
+  controllerMock,
+} from '../../mocks/reviewStep.mock';
 import { useContentData } from '../../utils/useContentData';
-import { businessDetailsMock, controllerMock } from '../../mocks/reviewStep.mock';
 
 const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   return (
     <>
-      <Grid className="eb-gap-4 eb-pt-4 eb-grid-flow-row eb-grid-cols-2">
+      <Grid className="eb-grid-flow-row eb-grid-cols-2 eb-gap-4 eb-pt-4">
         <FormField
           control={form.control}
           name="legalStructure"
@@ -75,8 +78,8 @@ const EntityTypeForm = ({ form }: any) => {
           )}
         />
         <Card>
-          <CardContent className="eb-bg-slate-200 eb-rounded">
-            <Grid className="eb-gap-2 eb-bg-slate-200 eb-p-5 eb-flex">
+          <CardContent className="eb-rounded eb-bg-slate-200">
+            <Grid className="eb-flex eb-gap-2 eb-bg-slate-200 eb-p-5">
               <Text>{getContentToken('corpText1')}</Text>
               <Text>{getContentToken('corpText2')}</Text>
               <Text className="eb-font-bold">

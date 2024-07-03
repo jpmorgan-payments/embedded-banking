@@ -106,11 +106,11 @@ const OtherOwnersStep = ({
             Listed business decision makers
           </Title>
 
-          <div className="eb-grid lg:eb-grid-cols-3 eb-gap-5 md:eb-grid-cols-2 ">
+          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
             {onboardingForm?.controller && (
               <div
                 key="controllerPanel"
-                className="eb-grid-cols-subgrid eb-grid-cols-2"
+                className="eb-grid-cols-2 eb-grid-cols-subgrid"
               >
                 <DecisionMakerCard
                   controller
@@ -123,7 +123,7 @@ const OtherOwnersStep = ({
               (individual: any, index: number) => (
                 <div
                   key={individual?.firstName}
-                  className="eb-grid-cols-subgrid eb-grid-cols-2"
+                  className="eb-grid-cols-2 eb-grid-cols-subgrid"
                 >
                   <DecisionMakerCard
                     controller={false}
