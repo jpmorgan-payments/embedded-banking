@@ -5,4 +5,8 @@ export default {
   title: 'Questions Step',
 };
 
-export const Usage = () => <OnboardingFormProvider><QuestionsStep activeStep={1} setActiveStep={()=> {}} /></OnboardingFormProvider>;
+export const Usage = () => (
+  <OnboardingFormProvider>
+    <QuestionsStep activeStep={1} setActiveStep={() => {}} />
+  </OnboardingFormProvider>
+);

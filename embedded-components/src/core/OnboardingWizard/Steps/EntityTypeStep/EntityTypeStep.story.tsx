@@ -7,9 +7,6 @@ export default {
 
 export const Usage = () => (
   <OnboardingFormProvider>
-    <EntityTypeStep
-      activeStep={0}
-      setActiveStep={() => {}}
-    />
+    <EntityTypeStep activeStep={0} setActiveStep={() => {}} />
   </OnboardingFormProvider>
 );

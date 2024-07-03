@@ -7,8 +7,6 @@ export default {
 
 export const Usage = () => (
   <OnboardingFormProvider>
-  <BusinessDetailsStep
-   activeStep={2} setActiveStep={()=> {}}
-  />
+    <BusinessDetailsStep activeStep={2} setActiveStep={() => {}} />
   </OnboardingFormProvider>
 );
