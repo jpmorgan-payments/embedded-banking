@@ -23,8 +23,10 @@ type ReviewValuesProps = {
 
 const ReviewValues = ({
   fieldLabel,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fieldLabelTooltip,
   fieldValue,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   index,
   displayType,
   customRenderer,

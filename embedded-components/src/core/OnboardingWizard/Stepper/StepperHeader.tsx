@@ -67,7 +67,7 @@ const StepperHeader = ({ activeStep, setCurrentStep }: StepperHeaderProps) => {
 
           <Text className="eb-mr-2 eb-text-sm">{val?.title}</Text>
 
-          {idx !== icons?.length - 1 && (
+          {idx !== (icons?.length ?? 0) - 1 && (
             <Box className="eb-mr-2 eb-grid eb-grid-rows-2 sm:eb-hidden lg:eb-grid">
               <Box></Box>
               <Box className="eb-w-5 eb-border-t-2"></Box>

@@ -28,7 +28,7 @@ export const valuesMap = (
   const newValues = {
     owners: values.significantOwnership
       ? values.owners.map((owner, index) => {
-          const ownerCopy = Object.assign({}, owner);
+          const ownerCopy = { ...owner };
           if (!ownerCopy.id) {
             ownerCopy.id = `NEW_${index}`;
           }
@@ -39,7 +39,7 @@ export const valuesMap = (
       entityType === 'Sole Proprietorship' ||
       values?.decisionMakersExist === 'yes'
         ? values?.decisionMakers?.map((decisionMaker, index) => {
-            const decisionMakerCopy = Object.assign({}, decisionMaker);
+            const decisionMakerCopy = { ...decisionMaker };
             if (!decisionMakerCopy.id) {
               decisionMakerCopy.id = `NEW_${index}`;
             }
@@ -70,13 +70,14 @@ export const valuesMap = (
         return emptyValue;
       }
       return value;
-    } else if (typeof value === 'boolean' || typeof value === 'number') {
-      return String(value);
-    } else if (value instanceof Date) {
-      return value.toLocaleDateString();
-    } else {
-      return emptyValue;
     }
+    if (typeof value === 'boolean' || typeof value === 'number') {
+      return String(value);
+    }
+    if (value instanceof Date) {
+      return value.toLocaleDateString();
+    }
+    return emptyValue;
   };
 
   const generateDiff = (
@@ -128,6 +129,7 @@ export const valuesMap = (
     const unchangedPersons = (
       diffArray.find((item) => item.key === personType)?.changes ?? []
     ).reduce<PersonValues[]>(
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       (persons, change) => {
         if (change.type !== 'ADD') {
           return persons.filter((person) => person.id !== change.key);
@@ -168,7 +170,8 @@ export const valuesMap = (
               }
               // return <Ins>{originalValue}</Ins>;
               return originalValue;
-            } else if (personDiff.type === 'REMOVE') {
+            }
+            if (personDiff.type === 'REMOVE') {
               if (originalValue === 'N/A') {
                 return originalValue;
               }
@@ -189,14 +192,14 @@ export const valuesMap = (
           const personName = (
             personValues
               ? [
-                  personValues?.['firstName'],
-                  personValues?.['middleName'],
-                  personValues?.['lastName'],
+                  personValues?.firstName,
+                  personValues?.middleName,
+                  personValues?.lastName,
                 ]
               : [
-                  personDiff.value?.['firstName'],
-                  personDiff.value?.['middleName'],
-                  personDiff.value?.['lastName'],
+                  personDiff.value?.firstName,
+                  personDiff.value?.middleName,
+                  personDiff.value?.lastName,
                 ]
           )
             .filter(Boolean)
@@ -547,6 +550,7 @@ export const valuesMap = (
           const label = item?.verification?.label;
           const options =
             item?.response?.answerOptions?.reduce(
+              // eslint-disable-next-line @typescript-eslint/no-shadow
               (a, { id = '', label = '' }) => ({
                 ...a,
                 [id]: label,

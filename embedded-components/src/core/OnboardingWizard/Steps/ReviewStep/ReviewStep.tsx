@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import {
-  getSmbdoPostClientVerificationsMutationOptions,
   smbdoGetClient,
   smbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
-import { Stack, Text, Title } from '@/components/ui';
+import { Stack, Title } from '@/components/ui';
 
 import { useOnboardingForm } from '../../context/form.context';
 import {
@@ -24,10 +23,13 @@ type ReviewStepProps = {
 };
 
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { getContentToken } = useContentData('steps.ReviewStep');
   const { getContentToken: getValueMap }: any =
     useContentData('steps.valuesMap');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState(
     onboardingForm?.legalStructure || {
       businessDetails: businessDetailsMock,

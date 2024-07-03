@@ -47,9 +47,9 @@ const DecisionMakerCard = ({
         <CardContent
           className={`${controller && 'eb-bg-black/10'} eb-flex eb-h-60 eb-content-center eb-rounded-md`}
         >
-          <div className="eb-flex  eb-grid eb-grid-flow-row-dense eb-grid-cols-3 eb-content-center eb-justify-center">
+          <div className="eb-grid eb-grid-flow-row-dense eb-grid-cols-3 eb-content-center eb-justify-center">
             <div className="eb-col eb-content-center eb-gap-2">
-              <div className="eb-mb-3 eb-flex eb-h-12 eb-w-12 eb-place-content-center eb-place-content-center eb-items-center eb-justify-center eb-justify-center eb-justify-items-center eb-rounded-full eb-border-2 eb-border-secondary/90">
+              <div className="eb-mb-3 eb-flex eb-h-12 eb-w-12 eb-place-content-center eb-items-center eb-justify-center eb-justify-items-center eb-rounded-full eb-border-2 eb-border-secondary/90">
                 <User key="userIcon" size={20} color="black"></User>
               </div>
               <div>
