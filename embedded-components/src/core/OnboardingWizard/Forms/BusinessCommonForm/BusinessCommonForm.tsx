@@ -27,6 +27,7 @@ import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
 export const BusinessCommonForm: any = ({ form }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isLoadingIndustryCategories = false;
   const industryTypes =
     industryCategories?.items

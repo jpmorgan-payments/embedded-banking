@@ -23,6 +23,7 @@ import { useContentData } from '../../utils/useContentData';
 
 const EntityTypeForm = ({ form }: any) => {
   const { getContentToken } = useContentData('features.EntityTypeForm');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   return (
     <>

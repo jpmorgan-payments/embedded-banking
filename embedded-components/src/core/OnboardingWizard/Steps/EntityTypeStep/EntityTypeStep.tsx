@@ -26,6 +26,7 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('features.EntityTypeForm');
 

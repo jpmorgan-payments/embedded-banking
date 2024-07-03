@@ -27,6 +27,7 @@ const BusinessDetailsStep: FC<BusinessDetailsProps> = ({
   setActiveStep,
   activeStep,
 }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedAccountType, setSelectedAccountType] = useState(''); // Default to individual
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();

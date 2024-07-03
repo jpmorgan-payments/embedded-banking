@@ -32,6 +32,7 @@ type PersonalDetailsFormProps = {
 
 const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
 
   const handleJobTitleChange = (jobTitle: string) => {

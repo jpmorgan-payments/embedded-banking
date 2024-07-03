@@ -1,4 +1,4 @@
-import { Key, useState } from 'react';
+import { useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
@@ -108,10 +108,7 @@ const OtherOwnersStep = ({
 
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
             {onboardingForm?.controller && (
-              <div
-                key="controllerPanel"
-                className="eb-grid-cols-2 eb-grid-cols-subgrid"
-              >
+              <div key="controllerPanel" className="eb-grid-cols-2">
                 <DecisionMakerCard
                   controller
                   individual={onboardingForm?.controller}
@@ -121,10 +118,7 @@ const OtherOwnersStep = ({
 
             {onboardingForm?.otherOwners?.map(
               (individual: any, index: number) => (
-                <div
-                  key={individual?.firstName}
-                  className="eb-grid-cols-2 eb-grid-cols-subgrid"
-                >
+                <div key={individual?.firstName} className="eb-grid-cols-2">
                   <DecisionMakerCard
                     controller={false}
                     individual={individual}
