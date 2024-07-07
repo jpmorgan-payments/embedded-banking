@@ -13,6 +13,7 @@ export const LinkedAccountWidget = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = (data: z.infer<typeof LinkAccountFormSchema>) => {
     // Handle account linking logic here
+    console.log('formSubmit', data)
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

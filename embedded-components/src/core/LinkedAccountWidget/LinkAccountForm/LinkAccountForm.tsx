@@ -49,6 +49,13 @@ export const LinkAccountFormDialogTrigger: FC<
 
   const form = useForm<LinkAccountFormDataType>({
     resolver: zodResolver(LinkAccountFormSchema),
+    defaultValues: {
+      accountType: 'individual',
+      firstName: '',
+      lastName: '',
+      routingNumber: '',
+      accountNumber: '',
+    },
   });
 
   const handleAccountTypeChange = (accountType: string) => {
@@ -56,16 +63,16 @@ export const LinkAccountFormDialogTrigger: FC<
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Dialog
-          open={isDialogOpen}
-          onOpenChange={(open) => {
-            setDialogOpen(open);
-          }}
-        >
-          <DialogTrigger asChild>{children}</DialogTrigger>
-          <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-gap-4 eb-px-0 eb-pb-0">
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        setDialogOpen(open);
+      }}
+    >
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-gap-4 eb-px-0 eb-pb-0">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader className="eb-px-6">
               <DialogTitle>Link an account</DialogTitle>
               <DialogDescription>
@@ -111,7 +118,7 @@ export const LinkAccountFormDialogTrigger: FC<
                         <FormItem>
                           <FormLabel>First Name</FormLabel>
                           <FormControl>
-                            <Input {...field} required />
+                            <Input {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -125,7 +132,7 @@ export const LinkAccountFormDialogTrigger: FC<
                         <FormItem>
                           <FormLabel>Last Name</FormLabel>
                           <FormControl>
-                            <Input {...field} required />
+                            <Input {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -142,7 +149,7 @@ export const LinkAccountFormDialogTrigger: FC<
                       <FormItem>
                         <FormLabel>Business Name</FormLabel>
                         <FormControl>
-                          <Input {...field} required />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -185,9 +192,9 @@ export const LinkAccountFormDialogTrigger: FC<
                 <Button type="submit">Link Account</Button>
               </DialogFooter>
             </ScrollArea>
-          </DialogContent>
-        </Dialog>
-      </form>
-    </Form>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 };
