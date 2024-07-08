@@ -70,17 +70,17 @@ export const LinkAccountFormDialogTrigger: FC<
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-gap-4 eb-px-0 eb-pb-0">
+      <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-max-w-[30rem] eb-gap-4 eb-px-0 eb-pb-0">
+        <DialogHeader className="eb-px-6">
+          <DialogTitle>Link an account</DialogTitle>
+          <DialogDescription>
+            Enter your external account&apos;s information to link it
+          </DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader className="eb-px-6">
-              <DialogTitle>Link an account</DialogTitle>
-              <DialogDescription>
-                Enter your external account&apos;s information to link it
-              </DialogDescription>
-            </DialogHeader>
-            <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2 eb-px-6">
-              <div className="eb-grid eb-gap-4 eb-pt-4">
+            <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2">
+              <div className="eb-grid eb-gap-4 eb-px-6 eb-pt-4">
                 <FormField
                   control={form.control}
                   name="accountType"
@@ -185,7 +185,7 @@ export const LinkAccountFormDialogTrigger: FC<
                   )}
                 />
               </div>
-              <DialogFooter className="eb-my-4 eb-gap-2">
+              <DialogFooter className="eb-mx-6 eb-my-4 eb-gap-2">
                 <DialogClose asChild>
                   <Button variant="secondary">Cancel</Button>
                 </DialogClose>

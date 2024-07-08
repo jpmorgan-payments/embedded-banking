@@ -17,7 +17,9 @@ export const LinkedAccountWidget = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data } = useGetAllRecipients();
+  const { data } = useGetAllRecipients({ type: 'LINKED_ACCOUNT' });
+
+  console.log(data);
 
   return (
     <Card>
