@@ -15,7 +15,6 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
-  clientId,
   token,
   theme = {},
 }) => {
@@ -24,19 +23,11 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
 
   AXIOS_INSTANCE.interceptors.request.use((config) => {
     if (token) {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return {
       ...config,
       baseURL: apiBaseUrl,
-      transformRequest: [
-        (data: any) => {
-          if (clientId) {
-            return JSON.stringify({ clientId, ...data });
-          }
-          return JSON.stringify(data);
-        },
-      ].concat(axios.defaults.transformRequest as any),
     };
   });
 

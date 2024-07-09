@@ -38,7 +38,7 @@ export const LinkedAccountWidget = () => {
             data.recipients &&
             data.recipients.length > 0 &&
             data.recipients.map((recipient) => (
-              <>
+              <div key={recipient.id}>
                 <div className="eb-space-y-1">
                   <div className="eb-flex eb-items-center eb-justify-between">
                     <h4
@@ -60,7 +60,7 @@ export const LinkedAccountWidget = () => {
                   </p>
                 </div>
                 <Separator className="eb-my-4" />
-              </>
+              </div>
             ))}
           {accountStatus === 'notLinked' && (
             <LinkAccountFormDialogTrigger onSubmit={handleSubmit}>

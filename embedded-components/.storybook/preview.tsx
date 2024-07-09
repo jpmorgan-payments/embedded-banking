@@ -23,6 +23,7 @@ function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
     <EBComponentsProvider
       apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/ef/v2"
       theme={{ colorScheme: colorScheme }}
+      clientId="1399135901"
     >
       <ReactQueryDevtools />
       {children}
