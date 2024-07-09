@@ -1,5 +1,3 @@
-import { AxiosRequestHeaders } from 'axios';
-
 export type EBColorScheme = 'dark' | 'light' | 'system';
 
 export type EBThemeVariables = {
