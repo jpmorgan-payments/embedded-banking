@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import axios from 'axios';
 
 import { AXIOS_INSTANCE } from '@/api/axios-instance';
 
