@@ -34,6 +34,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [yupSchema]);
 
+  //TODO: Should be API driven
   useEffect(() => {
     if (!orgTypesFormFields?.optionsList) {
       orgTypesFormFields.optionsList = [
@@ -66,11 +67,13 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
 
       setUpdate(blank + 1);
     }
+
     if (jurisdictions) {
       countryFormFields.defaultValue = jurisdictions;
       form.setValue('countryOfFormation', jurisdictions);
       setUpdate(blank + 1);
     }
+
     if (entityType) {
       orgTypesFormFields.defaultValue = entityType;
       form.setValue('organizationType', entityType);
@@ -78,19 +81,12 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [orgTypesFormFields, countryFormFields, entityType, jurisdictions]);
 
-  console.log(
-    '@@jurisdictions',
-    jurisdictions,
-    entityType,
-    form.getValues(),
-    countryFormFields.defaultValue,
-    orgTypesFormFields.defaultValue,
-    formSchema?.form
-  );
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
-    console.log('@@ON SUBMIT', errors);
 
+    if (Object.keys(errors)?.length) {
+      return;
+    }
     setCurrentStep(activeStep + 1);
   }, [activeStep]);
 

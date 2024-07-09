@@ -18,7 +18,7 @@ export interface SelectFormFieldProps {
   placeholderToken: string;
   required: boolean;
   optionsList: any[];
-  defaultValue: string;
+  defaultValue?: string;
 }
 const SelectFormField = ({
   name,
@@ -27,7 +27,6 @@ const SelectFormField = ({
   placeholderToken,
   required,
   optionsList,
-  defaultValue,
 }: any) => {
   return (
     <FormField
@@ -42,7 +41,7 @@ const SelectFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={defaultValue}
+              defaultValue={form.getValues(name)}
             >
               <FormControl>
                 <SelectTrigger>

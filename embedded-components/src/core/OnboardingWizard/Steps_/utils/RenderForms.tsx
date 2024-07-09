@@ -21,6 +21,8 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
           optionsList,
           defaultValue,
         }: FormScham) => {
+          console.log('@@defaultValue', defaultValue);
+
           switch (fieldType) {
             case 'input':
               return (
