@@ -1,22 +1,11 @@
-import { z } from 'zod';
-
 import { useGetAllRecipients } from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge, Separator } from '@/components/ui';
 
 import { LinkAccountFormDialogTrigger } from './LinkAccountForm/LinkAccountForm';
-import { LinkAccountFormSchema } from './LinkAccountForm/LinkAccountForm.schema';
 
 export const LinkedAccountWidget = () => {
-  const accountStatus = 'notLinked';
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSubmit = (data: z.infer<typeof LinkAccountFormSchema>) => {
-    // Handle account linking logic here
-    console.log('formSubmit', data);
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, status, failureReason } = useGetAllRecipients({
     type: 'LINKED_ACCOUNT',
@@ -62,11 +51,9 @@ export const LinkedAccountWidget = () => {
                 <Separator className="eb-my-4" />
               </div>
             ))}
-          {accountStatus === 'notLinked' && (
-            <LinkAccountFormDialogTrigger onSubmit={handleSubmit}>
-              <Button>Link A New Account</Button>
-            </LinkAccountFormDialogTrigger>
-          )}
+          <LinkAccountFormDialogTrigger>
+            <Button>Link A New Account</Button>
+          </LinkAccountFormDialogTrigger>
         </div>
       </CardContent>
     </Card>
