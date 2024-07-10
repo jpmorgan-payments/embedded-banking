@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckCircle2Icon, CheckCircleIcon, Loader2Icon } from 'lucide-react';
+import { CheckCircle2Icon, Loader2Icon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
