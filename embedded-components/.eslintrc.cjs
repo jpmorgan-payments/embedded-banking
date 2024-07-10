@@ -21,6 +21,7 @@ module.exports = {
         '': 'never',
       },
     ],
+    'import/order': 'off',
   },
   ignorePatterns: [
     '*.js',
