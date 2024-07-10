@@ -11,8 +11,6 @@ export const LinkedAccountWidget = () => {
     type: 'LINKED_ACCOUNT',
   });
 
-  console.log(data);
-
   return (
     <Card>
       <CardHeader>
