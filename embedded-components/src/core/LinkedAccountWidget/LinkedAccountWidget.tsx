@@ -66,7 +66,7 @@ export const LinkedAccountWidget = () => {
                   <p className="eb-text-sm eb-text-muted-foreground">
                     {recipient.partyDetails.type.toLocaleUpperCase()}
                   </p>
-                  {recipient.status === 'ACTIVE' && (
+                  {recipient.status === 'READY_FOR_VALIDATION' && (
                     <MicrodepositsFormDialogTrigger recipientId={recipient.id}>
                       <Button size="sm" variant="secondary" className="eb-mt-2">
                         <PencilLineIcon className="eb-mr-2 eb-h-4 eb-w-4" />{' '}
