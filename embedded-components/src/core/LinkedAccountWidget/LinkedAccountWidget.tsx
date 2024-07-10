@@ -1,5 +1,6 @@
 import { LinkIcon, PencilLineIcon } from 'lucide-react';
 
+import { getRecipientLabel } from '@/lib/getAccountLabelFromPartyDetails';
 import { useGetAllRecipients } from '@/api/generated/embedded-banking';
 import { RecipientStatus } from '@/api/generated/embedded-banking.schemas';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge, Separator } from '@/components/ui';
 
 import { LinkAccountFormDialogTrigger } from './LinkAccountForm/LinkAccountForm';
+import { MicrodepositsFormDialogTrigger } from './MicrodepositsForm/MicrodepositsForm';
 
 const StatusBadge = ({ status }: { status: RecipientStatus }) => {
   const propsMap: Record<RecipientStatus, Record<string, string>> = {
@@ -55,13 +57,7 @@ export const LinkedAccountWidget = () => {
                       key={recipient.id}
                       className="eb-text-sm eb-font-medium eb-leading-none"
                     >
-                      {recipient.partyDetails.type === 'INDIVIDUAL'
-                        ? [
-                            recipient.partyDetails.firstName,
-                            recipient.partyDetails.lastName,
-                          ].join(' ')
-                        : recipient.partyDetails.businessName}
-                      {` (...${recipient.account.number.slice(-4)})`}
+                      {getRecipientLabel(recipient)}
                     </h4>
                     {recipient.status && (
                       <StatusBadge status={recipient.status} />
@@ -70,13 +66,13 @@ export const LinkedAccountWidget = () => {
                   <p className="eb-text-sm eb-text-muted-foreground">
                     {recipient.partyDetails.type.toLocaleUpperCase()}
                   </p>
-                  {recipient.status === 'MICRODEPOSITS_INITIATED' && (
-                    <div>
+                  {recipient.status === 'ACTIVE' && (
+                    <MicrodepositsFormDialogTrigger recipientId={recipient.id}>
                       <Button size="sm" variant="secondary" className="eb-mt-2">
                         <PencilLineIcon className="eb-mr-2 eb-h-4 eb-w-4" />{' '}
                         Verify microdeposits
                       </Button>
-                    </div>
+                    </MicrodepositsFormDialogTrigger>
                   )}
                 </div>
                 <Separator className="eb-my-4" />
