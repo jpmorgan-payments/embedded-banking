@@ -14,18 +14,19 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
-  token,
+  headers = {},
   theme = {},
 }) => {
   const queryClient = new QueryClient();
   // TODO: set up api instance
 
-  AXIOS_INSTANCE.interceptors.request.use((config) => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  AXIOS_INSTANCE.interceptors.request.use((config: any) => {
     return {
       ...config,
+      headers: {
+        ...config.headers,
+        ...headers,
+      },
       baseURL: apiBaseUrl,
     };
   });
