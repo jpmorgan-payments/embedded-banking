@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   IconCheck,
   IconClipboardCheck,
@@ -11,6 +11,7 @@ import { useFormContext } from 'react-hook-form';
 import {
   useSmbdoDownloadDocument,
   useSmbdoGetAllDocumentDetails,
+  useSmbdoGetClient,
   useSmbdoGetDocumentDetail,
   useSmbdoGetDocumentRequest,
   useSmbdoPostClientVerifications,
@@ -37,6 +38,7 @@ import NavigationButtons from '../Stepper/NavigationButtons';
 import { useStepper } from '../Stepper/useStepper';
 import { PdfDisplay } from '../Steps/VerificationStep/PdfDisplay';
 import { verificationsStepSchema } from '../Steps/VerificationStep/validationSchema';
+import { fromApiToForm } from '../utils/fromApitoForm';
 import { useContentData } from '../utils/useContentData';
 
 const VerificationStep = () => {
@@ -48,6 +50,16 @@ const VerificationStep = () => {
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
+
+  const {
+    data: clientData,
+    refetch,
+    isPending,
+  } = useSmbdoGetClient((clientId || onboardingForm?.id) as string);
+
+  const clientDataForm = useMemo(() => {
+    return clientData && fromApiToForm(clientData);
+  }, [clientData]);
 
   // TODO: we need to list this?
   const termsAndConditionsDocId = verifications?.documentDetails?.find(
@@ -77,7 +89,14 @@ const VerificationStep = () => {
   //   };
   //   fetch();
   // }, []);
-  console.log('@@document', onboardingForm);
+  console.log(
+    '@@document',
+    onboardingForm,
+    clientDataForm,
+    onboardingForm?.id,
+    '::',
+    clientId
+  );
   const attestationID: string[] | undefined = onboardingForm?.attestations;
   const { data: termsAndConditionsDoc, isError: termsIsError }: any =
     useSmbdoDownloadDocument(
@@ -125,8 +144,11 @@ const VerificationStep = () => {
     console.log('@@onSubmit');
   };
 
-  const { organizationType } = onboardingForm.onganizationDetails.orgDetails;
-  const { businessName } = onboardingForm.onganizationDetails.orgDetails;
+  const organizationType =
+    clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
+  const businessName =
+    clientDataForm?.onganizationDetails?.orgDetails?.businessName;
+
   return (
     <section>
       <Title as="h2">{getContentToken(`title`)}</Title>

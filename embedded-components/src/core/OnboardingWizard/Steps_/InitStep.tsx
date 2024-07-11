@@ -5,7 +5,8 @@ import { Box } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useFormSchema } from '../context/formProvider.contex';
-import { useStepper } from '../Stepper/useStepper';
+// import { useStepper } from '../Stepper/useStepper';
+import { useStepper } from '../Stepper/Stepper';
 import { useContentData } from '../utils/useContentData';
 import { initSchema } from './StepsSchema';
 import { RenderForms } from './utils/RenderForms';
@@ -14,7 +15,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   const { clientId, jurisdictions, products, entityType } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
-  const { activeStep, setCurrentStep } = useStepper();
+  const { activeStep, setCurrentStep, buildStepper } = useStepper();
 
   const [blank, setUpdate] = useState(0);
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
@@ -27,6 +28,10 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   )[0];
 
   useEffect(() => {
+    buildStepper(['Init']);
+  }, []);
+
+  useEffect(() => {
     if (yupSchema) {
       updateSchema(yupSchema);
     } else {
@@ -34,7 +39,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [yupSchema]);
 
-  //TODO: Should be API driven
+  //TODO: Should be API driven, and token Content?
   useEffect(() => {
     if (!orgTypesFormFields?.optionsList) {
       orgTypesFormFields.optionsList = [

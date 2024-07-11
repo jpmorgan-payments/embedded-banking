@@ -48,7 +48,7 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
-    console.log('@@ON SUBMIT');
+    console.log('@@ON SUBMIT', postClient);
 
     if (!Object.values(errors).length) {
       // TODO: update this

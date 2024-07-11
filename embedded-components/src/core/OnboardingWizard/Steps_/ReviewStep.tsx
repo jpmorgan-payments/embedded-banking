@@ -51,9 +51,17 @@ const ReviewStep = () => {
 
     if (data?.outstanding?.questionIds?.length) {
       buildStepper(['Review', 'Questions']);
+      setOnboardingForm({
+        ...onboardingForm,
+        questionsIds: data?.outstanding?.questionIds || [],
+      });
     }
     if (data?.outstanding?.attestationDocumentIds?.length) {
       buildStepper(['Verification']);
+      setOnboardingForm({
+        ...onboardingForm,
+        questionsIds: data?.outstanding?.questionIds || [],
+      });
     }
   }, [data]);
 

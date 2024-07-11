@@ -20,22 +20,30 @@ import { updateOutstandingItems } from '../utils/actions';
 import { makeQuestionsAPIBody } from '../utils/apiUtilsParsers';
 import { useContentData } from '../utils/useContentData';
 import { q } from './q';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
-const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
+const QuestionsStep = ({ questionsIds, children }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
-
+  const { clientId } = useRootConfig();
   //TODO: When questions are answered, and no questions found, we need to say something here
   const { data: questionsList, isSuccess } = useSmbdoListQuestions({
     questionIds:
-      questionsIds?.join(',') ||
-      onboardingForm?.outstandingItems?.questionIds?.join(','),
+      questionsIds?.join(',') || onboardingForm?.questionsIds?.join(','),
   });
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
-  console.log('@@questions', onboardingForm, questionsList);
+  console.log(
+    '@@questions',
+    onboardingForm,
+    '::',
+    questionsList,
+    '>>',
+    questionsIds?.join(','),
+    onboardingForm
+  );
 
   const getValidationByFormat = (format?: string, parentId?: string) => {
     const listSchema = yup
@@ -43,6 +51,9 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
       .min(1, getContentToken('listSchemaError') as string);
     const stringSchema = yup
       .string()
+      .required(getContentToken('stringSchemaError') as string);
+    const integerSchema = yup
+      .number()
       .required(getContentToken('stringSchemaError') as string);
 
     // const booleanSchema = yup
@@ -54,7 +65,7 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
     // .required(getContentToken('stringSchemaError') as string);
 
     switch (format) {
-      case 'list':
+      case 'LIST':
         if (parentId) {
           return yup.array().when(parentId, {
             is: true,
@@ -62,17 +73,24 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
           });
         }
         return listSchema;
-      case 'boolean':
+      case 'BOLEAN':
         // if (parentId) {
-        //   return yup.string().when(parentId, {
-        //     is: 'true',
-        //     then: (s) => s.concat(booleanSchema),
+        //   return yup.boolean().when(parentId, {
+        //     is: true,
+        //     then: (s: any) => s.concat(booleanSchema),
         //   });
         // }
         return booleanSchema;
-
-      case 'single':
-      case 'string':
+      case 'INTEGER':
+        if (parentId) {
+          return yup.number().when(parentId, {
+            is: true,
+            then: (s) => s.concat(integerSchema),
+          });
+        }
+        return integerSchema;
+      case 'SINGLE':
+      case 'STRING':
       default:
         if (parentId) {
           //   return yup.string().when(parentId, (val, schema) => {
@@ -127,6 +145,8 @@ const QuestionsStep = ({ clientId, questionsIds, children }: any) => {
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
     console.log(
       '@@postBody',
+      form.getValues(),
+      '>>',
       postBody,
       questionList,
       form.getValues(),

@@ -20,9 +20,15 @@ const config: StorybookConfig = {
         proxy: {
           '/ef': {
             target: 'https://t3mpo-api-gateway-service-dev.jpmchase.net',
+            // TODO: this is for api-extermal-0.9...
+            // target: 'https://api-mock-payments.dev.aws.jpmchase.net',
             changeOrigin: true,
             secure: false,
             rewrite: (path) => path.replace(/^\/ef/, '/api-gateway/api/ef/v2'),
+            // TODO: this is for api-extermal-0.9...
+            // rewrite: (path) => {
+            //   return '/tsapi' + path;
+            // },
             configure: (proxy, opt) => {
               proxy.on('error', (err, _req, _res) => {
                 console.log('@@ERR');

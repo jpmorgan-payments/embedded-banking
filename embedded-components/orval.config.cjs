@@ -1,6 +1,7 @@
 module.exports = {
   'embedded-banking': {
     input: './api-specs/smb-do-api.oas3.yml',
+    // input: './api-specs/embedded-banking-api-external-0.9.88.yml',
     output: {
       mode: 'split',
       mock: true,

@@ -22,7 +22,8 @@ const QuestionForm = ({ question, form }: QuestionFormProps) => {
 
   return (
     <>
-      {question?.responseSchema?.items?.type === 'boolean' ? (
+      {/* TODO: TYPE ARE INCORRECT */}
+      {question?.responseSchema?.items?.type === 'BOOLEAN' ? (
         <FormField
           control={form.control}
           name={`${question?.id}`}

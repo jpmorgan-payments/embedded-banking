@@ -3,11 +3,12 @@ import {
   FC,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 
 import {
   IndDetails,
@@ -42,6 +43,16 @@ const initValues: yInitValues = {
 };
 const StepperContext = createContext(initValues);
 
+const useStepper = () => {
+  const context = useContext(StepperContext);
+  console.log('@@Curr@@', context);
+
+  if (!context) {
+    throw new Error('Stepper Context not found');
+  }
+  return context;
+};
+
 type yStepper = {
   children: ReactNode;
 };
@@ -54,6 +65,7 @@ const stepsWizard: any = {
   Review: ReviewStep,
   Verification: VerificationStep,
 };
+
 const StepperProvider: FC<yStepper> = ({ children }) => {
   const [steps, setStepState] = useState(initValues);
 
@@ -83,15 +95,18 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Verification',
     ]
   ): any => {
-    console.log('@@LIST::', stepNames);
+    console.log('@@LIST::', stepNames, '>>', activeStep);
 
     const stepsListSchemaTemp: any = () => {
-      return [
-        ...stepsList,
-        ...stepNames.map((name: string) => {
-          return stepsWizard[name];
-        }),
-      ].filter((item) => item);
+      return uniqBy(
+        [
+          ...stepsList,
+          ...stepNames.map((name: string) => {
+            return stepsWizard[name];
+          }),
+        ],
+        'title'
+      ).filter((item) => item);
     };
 
     const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;
@@ -109,17 +124,33 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
     setStepState((state) => {
       console.log(
         '@@LIST>$',
-        uniq([...state.stepsList, ...stepsListSchemaTemp()])
+        uniqBy([...state.stepsList, ...stepsListSchemaTemp()], 'title'),
+        '::',
+        CurrentStepTemp,
+        CurrentStepTemp?.title
       );
 
       return {
         ...state,
-        stepsList: uniq([...state.stepsList, ...stepsListSchemaTemp()]),
+        stepsList: uniqBy(
+          [...state.stepsList, ...stepsListSchemaTemp()],
+          'title'
+        ),
         currentFormSchema: currentSchemaTemp,
         CurrentStep: CurrentStepTemp,
       };
     });
   };
+
+  useEffect(() => {
+    console.log('@@LIST))))', steps);
+    // buildStepper(stepsList.map((val: any) => val?.title));
+    setStepState((state) => {
+      return {
+        ...state,
+      };
+    });
+  }, []);
 
   useEffect(() => {
     console.log('@@LIST@@', stepsList);
@@ -150,4 +181,4 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
   );
 };
 
-export { StepperProvider, StepperContext };
+export { StepperProvider, StepperContext, useStepper };

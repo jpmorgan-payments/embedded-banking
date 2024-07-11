@@ -11,8 +11,9 @@ import { FormProvider } from './context/formProvider.contex';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import NavigationButtons from './Stepper/NavigationButtons';
+import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
-import { useStepper } from './Stepper/useStepper';
+// import { useStepper } from './Stepper/useStepper';
 import { createYupSchema } from './Steps_/utils/createYupSchema';
 import { useContentData } from './utils/useContentData';
 
@@ -79,7 +80,16 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     } else {
       buildStepper();
     }
-  }, [clientId]);
+    if (!CurrentStep) {
+      console.log('@@LIST>WTF');
+
+      if (clientId) {
+        buildStepper(['Review']);
+      } else {
+        buildStepper();
+      }
+    }
+  }, [clientId, CurrentStep]);
 
   const { getContentToken } = useContentData(
     `schema.${CurrentStep?.contentData ?? ''}`
@@ -93,7 +103,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     : ({} as any);
 
   console.log(
-    '@@CurrentStep',
+    '@@LIST%',
     CurrentStep,
     CurrentStep?.title,
     '::',

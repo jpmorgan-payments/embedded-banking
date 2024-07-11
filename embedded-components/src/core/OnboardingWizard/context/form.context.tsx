@@ -18,6 +18,7 @@ export type OnboardingForm = {
   questionsAnswers: any;
   ip: string | undefined;
   attestations: string[] | undefined;
+  questionsIds: string[] | undefined;
 };
 
 export type defaultVluesFormContext = {
@@ -36,6 +37,7 @@ export const defaultValues: defaultVluesFormContext = {
     id: undefined,
     questionsAnswers: undefined,
     ip: undefined,
+    questionsIds: undefined,
   },
   setOnboardingForm: null,
 };
