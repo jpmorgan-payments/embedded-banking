@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Card, CardContent, Grid, Text } from '@/components/ui';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Stack,
+  Text,
+  Title,
+} from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useFormSchema } from '../context/formProvider.contex';
@@ -101,62 +109,75 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   console.log('@@orm.getValues()', form.getValues());
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-      <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
-        <RenderForms
-          {...{ formSchema: formSchema.form, getContentToken, form }}
-        />
-        <Card role="complementary" aria-live="polite">
-          <CardContent className="eb-rounded eb-bg-slate-200">
-            <Grid className="eb-flex eb-gap-2 eb-bg-slate-200 eb-p-5">
-              <Text>{getInitContentToken('corpText')}</Text>
-              <Text>{getInitContentToken('corpText1')}</Text>
+    <Stack>
+      <Title as="h3" className="eb-mb-8">
+        {getInitContentToken(`title`)}
+      </Title>
+      <Box>
+        <form
+          noValidate
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="eb-w-full"
+        >
+          <Box className="eb-grid eb-grid-cols-2 eb-gap-4 eb-space-y-4">
+            <RenderForms
+              {...{ formSchema: formSchema.form, getContentToken, form }}
+            />
+            <Card role="complementary" aria-live="polite">
+              <CardContent className="eb-rounded eb-bg-slate-200">
+                <Grid className="eb-flex eb-gap-2 eb-bg-slate-200 eb-p-5">
+                  <Text>{getInitContentToken('corpText')}</Text>
+                  <Text>{getInitContentToken('corpText1')}</Text>
 
-              {form.getValues().organizationType === '' && (
-                <Text>{getInitContentToken('corpText2')}</Text>
-              )}
+                  {form.getValues().organizationType === '' && (
+                    <Text>{getInitContentToken('corpText2')}</Text>
+                  )}
 
-              {form.getValues().organizationType !== 'SOLE_PROPRIETORSHIP' &&
-                form.getValues().organizationType !== '' && (
-                  <>
-                    <Text className="eb-font-bold">
-                      {getInitContentToken('corpText3')}
-                    </Text>
+                  {form.getValues().organizationType !==
+                    'SOLE_PROPRIETORSHIP' &&
+                    form.getValues().organizationType !== '' && (
+                      <>
+                        <Text className="eb-font-bold">
+                          {getInitContentToken('corpText3')}
+                        </Text>
 
-                    <Text className="eb-px-4">
-                      <ul className="eb-list-disc">
-                        {getInitContentToken('corpTextList')
-                          .toString()
+                        <Text className="eb-px-4">
+                          <ul className="eb-list-disc">
+                            {getInitContentToken('corpTextList')
+                              .toString()
+                              .split(',')
+                              .map((val) => (
+                                <li key={val}>{val}</li>
+                              ))}
+                          </ul>
+                        </Text>
+                      </>
+                    )}
+
+                  {form.getValues().organizationType ===
+                    'SOLE_PROPRIETORSHIP' && (
+                    <>
+                      <Text className="eb-font-bold">
+                        {getInitContentToken(`soloText`)}
+                      </Text>
+                      <ul>
+                        {(getInitContentToken(`soloListText`) as string)
                           .split(',')
-                          .map((val) => (
-                            <li key={val}>{val}</li>
-                          ))}
+                          .filter((i: string) => i)
+                          .map((item: string) => {
+                            return <li key={item}>{item}</li>;
+                          })}
                       </ul>
-                    </Text>
-                  </>
-                )}
-
-              {form.getValues().organizationType === 'SOLE_PROPRIETORSHIP' && (
-                <>
-                  <Text className="eb-font-bold">
-                    {getInitContentToken(`soloText`)}
-                  </Text>
-                  <ul>
-                    {(getInitContentToken(`soloListText`) as string)
-                      .split(',')
-                      .filter((i: string) => i)
-                      .map((item: string) => {
-                        return <li key={item}>{item}</li>;
-                      })}
-                  </ul>
-                </>
-              )}
-            </Grid>
-          </CardContent>
-        </Card>
+                    </>
+                  )}
+                </Grid>
+              </CardContent>
+            </Card>
+          </Box>
+          {children}
+        </form>
       </Box>
-      {children}
-    </form>
+    </Stack>
   );
 };
 

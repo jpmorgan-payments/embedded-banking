@@ -123,10 +123,15 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
   console.log('@@schema', formSchema.form);
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-      <Box className="eb-grid eb-grid-cols-3 eb-gap-4">
+    <form noValidate onSubmit={form.handleSubmit(onSubmit)} className='eb-w-full'>
+      <Box className="eb-w-full">
         <RenderForms
-          {...{ formSchema: formSchema.form, getContentToken, form }}
+          {...{
+            formSchema: formSchema.form,
+            getContentToken,
+            form,
+            className: `eb-space-y-4 eb-grid eb-grid-cols-3 eb-gap-4`,
+          }}
         />
       </Box>
       <NavigationButtons

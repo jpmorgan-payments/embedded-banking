@@ -1,3 +1,5 @@
+import { Box } from '@/components/ui';
+
 import { DobFormField } from '../../formFields/DobFormField';
 import { InputFormField } from '../../formFields/InputFormField';
 import { JobTitlesFormField } from '../../formFields/JobTitlesFormField';
@@ -20,9 +22,9 @@ export interface FormScham extends SelectFormFieldProps {
     | 'jobTitle';
 }
 
-const RenderForms = ({ formSchema, getContentToken, form }: any) => {
+const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
   return (
-    <>
+    <Box className={className}>
       {formSchema.map(
         ({
           name,
@@ -150,7 +152,7 @@ const RenderForms = ({ formSchema, getContentToken, form }: any) => {
           }
         }
       )}
-    </>
+    </Box>
   );
 };
 
