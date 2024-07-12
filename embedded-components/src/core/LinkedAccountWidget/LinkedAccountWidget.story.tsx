@@ -6,6 +6,6 @@ export default {
 
 export const Usage = () => (
   <div className="eb-max-w-[40rem]">
-    <LinkedAccountWidget />
+    <LinkedAccountWidget variant="singleAccount" />
   </div>
 );
