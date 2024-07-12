@@ -4,18 +4,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
 } from '@/components/ui';
+import { PhoneInput } from '@/components/ux/PhoneInput';
 
-const InputFormField = ({
-  name,
-  form,
-  labelToken,
-  placeholderToken,
-  required,
-}: any) => {
-  console.log('@@req', typeof required);
-
+const PhoneFormField = ({ name, form, labelToken, required }: any) => {
   return (
     <FormField
       control={form.control}
@@ -26,11 +18,7 @@ const InputFormField = ({
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
           <FormControl>
-            <Input
-              {...field}
-              required={required}
-              placeholder={placeholderToken}
-            />
+            <PhoneInput {...field} required />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -39,4 +27,4 @@ const InputFormField = ({
   );
 };
 
-export { InputFormField };
+export { PhoneFormField };

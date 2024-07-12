@@ -4,18 +4,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
 } from '@/components/ui';
+import { BirthDatePattern } from '@/components/ux/BirthDatePattern';
 
-const InputFormField = ({
-  name,
-  form,
-  labelToken,
-  placeholderToken,
-  required,
-}: any) => {
-  console.log('@@req', typeof required);
-
+const DobFormField = ({ name, form, labelToken, required }: any) => {
   return (
     <FormField
       control={form.control}
@@ -26,11 +18,7 @@ const InputFormField = ({
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
           <FormControl>
-            <Input
-              {...field}
-              required={required}
-              placeholder={placeholderToken}
-            />
+            <BirthDatePattern {...field} required />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -39,4 +27,4 @@ const InputFormField = ({
   );
 };
 
-export { InputFormField };
+export { DobFormField };

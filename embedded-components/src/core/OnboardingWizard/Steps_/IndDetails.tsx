@@ -120,6 +120,8 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
     }
   }, [activeStep]);
 
+  console.log('@@schema', formSchema.form);
+
   return (
     <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
       <Box className="eb-grid eb-grid-cols-3 eb-gap-4">

@@ -92,14 +92,14 @@ interface FormLablePropsRef
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   FormLablePropsRef
->(({ className, ...props }, ref) => {
+>(({ className, asterisk, ...props }, ref) => {
   const { error, formItemId } = useFormField();
   return (
     <Label
       ref={ref}
       className={cn(
         error && '!eb-text-destructive',
-        props?.asterisk && `after:eb-text-red-500 after:eb-content-["_*"]`,
+        asterisk && `after:eb-text-red-500 after:eb-content-["_*"]`,
         className
       )}
       htmlFor={formItemId}

@@ -147,7 +147,9 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
           name="jobTitleDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel asterisk={jobTitleIsOther}>Job Description</FormLabel>
+              <FormLabel asterisk={!!jobTitleIsOther}>
+                Job Description
+              </FormLabel>
               <FormControl>
                 <Input
                   {...field}

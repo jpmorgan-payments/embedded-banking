@@ -4,18 +4,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
 } from '@/components/ui';
+import { Ssn9Input } from '@/components/ux/SocialSecurity';
 
-const InputFormField = ({
-  name,
-  form,
-  labelToken,
-  placeholderToken,
-  required,
-}: any) => {
-  console.log('@@req', typeof required);
-
+const SsnFormField = ({ name, form, labelToken, required }: any) => {
   return (
     <FormField
       control={form.control}
@@ -26,11 +18,7 @@ const InputFormField = ({
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
           <FormControl>
-            <Input
-              {...field}
-              required={required}
-              placeholder={placeholderToken}
-            />
+            <Ssn9Input {...field} required />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -39,4 +27,4 @@ const InputFormField = ({
   );
 };
 
-export { InputFormField };
+export { SsnFormField };

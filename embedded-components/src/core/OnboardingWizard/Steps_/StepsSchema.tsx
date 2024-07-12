@@ -55,6 +55,7 @@ const businessSchema = {
     // },
   ],
 };
+
 const individaulSchema = {
   stepName: 'Individual',
   form: [
@@ -66,10 +67,97 @@ const individaulSchema = {
       required: true,
     },
     {
+      name: 'middleName',
+      fieldType: 'input',
+      labelToken: 'inputMN',
+      placeHolder: 'inputMN',
+      required: false,
+    },
+    {
       name: 'lastName',
       fieldType: 'input',
       labelToken: 'inputLN',
       placeholderToken: 'inputLN',
+      required: true,
+    },
+    {
+      name: 'email',
+      fieldType: 'input',
+      labelToken: 'Email',
+      placeholderToken: 'example@example.com',
+      required: true,
+    },
+    {
+      name: 'jobTitle',
+      fieldType: 'jobTitle',
+      labelToken: 'Job Title',
+      placeholderToken: 'Select Job Title',
+      required: true,
+    },
+    {
+      name: 'jobTitleDescription',
+      // TODO: add Special field type, if fieldType is just a placeholder
+      fieldType: null,
+      labelToken: 'Job Description',
+      required: true,
+    },
+    {
+      name: 'phone',
+
+      fieldType: 'phone',
+      labelToken: 'Phone',
+      required: true,
+    },
+    {
+      name: 'birthDate',
+
+      fieldType: 'birthdate',
+      labelToken: 'Date of Birth',
+      required: true,
+    },
+    {
+      name: 'ssn',
+
+      fieldType: 'ssn',
+      labelToken: 'Social Security Number',
+      required: true,
+    },
+    {
+      name: 'addressLine1',
+      fieldType: 'input',
+      labelToken: 'Address Line One',
+      required: true,
+    },
+    {
+      name: 'addressLine2',
+      fieldType: 'input',
+      labelToken: 'Address Line Two',
+      required: true,
+    },
+    {
+      name: 'addressLine3',
+      fieldType: 'input',
+      labelToken: 'Address Line Three',
+      required: true,
+    },
+    {
+      name: 'city',
+
+      fieldType: 'input',
+      labelToken: 'City',
+      required: true,
+    },
+    {
+      name: 'state',
+
+      fieldType: 'state',
+      labelToken: 'State',
+      required: true,
+    },
+    {
+      name: 'zip',
+      fieldType: 'input',
+      labelToken: 'Zip',
       required: true,
     },
     {
