@@ -38,7 +38,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   )[0];
 
   useEffect(() => {
-    buildStepper(['Init']);
+    buildStepper(['Intro']);
   }, []);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
 
   return (
     <Stack>
-      <Title as="h3" className="eb-mb-8">
+      <Title as="h2" className="eb-mb-8">
         {getInitContentToken(`title`)}
       </Title>
       <Box>
@@ -119,9 +119,14 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="eb-w-full"
         >
-          <Box className="eb-grid eb-grid-cols-2 eb-gap-4 eb-space-y-4">
+          <Box className="eb-grid eb-grid-cols-2 eb-gap-4 ">
             <RenderForms
-              {...{ formSchema: formSchema.form, getContentToken, form }}
+              {...{
+                formSchema: formSchema.form,
+                getContentToken,
+                form,
+                className: `eb-space-y-6`,
+              }}
             />
             <Card role="complementary" aria-live="polite">
               <CardContent className="eb-rounded eb-bg-slate-200">
@@ -141,16 +146,14 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
                           {getInitContentToken('corpText3')}
                         </Text>
 
-                        <Text className="eb-px-4">
-                          <ul className="eb-list-disc">
-                            {getInitContentToken('corpTextList')
-                              .toString()
-                              .split(',')
-                              .map((val) => (
-                                <li key={val}>{val}</li>
-                              ))}
-                          </ul>
-                        </Text>
+                        <ul className="eb-list-disc eb-px-4">
+                          {getInitContentToken('corpTextList')
+                            .toString()
+                            .split(',')
+                            .map((val) => (
+                              <li key={val}>{val}</li>
+                            ))}
+                        </ul>
                       </>
                     )}
 
@@ -181,7 +184,7 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
   );
 };
 
-InitStep.title = 'Init';
+InitStep.title = 'Intro';
 InitStep.contentData = 'BusinessDetailsStep';
 InitStep.formSchema = initSchema;
 

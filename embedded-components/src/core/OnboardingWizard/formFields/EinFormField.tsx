@@ -4,31 +4,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
 } from '@/components/ui';
+import { EinInput } from '@/components/ux/EinInput';
 
-const InputFormField = ({
-  name,
-  form,
-  labelToken,
-  placeholderToken,
-  required,
-}: any) => {
+const EinFormField = ({ name, form, labelToken, required }: any) => {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className='first:eb-mt-4'>
+        <FormItem>
           {labelToken && (
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
           <FormControl>
-            <Input
-              {...field}
-              required={required}
-              placeholder={placeholderToken}
-            />
+            <EinInput {...field} required />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -37,4 +27,4 @@ const InputFormField = ({
   );
 };
 
-export { InputFormField };
+export { EinFormField };

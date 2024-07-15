@@ -7,7 +7,7 @@ import {
   Input,
 } from '@/components/ui';
 
-const InputFormField = ({
+const WebsiteFromField = ({
   name,
   form,
   labelToken,
@@ -19,7 +19,7 @@ const InputFormField = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className='first:eb-mt-4'>
+        <FormItem className="">
           {labelToken && (
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
@@ -37,4 +37,4 @@ const InputFormField = ({
   );
 };
 
-export { InputFormField };
+export { WebsiteFromField };

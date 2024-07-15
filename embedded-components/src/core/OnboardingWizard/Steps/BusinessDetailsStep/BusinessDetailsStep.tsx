@@ -53,7 +53,7 @@ const BusinessDetailsStep = ({
       setActiveStep(activeStep + 1);
     }
   };
-  console.log('@@hasWebsite@@', hasWebsite);
+
   return (
     <Stack className="eb-w-full eb-gap-2">
       <Form {...form}>

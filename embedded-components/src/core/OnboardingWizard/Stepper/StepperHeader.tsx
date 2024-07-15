@@ -12,7 +12,7 @@ import { Box } from '@/components/ui';
 
 const icons = [
   {
-    title: 'Init',
+    title: 'Intro',
     icon: <User key="userIcon" size={20} color="black"></User>,
   },
   {
@@ -20,7 +20,7 @@ const icons = [
     icon: <User key="userIcon" size={20} color="black"></User>,
   },
   {
-    title: 'Business',
+    title: 'Organization',
     icon: <Building key="buildingIcon" size={20} color="black"></Building>,
   },
   {

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
-import { Box } from '@/components/ui';
+import { Box, Separator, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../context/form.context';
@@ -60,6 +60,8 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
         lastName,
         businessEmail,
         countryOfResidence,
+        organizationType,
+        individualEmail,
       } = form.getValues();
 
       try {
@@ -74,13 +76,13 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
                 organizationDetails: {
                   organizationName,
                   // TODO: update organization Type
-                  organizationType: 'LIMITED_LIABILITY_COMPANY',
+                  organizationType,
                   countryOfFormation,
                 },
               },
               {
                 partyType: 'INDIVIDUAL',
-                email: businessEmail,
+                email: individualEmail || businessEmail,
                 roles: ['CONTROLLER'],
                 individualDetails: {
                   firstName,
@@ -123,23 +125,34 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
   console.log('@@schema', formSchema.form);
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)} className='eb-w-full'>
-      <Box className="eb-w-full">
-        <RenderForms
-          {...{
-            formSchema: formSchema.form,
-            getContentToken,
-            form,
-            className: `eb-space-y-4 eb-grid eb-grid-cols-3 eb-gap-4`,
-          }}
+    <Stack className="eb-w-full">
+      <Title as="h2" className="eb-mb-4">
+        Tell us about your Organization
+      </Title>
+      <Separator className="eb-mb-4" />
+
+      <form
+        noValidate
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="eb-w-full"
+      >
+        <Box className="eb-w-full">
+          <RenderForms
+            {...{
+              formSchema: formSchema.form,
+              getContentToken,
+              form,
+              className: `eb-space-y-4 eb-grid eb-grid-cols-3 eb-gap-4 first:eb-mt-8`,
+            }}
+          />
+        </Box>
+        <NavigationButtons
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+          disabled={isPendingClientPost}
         />
-      </Box>
-      <NavigationButtons
-        setActiveStep={setCurrentStep}
-        activeStep={activeStep}
-        disabled={isPendingClientPost}
-      />
-    </form>
+      </form>
+    </Stack>
   );
 };
 IndDetails.title = 'Individual';

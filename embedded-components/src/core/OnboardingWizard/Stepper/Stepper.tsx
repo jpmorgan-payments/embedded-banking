@@ -58,9 +58,9 @@ type yStepper = {
 };
 
 const stepsWizard: any = {
-  Init: InitStep,
-  // Business: OrgDetails,
+  Intro: InitStep,
   Individual: IndDetails,
+  Organization: OrgDetails,
   Questions: QuestionsStep,
   Review: ReviewStep,
   Verification: VerificationStep,
@@ -88,8 +88,9 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
 
   const buildStepper = (
     stepNames: string[] = [
-      'Init',
+      'Intro',
       'Individual',
+      'Organization',
       'Questions',
       'Review',
       'Verification',
