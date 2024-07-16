@@ -9,15 +9,19 @@ const baseSchema = z.object({
 });
 
 export const LinkAccountFormSchema = z.discriminatedUnion('accountType', [
-  z.object({
-    accountType: z.literal('individual'),
-    firstName: z.string().min(1, 'First name is required'),
-    lastName: z.string().min(1, 'Last name is required'),
-  }).merge(baseSchema),
-  z.object({
-    accountType: z.literal('business'),
-    businessName: z.string().min(1, 'Business name is required'),
-  }).merge(baseSchema),
+  z
+    .object({
+      accountType: z.literal('INDIVIDUAL'),
+      firstName: z.string().min(1, 'First name is required'),
+      lastName: z.string().min(1, 'Last name is required'),
+    })
+    .merge(baseSchema),
+  z
+    .object({
+      accountType: z.literal('ORGANIZATION'),
+      businessName: z.string().min(1, 'Business name is required'),
+    })
+    .merge(baseSchema),
 ]);
 
 export type LinkAccountFormDataType = z.infer<typeof LinkAccountFormSchema>;

@@ -35,4 +35,5 @@ export type EBTheme = {
 export type EBConfig = {
   apiBaseUrl: string;
   theme?: EBTheme;
+  headers?: Record<string, string>;
 };
