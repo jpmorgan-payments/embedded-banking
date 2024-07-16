@@ -112,7 +112,7 @@ export const LinkAccountFormDialogTrigger: FC<
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-max-w-[30rem] eb-gap-4 eb-px-0 eb-pb-0">
+      <DialogContent className="eb-max-h-[min(60rem,100vh)] eb-gap-4 eb-px-0 eb-pb-0 sm:eb-max-w-[26rem]">
         <DialogHeader className="eb-px-6">
           <DialogTitle>Link an account</DialogTitle>
           <DialogDescription>
