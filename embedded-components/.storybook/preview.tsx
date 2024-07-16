@@ -5,7 +5,7 @@ import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 
 import { EBComponentsProvider } from '../src/core/EBComponentsProvider';
 
-import '../src/index.css';
+import 'tailwindcss/tailwind.css';
 
 const channel = addons.getChannel();
 
@@ -23,7 +23,6 @@ function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
     <EBComponentsProvider
       apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/ef/v2"
       theme={{ colorScheme: colorScheme }}
-      clientId="1399135901"
     >
       <ReactQueryDevtools />
       {children}

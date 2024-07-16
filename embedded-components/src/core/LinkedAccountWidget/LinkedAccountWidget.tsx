@@ -48,7 +48,7 @@ export const LinkedAccountWidget: React.FC<LinkedAccountWidgetProps> = ({
       : data?.recipients;
 
   return (
-    <Card>
+    <Card className="eb-component">
       <CardHeader>
         <CardTitle>Linked Account</CardTitle>
       </CardHeader>

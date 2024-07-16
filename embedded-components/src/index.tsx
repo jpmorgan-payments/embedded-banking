@@ -1,4 +1,4 @@
-import './index.css';
+import 'tailwind/tailwind.css';
 
 export { LinkedAccountWidget } from './core/LinkedAccountWidget/LinkedAccountWidget';
 export { OnboardingWizard } from './core/OnboardingWizard/OnboardingWizard';
