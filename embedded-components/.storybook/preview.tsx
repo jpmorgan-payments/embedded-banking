@@ -5,7 +5,7 @@ import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 
 import { EBComponentsProvider } from '../src/core/EBComponentsProvider';
 
-import 'tailwindcss/tailwind.css';
+import '../src/index.css';
 
 const channel = addons.getChannel();
 
