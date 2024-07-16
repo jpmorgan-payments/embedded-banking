@@ -12,6 +12,12 @@ import {
 } from '@/components/ui';
 // import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+const countryList = [
+  { value: 'US', label: 'US' },
+  { value: 'Canada', label: 'Canada' },
+  { value: 'UK', label: 'UK' },
+];
+
 const CountryFormField = ({
   form,
   name,
@@ -19,13 +25,6 @@ const CountryFormField = ({
   labelToken,
   placeholderToken,
 }: any) => {
-  const countryList = [
-    { value: 'US', label: 'US' },
-    { value: 'Canada', label: 'Canada' },
-    { value: 'UK', label: 'UK' },
-  ];
-
-  
   return (
     <FormField
       control={form.control}
@@ -39,7 +38,7 @@ const CountryFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={field.value}
+              value={field?.value}
             >
               <FormControl>
                 <SelectTrigger>

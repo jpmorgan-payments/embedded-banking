@@ -2,22 +2,21 @@ import {
   createContext,
   FC,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 import uniqBy from 'lodash/uniqBy';
 
 import {
+  DescionMakersStep,
   IndDetails,
   InitStep,
   OrgDetails,
   QuestionsStep,
   ReviewStep,
+  VerificationStep,
 } from '../Steps_';
-import { VerificationStep } from '../Steps_/VerificationStep';
 
 type yInitValues = {
   activeStep: number;
@@ -28,6 +27,7 @@ type yInitValues = {
   CurrentStep: any;
   buildStepper: (stepNames?: string[]) => any;
   setStepState: (val: any) => void;
+  removeSteps: (val: any) => void;
   // setActiveStep: any;
 };
 const initValues: yInitValues = {
@@ -39,6 +39,7 @@ const initValues: yInitValues = {
   currentFormSchema: null,
   buildStepper: () => {},
   setStepState: () => {},
+  removeSteps: () => {},
   // setActiveStep: () => {},
 };
 const StepperContext = createContext(initValues);
@@ -64,8 +65,25 @@ const stepsWizard: any = {
   Questions: QuestionsStep,
   Review: ReviewStep,
   Verification: VerificationStep,
+  'Decision Makers': DescionMakersStep,
 };
 
+const sortByRefferenceArray = (refArray: any, targetArray: any) => {
+  const orderMap = new Map();
+
+  refArray.forEach((item: any, idx: number) => {
+    orderMap.set(item, idx);
+  });
+
+  targetArray.sort((a: any, b: any) => {
+    const iA = orderMap.has(a.title) ? orderMap.get(a.title) : Infinity;
+    const iB = orderMap.has(b.title) ? orderMap.get(b.title) : Infinity;
+
+    return iA - iB;
+  });
+
+  return targetArray;
+};
 const StepperProvider: FC<yStepper> = ({ children }) => {
   const [steps, setStepState] = useState(initValues);
 
@@ -91,12 +109,12 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Intro',
       'Individual',
       'Organization',
+      'Decision Makers',
       'Questions',
       'Review',
       'Verification',
     ]
   ): any => {
-    console.log('@@LIST::', stepNames, '>>', activeStep);
 
     const stepsListSchemaTemp: any = () => {
       return uniqBy(
@@ -113,48 +131,38 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
     const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;
     const CurrentStepTemp = stepsListSchemaTemp()?.[activeStep];
 
-    console.log(
-      '@@LIST',
-      activeStep,
-      stepsListSchemaTemp(),
-      '>>',
-      currentSchemaTemp,
-      CurrentStepTemp
-    );
 
     setStepState((state) => {
-      console.log(
-        '@@LIST>$',
-        uniqBy([...state.stepsList, ...stepsListSchemaTemp()], 'title'),
-        '::',
-        CurrentStepTemp,
-        CurrentStepTemp?.title
+      const newArr = uniqBy(
+        [...state.stepsList, ...stepsListSchemaTemp()],
+        'title'
       );
 
       return {
         ...state,
-        stepsList: uniqBy(
-          [...state.stepsList, ...stepsListSchemaTemp()],
-          'title'
-        ),
+        stepsList: sortByRefferenceArray(stepNames, newArr),
         currentFormSchema: currentSchemaTemp,
         CurrentStep: CurrentStepTemp,
       };
     });
   };
 
-  useEffect(() => {
-    console.log('@@LIST))))', steps);
-    // buildStepper(stepsList.map((val: any) => val?.title));
+  const removeSteps = (nameList: string[]) => {
     setStepState((state) => {
+     
+
       return {
         ...state,
+        stepsList: [
+          ...stepsList.filter((step: any) => {
+            return !nameList.includes(step.title);
+          }),
+        ],
       };
     });
-  }, []);
+  };
 
   useEffect(() => {
-    console.log('@@LIST@@', stepsList);
     if (activeStep > 0) {
       buildStepper(
         stepsList?.length ? stepsList.map((val: any) => val?.title) : undefined
@@ -175,6 +183,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
         CurrentStep,
         setStepState,
         stepsList,
+        removeSteps,
       }}
     >
       {children}

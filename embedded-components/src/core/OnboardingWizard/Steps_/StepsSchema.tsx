@@ -17,7 +17,7 @@ const initSchema = {
     },
     {
       name: 'organizationType',
-      fieldType: 'select',
+      fieldType: 'orgType',
       labelToken: 'Organization Type',
       placeholderToken: 'Select type',
       required: true,
@@ -285,6 +285,11 @@ const questionsSchema = {
   display: true,
 };
 
+const descionMaker = {
+  stepName: 'Decision Makers',
+  display: true,
+};
+
 const reviewSchema = {
   stepName: 'Review',
   display: true,
@@ -304,6 +309,7 @@ export {
   stepsSchema,
   initSchema,
   individaulSchema,
+  descionMaker,
   questionsSchema,
   reviewSchema,
   businessSchema,

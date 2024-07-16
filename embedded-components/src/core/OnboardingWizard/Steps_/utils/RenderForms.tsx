@@ -6,6 +6,7 @@ import { EinFormField } from '../../formFields/EinFormField';
 import { IndustryFormField } from '../../formFields/IndustryFormField';
 import { InputFormField } from '../../formFields/InputFormField';
 import { JobTitlesFormField } from '../../formFields/JobTitlesFormField';
+import { OrgTypeFormField } from '../../formFields/OrgTypeFormField';
 import { PhoneFormField } from '../../formFields/PhoneFormField';
 import {
   SelectFormField,
@@ -30,6 +31,7 @@ export interface FormScham extends SelectFormFieldProps {
     | 'textarea'
     | 'website'
     | 'industryType'
+    | 'orgType'
     | 'jobTitle';
 }
 
@@ -146,6 +148,22 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
             case 'country':
               return (
                 <CountryFormField
+                  key={name}
+                  {...{
+                    name,
+                    labelToken: getContentToken(labelToken) ?? labelToken,
+                    placeholderToken:
+                      getContentToken(placeholderToken) ?? placeholderToken,
+                    required,
+                    form,
+                    defaultValue,
+                  }}
+                />
+              );
+
+            case 'orgType':
+              return (
+                <OrgTypeFormField
                   key={name}
                   {...{
                     name,
