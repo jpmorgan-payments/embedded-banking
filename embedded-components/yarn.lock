@@ -2345,8 +2345,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@jpmorgan-payments/embedded-banking-components@workspace:.":
   version: 0.0.0-use.local
   resolution: "@jpmorgan-payments/embedded-banking-components@workspace:."
@@ -2448,7 +2446,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
->>>>>>> 3ae08cc15e4499127e934e75bb524745b6885d5a
 "@jridgewell/gen-mapping@npm:^0.3.0, @jridgewell/gen-mapping@npm:^0.3.2":
   version: 0.3.4
   resolution: "@jridgewell/gen-mapping@npm:0.3.4"
