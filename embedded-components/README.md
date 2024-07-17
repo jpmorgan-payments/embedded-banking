@@ -6,11 +6,32 @@ This library is a works-in-progress.
 
 ## Usage
 
-***
+---
 
 :warning: This SDK is undergoing active development towards a stable release. While the version remains < 1.0.0 there may be some changes to the public API. We will endeavour to avoid that or keep to a minimum where possible
 
-***
+---
+
+Place the `<EBComponentsProvider>` component at the top-level of your React application. This wrapper will securely handle the sign-in and authenticate the user, in addition to applying a theme throughout all of the components.
+
+Next, you can add Embedded Banking Components anywhere within your application.
+
+The following is a current minimal setup:
+
+```tsx
+import {
+  EBComponentsProvider,
+  LinkedAccountWidget,
+} from '@jpmorgan-payments/embedded-banking-components';
+
+export const YourApplication = () => {
+  return (
+    <EBComponentsProvider theme={{}} apiBaseUrl="">
+      <LinkedAccountWidget />
+    </EBComponentsProvider>
+  );
+};
+```
 
 ## Contributing
 
@@ -26,9 +47,11 @@ This library is a works-in-progress.
 Use the `files.associations` setting to tell VS Code to always open `.css` files in Tailwind CSS mode:
 
 ```
+
 "files.associations": {
-  "*.css": "tailwindcss"
+"\*.css": "tailwindcss"
 }
+
 ```
 
 #### `editor.quickSuggestions`

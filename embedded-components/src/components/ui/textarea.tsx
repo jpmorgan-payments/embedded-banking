@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const textareaVariants = cva(
-  'eb-rounded-md eb-border eb-p-3 eb-leading-7 eb-text-gray-900   sm:eb-tracking-tight',
+  'eb-rounded-md eb-border eb-p-3 eb-leading-7 eb-text-gray-900 sm:eb-tracking-tight',
   {
     variants: {
       size: {

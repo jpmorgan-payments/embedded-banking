@@ -1,3 +1,8 @@
+import {
+  isolateForComponents,
+  scopedPreflightStyles,
+} from 'tailwindcss-scoped-preflight';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -79,5 +84,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    scopedPreflightStyles({
+      isolationStrategy: isolateForComponents('.eb-component'),
+    }),
+  ],
 };

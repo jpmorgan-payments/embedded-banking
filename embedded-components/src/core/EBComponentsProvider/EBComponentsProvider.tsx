@@ -14,8 +14,8 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
+  headers = {},
   theme = {},
-  headers,
 }) => {
   const queryClient = new QueryClient();
 
@@ -35,27 +35,17 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   }, []);
 
   useEffect(() => {
-    AXIOS_INSTANCE.defaults.baseURL = apiBaseUrl;
-  }, [apiBaseUrl]);
-
-  useEffect(() => {
-    if (!headers) return;
-
-    AXIOS_INSTANCE.interceptors.request.use(
-      (config: any) => {
-        return {
-          ...config,
-          headers: {
-            ...config.headers,
-            ...headers,
-          },
-        };
-      },
-      (error) => {
-        return Promise.reject(error);
-      }
-    );
-  }, [headers]);
+    AXIOS_INSTANCE.interceptors.request.use((config: any) => {
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          ...headers,
+        },
+        baseURL: apiBaseUrl,
+      };
+    });
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;

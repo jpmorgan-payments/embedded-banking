@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  getSmbdoPostClientVerificationsMutationOptions,
   smbdoGetClient,
   smbdoPostClientVerifications,
   useSmbdoGetClient,
@@ -124,7 +123,9 @@ const parties = [
   },
 ];
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { getContentToken } = useContentData('steps.ReviewStep');
   const { clientId } = useRootConfig();
   const { data } = useSmbdoGetClient(

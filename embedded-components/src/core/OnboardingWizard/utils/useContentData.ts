@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+
 import { contentTokensOnboardingEng } from './contentTokensOnboardingEng';
 
 const useContentData = (prefixes: string) => {
@@ -9,7 +10,7 @@ const useContentData = (prefixes: string) => {
     wordList?: Array<ReactNode | ReactNode[] | undefined>,
     customPrefix?: string
   ) => {
-    const compoundKey = `${customPrefix ?? prefixes  }.${  key}`;
+    const compoundKey = `${customPrefix ?? prefixes}.${key}`;
 
     const content = contentTokensList[compoundKey];
 
