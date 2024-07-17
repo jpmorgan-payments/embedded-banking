@@ -111,7 +111,7 @@ export const OnboardingWizard = ({ title, ...props }: any) => {
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <>
-            <Card className="eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
+            <Card className="eb-component eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
               <CardHeader>
                 <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
               </CardHeader>

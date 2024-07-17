@@ -200,7 +200,7 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
 
   return (
     <>
-      <Stack>
+      <Stack className="eb-component">
         <Title as="h2">Review</Title>
         <Group>
           <Title as="h5">STATUS: &nbsp;</Title>

@@ -48,7 +48,7 @@ const PersonalDetailsStep = ({
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Title as="h2">Tell us about yourself</Title>
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>

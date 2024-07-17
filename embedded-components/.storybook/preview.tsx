@@ -44,7 +44,7 @@ export const decorators = [
   (renderStory: any, { parameters, allArgs, ...props }: any) => {
     // TODO: we can use global Params
     const url = allArgs?.isMockBaseUrl
-      ? 'https://api.payments.jpmorgan.com/tsapi'
+      ? 'https://api-mock.payments.jpmorgan.com/tsapi'
       : '/ef';
     //TODO: this is also needs to be changed if new API is used
     // '';

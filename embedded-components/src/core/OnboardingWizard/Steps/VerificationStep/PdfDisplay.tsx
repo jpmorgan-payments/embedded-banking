@@ -46,7 +46,7 @@ export const PdfDisplay = ({
   return (
     <Box
       ref={ref}
-      className="eb-overflow-y-scroll"
+      className="eb-component eb-overflow-y-scroll"
       style={{
         height:
           rect.width * 1.3 > pdfMaxHeight ? pdfMaxHeight : rect.width * 1.3,

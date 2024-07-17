@@ -81,7 +81,7 @@ const EntityTypeStep: FC<EntityTypeStepProps> = ({
   };
 
   return (
-    <Stack>
+    <Stack className="eb-component">
       <Title as="h3">{getContentToken(`title`)}</Title>
 
       <Form {...form}>

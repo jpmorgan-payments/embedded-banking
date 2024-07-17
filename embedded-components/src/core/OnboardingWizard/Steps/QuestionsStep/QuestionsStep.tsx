@@ -107,7 +107,7 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <Title as="h3">

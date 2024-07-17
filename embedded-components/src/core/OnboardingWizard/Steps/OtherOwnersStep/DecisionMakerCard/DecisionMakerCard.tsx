@@ -42,7 +42,7 @@ const DecisionMakerCard = ({
 
   const [open, setOpen] = useState(false);
   return (
-    <div className="eb-w-80">
+    <div className="eb-component eb-w-80">
       <Card>
         <CardContent
           className={`${controller && 'eb-bg-black/10'} eb-flex eb-h-60 eb-content-center eb-rounded-md`}

@@ -79,7 +79,7 @@ const OtherOwnersStep = ({
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
