@@ -63,7 +63,7 @@ const BusinessDetailsStep = ({
           <BusinessCommonForm
             form={form}
             hasWebsite={hasWebsite}
-            setHasWebite={setHasWebsite}
+            setHasWebsite={setHasWebsite}
           />
           <NavigationButtons
             setActiveStep={setActiveStep}

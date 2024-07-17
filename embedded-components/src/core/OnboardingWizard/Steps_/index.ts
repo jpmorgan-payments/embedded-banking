@@ -3,5 +3,5 @@ export { OrgDetails } from './OrgDetails';
 export { IndDetails } from './IndDetails';
 export { QuestionsStep } from './QuestionsStep';
 export { ReviewStep } from './ReviewStep';
-export { DescionMakersStep } from './DescionMakers/DescionMakersStep';
+export { DecisionMakersStep } from './DecisionMakers/DecisionMakersStep';
 export { VerificationStep } from './VerificationStep';

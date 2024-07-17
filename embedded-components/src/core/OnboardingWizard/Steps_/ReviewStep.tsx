@@ -19,7 +19,7 @@ import { BusinessDetailsModal } from '../Modals/BusinessDetailsModal';
 import { IndividualDetailsModal } from '../Modals/IndividualDetailsModal';
 import NavigationButtons from '../Stepper/NavigationButtons';
 import { useStepper } from '../Stepper/useStepper';
-import { fromApiToForm } from '../utils/fromApitoForm';
+import { fromApiToForm } from '../utils/fromApiToForm';
 import { useContentData } from '../utils/useContentData';
 import { reviewSchema } from './StepsSchema';
 

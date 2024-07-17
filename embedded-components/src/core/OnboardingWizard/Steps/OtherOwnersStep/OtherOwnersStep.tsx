@@ -85,7 +85,7 @@ const OtherOwnersStep = ({
       <Form {...form}>
         <form noValidate>
           <FormField
-            name="additonalDecisionMakers"
+            name="additionalDecisionMakers"
             render={() => (
               <FormItem>
                 <FormLabel asterisk>

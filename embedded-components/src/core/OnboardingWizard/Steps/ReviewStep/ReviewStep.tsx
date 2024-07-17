@@ -27,7 +27,7 @@ import {
 import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
 import { IndividualDetailsModal } from '../../Modals/IndividualDetailsModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { fromApiToForm } from '../../utils/fromApitoForm';
+import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { ReviewTable } from './ReviewTable';
 import { valuesMap } from './valuesMap';
