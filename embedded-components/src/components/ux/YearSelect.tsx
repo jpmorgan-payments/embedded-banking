@@ -27,7 +27,6 @@ const YearSelect = ({ maxDate, onChange, value }: iYearSelect) => {
   const maxYear = maxDate || new Date().getFullYear();
   const yearOptions = useMemo(() => generateOptions(1900, maxYear), [maxYear]);
 
-
   return (
     <Select
       onValueChange={(val: string) => {

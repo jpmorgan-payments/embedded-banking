@@ -15,7 +15,7 @@ export function BirthDatePattern({ onChange, ...props }: any) {
       //TODO:placeHolder content replacement
       placeholder="MM/DD/YYYY"
       mask={['M', 'M', 'D', 'D', 'Y', 'Y', 'Y', 'Y']}
-    //   allowEmptyFormatting
+      //   allowEmptyFormatting
       onValueChange={(event: NumberFormatValues) => {
         if (event?.value) {
           onChange?.(event.value);

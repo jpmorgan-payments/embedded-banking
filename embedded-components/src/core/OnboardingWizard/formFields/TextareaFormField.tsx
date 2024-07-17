@@ -8,12 +8,7 @@ import {
   TextArea,
 } from '@/components/ui';
 
-const TextareaFormField = ({
-  name,
-  form,
-  labelToken,
-  required,
-}: any) => {
+const TextareaFormField = ({ name, form, labelToken, required }: any) => {
   return (
     <FormField
       control={form.control}

@@ -53,8 +53,6 @@ const InitStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [entityType, jurisdictions]);
 
-  
-
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
 

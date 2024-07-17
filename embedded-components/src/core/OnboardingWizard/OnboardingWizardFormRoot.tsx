@@ -17,7 +17,7 @@ export const OnboardingWizardFormRoot = ({
   submit,
   ...props
 }: any) => {
-  const { activeStep,  } = useStepper();
+  const { activeStep } = useStepper();
 
   const validSchema = yup.object({});
 

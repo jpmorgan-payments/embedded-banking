@@ -31,4 +31,4 @@ const Box = React.forwardRef<
 ));
 Box.displayName = 'Box';
 
-export { Box, };
+export { Box };

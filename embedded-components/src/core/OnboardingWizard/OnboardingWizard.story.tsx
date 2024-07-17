@@ -19,10 +19,10 @@ type Story = StoryObj<typeof OnboardingWizardRoot>;
 
 export const Default: Story = {
   args: {
-  onRegistration: ({ clientId }: onRegistrationProp) => {
-    console.log('@@clientId', clientId);
+    onRegistration: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
   },
-}
 };
 
 export const OnboardingWithClientID: Story = {

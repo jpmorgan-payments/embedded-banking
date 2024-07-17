@@ -11,6 +11,7 @@ import {
   SchemasQuestionResponse,
 } from '@/api/generated/embedded-banking.schemas';
 import { Grid, Stack, Title } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useOnboardingForm } from '../context/form.context';
 import { useFormSchema } from '../context/formProvider.contex';
@@ -20,7 +21,6 @@ import { updateOutstandingItems } from '../utils/actions';
 import { makeQuestionsAPIBody } from '../utils/apiUtilsParsers';
 import { useContentData } from '../utils/useContentData';
 import { q } from './q';
-import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 const QuestionsStep = ({ questionsIds, children }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
