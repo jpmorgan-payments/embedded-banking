@@ -92,9 +92,14 @@ export const LinkAccountFormDialogTrigger: FC<
         account: {
           type: 'CHECKING',
           number: data.accountNumber,
-          routingNumber: data.routingNumber,
+          routingInformation: [
+            {
+              routingCodeType: 'USABA',
+              routingNumber: data.routingNumber,
+              transactionType: 'ACH',
+            },
+          ],
           countryCode: 'US',
-          routingCodeType: 'USABA',
         },
       },
     });
@@ -151,7 +156,7 @@ export const LinkAccountFormDialogTrigger: FC<
                             createRecipientResponse.partyDetails.lastName,
                           ].join(' ')
                         : createRecipientResponse.partyDetails.businessName}
-                      {` (...${createRecipientResponse.account.number.slice(-4)})`}
+                      {` (...${createRecipientResponse.account ? createRecipientResponse.account.number.slice(-4) : ''})`}
                     </h4>
                     <Badge>{createRecipientResponse.status}</Badge>
                   </div>
