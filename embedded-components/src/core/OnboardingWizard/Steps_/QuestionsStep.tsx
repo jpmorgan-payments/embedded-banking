@@ -133,7 +133,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
 
     const res = await submitQuestions({
-      id: (onboardingForm?.id || clientId) as string,
+      id: (onboardingForm?.id || clientId) ?? '',
       data: postBody,
     });
 

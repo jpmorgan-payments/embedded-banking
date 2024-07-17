@@ -18,11 +18,7 @@ const Grid = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof gridVariant>
 >(({ className, variant, children, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(gridVariant({ variant }), className)}
-    {...props}
-  >
+  <div ref={ref} className={cn(gridVariant({ variant }), className)} {...props}>
     {children}
   </div>
 ));

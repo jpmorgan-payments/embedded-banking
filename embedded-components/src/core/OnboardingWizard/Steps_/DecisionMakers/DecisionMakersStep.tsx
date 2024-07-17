@@ -23,12 +23,12 @@ import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useStepper } from '../../Stepper/Stepper';
 import { formToAPIBody } from '../../utils/apiUtilsParsers';
-import { fromApiToForm } from '../../utils/fromApitoForm';
+import { fromApiToForm } from '../../utils/fromApiToForm';
 import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
 // import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
-const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
+const DecisionMakersStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
@@ -85,12 +85,12 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Title as="h3">Additional Decision Makers</Title>
 
       <form noValidate>
         <FormField
-          name="additonalDecisionMakers"
+          name="additionalDecisionMakers"
           render={() => (
             <FormItem>
               <FormLabel asterisk>
@@ -189,7 +189,7 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
   );
 };
 
-DescionMakersStep.title = 'Decision Makers';
-DescionMakersStep.formSchema = null;
+DecisionMakersStep.title = 'Decision Makers';
+DecisionMakersStep.formSchema = null;
 
-export { DescionMakersStep };
+export { DecisionMakersStep };

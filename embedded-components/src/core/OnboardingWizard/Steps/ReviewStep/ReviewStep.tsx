@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  getSmbdoPostClientVerificationsMutationOptions,
   smbdoGetClient,
   smbdoPostClientVerifications,
   useSmbdoGetClient,
@@ -28,7 +27,7 @@ import {
 import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
 import { IndividualDetailsModal } from '../../Modals/IndividualDetailsModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { fromApiToForm } from '../../utils/fromApitoForm';
+import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { ReviewTable } from './ReviewTable';
 import { valuesMap } from './valuesMap';
@@ -124,7 +123,9 @@ const parties = [
   },
 ];
 const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { getContentToken } = useContentData('steps.ReviewStep');
   const { clientId } = useRootConfig();
   const { data } = useSmbdoGetClient(
@@ -199,7 +200,7 @@ const ReviewStep = ({ activeStep, setActiveStep }: ReviewStepProps) => {
 
   return (
     <>
-      <Stack>
+      <Stack className="eb-component">
         <Title as="h2">Review</Title>
         <Group>
           <Title as="h5">STATUS: &nbsp;</Title>

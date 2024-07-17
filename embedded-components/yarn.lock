@@ -2345,6 +2345,110 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
+=======
+"@jpmorgan-payments/embedded-banking-components@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@jpmorgan-payments/embedded-banking-components@workspace:."
+  dependencies:
+    "@faker-js/faker": "npm:^8.4.1"
+    "@hookform/resolvers": "npm:^3.6.0"
+    "@ianvs/prettier-plugin-sort-imports": "npm:^4.2.1"
+    "@mantine/form": "npm:^7.5.2"
+    "@mantine/hooks": "npm:7.5.1"
+    "@radix-ui/react-alert-dialog": "npm:^1.0.5"
+    "@radix-ui/react-checkbox": "npm:^1.0.4"
+    "@radix-ui/react-dialog": "npm:^1.0.5"
+    "@radix-ui/react-label": "npm:^2.0.2"
+    "@radix-ui/react-popover": "npm:^1.0.7"
+    "@radix-ui/react-radio-group": "npm:^1.1.3"
+    "@radix-ui/react-scroll-area": "npm:^1.0.5"
+    "@radix-ui/react-select": "npm:^2.0.0"
+    "@radix-ui/react-separator": "npm:^1.0.3"
+    "@radix-ui/react-slot": "npm:^1.0.2"
+    "@radix-ui/react-switch": "npm:^1.0.3"
+    "@storybook/addon-essentials": "npm:^8.0.8"
+    "@storybook/addon-interactions": "npm:^8.0.8"
+    "@storybook/addon-links": "npm:^8.0.8"
+    "@storybook/blocks": "npm:^8.0.8"
+    "@storybook/react": "npm:^8.0.8"
+    "@storybook/react-vite": "npm:^8.0.8"
+    "@storybook/testing-library": "npm:^0.2.2"
+    "@tabler/icons-react": "npm:^3.7.0"
+    "@tanstack/react-query": "npm:^5.32.1"
+    "@tanstack/react-query-devtools": "npm:^5.32.1"
+    "@tanstack/react-table": "npm:^8.13.0"
+    "@testing-library/dom": "npm:^9.3.3"
+    "@testing-library/jest-dom": "npm:^6.1.5"
+    "@testing-library/react": "npm:^14.1.2"
+    "@testing-library/user-event": "npm:^14.5.1"
+    "@types/react": "npm:^18.2.36"
+    "@types/react-dom": "npm:^18.2.14"
+    "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
+    "@typescript-eslint/parser": "npm:^6.9.1"
+    "@vitejs/plugin-react": "npm:^4.2.1"
+    autoprefixer: "npm:^10.4.17"
+    axios: "npm:^1.6.7"
+    class-variance-authority: "npm:^0.7.0"
+    clsx: "npm:^2.1.0"
+    colortranslator: "npm:^4.1.0"
+    date-fns: "npm:^3.3.1"
+    deepmerge: "npm:^4.3.1"
+    eslint: "npm:^8.53.0"
+    eslint-config-airbnb: "npm:19.0.4"
+    eslint-config-airbnb-typescript: "npm:^17.1.0"
+    eslint-config-mantine: "npm:^3.1.0"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-import: "npm:^2.29.1"
+    eslint-plugin-jsx-a11y: "npm:^6.7.0"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-tailwindcss: "npm:^3.15.1"
+    identity-obj-proxy: "npm:^3.0.0"
+    jsdom: "npm:^23.0.1"
+    json-diff-ts: "npm:^4.0.1"
+    libphonenumber-js: "npm:^1.10.61"
+    lucide-react: "npm:^0.294.0"
+    msw: "npm:^2.3.0"
+    orval: "npm:^6.27.1"
+    postcss: "npm:^8.4.35"
+    postcss-preset-mantine: "npm:1.13.0"
+    postcss-simple-vars: "npm:^7.0.1"
+    prettier: "npm:^3.1.1"
+    prettier-plugin-tailwindcss: "npm:^0.5.14"
+    prop-types: "npm:^15.8.1"
+    public-ip: "npm:^6.0.2"
+    react: "npm:^18.2.0"
+    react-day-picker: "npm:^8.10.0"
+    react-dom: "npm:^18.2.0"
+    react-error-boundary: "npm:^4.0.13"
+    react-hook-form: "npm:^7.51.5"
+    react-number-format: "npm:^5.3.4"
+    react-pdf: "npm:8"
+    replace: "npm:^1.2.2"
+    storybook: "npm:^8.0.8"
+    storybook-dark-mode: "npm:^4.0.1"
+    tabler-icons-react: "npm:^1.56.0"
+    tailwind-merge: "npm:^2.1.0"
+    tailwindcss: "npm:^3.4.1"
+    tailwindcss-animate: "npm:^1.0.7"
+    tailwindcss-scoped-preflight: "npm:^3.3.0"
+    typescript: "npm:^5.3.3"
+    usa-states: "npm:^0.0.6"
+    vite: "npm:^5.0.10"
+    vite-plugin-dts: "npm:^3.7.2"
+    vite-plugin-lib-inject-css: "npm:^2.0.0"
+    vite-tsconfig-paths: "npm:^4.2.2"
+    vitest: "npm:^1.1.0"
+    yup: "npm:^1.4.0"
+    zod: "npm:^3.22.4"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+>>>>>>> 3ae08cc15e4499127e934e75bb524745b6885d5a
 "@jridgewell/gen-mapping@npm:^0.3.0, @jridgewell/gen-mapping@npm:^0.3.2":
   version: 0.3.4
   resolution: "@jridgewell/gen-mapping@npm:0.3.4"
@@ -11912,10 +12016,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path2d@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "path2d@npm:0.2.0"
-  checksum: 10c0/fcf95e10a28ef9277a8e60c1df2b5279facb5894efa6a6c5225ec86b502aead1ea8fa90a3b21a7b5864e7a0ffb1405b360dc757c88794c5965bd43aa51b3c4f1
+"path2d-polyfill@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "path2d-polyfill@npm:2.0.1"
+  checksum: 10c0/b6d8c0764f65438cd884ef3b62c5af07d4f526b379c4c804effc26dd17936f18076941941f9e804c0df96d39720f155e9f0723e4b30feaee152ea4a441df023e
   languageName: node
   linkType: hard
 
@@ -11933,18 +12037,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdfjs-dist@npm:4.3.136":
-  version: 4.3.136
-  resolution: "pdfjs-dist@npm:4.3.136"
+"pdfjs-dist@npm:3.11.174":
+  version: 3.11.174
+  resolution: "pdfjs-dist@npm:3.11.174"
   dependencies:
     canvas: "npm:^2.11.2"
-    path2d: "npm:^0.2.0"
+    path2d-polyfill: "npm:^2.0.1"
   dependenciesMeta:
     canvas:
       optional: true
-    path2d:
+    path2d-polyfill:
       optional: true
-  checksum: 10c0/4cb88d737f56100d45d2c9c0c6e8dc2f3dfd856362a55e47801ae32c52b2f12b3e74819c3cafb995a1e84c43eb580598a69c6710a78b1a11cdb52ef24bf8a633
+  checksum: 10c0/0cb26561fd9bea90f2c1c8029d4cf972d338838de0f7f7aa3f369b2e555b99a2d8bbf1b81cc682fb26331241201a432726ae356a7ad3a930d86a308ca941d29c
   languageName: node
   linkType: hard
 
@@ -12613,16 +12717,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-pdf@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "react-pdf@npm:9.0.0"
+"react-pdf@npm:8":
+  version: 8.0.2
+  resolution: "react-pdf@npm:8.0.2"
   dependencies:
     clsx: "npm:^2.0.0"
     dequal: "npm:^2.0.3"
     make-cancellable-promise: "npm:^1.3.1"
     make-event-props: "npm:^1.6.0"
     merge-refs: "npm:^1.3.0"
-    pdfjs-dist: "npm:4.3.136"
+    pdfjs-dist: "npm:3.11.174"
     tiny-invariant: "npm:^1.0.0"
     warning: "npm:^4.0.0"
   peerDependencies:
@@ -12632,7 +12736,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/c9e5606ee5a36acab0746914f2efa84459bf969e0f4d5e3a945da6d14f9882c57c45ea66f181ed16112b933321b963241e5c7f6b1cb0890322a24b4c8925a48b
+  checksum: 10c0/83064e77030207bf4a7c80e24968c8957c9dedccadbf6f8e28b1a28166d9b7aa6cc473dc31bddcc57660d636756db763a39c0fdf1bc0d4cea49ffc3bb0f5d1d1
   languageName: node
   linkType: hard
 
@@ -14040,6 +14144,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tailwindcss-scoped-preflight@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "tailwindcss-scoped-preflight@npm:3.3.0"
+  peerDependencies:
+    postcss: ^8
+    tailwindcss: ^3
+  checksum: 10c0/4ead5d10b6d4c153c439ecc7816e1fbe6d5a17d522885327d9d7ca66d4cba1e9af2ca95b3aac694729c1f15162198090faa94c77bd1400fcd4e17d4abfe8ee51
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:^3.4.1":
   version: 3.4.1
   resolution: "tailwindcss@npm:3.4.1"
@@ -14099,8 +14213,8 @@ __metadata:
   linkType: hard
 
 "tar@npm:^6.1.11, tar@npm:^6.1.2, tar@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "tar@npm:6.2.0"
+  version: 6.2.1
+  resolution: "tar@npm:6.2.1"
   dependencies:
     chownr: "npm:^2.0.0"
     fs-minipass: "npm:^2.0.0"
@@ -14108,7 +14222,7 @@ __metadata:
     minizlib: "npm:^2.1.1"
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
-  checksum: 10c0/02ca064a1a6b4521fef88c07d389ac0936730091f8c02d30ea60d472e0378768e870769ab9e986d87807bfee5654359cf29ff4372746cc65e30cbddc352660d8
+  checksum: 10c0/a5eca3eb50bc11552d453488344e6507156b9193efd7635e98e867fab275d527af53d8866e2370cd09dfe74378a18111622ace35af6a608e5223a7d27fe99537
   languageName: node
   linkType: hard
 

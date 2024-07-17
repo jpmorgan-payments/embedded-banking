@@ -15,7 +15,7 @@ export const useFormSchema = () => useContext(FormContext);
 export const FormProvider = ({ children, initialSchema }: any) => {
   const [schema, setSchema] = useState(initialSchema || yup.object({}));
   type FormData = yup.InferType<typeof schema>;
-  
+
   const form = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'onBlur',

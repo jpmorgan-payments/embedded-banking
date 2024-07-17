@@ -28,7 +28,6 @@ const CardReviewBusiness = ({
   title,
   onEdit,
 }: CardReviewBusiness) => {
- 
   const { email, orgDetails } = data;
   const {
     businessName,

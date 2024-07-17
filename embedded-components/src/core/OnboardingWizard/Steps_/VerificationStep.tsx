@@ -38,7 +38,7 @@ import NavigationButtons from '../Stepper/NavigationButtons';
 import { useStepper } from '../Stepper/useStepper';
 import { PdfDisplay } from '../Steps/VerificationStep/PdfDisplay';
 import { verificationsStepSchema } from '../Steps/VerificationStep/validationSchema';
-import { fromApiToForm } from '../utils/fromApitoForm';
+import { fromApiToForm } from '../utils/fromApiToForm';
 import { useContentData } from '../utils/useContentData';
 
 const VerificationStep = () => {
@@ -103,7 +103,7 @@ const VerificationStep = () => {
       type: 'application/pdf',
     });
     const urlBlob = URL.createObjectURL(newBlob);
-  
+
     setDocs(urlBlob);
   }, [termsAndConditionsDoc]);
 

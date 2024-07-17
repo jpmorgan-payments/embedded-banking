@@ -107,7 +107,7 @@ const VerificationsStep = ({
   // }, []);
 
   return (
-    <section>
+    <section className="eb-component">
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
       <Title as="h3">{getContentToken(`title1`)}</Title>

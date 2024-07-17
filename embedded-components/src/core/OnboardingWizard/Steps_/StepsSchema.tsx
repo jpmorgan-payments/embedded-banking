@@ -285,7 +285,7 @@ const questionsSchema = {
   display: true,
 };
 
-const descionMaker = {
+const decisionMaker = {
   stepName: 'Decision Makers',
   display: true,
 };
@@ -309,7 +309,7 @@ export {
   stepsSchema,
   initSchema,
   individaulSchema,
-  descionMaker,
+  decisionMaker,
   questionsSchema,
   reviewSchema,
   businessSchema,

@@ -9,7 +9,7 @@ import {
 import uniqBy from 'lodash/uniqBy';
 
 import {
-  DescionMakersStep,
+  DecisionMakersStep,
   IndDetails,
   InitStep,
   OrgDetails,
@@ -63,7 +63,7 @@ const stepsWizard: any = {
   Questions: QuestionsStep,
   Review: ReviewStep,
   Verification: VerificationStep,
-  'Decision Makers': DescionMakersStep,
+  'Decision Makers': DecisionMakersStep,
 };
 
 const sortByRefferenceArray = (refArray: any, targetArray: any) => {
@@ -113,7 +113,6 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Verification',
     ]
   ): any => {
-
     const stepsListSchemaTemp: any = () => {
       return uniqBy(
         [
@@ -128,7 +127,6 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
 
     const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;
     const CurrentStepTemp = stepsListSchemaTemp()?.[activeStep];
-
 
     setStepState((state) => {
       const newArr = uniqBy(
@@ -147,8 +145,6 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
 
   const removeSteps = (nameList: string[]) => {
     setStepState((state) => {
-     
-
       return {
         ...state,
         stepsList: [

@@ -58,7 +58,7 @@ const BusinessDetailsModal = ({
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
       const data = fromFormToOrgParty(form.getValues());
-     
+
       const res = await updateParty({
         id: formData.id,
         data: {
@@ -66,7 +66,7 @@ const BusinessDetailsModal = ({
           organizationDetails: data,
         },
       });
-     
+
       if (res?.id) {
         onCancel(res?.id);
       }

@@ -55,7 +55,7 @@ const BusinessDetailsStep = ({
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <BusinessForm form={form} />
@@ -63,7 +63,7 @@ const BusinessDetailsStep = ({
           <BusinessCommonForm
             form={form}
             hasWebsite={hasWebsite}
-            setHasWebite={setHasWebsite}
+            setHasWebsite={setHasWebsite}
           />
           <NavigationButtons
             setActiveStep={setActiveStep}

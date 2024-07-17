@@ -1,4 +1,4 @@
-import { Key, useState } from 'react';
+import { useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
@@ -79,13 +79,13 @@ const OtherOwnersStep = ({
   };
 
   return (
-    <Stack className="eb-w-full eb-gap-2">
+    <Stack className="eb-component eb-w-full eb-gap-2">
       <Title as="h3">Additional Decision Makers</Title>
 
       <Form {...form}>
         <form noValidate>
           <FormField
-            name="additonalDecisionMakers"
+            name="additionalDecisionMakers"
             render={() => (
               <FormItem>
                 <FormLabel asterisk>
