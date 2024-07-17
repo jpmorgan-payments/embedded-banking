@@ -9,5 +9,5 @@ export const getRecipientLabel = (recipient: Recipient) => {
         ].join(' ')
       : recipient.partyDetails.businessName;
 
-  return `${name} (...${recipient.account.number.slice(-4)})`;
+  return `${name} (...${recipient.account ? recipient.account.number.slice(-4) : ''})`;
 };

@@ -144,7 +144,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     );
 
     const res = await submitQuestions({
-      id: onboardingForm?.id || clientId,
+      id: (onboardingForm?.id || clientId) ?? '',
       data: postBody,
     });
 
