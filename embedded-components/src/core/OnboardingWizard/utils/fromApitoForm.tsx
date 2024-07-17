@@ -10,8 +10,7 @@ import {
 
 const fromApiToForm = (client: ClientResponse) => {
   if (!client?.parties) {
-    console.log('@@NO PARTIES DETECTED!!');
-    throw new Error('API Response failed, reset');
+    throw new Error('API Response failed,  no parties detected');
   }
   const flattened: any = {
     id: client.id,

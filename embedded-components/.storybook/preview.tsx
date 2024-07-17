@@ -46,9 +46,8 @@ export const decorators = [
     const url = allArgs?.isMockBaseUrl
       ? 'https://api-mock.payments.jpmorgan.com/tsapi/ef/v2'
       : '/ef';
-      //TODO: this is also needs to be changed if new API is used
+    //TODO: this is also needs to be changed if new API is used
     // '';
-    console.log('@@url', url);
 
     return (
       <ColorSchemeWrapper baseUrl={url}>{renderStory()}</ColorSchemeWrapper>

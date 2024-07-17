@@ -18,17 +18,15 @@ type QuestionFormProps = {
 };
 
 const QuestionForm = ({ question, form }: QuestionFormProps) => {
-  console.log('@@question', question);
-
   return (
     <>
-      {/* TODO: TYPE ARE INCORRECT */}
+      {/* TODO: TYPE ARE INCORRECT: BOOLEAN */}
+      {/* @ts-ignore */}
       {question?.responseSchema?.items?.type === 'BOOLEAN' ? (
         <FormField
           control={form.control}
           name={`${question?.id}`}
           render={({ field }) => {
-            console.log('@@field', field);
             return (
               <FormItem>
                 <FormLabel className="eb-my-5" asterisk>

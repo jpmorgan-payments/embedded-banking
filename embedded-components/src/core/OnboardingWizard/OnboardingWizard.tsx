@@ -9,8 +9,8 @@ import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useOnboardingForm } from './context/form.context';
 import { useIPAddress } from './hooks/getIPAddress';
 import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
-import { useStepper } from './Stepper/useStepper';
 import StepperHeader from './Stepper/StepperHeader';
+import { useStepper } from './Stepper/useStepper';
 import {
   BusinessDetailsStep,
   EntityTypeStep,
@@ -26,7 +26,6 @@ export const OnboardingWizard = ({ title, ...props }: any) => {
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
   const { clientId } = useRootConfig();
-  console.log('@@IPs', ipAddress, ipFetchStatus);
 
   useEffect(() => {
     if (props?.isMock) {
@@ -53,12 +52,6 @@ export const OnboardingWizard = ({ title, ...props }: any) => {
       setOnboardingForm({ ...onboardingForm, ip: ipAddress });
     }
   }, [ipAddress]);
-
-  useEffect(() => {
-    if (clientId) {
-      console.log('@@clientID', clientId);
-    }
-  }, [clientId]);
 
   const steps = clientId
     ? [

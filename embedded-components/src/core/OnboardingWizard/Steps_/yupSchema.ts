@@ -4,15 +4,6 @@ import { createRegExpAndMessage } from '@/lib/utils';
 
 const yupSchema: any = {
   Init: (getContentToken: any) => {
-    console.log(
-      '@@INIT LOADED>>',
-      getContentToken?.(`businessName`) ?? '',
-      '::WTF',
-      getContentToken?.('invalidCharactersErrorMessage', undefined, 'common'),
-      '<>',
-      getContentToken?.(`invalidWhiteSpaces`) ?? ''
-    );
-
     return yup.object().shape({
       organizationName: yup
         .string()

@@ -35,15 +35,6 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   });
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
-  console.log(
-    '@@questions',
-    onboardingForm,
-    '::',
-    questionsList,
-    '>>',
-    questionsIds?.join(','),
-    onboardingForm
-  );
 
   const getValidationByFormat = (format?: string, parentId?: string) => {
     const listSchema = yup
@@ -114,8 +105,6 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     ((questionsList || q) as QuestionListResponse)?.questions?.reduce(
       (a: any, v: any) => {
         if (!v?.id) return a;
-        console.log('@@a,v', a, v);
-
         return {
           ...a,
           [v.id]: getValidationByFormat(
@@ -166,8 +155,6 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     });
     // setCurrentStep(activeStep + 1);
   }, [activeStep]);
-
-  console.log('@@yupObject', yupObject, onboardingForm);
 
   return (
     <Stack>

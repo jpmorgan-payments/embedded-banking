@@ -89,14 +89,7 @@ const VerificationStep = () => {
   //   };
   //   fetch();
   // }, []);
-  console.log(
-    '@@document',
-    onboardingForm,
-    clientDataForm,
-    onboardingForm?.id,
-    '::',
-    clientId
-  );
+
   const attestationID: string[] | undefined = onboardingForm?.attestations;
   const { data: termsAndConditionsDoc, isError: termsIsError }: any =
     useSmbdoDownloadDocument(
@@ -110,7 +103,7 @@ const VerificationStep = () => {
       type: 'application/pdf',
     });
     const urlBlob = URL.createObjectURL(newBlob);
-    console.log('@@urlBlob', urlBlob);
+  
     setDocs(urlBlob);
   }, [termsAndConditionsDoc]);
 
@@ -161,8 +154,6 @@ const VerificationStep = () => {
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
-            console.log('@@pdfAtBottom');
-
             form.setValue('reviewedTerms', true);
           }
         }}

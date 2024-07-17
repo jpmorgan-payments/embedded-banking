@@ -41,8 +41,6 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
     }
   };
 
-  console.log('@@jobTitles', jobTitles);
-
   return (
     <>
       <FormField
@@ -67,8 +65,6 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
                 </FormControl>
                 <SelectContent>
                   {[...jobTitles].map((val) => {
-                    console.log('@@Titles', val);
-
                     return (
                       <SelectItem key={val} value={val}>
                         {val}

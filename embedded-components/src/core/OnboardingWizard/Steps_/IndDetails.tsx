@@ -48,7 +48,6 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
-    console.log('@@ON SUBMIT', postClient);
 
     if (!Object.values(errors).length) {
       // TODO: update this
@@ -105,7 +104,6 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
         }
 
         setCurrentStep(activeStep + 1);
-        console.log('@@docs?', res);
         setOnboardingForm({
           ...onboardingForm,
           id: res.id,
@@ -121,8 +119,6 @@ const IndDetails = ({ formSchema, yupSchema }: any) => {
       }
     }
   }, [activeStep]);
-
-  console.log('@@schema', formSchema.form);
 
   return (
     <Stack className="eb-w-full">

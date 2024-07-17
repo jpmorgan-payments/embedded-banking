@@ -58,8 +58,6 @@ const StepperHeader = ({
   setCurrentStep,
   steps,
 }: StepperHeaderProps) => {
-  console.log('@@steps', steps);
-
   return (
     <Box className="eb-my-5 eb-flex eb-cursor-pointer eb-flex-row eb-justify-center sm:eb-hidden md:eb-flex">
       {steps
@@ -68,7 +66,6 @@ const StepperHeader = ({
         })
         .map((val, idx) => {
           const icon: any = icons.filter((i: any) => i?.title === val)[0];
-          console.log('@@ICON', icon, val);
 
           return (
             <Box

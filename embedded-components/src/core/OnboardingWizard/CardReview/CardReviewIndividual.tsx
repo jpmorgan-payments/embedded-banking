@@ -47,11 +47,8 @@ const CardReviewIndividual = ({
     state,
   } = indDetails;
 
-  console.log('@@indDetails', indDetails);
-
   return (
     <>
-      
       <Card className="eb-min-w-96">
         <CardHeader className="">
           <CardTitle></CardTitle>
@@ -72,11 +69,7 @@ const CardReviewIndividual = ({
           </Title>
           <Group>
             <Text size="sm">
-              {[
-                addressLine1,
-                addressLine2,
-                addressLine3,
-              ].join(' ')}
+              {[addressLine1, addressLine2, addressLine3].join(' ')}
             </Text>
           </Group>
           <Group>

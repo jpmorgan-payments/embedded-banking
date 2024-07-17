@@ -45,8 +45,6 @@ const OrgTypeFormField = ({
 }: any) => {
   const { removeSteps, buildStepper } = useStepper();
   useEffect(() => {
-    console.log('@@e', form.getValues('organizationType'));
-
     if (form.getValues('organizationType') === 'SOLE_PROPRIETORSHIP') {
       removeSteps(['Decision Makers']);
     } else {

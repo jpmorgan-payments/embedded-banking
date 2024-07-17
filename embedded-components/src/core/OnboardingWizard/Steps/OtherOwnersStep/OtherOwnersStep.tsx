@@ -53,8 +53,6 @@ const OtherOwnersStep = ({
   };
 
   const onSubmit = async () => {
-    console.log('@@ON SUBMIT');
-    
     const apiForm = formToAPIBody(onboardingForm);
 
     //TODO: should we load next api call everytime we go next?
@@ -70,7 +68,6 @@ const OtherOwnersStep = ({
         onRegistration({ clientId: res.id });
       }
 
-      console.log('@@docs?', res);
       setOnboardingForm({
         ...newOnboardingForm,
         attestations: res.outstanding.attestationDocumentIds || [],

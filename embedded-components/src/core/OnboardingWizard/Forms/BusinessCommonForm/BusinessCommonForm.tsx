@@ -48,7 +48,6 @@ export const BusinessCommonForm: any = ({
   const { websiteNotAvailable } = form.getValues();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const [, setNoWebsite] = useState(websiteNotAvailable);
-  console.log('@@websiteNotAvailable', websiteNotAvailable);
 
   return (
     <>
@@ -164,7 +163,6 @@ export const BusinessCommonForm: any = ({
                         onCheckedChange={(value) => {
                           // setHasWebsite(value);
                           form.setValue('websiteNotAvailable', value);
-                          console.log('@@value', value);
                           // form
                           //   .getInputProps('websiteNotAvailable', {
                           //     type: 'checkbox',

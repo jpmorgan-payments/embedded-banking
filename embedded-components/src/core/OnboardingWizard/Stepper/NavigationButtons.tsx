@@ -35,8 +35,6 @@ const NavigationButtons = ({
         <Button
           type="submit"
           onClick={() => {
-            console.log('@@SUBMIT');
-
             if (onSubmit) {
               onSubmit();
             }

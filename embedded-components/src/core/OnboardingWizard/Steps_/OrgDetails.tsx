@@ -27,7 +27,6 @@ const OrgDetails = ({ formSchema, yupSchema }: any) => {
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
-    console.log('@@ON SUBMIT', postClient);
     setCurrentStep(activeStep + 1);
   }, [activeStep]);
 

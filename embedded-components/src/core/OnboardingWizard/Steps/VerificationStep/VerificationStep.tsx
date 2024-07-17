@@ -62,7 +62,7 @@ const VerificationsStep = ({
   //   };
   //   fetch();
   // }, []);
-  console.log('@@document', onboardingForm);
+
   const attestationID: string[] | undefined = onboardingForm?.attestations;
   const { data: termsAndConditionsDoc, isError: termsIsError }: any =
     useSmbdoDownloadDocument(
@@ -76,7 +76,7 @@ const VerificationsStep = ({
       type: 'application/pdf',
     });
     const urlBlob = URL.createObjectURL(newBlob);
-    console.log('@@urlBlob', urlBlob);
+
     setDocs(urlBlob);
   }, [termsAndConditionsDoc]);
 
@@ -118,8 +118,6 @@ const VerificationsStep = ({
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
-            console.log('@@pdfAtBottom');
-
             // form.setFieldValue('reviewedTerms', true);
           }
         }}

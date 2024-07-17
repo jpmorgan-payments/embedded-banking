@@ -38,7 +38,6 @@ export function BirthDateSelector({
     value ? (value.getMonth() + 1).toString() : ''
   );
   const [year, setYear] = useState(value ? value.getFullYear().toString() : '');
-  console.log('@@value', value, year, month, day);
 
   // Update internal stat when selectedDate changes
   useEffect(() => {

@@ -89,7 +89,6 @@ const QuestionsStep = ({ setActiveStep, activeStep }: QuestionsStepProps) => {
           (onboardingForm?.id || clientId) as string,
           postBody
         );
-        console.log('@@resQ', res);
 
         const newOnboardingForm = updateOutstandingItems(
           onboardingForm,

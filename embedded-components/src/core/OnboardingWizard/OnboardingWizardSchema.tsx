@@ -31,20 +31,6 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
   const { clientId, jurisdictions, products, entityType } = useRootConfig();
 
-  console.log(
-    '@@IPs',
-    ipAddress,
-    jurisdictions,
-    products,
-    clientId,
-    '>>',
-    entityType,
-    'ipFetchStatus',
-    ipFetchStatus
-  );
-  // const actualSchema = schema || StepsSchema;
-  console.log('@@schema', schema);
-
   // TODO: remove maybe
   useEffect(() => {
     if (props?.isMock) {
@@ -81,8 +67,6 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
       buildStepper();
     }
     if (!CurrentStep) {
-      console.log('@@LIST>WTF');
-
       if (clientId) {
         buildStepper(['Review']);
       } else {
@@ -101,19 +85,6 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
         getContentToken,
       })
     : ({} as any);
-
-  console.log(
-    '@@LIST%',
-    CurrentStep,
-    CurrentStep?.title,
-    '::',
-    currentFormSchema,
-    '>>',
-    rest,
-    activeStep,
-    '><',
-    stepsList
-  );
 
   return (
     <>

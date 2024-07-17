@@ -59,8 +59,6 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
   };
 
   const onSubmit = async () => {
-    console.log('@@ON SUBMIT');
-
     const apiForm = formToAPIBody(onboardingForm);
 
     //TODO: should we load next api call everytime we go next?
@@ -76,7 +74,6 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
         onRegistration({ clientId: res.id });
       }
 
-      console.log('@@docs?', res);
       setOnboardingForm({
         ...newOnboardingForm,
         attestations: res.outstanding.attestationDocumentIds || [],
@@ -86,8 +83,6 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
       console.log(error);
     }
   };
-
-  console.log('@@reviewData', reviewData);
 
   return (
     <Stack className="eb-w-full eb-gap-2">
@@ -134,29 +129,41 @@ const DescionMakersStep = ({ formSchema, yupSchema }: any) => {
           </Title>
 
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
-            {onboardingForm?.controller && (
-              <div key="controllerPanel" className=" eb-grid-cols-subgrid">
-                <DecisionMakerCard
-                  controller
-                  individual={onboardingForm?.controller}
-                ></DecisionMakerCard>
-              </div>
-            )}
+            {Object.keys(reviewData?.individualDetails)
+              .filter((indID) => {
+                return reviewData.individualDetails[indID].roles.includes(
+                  'CONTROLLER'
+                );
+              })
+              .map((contollerID: any) => {
+                const controller = reviewData.individualDetails[contollerID];
+                return (
+                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                    <DecisionMakerCard
+                      controller
+                      individual={controller.indDetails}
+                    ></DecisionMakerCard>
+                  </div>
+                );
+              })}
 
-            {onboardingForm?.otherOwners?.map(
-              (individual: any, index: number) => (
-                <div
-                  key={individual?.firstName}
-                  className=" eb-grid-cols-subgrid"
-                >
-                  <DecisionMakerCard
-                    controller={false}
-                    individual={individual}
-                    index={index}
-                  ></DecisionMakerCard>
-                </div>
-              )
-            )}
+            {Object.keys(reviewData?.individualDetails)
+              .filter((indID) => {
+                return !reviewData.individualDetails[indID].roles.includes(
+                  'CONTROLLER'
+                );
+              })
+              .map((contollerID: any) => {
+                const controller = reviewData.individualDetails[contollerID];
+                return (
+                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                    <DecisionMakerCard
+                      controller
+                      individual={controller.indDetails}
+                    ></DecisionMakerCard>
+                  </div>
+                );
+              })}
 
             <Dialog open={open} onOpenChange={setOpen}>
               <Button
