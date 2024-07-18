@@ -22,6 +22,7 @@ const links = [
   { link: 'transactions', label: 'Moving Money', icon: IconExchange },
   { link: 'debit-cards', label: 'Managing Debit Cards', icon: IconCreditCard },
   { link: 'cases', label: 'Getting Support', icon: IconHelp },
+  { link: 'onboarding-next', label: '[Next] Onboarding', icon: IconUserPlus },
 ];
 
 const NavbarLink = ({ children, to, ...props }: LinkProps) => {
