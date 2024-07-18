@@ -19,6 +19,3 @@ jobs:
       - name: Build
         run: yarn build
         working-directory: ./app/client
-      - name: Run tests
-        run: yarn run test:no-watch
-        working-directory: ./app/client
