@@ -2353,6 +2353,7 @@ __metadata:
     tailwind-merge: "npm:^2.1.0"
     tailwindcss: "npm:^3.4.1"
     tailwindcss-animate: "npm:^1.0.7"
+    tailwindcss-scoped-preflight: "npm:^3.3.0"
     typescript: "npm:^5.3.3"
     vite: "npm:^5.0.10"
     vite-plugin-dts: "npm:^3.7.2"
@@ -13442,6 +13443,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tailwindcss-scoped-preflight@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "tailwindcss-scoped-preflight@npm:3.3.0"
+  peerDependencies:
+    postcss: ^8
+    tailwindcss: ^3
+  checksum: 10c0/4ead5d10b6d4c153c439ecc7816e1fbe6d5a17d522885327d9d7ca66d4cba1e9af2ca95b3aac694729c1f15162198090faa94c77bd1400fcd4e17d4abfe8ee51
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:^3.4.1":
   version: 3.4.1
   resolution: "tailwindcss@npm:3.4.1"
@@ -13501,8 +13512,8 @@ __metadata:
   linkType: hard
 
 "tar@npm:^6.1.11, tar@npm:^6.1.2, tar@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "tar@npm:6.2.0"
+  version: 6.2.1
+  resolution: "tar@npm:6.2.1"
   dependencies:
     chownr: "npm:^2.0.0"
     fs-minipass: "npm:^2.0.0"
@@ -13510,7 +13521,7 @@ __metadata:
     minizlib: "npm:^2.1.1"
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
-  checksum: 10c0/02ca064a1a6b4521fef88c07d389ac0936730091f8c02d30ea60d472e0378768e870769ab9e986d87807bfee5654359cf29ff4372746cc65e30cbddc352660d8
+  checksum: 10c0/a5eca3eb50bc11552d453488344e6507156b9193efd7635e98e867fab275d527af53d8866e2370cd09dfe74378a18111622ace35af6a608e5223a7d27fe99537
   languageName: node
   linkType: hard
 
