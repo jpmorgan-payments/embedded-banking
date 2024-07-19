@@ -3,6 +3,12 @@ import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import {
   Button,
   Dialog,
   DialogTrigger,
@@ -79,7 +85,7 @@ const ReviewStep = () => {
 
   return (
     <>
-      <Stack>
+      <Stack className="eb-w-full">
         <Title as="h2">Review</Title>
         <Group>
           <Title as="h5">STATUS: &nbsp;</Title>
@@ -88,36 +94,50 @@ const ReviewStep = () => {
           </Title>
         </Group>
 
-        {reviewData?.organizationDetails && (
-          <CardReviewBusiness
-            data={reviewData?.organizationDetails}
-            title="Business Details"
-            type="organization"
-            onEdit={onEditBusiness}
-          />
-        )}
-        <Title as="h5" className="eb-my-6 eb-uppercase ">
-          Management & Ownership
-        </Title>
-        <Stack className="eb-gap-4">
-          {reviewData?.individualDetails &&
-            Object.keys(reviewData?.individualDetails).map((key: any) => {
-              const indDetails = reviewData.individualDetails[key];
-
-              return (
-                <CardReviewIndividual
-                  data={indDetails}
-                  title="Individual & Managament"
-                  type="individual"
-                  onEdit={() => {
-                    onEditIndividual(true);
-                    setModalData(indDetails);
-                  }}
-                  key={indDetails?.id}
+        <Accordion type="multiple" className="eb-w-full">
+          <AccordionItem value="business-details">
+            <AccordionTrigger className="eb-uppercase">
+              Business Details
+            </AccordionTrigger>
+            <AccordionContent>
+              {reviewData?.organizationDetails && (
+                <CardReviewBusiness
+                  data={reviewData?.organizationDetails}
+                  title="Business Details"
+                  type="organization"
+                  onEdit={onEditBusiness}
                 />
-              );
-            })}
-        </Stack>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="ownership">
+            <AccordionTrigger className="eb-uppercase">
+              Management & Ownership
+            </AccordionTrigger>
+            <AccordionContent>
+              <Stack className="eb-gap-4">
+                {reviewData?.individualDetails &&
+                  Object.keys(reviewData?.individualDetails).map((key: any) => {
+                    const indDetails = reviewData.individualDetails[key];
+
+                    return (
+                      <CardReviewIndividual
+                        data={indDetails}
+                        title="Individual & Managament"
+                        type="individual"
+                        onEdit={() => {
+                          onEditIndividual(true);
+                          setModalData(indDetails);
+                        }}
+                        key={indDetails?.id}
+                      />
+                    );
+                  })}
+              </Stack>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
         <Dialog open={edit} onOpenChange={onEditBusiness}>
           {reviewData?.organizationDetails && (
             <BusinessDetailsModal
