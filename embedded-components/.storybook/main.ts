@@ -34,7 +34,7 @@ const config: StorybookConfig = {
               );
 
               // path.replace(/^\/ef/, '/api-gateway/api/ef/v2');
-              path.replace(/^\/ef\/do\/v1/, '/api-gateway/api/ef/v2');
+              return path.replace(/^\/ef\/do\/v1/, '/api-gateway/api/ef/v2');
             },
             // TODO: this is for api-extermal-0.9...
             // rewrite: (path) => {
