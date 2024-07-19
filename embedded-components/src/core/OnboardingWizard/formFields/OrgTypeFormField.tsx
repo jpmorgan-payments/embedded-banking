@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   FormControl,
@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui';
 
+// eslint-disable-next-line
 import { useStepper } from '../Stepper/Stepper';
 
 // import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';

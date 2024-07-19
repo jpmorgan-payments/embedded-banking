@@ -36,7 +36,7 @@ const IndustryFormField = ({
         render={({ field }) => (
           <FormItem className="eb-mt-5">
             {/* TODO:// MISIng content Type */}
-            <FormLabel>Account Type</FormLabel>
+            <FormLabel>Industry Category</FormLabel>
             <Select
               onValueChange={(value) => {
                 field.onChange(value);
@@ -80,7 +80,7 @@ const IndustryFormField = ({
         name="industryType"
         render={({ field }) => (
           <FormItem className="eb-mt-5">
-            <FormLabel>Account Type</FormLabel>
+            <FormLabel>Industry Type</FormLabel>
             <Select
               onValueChange={(value) => {
                 field.onChange(value);

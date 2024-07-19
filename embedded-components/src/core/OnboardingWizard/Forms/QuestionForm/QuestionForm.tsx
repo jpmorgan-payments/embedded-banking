@@ -7,7 +7,6 @@ import {
   FormMessage,
   RadioGroup,
   RadioGroupItem,
-  Separator,
   Stack,
   TextArea,
 } from '@/components/ui';
@@ -71,7 +70,7 @@ const QuestionForm = ({ question, form }: QuestionFormProps) => {
                   <TextArea
                     {...field}
                     size="md"
-                    className="eb-h-30 eb-border eb-border-solid"
+                    className="eb-h-28 eb-border eb-border-solid"
                   />
                 </FormControl>
                 <FormMessage />

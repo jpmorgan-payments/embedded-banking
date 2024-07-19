@@ -3,9 +3,9 @@ import {
   OrganizationDetails,
 } from '@/api/generated/embedded-banking.schemas';
 
-import { fromDateToString } from '../Steps_/utils/fromDateToString';
 import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+import { fromDateToString } from '../WizardSteps/utils/fromDateToString';
 
 export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
   let orgParty: OrganizationDetails = {};

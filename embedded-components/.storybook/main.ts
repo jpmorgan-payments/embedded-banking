@@ -24,7 +24,8 @@ const config: StorybookConfig = {
             // target: 'https://api-mock-payments.dev.aws.jpmchase.net',
             changeOrigin: true,
             secure: false,
-            rewrite: (path) => path.replace(/^\/ef/, '/api-gateway/api/ef/v2'),
+            rewrite: (path: string) =>
+              path.replace(/^\/ef/, '/api-gateway/api/ef/v2'),
             // TODO: this is for api-extermal-0.9...
             // rewrite: (path) => {
             //   return '/tsapi' + path;

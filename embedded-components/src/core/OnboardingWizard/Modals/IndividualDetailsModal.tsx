@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -18,11 +17,11 @@ import { Group } from '@/components/ui';
 import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
 import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 
-import { useOnboardingForm } from '../context/form.context';
-import {
-  createPersonalDetailsSchema,
-  PersonalDetailsValues,
-} from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+// import { useOnboardingForm } from '../context/form.context';
+// import {
+//   createPersonalDetailsSchema,
+//   PersonalDetailsValues,
+// } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromFormToIndParty } from '../utils/fromFormToApi';
 import { useContentData } from '../utils/useContentData';
 
@@ -39,23 +38,21 @@ const IndividualDetailsModal = ({
   create = false,
   parentPartyId,
 }: IndividualDetailsModalProps) => {
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  // const { setOnboardingForm, onboardingForm } = useOnboardingForm();
   const { getContentToken: getFormSchema } = useContentData(
     'steps.BusinessDetailsStep'
   );
   const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
   const { mutateAsync: createParty } = useSmbdoPostParties();
-  const defaultInitialValues = createPersonalDetailsSchema().cast(
-    {}
-  ) as PersonalDetailsValues;
+  const defaultInitialValues = {};
 
-  const form = useForm<PersonalDetailsValues>({
+  const form = useForm<any>({
     defaultValues: formData?.indDetails || defaultInitialValues,
-    resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
+    // resolver: yupResolver(createPersonalDetailsSchema(getFormSchema)),
     mode: 'onBlur',
   });
 
-  const onSave: SubmitHandler<PersonalDetailsValues> = async () => {
+  const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
       const data = fromFormToIndParty(form.getValues());

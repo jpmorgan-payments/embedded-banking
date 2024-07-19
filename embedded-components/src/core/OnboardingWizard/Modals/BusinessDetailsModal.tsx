@@ -18,10 +18,10 @@ import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetai
 import { useOnboardingForm } from '../context/form.context';
 import { BusinessCommonForm } from '../Forms/BusinessCommonForm/BusinessCommonForm';
 import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
-import {
-  businessDetailsSchema,
-  BusinessDetailsStepValues,
-} from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+// import {
+//   businessDetailsSchema,
+//   BusinessDetailsStepValues,
+// } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 import {
   addOtherOwner,
   removeOtherOwner,

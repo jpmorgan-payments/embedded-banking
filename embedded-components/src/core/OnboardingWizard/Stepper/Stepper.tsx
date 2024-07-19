@@ -8,15 +8,16 @@ import {
 } from 'react';
 import uniqBy from 'lodash/uniqBy';
 
+// eslint-disable-next-line
 import {
   DecisionMakersStep,
-  IndDetails,
-  InitStep,
-  OrgDetails,
+  IndividualDetailsStep,
+  IntroStep,
+  OrganizationDetailsStep,
   QuestionsStep,
   ReviewStep,
   VerificationStep,
-} from '../Steps_';
+} from '../WizardSteps';
 
 type yInitValues = {
   activeStep: number;
@@ -30,6 +31,7 @@ type yInitValues = {
   removeSteps: (val: any) => void;
   // setActiveStep: any;
 };
+
 const initValues: yInitValues = {
   activeStep: 0,
   setCurrentStep: () => {},
@@ -42,6 +44,7 @@ const initValues: yInitValues = {
   removeSteps: () => {},
   // setActiveStep: () => {},
 };
+
 const StepperContext = createContext(initValues);
 
 const useStepper = () => {
@@ -57,9 +60,9 @@ type yStepper = {
 };
 
 const stepsWizard: any = {
-  Intro: InitStep,
-  Individual: IndDetails,
-  Organization: OrgDetails,
+  Intro: IntroStep,
+  Individual: IndividualDetailsStep,
+  Organization: OrganizationDetailsStep,
   Questions: QuestionsStep,
   Review: ReviewStep,
   Verification: VerificationStep,

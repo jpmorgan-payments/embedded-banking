@@ -6,21 +6,15 @@ import {
   stepReviewMockWithAttestations,
   stepReviewMockWithQuestions,
 } from './mocks/stepReview.mock';
-import { OnboardingWizardInit } from './OboardingWizardInit';
+import { OnboardingWizard } from './OboardingWizard';
 
-// export default {
-//   title: 'Onboarding Wizard',
-// };
-
-// export const Usage = () => <OnboardingWizardInit />;
-
-const meta: Meta<typeof OnboardingWizardInit> = {
+const meta: Meta<typeof OnboardingWizard> = {
   title: 'Onboarding Wizard Schema',
-  component: OnboardingWizardInit,
+  component: OnboardingWizard,
 };
 export default meta;
 
-type Story = StoryObj<typeof OnboardingWizardInit>;
+type Story = StoryObj<typeof OnboardingWizard>;
 
 export const Default: Story = {
   argTypes: {

@@ -18,8 +18,8 @@ import {
 import { BirthDateSelector } from '@/components/ux/BirthDateSelector';
 import { PhoneInput } from '@/components/ux/PhoneInput';
 import { Ssn9Input } from '@/components/ux/SocialSecurity';
+import { parseUTCDate } from '@/core/OnboardingWizard/WizardSteps/utils/parseUTCDate';
 
-import { parseUTCDate } from '../../Steps_/utils/parseUTCDate';
 import { useContentData } from '../../utils/useContentData';
 
 //TODO: Job Titles need to API driven
@@ -39,7 +39,7 @@ type PersonalDetailsFormProps = {
 
 const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
-  const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
+  const [, setSelectedJobTitle] = useState('CEO');
   const { getContentToken } = useContentData(`components.CustomDatePicker`);
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);

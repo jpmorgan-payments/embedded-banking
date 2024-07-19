@@ -13,9 +13,8 @@ import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
-// import { useStepper } from './Stepper/useStepper';
-import { createYupSchema } from './Steps_/utils/createYupSchema';
 import { useContentData } from './utils/useContentData';
+import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 
 export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
   const {
@@ -25,13 +24,16 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     buildStepper,
     CurrentStep,
     currentFormSchema,
-    ...rest
   } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
-  const { clientId, jurisdictions, products, entityType } = useRootConfig();
+  const { clientId } = useRootConfig();
 
-  // TODO: remove maybe
+  useEffect(() => {
+    //TODO: Do something if ipFetchStatus, fails, or stalls
+  }, [ipFetchStatus]);
+
+  // TODO: Update the mock intel
   useEffect(() => {
     if (props?.isMock) {
       setOnboardingForm({
@@ -59,7 +61,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     }
   }, [ipAddress]);
 
-  // Building stepsF
+  // Building steps
   useEffect(() => {
     if (clientId) {
       buildStepper(['Review']);

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { UsaStates } from 'usa-states';
 
 import { Input } from '@/components/ui/input';
 import {
@@ -30,7 +29,8 @@ const jobTitles = [
 
 const JobTitlesFormField = ({ form, name, required }: any) => {
   const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
-  const [selectedJobTitle, setSelectedJobTitle] = useState('CEO');
+  // TODO: Other jobs states incomplete
+  const [, setSelectedJobTitle] = useState('CEO');
 
   const handleJobTitleChange = (jobTitle: string) => {
     setSelectedJobTitle(jobTitle);
