@@ -64,20 +64,6 @@ const businessSchema = {
       name: 'industryCategory',
       fieldType: 'industryType',
     },
-    // {
-    //   name: 'industryCategory',
-    //   fieldType: 'industryCategory',
-    //   labelToken: 'Account Type',
-    //   placeholderToken: 'Select account type',
-    //   required: true,
-    // },
-    // {
-    //   name: 'industryType',
-    //   fieldType: 'industryType',
-    //   labelToken: 'Account Type',
-    //   placeholderToken: 'Select account type',
-    //   required: true,
-    // },
     {
       name: 'organizationDescription',
       fieldType: 'textarea',
@@ -113,45 +99,12 @@ const businessSchema = {
     },
 
     {
-      labelToken: 'What is your business address?',
-      fieldType: 'separator',
+      labelToken: 'What is your address?',
+      fieldType: 'address',
+      type: 'organization',
     },
-    {
-      name: 'businessAddressLine1',
-      fieldType: 'input',
-      labelToken: 'Address Line One',
-      required: true,
-    },
-    {
-      name: 'businessAddressLine2',
-      fieldType: 'input',
-      labelToken: 'Address Line Two',
-      required: false,
-    },
-    {
-      name: 'businessAddressLine3',
-      fieldType: 'input',
-      labelToken: 'Address Line Three',
-      required: false,
-    },
-    {
-      name: 'city',
-      fieldType: 'input',
-      labelToken: 'City',
-      required: true,
-    },
-    {
-      name: 'state',
-      fieldType: 'state',
-      labelToken: 'State',
-      required: true,
-    },
-    {
-      name: 'zip',
-      fieldType: 'input',
-      labelToken: 'Zip',
-      required: true,
-    },
+
+    
   ],
 };
 
@@ -219,54 +172,11 @@ const individualSchema = {
       labelToken: 'Social Security Number',
       required: true,
     },
-    {
-      labelToken: ' What is your address?',
-      fieldType: 'separator',
-    },
-    {
-      name: 'addressLine1',
-      fieldType: 'input',
-      labelToken: 'Address Line One',
-      required: true,
-    },
-    {
-      name: 'addressLine2',
-      fieldType: 'input',
-      labelToken: 'Address Line Two',
-      required: true,
-    },
-    {
-      name: 'addressLine3',
-      fieldType: 'input',
-      labelToken: 'Address Line Three',
-      required: true,
-    },
-    {
-      name: 'city',
 
-      fieldType: 'input',
-      labelToken: 'City',
-      required: true,
-    },
     {
-      name: 'state',
-
-      fieldType: 'state',
-      labelToken: 'State',
-      required: true,
-    },
-    {
-      name: 'zip',
-      fieldType: 'input',
-      labelToken: 'Zip',
-      required: true,
-    },
-    {
-      name: 'countryOfResidence',
-      fieldType: 'country',
-      labelToken: 'Country of Residence',
-      placeholderToken: 'Select country',
-      required: true,
+      labelToken: 'What is your address?',
+      fieldType: 'address',
+      type: 'individual',
     },
   ],
 };

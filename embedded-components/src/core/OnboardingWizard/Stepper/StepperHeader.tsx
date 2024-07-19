@@ -24,6 +24,10 @@ const icons = [
     icon: <Building key="buildingIcon" size={20} color="black"></Building>,
   },
   {
+    title: 'Business Owners',
+    icon: <Users key="userIcon" size={20} color="black"></Users>,
+  },
+  {
     title: 'Decision Makers',
     icon: <Users key="userIcon" size={20} color="black"></Users>,
   },
