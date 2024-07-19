@@ -4,13 +4,11 @@ import {
 } from '@/api/generated/embedded-banking.schemas';
 
 import { OnboardingForm } from '../context/form.context';
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 
-export const makeBusiness = (
-  business: BusinessDetailsStepValues,
-  form: OnboardingForm
-) => {
+// import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+// import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+
+export const makeBusiness = (business: any, form: OnboardingForm) => {
   const addressLines = [];
 
   if (business?.businessAddressLine1) {
@@ -81,7 +79,7 @@ export const makeBusiness = (
 };
 
 export const makeIndividual = (
-  owner: PersonalDetailsValues,
+  owner: any,
   form: OnboardingForm,
   roles: string[]
 ) => {

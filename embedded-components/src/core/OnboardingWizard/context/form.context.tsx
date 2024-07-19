@@ -2,17 +2,14 @@ import { createContext, useContext, useMemo, useState } from 'react';
 
 import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
-
 //import { useListClients } from '../hooks/useListClients';
 
 export type OnboardingForm = {
   legalStructure: string;
-  owner: PersonalDetailsValues | undefined;
-  controller: PersonalDetailsValues | undefined;
-  otherOwners: PersonalDetailsValues[] | undefined;
-  businessDetails: BusinessDetailsStepValues | undefined;
+  owner: any | undefined;
+  controller: any | undefined;
+  otherOwners: any[] | undefined;
+  businessDetails: any | undefined;
   outstandingItems: ClientResponseOutstanding | undefined;
   id: string | undefined;
   questionsAnswers: any;

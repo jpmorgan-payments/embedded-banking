@@ -3,11 +3,11 @@ import {
   OrganizationDetails,
 } from '@/api/generated/embedded-banking.schemas';
 
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+// import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+// import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromDateToString } from '../WizardSteps/utils/fromDateToString';
 
-export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
+export const fromFormToOrgParty = (form: any) => {
   let orgParty: OrganizationDetails = {};
 
   const addressLines = [
@@ -71,8 +71,8 @@ export const fromFormToOrgParty = (form: BusinessDetailsStepValues) => {
 };
 
 // TODO: update proper types
-// PersonalDetailsValues
-export const fromFormToIndParty = (form: PersonalDetailsValues) => {
+// any
+export const fromFormToIndParty = (form: any) => {
   let indParty: IndividualDetails = {};
 
   const addressLines = [

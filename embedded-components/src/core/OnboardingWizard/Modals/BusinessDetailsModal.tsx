@@ -44,17 +44,15 @@ const BusinessDetailsModal = ({
   );
   const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
 
-  const defaultInitialValues = businessDetailsSchema().cast(
-    {}
-  ) as BusinessDetailsStepValues;
+  const defaultInitialValues = {};
 
-  const form = useForm<BusinessDetailsStepValues>({
+  const form = useForm<any>({
     defaultValues: formData?.orgDetails || defaultInitialValues,
-    resolver: yupResolver(businessDetailsSchema(getFormSchema)),
+    // resolver: yupResolver(businessDetailsSchema(getFormSchema)),
     mode: 'onBlur',
   });
 
-  const onSave: SubmitHandler<BusinessDetailsStepValues> = async () => {
+  const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
       const data = fromFormToOrgParty(form.getValues());

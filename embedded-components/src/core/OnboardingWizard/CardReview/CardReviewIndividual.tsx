@@ -18,7 +18,7 @@ import {
   Title,
 } from '@/components/ui';
 
-import { DecisionMakerModal } from '../Steps/OtherOwnersStep/DecisionMakerModal/DecisionMakerModal';
+import { DecisionMakerModal } from '../WizardSteps/DecisionMakers/DecisionMakerModal/DecisionMakerModal';
 
 interface CardReviewIndividualProps {
   data: any;
