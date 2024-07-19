@@ -26,8 +26,6 @@ const CountryFormField = ({
   labelToken,
   placeholderToken,
 }: any) => {
-  console.log('@@WHAT!!!');
-
   return (
     <FormField
       control={form.control}

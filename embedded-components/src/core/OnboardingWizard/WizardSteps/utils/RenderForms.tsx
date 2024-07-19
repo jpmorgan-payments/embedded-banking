@@ -52,8 +52,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
           defaultValue,
           type,
         }: FormScham) => {
-          console.log('@@name', fieldType);
-
           switch (fieldType) {
             case 'input':
               return (
@@ -152,8 +150,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               );
 
             case 'country':
-              console.log('@@WTF');
-
               return (
                 <CountryFormField
                   key={name}

@@ -22,12 +22,12 @@ const addressSchemaIndividual = [
     labelToken: 'Address Line Two',
     required: true,
   },
-    {
-      name: 'addressLine3',
-      fieldType: 'input',
-      labelToken: 'Address Line Three',
-      required: true,
-    },
+  {
+    name: 'addressLine3',
+    fieldType: 'input',
+    labelToken: 'Address Line Three',
+    required: true,
+  },
   {
     name: 'city',
     fieldType: 'input',
@@ -102,7 +102,6 @@ const AddressFormFields = ({ type }: any) => {
   const form = useFormContext();
 
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
-  console.log('@@type', type);
 
   return (
     <Box className="eb-w-full">
