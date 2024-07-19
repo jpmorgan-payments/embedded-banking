@@ -1,12 +1,12 @@
 import { Box, Separator, Title } from '@/components/ui';
 
+import { AddressFormFields } from '../../formFields/AddressFormFields';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
 import { EinFormField } from '../../formFields/EinFormField';
 import { IndustryFormField } from '../../formFields/IndustryFormField';
 import { InputFormField } from '../../formFields/InputFormField';
 import { JobTitlesFormField } from '../../formFields/JobTitlesFormField';
-
 // eslint-disable-next-line
 import { OrgTypeFormField } from '../../formFields/OrgTypeFormField';
 import { PhoneFormField } from '../../formFields/PhoneFormField';
@@ -34,6 +34,7 @@ export interface FormScham extends SelectFormFieldProps {
     | 'website'
     | 'industryType'
     | 'orgType'
+    | 'address'
     | 'jobTitle';
 }
 
@@ -49,6 +50,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
           required,
           optionsList,
           defaultValue,
+          type,
         }: FormScham) => {
           switch (fieldType) {
             case 'input':
@@ -206,6 +208,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                   <Separator></Separator>
                 </Box>
               );
+
             case 'ein':
               return (
                 <EinFormField
@@ -271,6 +274,25 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                       required,
                       form,
                       defaultValue,
+                    }}
+                  />
+                </Box>
+              );
+
+            case 'address':
+              return (
+                <Box className="eb-col-span-3">
+                  <AddressFormFields
+                    key={name}
+                    {...{
+                      name,
+                      labelToken: getContentToken(labelToken) ?? labelToken,
+                      placeholderToken:
+                        getContentToken(placeholderToken) || placeholderToken,
+                      required,
+                      form,
+                      defaultValue,
+                      type,
                     }}
                   />
                 </Box>

@@ -68,6 +68,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     } else {
       buildStepper();
     }
+    
     if (!CurrentStep) {
       if (clientId) {
         buildStepper(['Review']);

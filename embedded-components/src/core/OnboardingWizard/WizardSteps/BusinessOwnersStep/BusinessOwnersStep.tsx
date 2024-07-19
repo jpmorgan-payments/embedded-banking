@@ -18,19 +18,19 @@ import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
+import { BusinessCard } from '../../common/BusinessCard';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
 import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { fromApiToForm } from '../../utils/fromApiToForm';
-import { DecisionMakerCard } from './DecisionMakerCard/DecisionMakerCard';
 
 // TODO: Modal on adding descion maker
 // import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
 // TODO: neeed to add arguments for mock testing
-const DecisionMakersStep = () => {
+const BusinessOwnersStep = () => {
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
@@ -83,7 +83,7 @@ const DecisionMakersStep = () => {
 
   return (
     <Stack className="eb-component eb-w-full eb-gap-2">
-      <Title as="h3">Additional Decision Makers</Title>
+      <Title as="h3">Enter business owner details</Title>
 
       <form noValidate>
         <FormField
@@ -91,9 +91,7 @@ const DecisionMakersStep = () => {
           render={() => (
             <FormItem>
               <FormLabel asterisk>
-                Are there any general partners or managing members within in
-                your business who can make decisions on behalf of your company
-                that we have not already captured in the business details?
+                Do you, the controller, own 25% or more of the business?
               </FormLabel>
 
               <FormControl>
@@ -136,10 +134,10 @@ const DecisionMakersStep = () => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
                   <div key={contollerID} className=" eb-grid-cols-subgrid">
-                    <DecisionMakerCard
+                    <BusinessCard
                       controller
                       individual={controller.indDetails}
-                    ></DecisionMakerCard>
+                    ></BusinessCard>
                   </div>
                 );
               })}
@@ -154,10 +152,10 @@ const DecisionMakersStep = () => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
                   <div key={contollerID} className=" eb-grid-cols-subgrid">
-                    <DecisionMakerCard
+                    <BusinessCard
                       controller
                       individual={controller.indDetails}
-                    ></DecisionMakerCard>
+                    ></BusinessCard>
                   </div>
                 );
               })}
@@ -186,7 +184,7 @@ const DecisionMakersStep = () => {
   );
 };
 
-DecisionMakersStep.title = 'Decision Makers';
-DecisionMakersStep.formSchema = null;
+BusinessOwnersStep.title = 'Business Owners';
+BusinessOwnersStep.formSchema = null;
 
-export { DecisionMakersStep };
+export { BusinessOwnersStep };

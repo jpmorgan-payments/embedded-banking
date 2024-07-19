@@ -10,6 +10,7 @@ import uniqBy from 'lodash/uniqBy';
 
 // eslint-disable-next-line
 import {
+  BusinessOwnersStep,
   DecisionMakersStep,
   IndividualDetailsStep,
   IntroStep,
@@ -67,6 +68,7 @@ const stepsWizard: any = {
   Review: ReviewStep,
   Verification: VerificationStep,
   'Decision Makers': DecisionMakersStep,
+  'Business Owners': BusinessOwnersStep,
 };
 
 const sortByRefferenceArray = (refArray: any, targetArray: any) => {
@@ -110,6 +112,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Intro',
       'Individual',
       'Organization',
+      'Business Owners',
       'Decision Makers',
       'Questions',
       'Review',

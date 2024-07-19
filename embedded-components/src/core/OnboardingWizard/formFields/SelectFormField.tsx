@@ -19,6 +19,7 @@ export interface SelectFormFieldProps {
   required: boolean;
   optionsList: any[];
   defaultValue?: string;
+  type?: string;
 }
 const SelectFormField = ({
   name,

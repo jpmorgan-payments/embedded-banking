@@ -4,5 +4,6 @@ export { OrganizationDetailsStep } from './OrganizationDetailsStep/OrganizationD
 export { IndividualDetailsStep } from './IndividualDetailsStep/IndividualDetailsStep';
 export { QuestionsStep } from './QuestionsStep/QuestionsStep';
 export { ReviewStep } from './ReviewStep/ReviewStep';
-export { DecisionMakersStep } from './DecisionMakers/DecisionMakersStep';
+export { DecisionMakersStep } from './DecisionMakersStep/DecisionMakersStep';
+export { BusinessOwnersStep } from './BusinessOwnersStep/BusinessOwnersStep';
 export { VerificationStep } from './VerificationStep/VerificationStep';

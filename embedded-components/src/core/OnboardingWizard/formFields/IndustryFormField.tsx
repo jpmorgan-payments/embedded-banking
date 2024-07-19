@@ -46,7 +46,7 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select account type" />
+                  <SelectValue placeholder="Select industry category" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -90,7 +90,7 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select account type" />
+                  <SelectValue placeholder="Select industry type" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
