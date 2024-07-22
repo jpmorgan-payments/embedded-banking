@@ -8,6 +8,8 @@ import {
   PartyResponse,
 } from '@/api/generated/embedded-banking.schemas';
 
+import { transformDateofBirth } from '../WizardSteps/utils/transformDateofBirth';
+
 const fromApiToForm = (client: ClientResponse) => {
   if (!client?.parties) {
     throw new Error('API Response failed,  no parties detected');
@@ -94,12 +96,13 @@ const fromApiToForm = (client: ClientResponse) => {
       actInd.indDetails = {};
       const { indDetails } = actInd;
       const indD: IndividualDetails = party.individualDetails;
+
       indDetails.email = party.email;
       indDetails.firstName = indD.firstName;
       indDetails.lastName = indD.lastName;
       indDetails.countryOfResidence = indD.countryOfResidence;
       indDetails.natureOfOwnership = indD.natureOfOwnership;
-      indDetails.birthDate = indD.birthDate;
+      indDetails.birthDate = transformDateofBirth(indD.birthDate);
       indDetails.jobTitle = indD.jobTitle;
       indDetails.jobTitleDescription = indD.jobTitleDescription;
       indDetails.soleOwner = indD.soleOwner;

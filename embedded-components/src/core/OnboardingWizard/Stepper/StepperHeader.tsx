@@ -46,7 +46,7 @@ const icons = [
     ),
   },
   {
-    title: 'Verification',
+    title: 'Attestation',
     icon: <Checklist key="checklistIcon" size={20} color="black"></Checklist>,
   },
 ];

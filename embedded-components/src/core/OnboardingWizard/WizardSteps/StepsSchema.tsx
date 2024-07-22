@@ -133,7 +133,7 @@ const individualSchema = {
       required: true,
     },
     {
-      name: 'individualEmail',
+      name: 'email',
       fieldType: 'input',
       labelToken: 'Email',
       placeholderToken: 'example@example.com',
@@ -146,13 +146,13 @@ const individualSchema = {
       placeholderToken: 'Select Job Title',
       required: true,
     },
-    {
-      name: 'jobTitleDescription',
-      // TODO: add Special field type, if fieldType is just a placeholder
-      fieldType: null,
-      labelToken: 'Job Description',
-      required: true,
-    },
+    // {
+    //   name: 'jobTitleDescription',
+    //   // TODO: add Special field type, if fieldType is just a placeholder
+    //   fieldType: null,
+    //   labelToken: 'Job Description',
+    //   required: true,
+    // },
     {
       name: 'phone',
 

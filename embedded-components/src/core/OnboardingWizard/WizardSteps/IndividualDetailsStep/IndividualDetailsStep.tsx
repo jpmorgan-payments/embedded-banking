@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
@@ -10,11 +10,16 @@ import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { fromApiToForm } from '../../utils/fromApiToForm';
+import { useGetDataByClientId } from '../hooks';
 import { individualSchema } from '../StepsSchema';
+import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
+import { updateFormValues } from '../utils/updateFormValues';
 
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
+  const { getContentToken } = useContentData('steps.ControllerDetailsStep');
   const { onRegistration } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
@@ -25,13 +30,30 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   //   'schema.businessOwnerFormSchema'
   // );
 
-  const { getContentToken } = useContentData('steps.ControllerDetailsStep');
+  const {
+    data,
+    refetch,
+    isPending: isPendingClient,
+  } = useGetDataByClientId('client');
   const { mutateAsync: postClient, isPending: isPendingClientPost } =
     useSmbdoPostClients();
+
+  const clientDataForm = useMemo(() => {
+    return data && fromApiToForm(data);
+  }, [data]);
 
   useEffect(() => {
     updateSchema(yupSchema);
   }, [yupSchema]);
+
+  useEffect(() => {
+    if (clientDataForm) {
+      updateFormValues(
+        getIndividualDetailsByRole(clientDataForm, 'CONTROLLER')[0],
+        form.setValue
+      );
+    }
+  }, [clientDataForm]);
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
@@ -125,7 +147,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
               formSchema: formSchema.form,
               getContentToken,
               form,
-              className: `eb-space-y-4 eb-grid eb-grid-cols-3 eb-gap-4 first:eb-mt-8`,
+              className: `eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4 `,
             }}
           />
         </Box>

@@ -55,7 +55,7 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
                   field.onChange(value);
                   handleJobTitleChange(value);
                 }}
-                defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
                   <SelectTrigger>

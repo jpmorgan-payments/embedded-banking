@@ -20,14 +20,13 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { BusinessCard } from '../../common/BusinessCard';
 import { useOnboardingForm } from '../../context/form.context';
+import { DecisionMakerModal } from '../../Modals/DecisionMakerModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
 import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { fromApiToForm } from '../../utils/fromApiToForm';
-
-// TODO: Modal on adding descion maker
-// import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
+import { useGetDataByClientId } from '../hooks';
 
 // TODO: neeed to add arguments for mock testing
 const BusinessOwnersStep = () => {
@@ -36,13 +35,14 @@ const BusinessOwnersStep = () => {
     useState(false);
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const { clientId, mockSteps, isMockResponse, onRegistration } =
-    useRootConfig();
+  const { onRegistration } = useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
 
-  const { data }: any = isMockResponse
-    ? { data: mockSteps.review, refetch: () => null, isPending: false }
-    : useSmbdoGetClient((clientId || onboardingForm?.id) ?? '');
+  const {
+    data,
+    refetch,
+    isPending: isPendingClient,
+  } = useGetDataByClientId('client');
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
@@ -120,7 +120,7 @@ const BusinessOwnersStep = () => {
       {additionalDecisionMakers && reviewData?.individualDetails && (
         <>
           <Title as="h4" className="eb-my-5">
-            Listed business decision makers
+            Listed business owners
           </Title>
 
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
@@ -167,9 +167,9 @@ const BusinessOwnersStep = () => {
                 variant="outline"
                 className="eb-max-w-56"
               >
-                <DialogTrigger>Click to add a decision maker</DialogTrigger>
+                <DialogTrigger>Click to add a business owner</DialogTrigger>
               </Button>
-              {/* <DecisionMakerModal onOpenChange={setOpen} /> */}
+              <DecisionMakerModal onOpenChange={setOpen} />
             </Dialog>
           </div>
         </>

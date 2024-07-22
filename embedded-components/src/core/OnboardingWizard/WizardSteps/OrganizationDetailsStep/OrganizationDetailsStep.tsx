@@ -51,7 +51,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
               formSchema: formSchema.form,
               getContentToken,
               form,
-              className: `eb-space-y-4 eb-grid eb-grid-cols-3 eb-gap-4`,
+              className: `eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4`,
             }}
           />
         </Box>

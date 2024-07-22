@@ -44,6 +44,9 @@ export const Default: Story = {
     onRegistration: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
+    mockSteps: {
+      client: stepReviewMockWithQuestions,
+    },
   },
 };
 

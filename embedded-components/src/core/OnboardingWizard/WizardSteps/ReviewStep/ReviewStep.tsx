@@ -21,6 +21,7 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
+import { useGetDataByClientId } from '../hooks';
 // import { useContentData } from '../../utils/useContentData';
 import { reviewSchema } from '../StepsSchema';
 
@@ -31,11 +32,7 @@ const ReviewStep = () => {
   const form = useFormContext();
   const { setCurrentStep, buildStepper, activeStep } = useStepper();
 
-  const { clientId, mockSteps, isMockResponse } = useRootConfig();
-
-  const { data, refetch, isPending } = isMockResponse
-    ? { data: mockSteps.review, refetch: () => null, isPending: false }
-    : useSmbdoGetClient((clientId || onboardingForm?.id) as string);
+  const { data, refetch, isPending } = useGetDataByClientId();
 
   const [edit, onEditBusiness] = useState(false);
   const [editIndividual, onEditIndividual] = useState(false);
@@ -57,7 +54,7 @@ const ReviewStep = () => {
       });
     }
     if (data?.outstanding?.attestationDocumentIds?.length) {
-      buildStepper(['Verification']);
+      buildStepper(['Attestation']);
       setOnboardingForm({
         ...onboardingForm,
         questionsIds: data?.outstanding?.questionIds || [],

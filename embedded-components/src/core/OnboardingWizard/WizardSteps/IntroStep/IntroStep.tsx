@@ -16,7 +16,6 @@ import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { introSchema } from '../StepsSchema';
-
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 
@@ -30,10 +29,6 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
   const { getContentToken: getInitContentToken } = useContentData(
     'features.EntityTypeForm'
   );
-
-  useEffect(() => {
-    buildStepper(['Intro']);
-  }, []);
 
   useEffect(() => {
     if (yupSchema) {

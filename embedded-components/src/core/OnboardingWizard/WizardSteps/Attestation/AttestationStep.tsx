@@ -41,7 +41,7 @@ import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { PdfDisplay } from './PdfDisplay';
 
-const VerificationStep = () => {
+const AttestationStep = () => {
   const form = useFormContext();
   const { clientId } = useRootConfig();
   const { setCurrentStep, buildStepper, activeStep } = useStepper();
@@ -285,6 +285,6 @@ const VerificationStep = () => {
   );
 };
 
-VerificationStep.title = 'Verification';
+AttestationStep.title = 'Attestation';
 
-export { VerificationStep };
+export { AttestationStep };

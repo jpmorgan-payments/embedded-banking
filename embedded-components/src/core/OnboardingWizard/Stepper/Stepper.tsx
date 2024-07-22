@@ -17,7 +17,7 @@ import {
   OrganizationDetailsStep,
   QuestionsStep,
   ReviewStep,
-  VerificationStep,
+  AttestationStep,
 } from '../WizardSteps';
 
 type yInitValues = {
@@ -66,7 +66,7 @@ const stepsWizard: any = {
   Organization: OrganizationDetailsStep,
   Questions: QuestionsStep,
   Review: ReviewStep,
-  Verification: VerificationStep,
+  Attestation: AttestationStep,
   'Decision Makers': DecisionMakersStep,
   'Business Owners': BusinessOwnersStep,
 };
@@ -116,7 +116,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Decision Makers',
       'Questions',
       'Review',
-      'Verification',
+      'Attestation',
     ]
   ): any => {
     const stepsListSchemaTemp: any = () => {

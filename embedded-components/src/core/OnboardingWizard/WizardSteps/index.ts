@@ -6,4 +6,4 @@ export { QuestionsStep } from './QuestionsStep/QuestionsStep';
 export { ReviewStep } from './ReviewStep/ReviewStep';
 export { DecisionMakersStep } from './DecisionMakersStep/DecisionMakersStep';
 export { BusinessOwnersStep } from './BusinessOwnersStep/BusinessOwnersStep';
-export { VerificationStep } from './VerificationStep/VerificationStep';
+export { AttestationStep } from './Attestation/AttestationStep';

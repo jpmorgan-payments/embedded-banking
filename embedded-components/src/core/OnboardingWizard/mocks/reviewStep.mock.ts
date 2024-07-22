@@ -216,7 +216,7 @@ const formCompleteMock = {
   businessPhone: '2017700500',
   website: '',
   websiteNotAvailable: true,
-  industryCategory: 'Accommodation and Food Services',
+  industryCategory: 'Accommodation aimp[nd Food Services',
   industryType: 'Caterers',
   yearOfFormation: '2020',
   businessIdentification: 'ein',

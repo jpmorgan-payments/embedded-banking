@@ -180,9 +180,10 @@ export const stepReviewMockWithQuestions = {
         lastName: 'Gellar',
         countryOfResidence: 'US',
         natureOfOwnership: 'Direct',
-        jobTitle: 'Other',
-        jobTitleDescription: 'CEO',
+        jobTitle: 'CEO',
+        jobTitleDescription: null,
         soleOwner: true,
+        birthDate: '1983-02-08',
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
@@ -197,9 +198,14 @@ export const stepReviewMockWithQuestions = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '100-01-0001',
+            value: '078-86-6616',
           },
         ],
+        phone: {
+          phoneType: 'MOBILE_PHONE',
+          countryCode: 'US',
+          phoneNumber: '6316215110',
+        },
       },
     },
   ],

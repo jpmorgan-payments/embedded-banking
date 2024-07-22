@@ -1,0 +1,1 @@
+export { useGetDataByClientId } from './useGetDataByClientId';

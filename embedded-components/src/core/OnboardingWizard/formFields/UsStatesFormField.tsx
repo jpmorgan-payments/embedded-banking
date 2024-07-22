@@ -33,7 +33,7 @@ const UsStatesFormField = ({ form, name, required }: any) => {
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={field.value}
+              value={field.value}
             >
               <FormControl>
                 <SelectTrigger>
