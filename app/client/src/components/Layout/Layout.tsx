@@ -18,6 +18,7 @@ import {
   ThemeSelectMenu,
   ThemeSelectMenuProps,
 } from './ThemeSelectMenu/ThemeSelectMenu';
+import UnicornAssistant from 'unicorn-assitant/UnicornAssitant';
 
 interface LayoutProps {
   themeProps: ThemeSelectMenuProps;
@@ -95,6 +96,7 @@ export const Layout = ({
       }
     >
       {children}
+      <UnicornAssistant />
     </AppShell>
   );
 };

@@ -4,7 +4,7 @@ Unicorn CLI is a command-line interface for ...
 
 ## Demo Script: Introducing UnicornCoder
 
-Welcome to UnicornCoder, the CLI utility designed to supercharge your development workflow! With UnicornCoder, you can seamlessly integrate JPMorgan's Embedded Banking Solutions into your web apps, saving you valuable time and enabling you to implement advanced payment functionalities with ease.
+Welcome to UnicornCoder, the CLI utility designed to supercharge your development workflow! With UnicornCoder, you can seamlessly integrate JPMorgan's Embedded Banking Digital capabilities into your source code context, saving you valuable time and enabling you to implement advanced embedded banking functionalities with ease.
 
 Here's how it works:
 

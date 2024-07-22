@@ -4,8 +4,6 @@ import axios from "axios";
 // Function to generate and open the sandbox URL
 export async function generateAndOpenSandbox(content) {
 
-console.log("content", content);
-
   try {
     const response = await axios.post(
       "https://codesandbox.io/api/v1/sandboxes/define?json=1",

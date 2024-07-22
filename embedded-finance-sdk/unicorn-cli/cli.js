@@ -10,29 +10,29 @@ import { unicornAscii } from "./unicornAscii.js";
 
 unicornAscii();
 
-// Define the questions
 const questions = [
   {
-    type: "list",
-    name: "uiLibrary",
-    message: "What is your UI rendering library / framework?",
-    choices: ["ReactJS", "VueJS", "Angular", "Svelte"],
+    type: 'list',
+    name: 'uiLibrary',
+    message: 'What is your UI rendering library / framework?',
+    choices: ['@react', '@vue', '@angular', '@svelte'],
   },
   {
-    type: "list",
-    name: "componentLibrary",
-    message: "What is your prefered component library?",
-    choices: ["@material-ui", "@salt-ds/core", "@mantine/core", "@shadcn-ui"],
+    type: 'list',
+    name: 'componentLibrary',
+    message: 'What is your prefered component library?',
+    choices: ['@material-ui', '@salt-ds/core', '@mantine/core', '@chakra-ui'],
   },
   {
-    type: "checkbox",
-    name: "capabilities",
-    message: "What capability(ies) do you want to implement?",
+    type: 'checkbox',
+    name: 'capabilities',
+    message: 'What capability(ies) do you want to implement?',
     choices: [
-      "Onboard a client",
-      "Add a link account",
-      "Make a payment",
-      "Display a payment",
+      'Onboard a client',
+      'Add a linked account',
+      'Make a payment',
+      'Display a payment details',
+      'Manage notifications',
     ],
   },
 ];
@@ -71,7 +71,8 @@ async function askQuestions() {
 
   const generatedCode = await generateCodeWithOpenAI(
     answers,
-    JSON.stringify(openApiSpec)
+    JSON.stringify(openApiSpec),
+    "openai"
   );
   generateAndOpenSandbox(generatedCode?.message?.content);
 }
