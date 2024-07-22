@@ -103,8 +103,6 @@ const businessSchema = {
       fieldType: 'address',
       type: 'organization',
     },
-
-    
   ],
 };
 

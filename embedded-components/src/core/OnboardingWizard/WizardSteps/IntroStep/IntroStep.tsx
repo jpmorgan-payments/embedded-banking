@@ -16,7 +16,6 @@ import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { introSchema } from '../StepsSchema';
-
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 
