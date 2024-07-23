@@ -114,7 +114,11 @@ const ReviewStep = () => {
           </Title>
         </Group>
         <div className="eb-w-[28rem] eb-border eb-px-4">
-          <Accordion type="multiple" className="eb-w-full">
+          <Accordion
+            type="multiple"
+            className="eb-w-full"
+            defaultValue={['individual-details']}
+          >
             <AccordionItem value="individual-details">
               <AccordionTrigger className="eb-uppercase">
                 Individual Details
