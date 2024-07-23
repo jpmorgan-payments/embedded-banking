@@ -10,6 +10,7 @@ import uniqBy from 'lodash/uniqBy';
 
 // eslint-disable-next-line
 import {
+  AttestationStep,
   BusinessOwnersStep,
   DecisionMakersStep,
   IndividualDetailsStep,
@@ -17,7 +18,6 @@ import {
   OrganizationDetailsStep,
   QuestionsStep,
   ReviewStep,
-  AttestationStep,
 } from '../WizardSteps';
 
 type yInitValues = {
