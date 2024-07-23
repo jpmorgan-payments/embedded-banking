@@ -22,6 +22,7 @@ import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetai
 //   PersonalDetailsValues,
 // } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromFormToIndParty } from '../utils/fromFormToApi';
+
 // import { useContentData } from '../utils/useContentData';
 
 type IndividualDetailsModalProps = {

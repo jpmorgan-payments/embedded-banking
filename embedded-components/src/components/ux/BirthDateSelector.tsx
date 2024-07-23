@@ -108,7 +108,7 @@ export function BirthDateSelector({
               <SelectContent>
                 {dayOptions?.map((items: any) => {
                   return (
-                    <SelectItem value={items.value} key={`${items.value  }D`}>
+                    <SelectItem value={items.value} key={`${items.value}D`}>
                       {items.value}
                     </SelectItem>
                   );
@@ -134,7 +134,7 @@ export function BirthDateSelector({
               <SelectContent>
                 {monthOptions?.map((items: any) => {
                   return (
-                    <SelectItem value={items.value} key={`${items.value  }M`}>
+                    <SelectItem value={items.value} key={`${items.value}M`}>
                       {items.value}
                     </SelectItem>
                   );
@@ -160,7 +160,7 @@ export function BirthDateSelector({
               <SelectContent>
                 {yearOptions?.map((items: any) => {
                   return (
-                    <SelectItem value={items.value} key={`${items.value  }Y`}>
+                    <SelectItem value={items.value} key={`${items.value}Y`}>
                       {items.value}
                     </SelectItem>
                   );

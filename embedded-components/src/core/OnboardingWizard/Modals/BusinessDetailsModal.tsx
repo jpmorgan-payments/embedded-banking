@@ -23,6 +23,7 @@ import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
 //   updateOtherOwner,
 // } from '../utils/actions';
 import { fromFormToOrgParty } from '../utils/fromFormToApi';
+
 // import { useContentData } from '../utils/useContentData';
 
 type BusinessDetailsModalProps = {
