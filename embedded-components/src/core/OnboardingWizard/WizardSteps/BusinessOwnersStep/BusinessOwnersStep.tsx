@@ -2,10 +2,7 @@ import { useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 
-import {
-  useSmbdoGetClient,
-  useSmbdoPostClients,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
   FormControl,
@@ -20,6 +17,7 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { BusinessCard } from '../../common/BusinessCard';
 import { useOnboardingForm } from '../../context/form.context';
+// eslint-disable-next-line
 import { DecisionMakerModal } from '../../Modals/DecisionMakerModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
@@ -38,11 +36,7 @@ const BusinessOwnersStep = () => {
   const { onRegistration } = useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
 
-  const {
-    data,
-    refetch,
-    isPending: isPendingClient,
-  } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId('client');
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);

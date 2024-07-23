@@ -1,24 +1,18 @@
-import { useState } from 'react';
-import { Edit2Icon } from 'lucide-react';
 import { Edit } from 'tabler-icons-react';
 
 import {
   Button,
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-  Dialog,
-  DialogTrigger,
   Group,
-  Stack,
   Text,
   Title,
 } from '@/components/ui';
 
-import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
+// import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
 
 interface CardReviewIndividualProps {
   data: any;
@@ -29,12 +23,15 @@ interface CardReviewIndividualProps {
 
 const CardReviewIndividual = ({
   data,
-  type = 'organization',
-  title,
+  // type = 'organization',
+  // title,
   onEdit,
 }: CardReviewIndividualProps) => {
-  const [open, setOpen] = useState(false);
-  const { email, indDetails } = data;
+  // const [open, setOpen] = useState(false);
+  const {
+    // email,
+    indDetails,
+  } = data;
   const {
     city,
     countryOfResidence,

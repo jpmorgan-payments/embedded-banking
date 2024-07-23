@@ -1,6 +1,6 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "license": "Apache-2.0",
   "type": "module",
   "description": "EB components",
@@ -24,7 +24,7 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "vitest": "vitest run",
     "vitest:watch": "vitest",
-    "test": "npm run typecheck && npm run prettier && npm run vitest && npm run build",
+    "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "generate-api": "orval --config ./orval.config.cjs && yarn replace '((?:\\s|\\<))(\\d\\S*)Response' '$1N$2Response' ./src/api/generated/embedded-banking.ts && npx prettier --write './src/api/generated/embedded-banking.*'"

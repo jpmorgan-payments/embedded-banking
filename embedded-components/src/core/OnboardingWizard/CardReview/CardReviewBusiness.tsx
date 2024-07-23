@@ -1,16 +1,13 @@
-import { Edit2Icon } from 'lucide-react';
 import { Edit } from 'tabler-icons-react';
 
 import {
   Button,
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
   Group,
-  Stack,
   Text,
   Title,
 } from '@/components/ui';
@@ -25,21 +22,24 @@ interface CardReviewBusiness {
 const CardReviewBusiness = ({
   data,
   type = 'organization',
-  title,
+  // title,
   onEdit,
 }: CardReviewBusiness) => {
-  const { email, orgDetails } = data;
+  const {
+    // email,
+    orgDetails,
+  } = data;
   const {
     businessName,
-    dba,
-    organizationDescription,
-    industryCategory,
-    industryType,
+    // dba,
+    // organizationDescription,
+    // industryCategory,
+    // industryType,
     countryOfFormation,
-    yearOfFormation,
-    countryCode,
-    phoneNumber,
-    website,
+    // yearOfFormation,
+    // countryCode,
+    // phoneNumber,
+    // website,
     businessAddressLine1,
     businessAddressLine2,
     businessAddressLine3,

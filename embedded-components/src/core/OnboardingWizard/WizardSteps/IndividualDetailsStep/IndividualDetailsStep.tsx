@@ -30,11 +30,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   //   'schema.businessOwnerFormSchema'
   // );
 
-  const {
-    data,
-    refetch,
-    isPending: isPendingClient,
-  } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId('client');
   const { mutateAsync: postClient, isPending: isPendingClientPost } =
     useSmbdoPostClients();
 

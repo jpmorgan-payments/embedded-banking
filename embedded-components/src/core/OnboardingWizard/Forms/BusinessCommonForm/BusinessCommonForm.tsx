@@ -32,11 +32,7 @@ import { industryCategoriesMock as industryCategories } from '../../utils/indust
 import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
-export const BusinessCommonForm: any = ({
-  form,
-  hasWebsite,
-  setHasWebsite,
-}: any) => {
+export const BusinessCommonForm: any = ({ form }: any) => {
   const industryTypes =
     industryCategories?.items
       ?.find?.(

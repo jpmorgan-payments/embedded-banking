@@ -16,7 +16,6 @@ import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context'
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
 import { QuestionForm } from '@/core/OnboardingWizard/Forms/QuestionForm/QuestionForm';
 
-import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
 // import { updateOutstandingItems } from '../../utils/actions';
@@ -25,7 +24,7 @@ import { useContentData } from '../../utils/useContentData';
 import { q } from './q';
 
 const QuestionsStep = ({ questionsIds, children }: any) => {
-  const { activeStep, setCurrentStep } = useStepper();
+  const { activeStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
@@ -35,7 +34,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     questionIds:
       questionsIds?.join(',') || onboardingForm?.questionsIds?.join(','),
   });
-  const { mutateAsync: submitQuestions, isPending } = useSmbdoUpdateClient();
+  const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
 
   const getValidationByFormat = (format?: string, parentId?: string) => {

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
   Button,
   Dialog,
@@ -10,7 +9,6 @@ import {
   Stack,
   Title,
 } from '@/components/ui';
-import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
 
 import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';

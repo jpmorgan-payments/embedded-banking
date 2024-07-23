@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 
+// eslint-disable-next-line
 import { StepperContext } from './Stepper';
 
 const useStepper = () => {

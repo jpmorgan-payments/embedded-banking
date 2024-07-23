@@ -23,7 +23,7 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
   const { jurisdictions, entityType } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
-  const { activeStep, setCurrentStep, buildStepper } = useStepper();
+  const { activeStep, setCurrentStep } = useStepper();
 
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { getContentToken: getInitContentToken } = useContentData(
