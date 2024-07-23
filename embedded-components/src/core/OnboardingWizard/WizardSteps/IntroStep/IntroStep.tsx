@@ -1,15 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Stack,
-  Text,
-  Title,
-} from '@/components/ui';
+import { Box, Card, CardContent, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
@@ -60,7 +52,7 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
 
   return (
     <Stack>
-      <Title as="h2" className="eb-mb-8">
+      <Title as="h2" className="eb-mb-4">
         {getInitContentToken(`title`)}
       </Title>
       <Box>
@@ -69,18 +61,22 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="eb-w-full"
         >
-          <Box className="eb-grid eb-grid-cols-2 eb-gap-4 ">
+          <Box className="eb-grid eb-grid-cols-2 eb-gap-4">
             <RenderForms
               {...{
                 formSchema: formSchema.form,
                 getContentToken,
                 form,
-                className: `eb-space-y-6`,
+                className: `eb-space-y-2`,
               }}
             />
-            <Card role="complementary" aria-live="polite">
-              <CardContent className="eb-rounded eb-bg-slate-200">
-                <Grid className="eb-flex eb-gap-2 eb-bg-slate-200 eb-p-5">
+            <Card
+              role="complementary"
+              aria-live="polite"
+              className="eb-rounded eb-bg-slate-100"
+            >
+              <CardContent>
+                <div className="eb-flex eb-flex-col eb-gap-2 eb-p-2">
                   <Text>{getInitContentToken('corpText')}</Text>
                   <Text>{getInitContentToken('corpText1')}</Text>
 
@@ -123,7 +119,7 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
                       </ul>
                     </>
                   )}
-                </Grid>
+                </div>
               </CardContent>
             </Card>
           </Box>
