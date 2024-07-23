@@ -4,6 +4,7 @@ import { CheckCircle2Icon, Loader2Icon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { getRecipientLabel } from '@/lib/getAccountLabelFromPartyDetails';
 import { useCreateRecipient } from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import {
@@ -92,9 +93,14 @@ export const LinkAccountFormDialogTrigger: FC<
         account: {
           type: 'CHECKING',
           number: data.accountNumber,
-          routingNumber: data.routingNumber,
+          routingInformation: [
+            {
+              routingCodeType: 'USABA',
+              routingNumber: data.routingNumber,
+              transactionType: 'ACH',
+            },
+          ],
           countryCode: 'US',
-          routingCodeType: 'USABA',
         },
       },
     });
@@ -144,14 +150,7 @@ export const LinkAccountFormDialogTrigger: FC<
                       key={createRecipientResponse.id}
                       className="eb-text-sm eb-font-medium eb-leading-none"
                     >
-                      {createRecipientResponse.partyDetails.type ===
-                      'INDIVIDUAL'
-                        ? [
-                            createRecipientResponse.partyDetails.firstName,
-                            createRecipientResponse.partyDetails.lastName,
-                          ].join(' ')
-                        : createRecipientResponse.partyDetails.businessName}
-                      {` (...${createRecipientResponse.account.number.slice(-4)})`}
+                      {getRecipientLabel(createRecipientResponse)}
                     </h4>
                     <Badge>{createRecipientResponse.status}</Badge>
                   </div>

@@ -22,6 +22,9 @@ module.exports = {
       },
     },
     extend: {
+      height: {
+        'modal-overflow' : 'calc(100% - 25dvh)'
+      },
       colors: {
         border: 'hsl(var(--eb-border))',
         input: 'hsl(var(--eb-input))',

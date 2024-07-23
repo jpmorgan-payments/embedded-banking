@@ -1,4 +1,132 @@
 const contentTokensOnboardingEng: Record<string, string | string[]> = {
+  'common.validCharacters': "-_.,'+/?%&()[]",
+  'common.numbersStartFirst': '(!) Address must start with numbers',
+  'common.line2Empty':
+    '(!) Address Line 3 must be empty if Address Line 2 is empty',
+  'common.addressValidCharacters': "-.,'/&#@%",
+  'common.invalidCharactersErrorMessage':
+    '(!) Invalid characters. Please use only letters, numbers, and allowed characters ',
+  'common.startWithNumber': 'Address has to start with a number',
+  'common.justDigits': '(!) Address is incomplete',
+
+  // START - Common Components
+  'components.myDataGrid.errorMessage': 'Data fetching error',
+  'components.myDataGrid.emptyMessage': 'No data is available.',
+  'components.myDataGrid.emptyTitle': 'No data',
+  'components.myDataGrid.refreshActionLabel': 'Click to refresh',
+
+  // START - Common DataTableGrid
+  'components.DataTableGrid.errorMessage': 'Data fetching error',
+  'components.DataTableGrid.emptyMessage': 'No data is available.',
+  'components.DataTableGrid.emptyTitle': 'No data',
+  'components.DataTableGrid.refreshActionLabel': 'Click to refresh',
+  'components.DataTableGrid.description': `You can sort the list of transactions or use filters to review the information you are most interested in. All date and time values are displayed in browser timezone {word}`,
+  'components.DataTableGrid.smDescription': `All date and time values are displayed in browser timezone {word}`,
+  // ---------
+  'components.DataTableGrid.DataTableGridFilterHeader.searchRange': `Last 7 days`,
+  'components.DataTableGrid.DataTableGridFilterHeader.searchRangePlaceholder': `filter by`,
+  'components.DataTableGrid.DataTableGridFilterHeader.searchRangeList': `All Transactions,Current day,Previous day,Last 7 days,Last 14 days,Last 30 days,Last 2 months,Last 3 months,Last 6 months,Last 12 months,Last 24 months`,
+  'components.DataTableGrid.DataTableGridFilterHeader.transactionSearchHeader': `To refine your view sort the data in alphabetical or numerical order or use column filters to refine the data you want to see.`,
+  'components.DataTableGrid.DataTableGridFilterHeader.searchTransactionBy': `Quick filter`,
+  'components.DataTableGrid.DataTableGridFilterHeader.clear': `Reset filters`,
+  'components.DataTableGrid.DataTableGridFilterHeader.filterApplied': `Filters applied:`,
+  'components.DataTableGrid.DataTableGridFilterHeader.apply': `Advanced filters`,
+  'components.DataTableGrid.DataTableGridFilterHeader.custom': `Custom`,
+  'components.DataTableGrid.DataTableGridFilterHeader.all': `ALL`,
+
+  // ---------
+  'components.DataTableGrid.SearchHeaderFilterModal.title': `Filters`,
+  // ---------
+  // ---------
+  'components.DataTableGrid.DataTableGridTopFilter.display': `Display for:`,
+  // ---------
+  'components.DataTableGrid.DataTableGridFilterGenerated.searchText': `Search by any of these transaction details.`,
+  'components.DataTableGrid.DataTableGridFilterGenerated.close': `Cancel`,
+  'components.DataTableGrid.DataTableGridFilterGenerated.reset': `Reset`,
+  'components.DataTableGrid.DataTableGridFilterGenerated.apply': `Apply`,
+  // ---------
+  'components.alertMessage.errorTitleSuccess': 'Success',
+  // ------- BirthdayPicker
+  'components.CustomDatePicker.label': 'Date of birth',
+  'components.CustomDatePicker.month': 'Month',
+  'components.CustomDatePicker.day': 'Day',
+  'components.CustomDatePicker.year': 'Year',
+  'components.CustomDatePicker.placeHolder': 'Pick a date',
+  'components.CustomDatePicker.clear': 'Clear the date',
+  // ------- BackLink
+  'components.BackLink.backLinkLabel': 'Back',
+  // ------- ContextualHelp
+  'components.ContextualHelp.avatarHelp': 'get help',
+  'components.ContextualHelp.questionText': 'How can I help today?',
+  'components.ContextualHelp.navLinkLabel': 'Take an experience tour',
+  'components.ContextualHelp.navLinkLabelFAQ': `... or explore the whole FAQ section`,
+  'components.ContextualHelp.supportNumberBasic': `(866) 251-0588`,
+  'components.ContextualHelp.supportNumberIntl': `(212) 622-9814`,
+  // ------- DashboardWidget
+  'components.DashboardWidget.title': `No title`,
+  // ------- EinInput
+  'components.EinInput.label': `Employer Identification Number`,
+  // ------- BasicDataLoadingError
+  'components.BasicDataLoadingError.alertDataErrTitle': `Something went wrong ...`,
+  'components.BasicDataLoadingError.errorText': `Error loading data. Please try again later, or refresh the page.`,
+  // ------- BasicDataLoadingError
+  'components.BasicEmptyState.title': `No data`,
+  'components.BasicEmptyState.text': ` `,
+  // ------- Layout
+  'components.Layout.NavText': `No business name`,
+  'components.Layout.NavTextNo': `No client ID`,
+  'components.Layout.NavLoading': `loading ...`,
+  'components.Layout.openNavigation': `Open navigation`,
+  'components.Layout.closeNavigation': `Close navigation`,
+  'components.Layout.skipToNavigation': `Skip to Navigation`,
+  'components.Layout.skipToMainContent': `Skip to Main Content`,
+  // --------
+  'components.Layout.UserName': `Unnamed user`,
+  'components.Layout.UserEmail': `No email found`,
+  'components.Layout.ADALabels.UserMenu': `User menu`,
+  'components.Layout.ADALabels.UserAvatar': `User avatar`,
+  // --------
+  'components.Layout.MenuLabel': `Account`,
+  'components.Layout.MenuItem': `Log out`,
+  // --------
+  'components.Layout.TextBy': ``,
+  // --------
+  'components.Layout.linkDashboard': `Dashboard`,
+  'components.Layout.linkTransactions': `Transactions`,
+  'components.Layout.linkMakePay': `Make a payment`,
+  'components.Layout.linkAccounts': `Accounts`,
+  'components.Layout.linkDebit': `Debit Card`,
+  'components.Layout.linkRecipients': `Recipients`,
+  'components.Layout.linkRecipientsExternalAccount': `Recipients & External Account`,
+  'components.Layout.linkLinkedAccount': `External Account`,
+  'components.Layout.linkStatements': `Statements`,
+  'components.Layout.linkSupport': `Support`,
+  'components.Layout.linkBusiness': `Business details`,
+  'components.Layout.linkNoClientIdLinks': `Onboarding`,
+  // ------- ServerStateOverlays
+  'components.ServerStateOverlays.AlertTitle': `Loading ...`,
+  'components.ServerStateOverlays.Title': `No {word} found`,
+  // ------- PersonCard
+  'components.PersonCard.name': `Name`,
+  // -------
+  'components.PersonCard.cardName': `Name`,
+  'components.PersonCard.addressLine1': `AddressLine1`,
+  'components.PersonCard.addressLine2': `AddressLine2`,
+  'components.PersonCard.addressLine3': `AddressLine3`,
+  'components.PersonCard.zip': `State_Zip_Country`,
+  'components.PersonCard.email': `Email`,
+  // -------
+  'components.PersonCard.birthDate': `DOB:`,
+  'components.PersonCard.phoneNumber': `Phone:`,
+  // ------- PhoneInput
+  'components.PhoneInput.phoneNumber': `Phone number`,
+  // ------- Ssn4Input
+  'components.Ssn4Input.ssn': `Social Security Number`,
+  // ------- UsStateSelect
+  'components.UsStateSelect.state': `State`,
+  'components.UsStateSelect.selectState': `Select state`,
+  // END - Common Components
+
   // START - Page Onboarding
   'pages.OnboardingPage.reviewInProgressTitle': `Thank you for submitting your additional details.`,
   'pages.OnboardingPage.reviewInProgressLine1': `We are processing your application and will contact you once complete.`,

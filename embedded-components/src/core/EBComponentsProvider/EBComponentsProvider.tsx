@@ -18,18 +18,34 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   theme = {},
 }) => {
   const queryClient = new QueryClient();
-  // TODO: set up api instance
 
-  AXIOS_INSTANCE.interceptors.request.use((config: any) => {
-    return {
-      ...config,
-      headers: {
-        ...config.headers,
-        ...headers,
+  useEffect(() => {
+    AXIOS_INSTANCE.interceptors.request.use(
+      (config: any) => {
+        if (config.url.includes('/file')) {
+          config.responseType = 'blob';
+        }
+
+        return config;
       },
-      baseURL: apiBaseUrl,
-    };
-  });
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    AXIOS_INSTANCE.interceptors.request.use((config: any) => {
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          ...headers,
+        },
+        baseURL: apiBaseUrl,
+      };
+    });
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -56,6 +72,7 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
           __html: css,
         }}
       />
+
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </>
   );

@@ -1,5 +1,7 @@
 /* eslint react/prop-types: 0 */
-import { Checkbox } from '@/components/ui/checkbox';
+
+import { useState } from 'react';
+
 import {
   FormControl,
   FormField,
@@ -7,9 +9,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Grid } from '@/components/ui/grid';
-import { Group } from '@/components/ui/group';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -17,18 +16,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Stack } from '@/components/ui/stack';
-import { Text } from '@/components/ui/text';
-import { TextArea } from '@/components/ui/textarea';
-import { Title } from '@/components/ui/title';
+import {
+  Checkbox,
+  Grid,
+  Group,
+  Input,
+  Stack,
+  Text,
+  TextArea,
+  Title,
+} from '@/components/ui';
+import { PhoneInput } from '@/components/ux/PhoneInput';
 
 import { industryCategoriesMock as industryCategories } from '../../utils/industryCategories.mock';
 import { useContentData } from '../../utils/useContentData';
 import { AddressForm } from '../AddressForm/AddressForm';
 
-export const BusinessCommonForm: any = ({ form }: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const isLoadingIndustryCategories = false;
+export const BusinessCommonForm: any = ({
+  form,
+  hasWebsite,
+  setHasWebsite,
+}: any) => {
   const industryTypes =
     industryCategories?.items
       ?.find?.(
@@ -39,6 +47,8 @@ export const BusinessCommonForm: any = ({ form }: any) => {
 
   const { websiteNotAvailable } = form.getValues();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
+  const [, setNoWebsite] = useState(websiteNotAvailable);
+
   return (
     <>
       <Grid className={`eb-grid-flow-row eb-gap-4 eb-pt-4 `}>
@@ -102,20 +112,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                     {getContentToken(`businessPhone.label`)}
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      required
-                      placeholder={
-                        getContentToken(`businessPhone.placeholder`) as string
-                      }
-                    />
+                    <PhoneInput {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </Grid>
-          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4 ">
             <FormField
               control={form.control}
               name="website"
@@ -136,6 +140,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                           : (getContentToken(`text.notAvailable`) as string)
                       }
                       className="eb-lowercase"
+                      disabled={websiteNotAvailable}
                     />
                   </FormControl>
                   <FormMessage />
@@ -143,7 +148,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
 
-            <Group className="eb-flex eb-flex-row eb-flex-wrap eb-content-center  eb-gap-2">
+            <Group className="eb-mt-8 eb-flex eb-flex-row eb-flex-wrap  eb-content-center eb-gap-2">
               <Text className="eb-mx-3 eb-font-bold">
                 {getContentToken(`text.or`)}
               </Text>
@@ -156,11 +161,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={(value) => {
-                          form
-                            .getInputProps('websiteNotAvailable', {
-                              type: 'checkbox',
-                            })
-                            .onChange(value);
+                          // setHasWebsite(value);
+                          form.setValue('websiteNotAvailable', value);
+                          // form
+                          //   .getInputProps('websiteNotAvailable', {
+                          //     type: 'checkbox',
+                          //   })
+                          //   .onChange(value);
+                          setNoWebsite(value);
                           form.clearFieldError('website');
                         }}
                       />
@@ -174,20 +182,50 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               />
             </Group>
           </Grid>
-          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
+          <Grid className=" eb-grid-flow-row eb-grid-cols-2 eb-gap-4  ">
             <FormField
               control={form.control}
-              name="website"
+              name="countryOfFormation"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel asterisk>
+                <FormItem className="">
+                  <FormLabel>
                     {getContentToken(`countryOfFormation.label`)}
                   </FormLabel>
-                  <FormControl>
-                    <Input {...field} required disabled value="US" />
-                  </FormControl>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      // handleAccountTypeChange(value);
+                    }}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        {/* TODO: placholder needs token */}
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {['US', 'Canada', 'UK']?.map((items: any) => {
+                        return (
+                          <SelectItem key={items} value={items}>
+                            {items}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
+
+                // <FormItem>
+                //   <FormLabel asterisk>
+                //     {getContentToken(`countryOfFormation.label`)}
+                //   </FormLabel>
+                //   <FormControl>
+                //     <Input {...field} required disabled value="US" />
+                //   </FormControl>
+                //   <FormMessage />
+                // </FormItem>
               )}
             />
 
@@ -195,29 +233,25 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             <FormField
               control={form.control}
               name="yearOfFormation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel asterisk>
-                    {getContentToken(`yearOfFormation.label`)}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      required
-                      type="number"
-                      placeholder={
-                        !websiteNotAvailable
-                          ? (getContentToken(
-                              `yearOfFormation.placeholder`
-                            ) as string)
-                          : (getContentToken(`text.notAvailable`) as string)
-                      }
-                      className="eb-lowercase"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel asterisk>
+                      {getContentToken(`yearOfFormation.label`)}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        required
+                        placeholder="YYYY"
+                        type="number"
+                      />
+                      {/* <YearSelect {...field} /> */}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </Grid>
           <Stack>
@@ -267,6 +301,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
         name="industryCategory"
         render={({ field }) => (
           <FormItem className="eb-mt-5">
+            {/* TODO:// MISIng content Type */}
             <FormLabel>Account Type</FormLabel>
             <Select
               onValueChange={(value) => {
@@ -334,7 +369,9 @@ export const BusinessCommonForm: any = ({ form }: any) => {
                   })
                   ?.map((items: any) => {
                     return (
-                      <SelectItem value={items.value}>{items.value}</SelectItem>
+                      <SelectItem value={items.value} key={items.value}>
+                        {items.value}
+                      </SelectItem>
                     );
                   })}
               </SelectContent>

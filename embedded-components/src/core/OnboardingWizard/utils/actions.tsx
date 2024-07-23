@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
 
 import { OnboardingForm } from '../context/form.context';
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+
+// import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+// import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 
 /* export const apiToForm = (apiData) => {
   const form = {};
@@ -18,10 +19,7 @@ import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDeta
  */
 
 //ADD CONTROLLER TO FORM
-export const addOwner = (
-  onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
-) => {
+export const addOwner = (onboardingForm: OnboardingForm, owner: any) => {
   //TODO: pass role type?
   /*
   "CLIENT" "PRIMARY_ACCOUNT_OWNER" "BENEFICIAL_OWNER" "CONTROLLER" "DECISION_MAKER" "PRIMARY_CONTACT" "AUTHORIZED_USER" "AUTHORIZED_USER_ADMIN" "AUTHORIZED_USER_OPS" "DIRECTOR"
@@ -33,16 +31,13 @@ export const addOwner = (
 //ADD BUSINESS DETAILS
 export const addBusinessOwner = (
   onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
+  owner: any
 ) => {
   return { ...onboardingForm, owner };
 };
 
 //ADD CONTROLLER TO FORM
-export const addController = (
-  onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
-) => {
+export const addController = (onboardingForm: OnboardingForm, owner: any) => {
   //TODO: pass role type?
   /*
   "CLIENT" "PRIMARY_ACCOUNT_OWNER" "BENEFICIAL_OWNER" "CONTROLLER" "DECISION_MAKER" "PRIMARY_CONTACT" "AUTHORIZED_USER" "AUTHORIZED_USER_ADMIN" "AUTHORIZED_USER_OPS" "DIRECTOR"
@@ -58,14 +53,12 @@ export const updateOutstandingItems = (
 ) => {
   const form = _.cloneDeep(onboardingForm);
   form.outstandingItems = outstandingItems;
+
   return form;
 };
 
 //ADD OTHER OWNERS
-export const addOtherOwner = (
-  onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
-) => {
+export const addOtherOwner = (onboardingForm: OnboardingForm, owner: any) => {
   const form = _.cloneDeep(onboardingForm);
   if (form.otherOwners) {
     form.otherOwners = [...form.otherOwners, owner];
@@ -78,7 +71,7 @@ export const addOtherOwner = (
 //ADD OTHER OWNERS
 export const updateOtherOwner = (
   onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues,
+  owner: any,
   index: number
 ) => {
   const form = _.cloneDeep(onboardingForm);
@@ -95,12 +88,12 @@ export const updateOtherOwner = (
 //REMOVE OTHER OWNERS
 export const removeOtherOwner = (
   onboardingForm: OnboardingForm,
-  owner: PersonalDetailsValues
+  owner: any
 ) => {
   const form = JSON.parse(JSON.stringify(onboardingForm));
   let newOtherOwners = form?.otherOwners;
   if (newOtherOwners !== null) {
-    newOtherOwners = newOtherOwners.filter((x: PersonalDetailsValues) => {
+    newOtherOwners = newOtherOwners.filter((x: any) => {
       return x.firstName !== owner?.firstName;
     });
     form.otherOwners = newOtherOwners;
@@ -112,9 +105,21 @@ export const removeOtherOwner = (
 //ADD BUSINESS DETAILS
 export const addBusinessDetails = (
   onboardingForm: OnboardingForm,
-  businessDetails: BusinessDetailsStepValues
+  businessDetails: any
 ) => {
-  return { ...onboardingForm, businessDetails };
+  return {
+    ...onboardingForm,
+    businessDetails: { ...onboardingForm.businessDetails, ...businessDetails },
+  };
+};
+export const addQuestionAnswers = (
+  onboardingForm: OnboardingForm,
+  questions: any
+) => {
+  return {
+    ...onboardingForm,
+    questionsAnswers: { ...onboardingForm.questionsAnswers, ...questions },
+  };
 };
 
 //ADD BUSINESS TYPE
@@ -122,7 +127,14 @@ export const addBusinessType = (
   onboardingForm: OnboardingForm,
   businessType: string
 ) => {
-  const form = _.cloneDeep(onboardingForm);
-  form.legalStructure = businessType;
+  const form = { ...onboardingForm, legalStructure: businessType };
+  // form.legalStructure = businessType;
+  return form;
+};
+
+// AD IP
+export const addIp = (onboardingForm: OnboardingForm, ip: string) => {
+  const form = { ...onboardingForm, ip };
+  // form.legalStructure = businessType;
   return form;
 };

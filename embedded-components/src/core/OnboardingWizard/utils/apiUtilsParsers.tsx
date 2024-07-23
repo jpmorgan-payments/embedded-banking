@@ -4,13 +4,11 @@ import {
 } from '@/api/generated/embedded-banking.schemas';
 
 import { OnboardingForm } from '../context/form.context';
-import { BusinessDetailsStepValues } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import { PersonalDetailsValues } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 
-export const makeBusiness = (
-  business: BusinessDetailsStepValues,
-  form: OnboardingForm
-) => {
+// import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
+// import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
+
+export const makeBusiness = (business: any, form: OnboardingForm) => {
   const addressLines = [];
 
   if (business?.businessAddressLine1) {
@@ -20,7 +18,7 @@ export const makeBusiness = (
   if (business?.businessAddressLine2) {
     addressLines.push(business?.businessAddressLine2);
   }
-  //TODO: 3rd line business needs love
+  //TODO: 3rd line business needs to be added back
   // if (business?.businessAddressLine3)
   //   addressLines.push(business?.businessAddressLine3);
 
@@ -46,7 +44,9 @@ export const makeBusiness = (
       industryType: business?.industryType,
       yearOfFormation: business?.yearOfFormation,
       countryOfFormation: 'US',
-      significantOwnership: business?.significantOwnership,
+      significantOwnership:
+        form?.questionsAnswers?.significantOwnership === 'no',
+      entitiesInOwnership: form?.questionsAnswers?.entitiesInOwnership === 'no',
       addresses: [
         {
           addressType: 'BUSINESS_ADDRESS',
@@ -72,14 +72,14 @@ export const makeBusiness = (
           ]
         : [],
       websiteAvailable: !business?.websiteNotAvailable,
-      website: business?.website,
+      ...(business?.website ? { website: business?.website } : {}),
     },
   };
   return party;
 };
 
 export const makeIndividual = (
-  owner: PersonalDetailsValues,
+  owner: any,
   form: OnboardingForm,
   roles: string[]
 ) => {
@@ -144,7 +144,7 @@ export const formToAPIBody = (
     }
     const form = {
       parties: [...parties, businessParty, controllerParty],
-      products: ['EMBEDDED_BANKING'],
+      products: ['EMBEDDED_PAYMENTS'],
     };
 
     return form;
@@ -154,14 +154,24 @@ export const formToAPIBody = (
 };
 
 export const makeQuestionsAPIBody = (
-  questionRes: any
+  questionRes: any,
+  questionList?: string[]
 ): UpdateClientRequestSmbdo => {
   const responses: any = [];
   for (const [key, value] of Object.entries(questionRes)) {
-    responses.push({
-      questionId: key,
-      values: [value],
-    });
+    if (!questionList) {
+      responses.push({
+        questionId: key,
+        values: [value],
+      });
+    }
+
+    if (questionList?.includes(key) && value) {
+      responses.push({
+        questionId: key,
+        values: [value],
+      });
+    }
   }
   return { questionResponses: responses };
 };

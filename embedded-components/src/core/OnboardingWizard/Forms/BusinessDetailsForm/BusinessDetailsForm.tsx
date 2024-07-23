@@ -5,9 +5,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Grid } from '@/components/ui/grid';
-import { Input } from '@/components/ui/input';
-import { Title } from '@/components/ui/title';
+import { Grid, Input, Title } from '@/components/ui';
+import { EinInput } from '@/components/ux/EinInput';
 
 import { useContentData } from '../../utils/useContentData';
 
@@ -16,7 +15,9 @@ const BusinessDetailsForm = ({ form }: any) => {
   return (
     <>
       <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
-      <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
+      <Grid
+        className={`eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4`}
+      >
         <FormField
           control={form.control}
           name="businessName"
@@ -63,7 +64,7 @@ const BusinessDetailsForm = ({ form }: any) => {
                 {getContentToken(`solePropBusinessIdentification.option.ein`)}
               </FormLabel>
               <FormControl>
-                <Input {...field} required type="number" />
+                <EinInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -7,11 +7,14 @@ export const ebInstance = <T>(
   options?: AxiosRequestConfig
 ): Promise<T> => {
   const source = Axios.CancelToken.source();
+
   const promise = AXIOS_INSTANCE({
     ...config,
     ...options,
     cancelToken: source.token,
-  }).then(({ data }) => data);
+  }).then(({ data }) => {
+    return data;
+  });
 
   // @ts-ignore
   promise.cancel = () => {
