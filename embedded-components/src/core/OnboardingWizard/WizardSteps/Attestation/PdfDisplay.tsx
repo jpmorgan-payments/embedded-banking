@@ -67,7 +67,7 @@ export const PdfDisplay = ({
           <Box className="" key={index} tabIndex={0}>
             <Page
               pageNumber={index + 1}
-              className={`eb-flex eb-justify-center`}
+              className="eb-flex eb-justify-center"
               width={rect.width > pdfMaxWidth ? pdfMaxWidth : rect.width}
               renderAnnotationLayer={false}
             />

@@ -16,7 +16,7 @@ const BusinessDetailsForm = ({ form }: any) => {
     <>
       <Title as="h2">{getContentToken(`detailsSectionTitle`)}</Title>
       <Grid
-        className={`eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4`}
+        className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4"
       >
         <FormField
           control={form.control}
