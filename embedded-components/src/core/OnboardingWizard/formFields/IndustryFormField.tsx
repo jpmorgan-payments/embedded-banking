@@ -15,10 +15,10 @@ import { industryCategoriesMock as industryCategories } from '@/core/OnboardingW
 
 const IndustryFormField = ({
   form,
-  name,
-  required,
-  labelToken,
-  placeholderToken,
+  // name,
+  // required,
+  // labelToken,
+  // placeholderToken,
 }: any) => {
   const industryTypes =
     industryCategories?.items

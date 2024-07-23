@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useSmbdoUpdateParty } from '@/api/generated/embedded-banking';
@@ -11,24 +9,21 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { Group, Separator, Stack } from '@/components/ui';
-import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
-import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
+import { Group, Separator } from '@/components/ui';
 
-import { useOnboardingForm } from '../context/form.context';
 import { BusinessCommonForm } from '../Forms/BusinessCommonForm/BusinessCommonForm';
 import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
 // import {
 //   businessDetailsSchema,
 //   BusinessDetailsStepValues,
 // } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
-import {
-  addOtherOwner,
-  removeOtherOwner,
-  updateOtherOwner,
-} from '../utils/actions';
+// import {
+//   addOtherOwner,
+//   removeOtherOwner,
+//   updateOtherOwner,
+// } from '../utils/actions';
 import { fromFormToOrgParty } from '../utils/fromFormToApi';
-import { useContentData } from '../utils/useContentData';
+// import { useContentData } from '../utils/useContentData';
 
 type BusinessDetailsModalProps = {
   formData?: any;
@@ -39,9 +34,9 @@ const BusinessDetailsModal = ({
   formData,
   onCancel,
 }: BusinessDetailsModalProps) => {
-  const { getContentToken: getFormSchema } = useContentData(
-    'steps.BusinessDetailsStep'
-  );
+  // const { getContentToken: getFormSchema } = useContentData(
+  //   'steps.BusinessDetailsStep'
+  // );
   const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
 
   const defaultInitialValues = {};

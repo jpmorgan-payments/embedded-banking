@@ -33,7 +33,6 @@ const fieldsOther = (individual: any) => {
 const DecisionMakerCard = ({
   individual,
   controller,
-  index,
 }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)

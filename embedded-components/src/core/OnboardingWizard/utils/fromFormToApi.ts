@@ -19,15 +19,15 @@ export const fromFormToOrgParty = (form: any) => {
     .filter((val) => val)
     .join(' ');
 
-  const organizationSwitch = (businessType: string | undefined) => {
-    const map: any = {
-      Corporation: 'C_CORPORATION',
-      'Limited Partnership': 'LIMITED_PARTNERSHIP',
-      'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
-      'Sole Proprietorship': 'SOLE_PROPRIETORSHIP',
-    };
-    return businessType ? map[businessType] : '';
-  };
+  // const organizationSwitch = (businessType: string | undefined) => {
+  //   const map: any = {
+  //     Corporation: 'C_CORPORATION',
+  //     'Limited Partnership': 'LIMITED_PARTNERSHIP',
+  //     'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
+  //     'Sole Proprietorship': 'SOLE_PROPRIETORSHIP',
+  //   };
+  //   return businessType ? map[businessType] : '';
+  // };
 
   orgParty = {
     countryOfFormation: 'US',

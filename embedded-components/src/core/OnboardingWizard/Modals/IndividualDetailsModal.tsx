@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import {
@@ -23,7 +22,7 @@ import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetai
 //   PersonalDetailsValues,
 // } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromFormToIndParty } from '../utils/fromFormToApi';
-import { useContentData } from '../utils/useContentData';
+// import { useContentData } from '../utils/useContentData';
 
 type IndividualDetailsModalProps = {
   formData?: any;
@@ -39,9 +38,9 @@ const IndividualDetailsModal = ({
   parentPartyId,
 }: IndividualDetailsModalProps) => {
   // const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-  const { getContentToken: getFormSchema } = useContentData(
-    'steps.BusinessDetailsStep'
-  );
+  // const { getContentToken: getFormSchema } = useContentData(
+  //   'steps.BusinessDetailsStep'
+  // );
   const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
   const { mutateAsync: createParty } = useSmbdoPostParties();
   const defaultInitialValues = {};

@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
-import { AddressForm } from '@/core/OnboardingWizard/Forms/AddressForm/AddressForm';
-import { PersonalDetailsForm } from '@/core/OnboardingWizard/Forms/PersonalDetailsForm/PersonalDetailsForm';
 import {
   addOtherOwner,
   removeOtherOwner,
@@ -22,6 +20,7 @@ import {
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { individualSchema } from '../WizardSteps/StepsSchema';
+// eslint-disable-next-line
 import { RenderForms } from '../WizardSteps/utils/RenderForms';
 
 // import { useContentData } from '../../../utils/useContentData';
@@ -57,7 +56,7 @@ const DecisionMakerModal = ({
   onOpenChange,
   index,
 }: DecisionMakerModalProps) => {
-  const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
+  // const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );

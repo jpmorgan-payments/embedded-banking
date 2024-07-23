@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -46,7 +46,7 @@ const ReviewStep = () => {
   const form = useFormContext();
   const { setCurrentStep, buildStepper, activeStep } = useStepper();
 
-  const { data, refetch, isPending } = useGetDataByClientId('client');
+  const { data, isPending } = useGetDataByClientId('client');
 
   // STEP BUILDER, setOnboaring Form is not requried
   useEffect(() => {

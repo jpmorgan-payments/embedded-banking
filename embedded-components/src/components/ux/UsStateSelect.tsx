@@ -16,7 +16,7 @@ import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 const usStates = new UsaStates();
 
-export function UsStateSelect({ form, name, required, defaultValue }: any) {
+export function UsStateSelect({ form, name, required }: any) {
   const { getContentToken } = useContentData(`components.UsStateSelect`);
   return (
     <FormField

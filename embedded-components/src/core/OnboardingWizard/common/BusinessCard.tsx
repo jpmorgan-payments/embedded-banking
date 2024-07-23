@@ -30,11 +30,7 @@ const fieldsOther = (individual: any) => {
   ];
 };
 
-const BusinessCard = ({
-  individual,
-  controller,
-  index,
-}: DecisionMakersCardProps) => {
+const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);

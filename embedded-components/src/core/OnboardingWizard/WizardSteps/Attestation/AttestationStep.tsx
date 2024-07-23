@@ -44,18 +44,16 @@ import { PdfDisplay } from './PdfDisplay';
 const AttestationStep = () => {
   const form = useFormContext();
   const { clientId } = useRootConfig();
-  const { setCurrentStep, buildStepper, activeStep } = useStepper();
-  const { setOnboardingForm, onboardingForm }: any = useOnboardingForm();
-  const [docs, setDocs] = useState<any>(null);
+  const { setCurrentStep, activeStep } = useStepper();
+  const { onboardingForm }: any = useOnboardingForm();
+  const [setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
 
-  const {
-    data: clientData,
-    refetch,
-    isPending,
-  } = useSmbdoGetClient((clientId || onboardingForm?.id) as string);
+  const { data: clientData } = useSmbdoGetClient(
+    (clientId || onboardingForm?.id) as string
+  );
 
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);
@@ -91,7 +89,7 @@ const AttestationStep = () => {
   // }, []);
 
   const attestationID: string[] | undefined = onboardingForm?.attestations;
-  const { data: termsAndConditionsDoc, isError: termsIsError }: any =
+  const { data: termsAndConditionsDoc }: any =
     // TODO: We need to resolve the type undefined on attestionID
     useSmbdoDownloadDocument(
       (termsAndConditionsDocId || attestationID?.[0]) ?? ''
@@ -231,7 +229,7 @@ const AttestationStep = () => {
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={(value) => {}}
+                      onCheckedChange={() => {}}
                     />
                   </FormControl>
                   <FormLabel className="eb-p-3">
@@ -257,7 +255,7 @@ const AttestationStep = () => {
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={(value: any) => {}}
+                      onCheckedChange={() => {}}
                       disabled={
                         !form.getValues().reviewedDisclosure ||
                         !form.getValues().reviewedTerms
