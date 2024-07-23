@@ -40,6 +40,7 @@ export const Default: Story = {
     },
   },
   args: {
+    isMockResponse: false,
     products: [],
     onRegistration: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);

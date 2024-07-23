@@ -18,7 +18,7 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
   if (business?.businessAddressLine2) {
     addressLines.push(business?.businessAddressLine2);
   }
-  //TODO: 3rd line business needs love
+  //TODO: 3rd line business needs to be added back
   // if (business?.businessAddressLine3)
   //   addressLines.push(business?.businessAddressLine3);
 

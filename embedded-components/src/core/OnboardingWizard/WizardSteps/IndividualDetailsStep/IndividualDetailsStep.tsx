@@ -47,6 +47,8 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [yupSchema]);
 
   useEffect(() => {
+    console.log('@@clientData', clientDataForm);
+
     if (clientDataForm) {
       updateFormValues(
         getIndividualDetailsByRole(clientDataForm, 'CONTROLLER')[0],

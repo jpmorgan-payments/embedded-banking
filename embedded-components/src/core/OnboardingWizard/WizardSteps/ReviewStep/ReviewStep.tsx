@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
   IndividualDetails,
   OrganizationDetails,
@@ -12,21 +11,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Group,
-  Stack,
-  Title,
-} from '@/components/ui';
-import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
+import { Group, Stack, Title } from '@/components/ui';
 import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
 
-import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
-import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
-import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
-import { IndividualDetailsModal } from '../../Modals/IndividualDetailsModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
@@ -59,12 +46,7 @@ const ReviewStep = () => {
   const form = useFormContext();
   const { setCurrentStep, buildStepper, activeStep } = useStepper();
 
-  const { data, refetch, isPending } = useGetDataByClientId();
-
-  const [edit, onEditBusiness] = useState(false);
-  const [editIndividual, onEditIndividual] = useState(false);
-  const [indData, setModalData] = useState(null);
-  const [open, setOpen] = useState(false);
+  const { data, refetch, isPending } = useGetDataByClientId('client');
 
   // STEP BUILDER, setOnboaring Form is not requried
   useEffect(() => {
@@ -100,8 +82,6 @@ const ReviewStep = () => {
       setCurrentStep(activeStep + 1);
     }
   }, [activeStep]);
-
-  console.log(reviewData);
 
   const individualDetailsArray = [];
 
