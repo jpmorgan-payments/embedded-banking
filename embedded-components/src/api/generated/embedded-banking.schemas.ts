@@ -6,410 +6,410 @@
  * OpenAPI spec version: 0.9.88
  */
 export type GetAccountsParams = {
-/**
- * Unique client identifier
- */
-clientId?: ClientIdParamParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Unique client identifier
+   */
+  clientId?: ClientIdParamParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetAllRolesParams = {
-/**
- * Number of records per page.
- */
-limit?: UserPageSizeParameter;
-/**
- * Page Number
- */
-page?: UserPageNoParameter;
-/**
- * Role id
- */
-roleId?: UserRoleParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: UserPageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: UserPageNoParameter;
+  /**
+   * Role id
+   */
+  roleId?: UserRoleParameter;
 };
 
 export type GetAllUsersParams = {
-/**
+  /**
  * Determines the fetch level.<br><br>
 USER_STATUS: Fetches user status from identity provided<br><br>
 PARTY: Fetches party information for user like names, address, phones etc.<br><br>
 ROLES: Fetches user role information<br>
  */
-fetchLevel?: UserFetchLevelParameter;
-/**
- * Number of records per page.
- */
-limit?: UserPageSizeParameter;
-/**
- * Page Number
- */
-page?: UserPageNoParameter;
+  fetchLevel?: UserFetchLevelParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: UserPageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: UserPageNoParameter;
 };
 
 export type SearchStatementsParams = {
-/**
+  /**
  * Account identifiers used to represent client accounts.
 
  */
-accountIds?: string[];
-/**
- * Earliest date in search range. Must be set at least one day earlier than dateTo.
- */
-dateFrom: string;
-/**
- * Latest date in search range. Must be set at least one day later than dateFrom.
- */
-dateTo: string;
+  accountIds?: string[];
+  /**
+   * Earliest date in search range. Must be set at least one day earlier than dateTo.
+   */
+  dateFrom: string;
+  /**
+   * Latest date in search range. Must be set at least one day later than dateFrom.
+   */
+  dateTo: string;
 };
 
 export type GetClientIndustryCategoriesParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetDocumentTypesParams = {
-/**
- * Two-letter ISO code for a country, such as US for USA.
- */
-countryCode?: CountryCodeParameter;
-/**
- * Document category type.
- */
-documentCategory?: DocumentCategoryParameter;
-/**
- * url encoded legalStructure type.
- */
-legalStructure?: LegalStructureParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Two-letter ISO code for a country, such as US for USA.
+   */
+  countryCode?: CountryCodeParameter;
+  /**
+   * Document category type.
+   */
+  documentCategory?: DocumentCategoryParameter;
+  /**
+   * url encoded legalStructure type.
+   */
+  legalStructure?: LegalStructureParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetCountrySubdivisionParams = {
-/**
- * Two-letter ISO code for a country, such as US for USA.
- */
-countryCode?: CountryCodeParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Two-letter ISO code for a country, such as US for USA.
+   */
+  countryCode?: CountryCodeParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type ListWebhooksParams = {
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
 };
 
 export type GetFaqParams = {
-/**
- * Unique Client identifier
- */
-clientId?: ClientIdInQueryParameter;
-/**
- * Comma seperated tag values
- */
-tags?: string[];
+  /**
+   * Unique Client identifier
+   */
+  clientId?: ClientIdInQueryParameter;
+  /**
+   * Comma seperated tag values
+   */
+  tags?: string[];
 };
 
 export type GetAllRecipientsParams = {
-/**
- * Unique Client identifier
- */
-clientId?: ClientIdInQueryParameter;
-/**
- * Recipient type to return
- */
-type?: RecipientType;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Unique Client identifier
+   */
+  clientId?: ClientIdInQueryParameter;
+  /**
+   * Recipient type to return
+   */
+  type?: RecipientType;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetDebitCardsParams = {
-/**
- * Current page number.
- */
-page?: number;
-/**
- * Number of records per page.
- */
-limit?: number;
+  /**
+   * Current page number.
+   */
+  page?: number;
+  /**
+   * Number of records per page.
+   */
+  limit?: number;
 };
 
 export type ListPaymentIntentsParams = {
-/**
- * Recipient ID
- */
-recipientId?: string;
-/**
- * Payment intent status
- */
-status?: string;
+  /**
+   * Recipient ID
+   */
+  recipientId?: string;
+  /**
+   * Payment intent status
+   */
+  status?: string;
 };
 
 export type GetBalanceHolds1Params = {
-/**
- * Unique account identifier
- */
-id: AccountIdInQueryParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
+  /**
+   * Unique account identifier
+   */
+  id: AccountIdInQueryParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
 };
 
 export type GetBalanceHoldsParams = {
-/**
- * Account ID
- */
-accountId: string;
+  /**
+   * Account ID
+   */
+  accountId: string;
 };
 
 export type SmbdoDownloadDocument200Six = { [key: string]: any };
 
 export type SmbdoGetAllDocumentDetailsParams = {
-/**
- * Unique Client identifier
- */
-clientId?: ClientIdInQueryParameter;
-/**
- * Unique Party identifier.
- */
-partyId?: PartyIdQueryParameter;
-/**
- * Unique identifier for the platform.
- */
-platformId?: PlatformIdInQueryParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
+  /**
+   * Unique Client identifier
+   */
+  clientId?: ClientIdInQueryParameter;
+  /**
+   * Unique Party identifier.
+   */
+  partyId?: PartyIdQueryParameter;
+  /**
+   * Unique identifier for the platform.
+   */
+  platformId?: PlatformIdInQueryParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
 };
 
 export type SmbdoListDocumentRequestsParams = {
-/**
- * Unique Client identifier.
- */
-clientId?: ClientIdQueryParameter;
-/**
- * Unique Party identifier.
- */
-partyId?: PartyIdQueryParameter;
+  /**
+   * Unique Client identifier.
+   */
+  clientId?: ClientIdQueryParameter;
+  /**
+   * Unique Party identifier.
+   */
+  partyId?: PartyIdQueryParameter;
 };
 
 export type SmbdoListQuestionsParams = {
-/**
- * Comma-separated list of Question IDs.
- */
-questionIds?: QuestionIdListInQueryParameter;
+  /**
+   * Comma-separated list of Question IDs.
+   */
+  questionIds?: QuestionIdListInQueryParameter;
 };
 
 export type SmbdoListPartiesParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
-/**
- * ID of the parent party.
- */
-parentPartyId?: ParentPartyIdParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
+  /**
+   * ID of the parent party.
+   */
+  parentPartyId?: ParentPartyIdParameter;
 };
 
 export type SmbdoListClientsParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type ListTransactionsParams = {
-/**
- * Filters by type of transaction.
- */
-transactionType?: RequestTransactionType;
-/**
- * Filters by transaction status.
- */
-status?: RequestTransactionStatus;
-/**
- * Filters by the Embedded Banking client account number connected to the transaction.
- */
-accountNumber?: string;
-/**
- * Filters by an exact amount.
- */
-amountEquals?: string;
-/**
- * Filters by amounts greater than a specified value.
- */
-amountGreaterThan?: string;
-/**
- * Filters by amounts less than a specified value.
- */
-amountLessThan?: string;
-/**
- * Filters transactions by an exact date.
- */
-dateEquals?: string;
-/**
- * Filters for transactions made after this date.
- */
-dateGreaterThan?: string;
-/**
- * Filters for transactions made before this date.
- */
-dateLessThan?: string;
-/**
- * Filters for transactions made after this date and time.
- */
-dateTimeGreaterThan?: string;
-/**
- * Filters for transactions made before this date and time.
- */
-dateTimeLessThan?: string;
-/**
- * Filters by the recipient's account number.
- */
-recipientAccount?: string;
-/**
- * Filters for a transaction that matches a specific transaction ID. The transaction ID is generated by Embedded Banking when a transaction is created or received.
- */
-transactionId?: string;
+  /**
+   * Filters by type of transaction.
+   */
+  transactionType?: RequestTransactionType;
+  /**
+   * Filters by transaction status.
+   */
+  status?: RequestTransactionStatus;
+  /**
+   * Filters by the Embedded Banking client account number connected to the transaction.
+   */
+  accountNumber?: string;
+  /**
+   * Filters by an exact amount.
+   */
+  amountEquals?: string;
+  /**
+   * Filters by amounts greater than a specified value.
+   */
+  amountGreaterThan?: string;
+  /**
+   * Filters by amounts less than a specified value.
+   */
+  amountLessThan?: string;
+  /**
+   * Filters transactions by an exact date.
+   */
+  dateEquals?: string;
+  /**
+   * Filters for transactions made after this date.
+   */
+  dateGreaterThan?: string;
+  /**
+   * Filters for transactions made before this date.
+   */
+  dateLessThan?: string;
+  /**
+   * Filters for transactions made after this date and time.
+   */
+  dateTimeGreaterThan?: string;
+  /**
+   * Filters for transactions made before this date and time.
+   */
+  dateTimeLessThan?: string;
+  /**
+   * Filters by the recipient's account number.
+   */
+  recipientAccount?: string;
+  /**
+   * Filters for a transaction that matches a specific transaction ID. The transaction ID is generated by Embedded Banking when a transaction is created or received.
+   */
+  transactionId?: string;
 };
 
 export type ListTransactionsV2Params = {
-/**
- * Filters by type of transaction.
- */
-type?: RequestTransactionTypeV2;
-/**
- * Filters by transaction status.
- */
-status?: RequestTransactionStatus;
-/**
- * Filters by the Embedded Finance account id connected to the transaction.
- */
-accountId?: string;
-/**
- * Filters by an exact amount.
- */
-amountEquals?: string;
-/**
- * Filters by amounts greater than a specified value.
- */
-amountGreaterThan?: string;
-/**
- * Filters by amounts less than a specified value.
- */
-amountLessThan?: string;
-/**
- * Filters transactions by an exact date.
- */
-dateEquals?: string;
-/**
- * Filters for transactions made after this payment date.
- */
-dateGreaterThan?: string;
-/**
- * Filters for transactions made before this payment date.
- */
-dateLessThan?: string;
-/**
- * Filters for transactions created after this date and time.
- */
-dateTimeGreaterThan?: string;
-/**
- * Filters for transactions created before this date and time.
- */
-dateTimeLessThan?: string;
-/**
- * Filters for transactions from/to this recipientId.
- */
-recipientId?: string;
-/**
- * Filters for a transaction that matches a specific transaction reference ID provided by the client.
- */
-transactionReferenceId?: string;
-/**
- * Filters for transactions from/to this clientId.
- */
-clientId?: string;
+  /**
+   * Filters by type of transaction.
+   */
+  type?: RequestTransactionTypeV2;
+  /**
+   * Filters by transaction status.
+   */
+  status?: RequestTransactionStatus;
+  /**
+   * Filters by the Embedded Finance account id connected to the transaction.
+   */
+  accountId?: string;
+  /**
+   * Filters by an exact amount.
+   */
+  amountEquals?: string;
+  /**
+   * Filters by amounts greater than a specified value.
+   */
+  amountGreaterThan?: string;
+  /**
+   * Filters by amounts less than a specified value.
+   */
+  amountLessThan?: string;
+  /**
+   * Filters transactions by an exact date.
+   */
+  dateEquals?: string;
+  /**
+   * Filters for transactions made after this payment date.
+   */
+  dateGreaterThan?: string;
+  /**
+   * Filters for transactions made before this payment date.
+   */
+  dateLessThan?: string;
+  /**
+   * Filters for transactions created after this date and time.
+   */
+  dateTimeGreaterThan?: string;
+  /**
+   * Filters for transactions created before this date and time.
+   */
+  dateTimeLessThan?: string;
+  /**
+   * Filters for transactions from/to this recipientId.
+   */
+  recipientId?: string;
+  /**
+   * Filters for a transaction that matches a specific transaction reference ID provided by the client.
+   */
+  transactionReferenceId?: string;
+  /**
+   * Filters for transactions from/to this clientId.
+   */
+  clientId?: string;
 };
 
 export type DocumentsDetailsParams = {
-/**
- * The type of document. Can be terms and conditions or disclosure and consent documents.
- */
-type: DocumentTypeParameter;
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * The type of document. Can be terms and conditions or disclosure and consent documents.
+   */
+  type: DocumentTypeParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 export type GetAllClientsParams = {
-/**
- * Number of records per page.
- */
-limit?: PageSizeParameter;
-/**
- * Page Number
- */
-page?: PageNoParameter;
+  /**
+   * Number of records per page.
+   */
+  limit?: PageSizeParameter;
+  /**
+   * Page Number
+   */
+  page?: PageNoParameter;
 };
 
 /**
@@ -445,8 +445,8 @@ export type PlatformIdInQueryParameter = string;
  */
 export type ClientIdInQueryParameter = string;
 
-export type DocumentTypeParameter = typeof DocumentTypeParameter[keyof typeof DocumentTypeParameter];
-
+export type DocumentTypeParameter =
+  (typeof DocumentTypeParameter)[keyof typeof DocumentTypeParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentTypeParameter = {
@@ -469,8 +469,8 @@ export type PageSizeParameter = number;
  */
 export type ClientIdParamParameter = string;
 
-export type ProductParameter = typeof ProductParameter[keyof typeof ProductParameter];
-
+export type ProductParameter =
+  (typeof ProductParameter)[keyof typeof ProductParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProductParameter = {
@@ -483,8 +483,8 @@ export const ProductParameter = {
  */
 export type LegalStructureParameter = string;
 
-export type DocumentCategoryParameter = typeof DocumentCategoryParameter[keyof typeof DocumentCategoryParameter];
-
+export type DocumentCategoryParameter =
+  (typeof DocumentCategoryParameter)[keyof typeof DocumentCategoryParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentCategoryParameter = {
@@ -521,8 +521,8 @@ export type ParentPartyIdParameter = string;
  */
 export type ClientIdQueryParameter = string;
 
-export type CaseViewGroupParameter = typeof CaseViewGroupParameter[keyof typeof CaseViewGroupParameter];
-
+export type CaseViewGroupParameter =
+  (typeof CaseViewGroupParameter)[keyof typeof CaseViewGroupParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CaseViewGroupParameter = {
@@ -530,8 +530,8 @@ export const CaseViewGroupParameter = {
   ARCHIVED: 'ARCHIVED',
 } as const;
 
-export type SummaryTypeParameter = typeof SummaryTypeParameter[keyof typeof SummaryTypeParameter];
-
+export type SummaryTypeParameter =
+  (typeof SummaryTypeParameter)[keyof typeof SummaryTypeParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SummaryTypeParameter = {
@@ -684,8 +684,8 @@ export type N401Response = ApiError;
  */
 export type N400Response = ApiError;
 
-export type WebhookCallbackEventResourceType = typeof WebhookCallbackEventResourceType[keyof typeof WebhookCallbackEventResourceType];
-
+export type WebhookCallbackEventResourceType =
+  (typeof WebhookCallbackEventResourceType)[keyof typeof WebhookCallbackEventResourceType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookCallbackEventResourceType = {
@@ -696,10 +696,15 @@ export const WebhookCallbackEventResourceType = {
   ACCOUNTS: 'ACCOUNTS',
 } as const;
 
-export type WebhookCallbackEventResourceObject = TransactionCallbackEvent | ClientCallbackEvent | PartyCallbackEvent | RemittanceCallbackEvent | AccountCallbackEvent;
+export type WebhookCallbackEventResourceObject =
+  | TransactionCallbackEvent
+  | ClientCallbackEvent
+  | PartyCallbackEvent
+  | RemittanceCallbackEvent
+  | AccountCallbackEvent;
 
-export type WebhookCallbackEventEventType = typeof WebhookCallbackEventEventType[keyof typeof WebhookCallbackEventEventType];
-
+export type WebhookCallbackEventEventType =
+  (typeof WebhookCallbackEventEventType)[keyof typeof WebhookCallbackEventEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookCallbackEventEventType = {
@@ -726,8 +731,8 @@ export interface WebhookCallbackEvent {
 /**
  * Category of the account
  */
-export type AccountCallbackEventType = typeof AccountCallbackEventType[keyof typeof AccountCallbackEventType];
-
+export type AccountCallbackEventType =
+  (typeof AccountCallbackEventType)[keyof typeof AccountCallbackEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCallbackEventType = {
@@ -742,8 +747,8 @@ export const AccountCallbackEventType = {
 /**
  * Account state
  */
-export type AccountCallbackEventState = typeof AccountCallbackEventState[keyof typeof AccountCallbackEventState];
-
+export type AccountCallbackEventState =
+  (typeof AccountCallbackEventState)[keyof typeof AccountCallbackEventState];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCallbackEventState = {
@@ -781,8 +786,8 @@ export interface PaymentRoutingInformation {
   routingInformation?: PaymentRoutingInformationRoutingInformation;
 }
 
-export type RemittanceCallbackEventStatusType = typeof RemittanceCallbackEventStatusType[keyof typeof RemittanceCallbackEventStatusType];
-
+export type RemittanceCallbackEventStatusType =
+  (typeof RemittanceCallbackEventStatusType)[keyof typeof RemittanceCallbackEventStatusType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RemittanceCallbackEventStatusType = {
@@ -799,8 +804,8 @@ REJECTED: Cannot Be Processed
 ROLLOVER: Rollover To Future Date
 RETURNED: Returned
  */
-export type StatusDetailsStatus = typeof StatusDetailsStatus[keyof typeof StatusDetailsStatus];
-
+export type StatusDetailsStatus =
+  (typeof StatusDetailsStatus)[keyof typeof StatusDetailsStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const StatusDetailsStatus = {
@@ -857,8 +862,8 @@ export interface RemittanceCallbackEvent {
 /**
  * The client's status.
  */
-export type PartyCallbackEventProfileStatus = typeof PartyCallbackEventProfileStatus[keyof typeof PartyCallbackEventProfileStatus];
-
+export type PartyCallbackEventProfileStatus =
+  (typeof PartyCallbackEventProfileStatus)[keyof typeof PartyCallbackEventProfileStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyCallbackEventProfileStatus = {
@@ -883,8 +888,8 @@ export interface PartyCallbackEvent {
 /**
  * The client's status.
  */
-export type ClientCallbackEventStatus = typeof ClientCallbackEventStatus[keyof typeof ClientCallbackEventStatus];
-
+export type ClientCallbackEventStatus =
+  (typeof ClientCallbackEventStatus)[keyof typeof ClientCallbackEventStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ClientCallbackEventStatus = {
@@ -1010,8 +1015,7 @@ export interface SchemasListAccountsResponse {
 /**
  * Routing codes supported (currently only ABA is supported)
  */
-export type RoutingCode = typeof RoutingCode[keyof typeof RoutingCode];
-
+export type RoutingCode = (typeof RoutingCode)[keyof typeof RoutingCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingCode = {
@@ -1032,8 +1036,7 @@ export interface ListRoleResponse {
   metadata?: PageMetaData;
 }
 
-export type SchemasAction = typeof SchemasAction[keyof typeof SchemasAction];
-
+export type SchemasAction = (typeof SchemasAction)[keyof typeof SchemasAction];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemasAction = {
@@ -1067,7 +1070,7 @@ export type SchemasCreateUserRequest = User & {
    */
   clientId?: string;
   /** The client party id to link the user to. This is applicable when the party already exists for a C2.
- */
+   */
   relatedPartyId?: string;
   /**
    * @minItems 0
@@ -1177,8 +1180,8 @@ export type UserRoleResponse = SchemasRole & {
 /**
  * Processing status during user/resource creation/update.
  */
-export type ProcessingStatus = typeof ProcessingStatus[keyof typeof ProcessingStatus];
-
+export type ProcessingStatus =
+  (typeof ProcessingStatus)[keyof typeof ProcessingStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProcessingStatus = {
@@ -1193,8 +1196,7 @@ export const ProcessingStatus = {
 /**
  * Status of the user derived from the identity provider.
  */
-export type SchemasStatus = typeof SchemasStatus[keyof typeof SchemasStatus];
-
+export type SchemasStatus = (typeof SchemasStatus)[keyof typeof SchemasStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemasStatus = {
@@ -1216,7 +1218,7 @@ export type SchemasUserResponse = User & {
   id?: string;
   processingStatus?: ProcessingStatus;
   /** The client party id to link the user to. This is applicable when the party already exists for a C2.
- */
+   */
   relatedPartyId?: string;
   /**
    * @minItems 0
@@ -1229,8 +1231,7 @@ export type SchemasUserResponse = User & {
 /**
  * Type of address e.g. 'Primary Residence' | 'Principal place of business'.
  */
-export type AddressType = typeof AddressType[keyof typeof AddressType];
-
+export type AddressType = (typeof AddressType)[keyof typeof AddressType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AddressType = {
@@ -1357,8 +1358,7 @@ export type SchemasUpdateUserRequest = User & {
   roles?: RoleRequest[];
 };
 
-export type FetchLevel = typeof FetchLevel[keyof typeof FetchLevel];
-
+export type FetchLevel = (typeof FetchLevel)[keyof typeof FetchLevel];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FetchLevel = {
@@ -1382,8 +1382,8 @@ export interface ListDocumentsResponse {
   metadata?: PageMetaDataSmbdo;
 }
 
-export type DocumentMetadataKeyEnum = typeof DocumentMetadataKeyEnum[keyof typeof DocumentMetadataKeyEnum];
-
+export type DocumentMetadataKeyEnum =
+  (typeof DocumentMetadataKeyEnum)[keyof typeof DocumentMetadataKeyEnum];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentMetadataKeyEnum = {
@@ -1404,8 +1404,8 @@ export interface DocumentMetadataSmbdo {
 /**
  * Supported document types
  */
-export type SchemasDocumentTypeSmbdo = typeof SchemasDocumentTypeSmbdo[keyof typeof SchemasDocumentTypeSmbdo];
-
+export type SchemasDocumentTypeSmbdo =
+  (typeof SchemasDocumentTypeSmbdo)[keyof typeof SchemasDocumentTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemasDocumentTypeSmbdo = {
@@ -1466,8 +1466,8 @@ export interface SchemasDocumentResponse {
  */
 export type ValidForDays = number;
 
-export type DocumentRequestStatus = typeof DocumentRequestStatus[keyof typeof DocumentRequestStatus];
-
+export type DocumentRequestStatus =
+  (typeof DocumentRequestStatus)[keyof typeof DocumentRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentRequestStatus = {
@@ -1503,8 +1503,8 @@ export interface DocumentRequestListResponse {
   metadata: PageMetaDataSmbdo;
 }
 
-export type DocumentRequestRequirementLevel = typeof DocumentRequestRequirementLevel[keyof typeof DocumentRequestRequirementLevel];
-
+export type DocumentRequestRequirementLevel =
+  (typeof DocumentRequestRequirementLevel)[keyof typeof DocumentRequestRequirementLevel];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentRequestRequirementLevel = {
@@ -1532,8 +1532,8 @@ export interface DocumentRequestRequirement {
  */
 export type DocumentRequestId = string;
 
-export type DocumentTypeSmbdo = typeof DocumentTypeSmbdo[keyof typeof DocumentTypeSmbdo];
-
+export type DocumentTypeSmbdo =
+  (typeof DocumentTypeSmbdo)[keyof typeof DocumentTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentTypeSmbdo = {
@@ -1595,16 +1595,16 @@ export type SchemasQuestionResponseSubQuestionsItem = {
   questionIds?: SchemasQuestionIdList;
 };
 
-export type ResponseSchemaType = typeof ResponseSchemaType[keyof typeof ResponseSchemaType];
-
+export type ResponseSchemaType =
+  (typeof ResponseSchemaType)[keyof typeof ResponseSchemaType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaType = {
   array: 'array',
 } as const;
 
-export type ResponseSchemaItemType = typeof ResponseSchemaItemType[keyof typeof ResponseSchemaItemType];
-
+export type ResponseSchemaItemType =
+  (typeof ResponseSchemaItemType)[keyof typeof ResponseSchemaItemType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaItemType = {
@@ -1617,8 +1617,8 @@ export const ResponseSchemaItemType = {
 /**
  * Only applicable to string, number, and integer.
  */
-export type ResponseSchemaItemFormat = typeof ResponseSchemaItemFormat[keyof typeof ResponseSchemaItemFormat];
-
+export type ResponseSchemaItemFormat =
+  (typeof ResponseSchemaItemFormat)[keyof typeof ResponseSchemaItemFormat];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResponseSchemaItemFormat = {
@@ -1790,7 +1790,8 @@ export interface UpdatePartyRequestInline {
   roles?: Role[];
 }
 
-export type UpdateClientRequestSmbdoAddPartiesItem = CreatePartyRequestInline & UpdatePartyRequestInline;
+export type UpdateClientRequestSmbdoAddPartiesItem = CreatePartyRequestInline &
+  UpdatePartyRequestInline;
 
 export interface UpdateClientRequestSmbdo {
   /**
@@ -1905,8 +1906,8 @@ export interface PartyField {
   type?: string;
 }
 
-export type ValidationType = typeof ValidationType[keyof typeof ValidationType];
-
+export type ValidationType =
+  (typeof ValidationType)[keyof typeof ValidationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ValidationType = {
@@ -1917,8 +1918,8 @@ export const ValidationType = {
  * Status of a party validation. Missing fields result in `NEEDS_INFO`.
 
  */
-export type ValidationStatus = typeof ValidationStatus[keyof typeof ValidationStatus];
-
+export type ValidationStatus =
+  (typeof ValidationStatus)[keyof typeof ValidationStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ValidationStatus = {
@@ -1930,8 +1931,7 @@ export const ValidationStatus = {
   VALIDATED: 'VALIDATED',
 } as const;
 
-export type PartyStatus = typeof PartyStatus[keyof typeof PartyStatus];
-
+export type PartyStatus = (typeof PartyStatus)[keyof typeof PartyStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyStatus = {
@@ -1939,8 +1939,7 @@ export const PartyStatus = {
   INACTIVE: 'INACTIVE',
 } as const;
 
-export type ProfileStatus = typeof ProfileStatus[keyof typeof ProfileStatus];
-
+export type ProfileStatus = (typeof ProfileStatus)[keyof typeof ProfileStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProfileStatus = {
@@ -2024,8 +2023,8 @@ export type SignificantOwnership = boolean;
 /**
  * The ID type
  */
-export type OrganizationIdentityDtoIdType = typeof OrganizationIdentityDtoIdType[keyof typeof OrganizationIdentityDtoIdType];
-
+export type OrganizationIdentityDtoIdType =
+  (typeof OrganizationIdentityDtoIdType)[keyof typeof OrganizationIdentityDtoIdType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OrganizationIdentityDtoIdType = {
@@ -2056,8 +2055,8 @@ export interface OrganizationIdentityDto {
   value: string;
 }
 
-export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
-
+export type OrganizationType =
+  (typeof OrganizationType)[keyof typeof OrganizationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OrganizationType = {
@@ -2151,8 +2150,8 @@ export type SoleOwner = boolean;
  */
 export type NatureOfOwnership = string;
 
-export type PhoneSmbdoPhoneType = typeof PhoneSmbdoPhoneType[keyof typeof PhoneSmbdoPhoneType];
-
+export type PhoneSmbdoPhoneType =
+  (typeof PhoneSmbdoPhoneType)[keyof typeof PhoneSmbdoPhoneType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PhoneSmbdoPhoneType = {
@@ -2188,8 +2187,8 @@ export type IndividualJobTitle = string;
  * `idType` denotes the type of taxpayer identification number (e.g. Social Security Number or Individual Taxpayer Identification Number). A Social Security Number or Individual Taxpayer Identification Number is accepted for an owner or controller individual. Decision makers do not require any tax identifier.
 
  */
-export type IndividualIdentityDTOIdType = typeof IndividualIdentityDTOIdType[keyof typeof IndividualIdentityDTOIdType];
-
+export type IndividualIdentityDTOIdType =
+  (typeof IndividualIdentityDTOIdType)[keyof typeof IndividualIdentityDTOIdType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const IndividualIdentityDTOIdType = {
@@ -2202,7 +2201,7 @@ export interface IndividualIdentityDTO {
   description?: string;
   expiryDate?: string;
   /** `idType` denotes the type of taxpayer identification number (e.g. Social Security Number or Individual Taxpayer Identification Number). A Social Security Number or Individual Taxpayer Identification Number is accepted for an owner or controller individual. Decision makers do not require any tax identifier.
- */
+   */
   idType: IndividualIdentityDTOIdType;
   /** Identification issuer country code e.g. US */
   issuer: string;
@@ -2305,8 +2304,8 @@ export interface PartyResponse {
 /**
  * Type of address.
  */
-export type AddressDtoSmbdoAddressType = typeof AddressDtoSmbdoAddressType[keyof typeof AddressDtoSmbdoAddressType];
-
+export type AddressDtoSmbdoAddressType =
+  (typeof AddressDtoSmbdoAddressType)[keyof typeof AddressDtoSmbdoAddressType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AddressDtoSmbdoAddressType = {
@@ -2344,8 +2343,7 @@ export interface AddressDtoSmbdo {
   state?: string;
 }
 
-export type Role = typeof Role[keyof typeof Role];
-
+export type Role = (typeof Role)[keyof typeof Role];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Role = {
@@ -2360,8 +2358,8 @@ export const Role = {
 /**
  * The party type
  */
-export type PartyTypeSmbdo = typeof PartyTypeSmbdo[keyof typeof PartyTypeSmbdo];
-
+export type PartyTypeSmbdo =
+  (typeof PartyTypeSmbdo)[keyof typeof PartyTypeSmbdo];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyTypeSmbdo = {
@@ -2398,8 +2396,7 @@ export type AccessList = string[];
 /**
  * The client's status.
  */
-export type ClientStatus = typeof ClientStatus[keyof typeof ClientStatus];
-
+export type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ClientStatus = {
@@ -2432,8 +2429,8 @@ export interface ClientListResponse {
   metadata: PageMetaDataSmbdo;
 }
 
-export type PartyRoleListItem = typeof PartyRoleListItem[keyof typeof PartyRoleListItem];
-
+export type PartyRoleListItem =
+  (typeof PartyRoleListItem)[keyof typeof PartyRoleListItem];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyRoleListItem = {
@@ -2530,21 +2527,21 @@ export type ClientId = string;
 
 export interface PageMetaDataSmbdo {
   /** Number of records per page.
- */
+   */
   limit?: number;
   /** Page Number.
- */
+   */
   page?: number;
   /** Total number of items.
- */
+   */
   total?: number;
 }
 
 /**
  * Two letter country code based on ISO 3166 standard (currently only US is supported)
  */
-export type SchemasCountryCode = typeof SchemasCountryCode[keyof typeof SchemasCountryCode];
-
+export type SchemasCountryCode =
+  (typeof SchemasCountryCode)[keyof typeof SchemasCountryCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemasCountryCode = {
@@ -2655,8 +2652,8 @@ export interface ApiErrorV2 {
 /**
  * If the status is present in the response, CIP has been performed
  */
-export type CustomerIdentificationResponseCustomerIdentificationStatus = typeof CustomerIdentificationResponseCustomerIdentificationStatus[keyof typeof CustomerIdentificationResponseCustomerIdentificationStatus];
-
+export type CustomerIdentificationResponseCustomerIdentificationStatus =
+  (typeof CustomerIdentificationResponseCustomerIdentificationStatus)[keyof typeof CustomerIdentificationResponseCustomerIdentificationStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CustomerIdentificationResponseCustomerIdentificationStatus = {
@@ -2806,11 +2803,12 @@ export type VerificationsResponse = VerificationResponse;
 
 export type UpdateRelatedPartiesResponseAllOf = {
   /** Client id, that uniquely identifies the client.
- */
+   */
   id: string;
 };
 
-export type UpdateRelatedPartiesResponse = UpdateRelatedPartyRequest & UpdateRelatedPartiesResponseAllOf;
+export type UpdateRelatedPartiesResponse = UpdateRelatedPartyRequest &
+  UpdateRelatedPartiesResponseAllOf;
 
 export type UpdateClientResponseAllOf = {
   /**
@@ -2823,32 +2821,35 @@ export type UpdateClientResponseAllOf = {
   relatedParties?: UpdateRelatedPartiesResponse[];
 };
 
-export type UpdateClientResponse = UpdateEntityDetailBusinessRequest & UpdateClientResponseAllOf;
+export type UpdateClientResponse = UpdateEntityDetailBusinessRequest &
+  UpdateClientResponseAllOf;
 
 export type UpdateRelatedPartiesRequestAllOf = {
   /** The action like ADD, UPDATE, REMOVE
- */
+   */
   action: string;
 };
 
-export type UpdateRelatedPartiesRequest = UpdateRelatedPartyRequest & UpdateRelatedPartiesRequestAllOf;
+export type UpdateRelatedPartiesRequest = UpdateRelatedPartyRequest &
+  UpdateRelatedPartiesRequestAllOf;
 
 export type UpdateClientRequestAllOf = {
   /** @minItems 0 */
   relatedParties?: UpdateRelatedPartiesRequest[];
 };
 
-export type UpdateClientRequest = UpdateEntityDetailBusinessRequest & UpdateClientRequestAllOf;
+export type UpdateClientRequest = UpdateEntityDetailBusinessRequest &
+  UpdateClientRequestAllOf;
 
 export type UpdateRelatedPartyRequestAllOf = {
   /** The date of birth (yyyy-MM-dd) of the individual in case of party type being an individual. This field is not required for the party type Organization.
- */
+   */
   birthDate?: string;
   /** The business’s legal name. It is the official name of the person or entity that owns a company. And, it’s the name used on your government forms and business paperwork. This field is only required when party type is NON-IND
- */
+   */
   businessName?: string;
   /** Email of the individual.
- */
+   */
   email?: string;
   /**
    * First name of the individual in case of party type being an individual like Owners, Controllers and Decision Makers.
@@ -2858,10 +2859,10 @@ export type UpdateRelatedPartyRequestAllOf = {
    */
   firstName?: string;
   /** Unique identifier for this party. It is only required for UPDATE and REMOVE actions
- */
+   */
   id?: string;
   /** Job title in case of party type being an individual. JobTitle is required field for Controllers. Also, If Privately Owned Business is selected as the business type, Job Title should be a required field for Decision Makers. e.g. CEO|CFO|COO|President|Chairman|Senior Branch Manager|Other
- */
+   */
   jobTitle?: string;
   /**
    * In case on jobTitle is Other then Job title description is required.This field can be set to empty by passing field value as ("") in request.
@@ -2883,7 +2884,7 @@ export type UpdateRelatedPartyRequestAllOf = {
    */
   middleName?: string;
   /** Nature of ownership e.g. Direct|Indirect.This field can be set to empty by passing field value as ("") in request.
- */
+   */
   natureOfOwnership?: string;
   /**
    * A Party role which could have one or more of the following values: CLIENT, CONTROLLER, MARKETPLACE_OPERATOR, OWNER, PAYEE, DECISION_MAKER
@@ -2894,32 +2895,33 @@ If a SMB controller and owner is the same person - you have to send two parties 
    */
   partyRole?: string[];
   /** A Party type which could have one of the following distinct values: Organization, Individual, NonIndividual
- */
+   */
   partyType?: string;
   soleOwner?: boolean;
 };
 
-export type UpdateRelatedPartyRequest = UpdatePartyDetailCommon & UpdateRelatedPartyRequestAllOf;
+export type UpdateRelatedPartyRequest = UpdatePartyDetailCommon &
+  UpdateRelatedPartyRequestAllOf;
 
 export type UpdateEntityDetailBusinessRequestAllOf = {
   /** Client id, that uniquely identifies the client.
- */
+   */
   id?: string;
 };
 
 export type UpdatePartyDetailBusinessAllOf = {
   /** The business’s alias name. It is the other alias name of the  entity that owns a company.This field can be set to empty by passing field value as ("") in request.
- */
+   */
   businessAliasName?: string;
   /** The business’s description.
- */
+   */
   businessDescription?: string;
   /** The business’s legal name. It is the official name of the person or entity that owns a company.
 And, it’s the name used on your government forms and business paperwork
  */
   businessName?: string;
   /** The different business entity types that can be selected e.g. Privately Owned Business | Sole Proprietorship
- */
+   */
   businessType?: string;
   /** Country code in alpha-2 format */
   countryOfFormation?: string;
@@ -2930,45 +2932,47 @@ And, it’s the name used on your government forms and business paperwork
    */
   email?: string;
   /** If entitiesInOwnership is true, are there any businesses included in your ownership hierarchy? e.g. true|false. entitiesInOwnership is required for Privately Owned Business.
- */
+   */
   entitiesInOwnership?: boolean;
   /** Distinct industry category. e.g. - Accommodation and Food Services - Administrative and Support and Waste Management and Remediation Services - Agriculture, Forestry, Fishing and Hunting (not covered in economic census) - Arts, Entertainment, and Recreation - Construction - Educational Services - Finance and Insurance - Health Care and Social Assistance - Individuals - Information - Management of Companies and Enterprises - Manufacturing - Mining, Quarrying, and Oil and Gas Extraction - Other Services (except Public Administration) - Professional, Scientific, and Technical Services - Public Administration (not covered in economic census) - Real Estate and Rental and Leasing - Retail Trade - Transportation and Warehousing - Utilities - Wholesale Trade
- */
+   */
   industryCategory?: string;
   /** Industry type.
- */
+   */
   industryType?: string;
   /** Legal Structure of the business entity. Legal structure is required for Privately Owned Business and Sole Proprietorship.
- */
+   */
   legalStructure?: string;
   /** Are there any individuals who own 25% or more of your business? e.g. true|false. significantOwnership is required for Privately Owned Business. If Significant Ownership is selected as True, At least one related party should have a role of owner.
- */
+   */
   significantOwnership?: boolean;
   /** Website of the client. website is required if websiteAvailable is true.This field can be set to empty by passing field value as ("") in request.
- */
+   */
   website?: string;
   /** Does your business have a website? e.g. true|false
- */
+   */
   websiteAvailable?: boolean;
   /** Year of formation. Max and Min length is 4.
- */
+   */
   yearOfFormation?: string;
 };
 
-export type UpdatePartyDetailBusiness = UpdatePartyDetailCommon & UpdatePartyDetailBusinessAllOf;
+export type UpdatePartyDetailBusiness = UpdatePartyDetailCommon &
+  UpdatePartyDetailBusinessAllOf;
 
-export type UpdateEntityDetailBusinessRequest = UpdatePartyDetailBusiness & UpdateEntityDetailBusinessRequestAllOf;
+export type UpdateEntityDetailBusinessRequest = UpdatePartyDetailBusiness &
+  UpdateEntityDetailBusinessRequestAllOf;
 
 export interface UpdateIdentityDTO {
   /** The action like ADD, UPDATE, REMOVE
- */
+   */
   action: string;
   /** Description of identification type e.g. Social Security Number */
   idDescription?: string;
   /** Identification issuer country name e.g. US */
   idIssuer: string;
   /** IdType denotes the type of taxpayer identification numbers e.g. SSN/EIN. EIN is acceptable idType for Privately Owned Business. Sole Proprietorship can have EIN/SSN as idType. For individuals like Owners and Controllers SSN is accepted as idType.
- */
+   */
   idType: string;
   /** Value of the identification type. EIN/SSN must be of 9 digits. */
   idValue: string;
@@ -3047,8 +3051,8 @@ export interface UpdatePartyDetailCommon {
 /**
  * Part of the request which is responsible for the reason
  */
-export type ApiErrorReasonV2Location = typeof ApiErrorReasonV2Location[keyof typeof ApiErrorReasonV2Location];
-
+export type ApiErrorReasonV2Location =
+  (typeof ApiErrorReasonV2Location)[keyof typeof ApiErrorReasonV2Location];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ApiErrorReasonV2Location = {
@@ -3088,21 +3092,21 @@ export interface ApiError {
 
 export interface PageMetaData {
   /** Number of records per page.
- */
+   */
   limit?: number;
   /** Page Number.
- */
+   */
   page?: number;
   /** Total number of items.
- */
+   */
   total_items?: number;
 }
 
 /**
  * Category of account in create requests
  */
-export type AccountCategoryReq = typeof AccountCategoryReq[keyof typeof AccountCategoryReq];
-
+export type AccountCategoryReq =
+  (typeof AccountCategoryReq)[keyof typeof AccountCategoryReq];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCategoryReq = {
@@ -3113,8 +3117,8 @@ export const AccountCategoryReq = {
 /**
  * Category of account
  */
-export type AccountCategory = typeof AccountCategory[keyof typeof AccountCategory];
-
+export type AccountCategory =
+  (typeof AccountCategory)[keyof typeof AccountCategory];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountCategory = {
@@ -3131,8 +3135,8 @@ export const AccountCategory = {
 /**
  * Account state
  */
-export type ModifyAccountRequestState = typeof ModifyAccountRequestState[keyof typeof ModifyAccountRequestState];
-
+export type ModifyAccountRequestState =
+  (typeof ModifyAccountRequestState)[keyof typeof ModifyAccountRequestState];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ModifyAccountRequestState = {
@@ -3149,8 +3153,8 @@ export interface ModifyAccountRequest {
 /**
  * Balance type: ITAV (interim available balance) or ITBD (interim booked balance)
  */
-export type AccountBalanceDtoTypeCode = typeof AccountBalanceDtoTypeCode[keyof typeof AccountBalanceDtoTypeCode];
-
+export type AccountBalanceDtoTypeCode =
+  (typeof AccountBalanceDtoTypeCode)[keyof typeof AccountBalanceDtoTypeCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountBalanceDtoTypeCode = {
@@ -3199,8 +3203,8 @@ export interface PaymentRoutingInformationDto {
 /**
  * Payment routing status. Identifies whether the account is active, which means it has been used within the last 13 months. An account with the status INACTIVE is changed to ACTIVE as soon as a transaction is made on the account.
  */
-export type PaymentRoutingStatus = typeof PaymentRoutingStatus[keyof typeof PaymentRoutingStatus];
-
+export type PaymentRoutingStatus =
+  (typeof PaymentRoutingStatus)[keyof typeof PaymentRoutingStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentRoutingStatus = {
@@ -3223,8 +3227,7 @@ export interface PaymentRoutingInformationDtoWithStatus {
 /**
  * Account State
  */
-export type AccountState = typeof AccountState[keyof typeof AccountState];
-
+export type AccountState = (typeof AccountState)[keyof typeof AccountState];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountState = {
@@ -3357,12 +3360,11 @@ export interface CreateUserRequest {
   middleName?: string;
   phone?: Phone;
   /** The client party id to link the user to.
- */
+   */
   relatedPartyId?: string;
 }
 
-export type Status = typeof Status[keyof typeof Status];
-
+export type Status = (typeof Status)[keyof typeof Status];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Status = {
@@ -3436,8 +3438,8 @@ export interface GPPTransaction {
   transactionType?: string;
 }
 
-export type TaskRequestStatus = typeof TaskRequestStatus[keyof typeof TaskRequestStatus];
-
+export type TaskRequestStatus =
+  (typeof TaskRequestStatus)[keyof typeof TaskRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TaskRequestStatus = {
@@ -3448,8 +3450,7 @@ export const TaskRequestStatus = {
   REJECT: 'REJECT',
 } as const;
 
-export type TaskSubType = typeof TaskSubType[keyof typeof TaskSubType];
-
+export type TaskSubType = (typeof TaskSubType)[keyof typeof TaskSubType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TaskSubType = {
@@ -3480,8 +3481,7 @@ export const TaskSubType = {
   PAYMENT_INTENT: 'PAYMENT_INTENT',
 } as const;
 
-export type TaskType = typeof TaskType[keyof typeof TaskType];
-
+export type TaskType = (typeof TaskType)[keyof typeof TaskType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TaskType = {
@@ -3772,8 +3772,8 @@ export interface IdentificationTypeResponse {
 /**
  * The event types to be notified of.
  */
-export type SubscriptionEventType = typeof SubscriptionEventType[keyof typeof SubscriptionEventType];
-
+export type SubscriptionEventType =
+  (typeof SubscriptionEventType)[keyof typeof SubscriptionEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SubscriptionEventType = {
@@ -3802,8 +3802,8 @@ export interface Subscription {
 /**
  * The status of this webhook.
  */
-export type WebhookResponseStatus = typeof WebhookResponseStatus[keyof typeof WebhookResponseStatus];
-
+export type WebhookResponseStatus =
+  (typeof WebhookResponseStatus)[keyof typeof WebhookResponseStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookResponseStatus = {
@@ -3840,8 +3840,8 @@ export interface ListWebhookResponse {
 /**
  * Allowed status - ACTIVE or INACTIVE
  */
-export type WebhookUpdateRequestStatus = typeof WebhookUpdateRequestStatus[keyof typeof WebhookUpdateRequestStatus];
-
+export type WebhookUpdateRequestStatus =
+  (typeof WebhookUpdateRequestStatus)[keyof typeof WebhookUpdateRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookUpdateRequestStatus = {
@@ -3884,8 +3884,8 @@ export type EventResponse = EventRequest & {
 /**
  * The status of the subscription of an event.
  */
-export type EventRequestStatus = typeof EventRequestStatus[keyof typeof EventRequestStatus];
-
+export type EventRequestStatus =
+  (typeof EventRequestStatus)[keyof typeof EventRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EventRequestStatus = {
@@ -3896,8 +3896,8 @@ export const EventRequestStatus = {
 /**
  * The event types to be notified of.
  */
-export type EventRequestEventType = typeof EventRequestEventType[keyof typeof EventRequestEventType];
-
+export type EventRequestEventType =
+  (typeof EventRequestEventType)[keyof typeof EventRequestEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EventRequestEventType = {
@@ -3924,8 +3924,8 @@ export interface SubscriptionsUpdateRequest {
 /**
  * The type of notification to be sent
  */
-export type SubscriptionsCreateRequestChannel = typeof SubscriptionsCreateRequestChannel[keyof typeof SubscriptionsCreateRequestChannel];
-
+export type SubscriptionsCreateRequestChannel =
+  (typeof SubscriptionsCreateRequestChannel)[keyof typeof SubscriptionsCreateRequestChannel];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SubscriptionsCreateRequestChannel = {
@@ -3942,8 +3942,8 @@ export interface SubscriptionsCreateRequest {
 /**
  * The format of the notification
  */
-export type SubscriptionsResponseChannel = typeof SubscriptionsResponseChannel[keyof typeof SubscriptionsResponseChannel];
-
+export type SubscriptionsResponseChannel =
+  (typeof SubscriptionsResponseChannel)[keyof typeof SubscriptionsResponseChannel];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SubscriptionsResponseChannel = {
@@ -4003,8 +4003,7 @@ export interface Notification {
 /**
  * FAQ Type enum
  */
-export type FaqType = typeof FaqType[keyof typeof FaqType];
-
+export type FaqType = (typeof FaqType)[keyof typeof FaqType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FaqType = {
@@ -4100,8 +4099,7 @@ export interface AccountValidationResponse {
 /**
  * Two letter country code based on ISO 3166 standard. Only US is supported in this version of Embedded Banking.
  */
-export type CountryCode = typeof CountryCode[keyof typeof CountryCode];
-
+export type CountryCode = (typeof CountryCode)[keyof typeof CountryCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CountryCode = {
@@ -4117,8 +4115,8 @@ export type RoutingNumber = string;
 /**
  * Type of routing code. Only USABA is supported in this version of Embedded Banking.
  */
-export type RoutingCodeType = typeof RoutingCodeType[keyof typeof RoutingCodeType];
-
+export type RoutingCodeType =
+  (typeof RoutingCodeType)[keyof typeof RoutingCodeType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingCodeType = {
@@ -4128,8 +4126,8 @@ export const RoutingCodeType = {
 /**
  * Type of transaction.
  */
-export type RoutingInformationTransactionType = typeof RoutingInformationTransactionType[keyof typeof RoutingInformationTransactionType];
-
+export type RoutingInformationTransactionType =
+  (typeof RoutingInformationTransactionType)[keyof typeof RoutingInformationTransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RoutingInformationTransactionType = {
@@ -4147,8 +4145,7 @@ export interface RoutingInformation {
 /**
  * Type of bank account, either CHECKING or SAVINGS. Only required for ACH payments. Exclude field from payload completely if not needed.
  */
-export type AccountType = typeof AccountType[keyof typeof AccountType];
-
+export type AccountType = (typeof AccountType)[keyof typeof AccountType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountType = {
@@ -4177,8 +4174,8 @@ export interface RecipientAccount {
   type: AccountType;
 }
 
-export type MicrodepositVerificationResponseStatus = typeof MicrodepositVerificationResponseStatus[keyof typeof MicrodepositVerificationResponseStatus];
-
+export type MicrodepositVerificationResponseStatus =
+  (typeof MicrodepositVerificationResponseStatus)[keyof typeof MicrodepositVerificationResponseStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MicrodepositVerificationResponseStatus = {
@@ -4205,8 +4202,8 @@ export interface MicrodepositAmounts {
 /**
  * Type of contact information being provided
  */
-export type RecipientContactContactType = typeof RecipientContactContactType[keyof typeof RecipientContactContactType];
-
+export type RecipientContactContactType =
+  (typeof RecipientContactContactType)[keyof typeof RecipientContactContactType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientContactContactType = {
@@ -4281,8 +4278,8 @@ export interface RecipientAddress {
 
 /**
  */
-export type RecipientStatus = typeof RecipientStatus[keyof typeof RecipientStatus];
-
+export type RecipientStatus =
+  (typeof RecipientStatus)[keyof typeof RecipientStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientStatus = {
@@ -4295,8 +4292,7 @@ export const RecipientStatus = {
 
 /**
  */
-export type RecipientType = typeof RecipientType[keyof typeof RecipientType];
-
+export type RecipientType = (typeof RecipientType)[keyof typeof RecipientType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecipientType = {
@@ -4307,8 +4303,7 @@ export const RecipientType = {
 
 /**
  */
-export type PartyType = typeof PartyType[keyof typeof PartyType];
-
+export type PartyType = (typeof PartyType)[keyof typeof PartyType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PartyType = {
@@ -4416,8 +4411,8 @@ export interface CardAddress {
   state?: string;
 }
 
-export type GovernmentIdIdType = typeof GovernmentIdIdType[keyof typeof GovernmentIdIdType];
-
+export type GovernmentIdIdType =
+  (typeof GovernmentIdIdType)[keyof typeof GovernmentIdIdType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GovernmentIdIdType = {
@@ -4440,13 +4435,13 @@ export interface GovernmentId {
 
 export interface CardDetailsErrorResponse {
   /** Freeform explanatory text for the error.
- */
+   */
   errorDescription: string;
   /** A code defined by the service for the external partner that includes a more specific information of what caused the error.
- */
+   */
   externalErrorCode?: string;
   /** A code defined by the API provider that describes the specific error for a given API. This code provides more fine grained information than the httpStatusCode. As an example if an API provides an httpStatusCode of 400 they may also include the serviceErrorCode that includes more specific information of what caused a 400 response. (i.e. INVALID_EMAIL, INVALID_PHONE_NUMBER, etc)
- */
+   */
   serviceErrorCode?: string;
 }
 
@@ -4465,10 +4460,10 @@ export interface DebitCardsResponse {
  */
 export interface CardDetailResponse {
   /** Account Identifier/ Payment Routing Number
- */
+   */
   accountId: string;
   /** Web link to the Card Holder Profile
- */
+   */
   link: string;
 }
 
@@ -4478,16 +4473,16 @@ export interface CardDetailResponse {
  */
 export interface CreateDebitCardResponse {
   /** Account Identifier/ Payment Routing Number
- */
+   */
   accountId?: string;
   /** Card Identifier
- */
+   */
   id?: string;
   /** Link to the Customer Profile
- */
+   */
   link?: string;
   /** Customer Card Information Message
- */
+   */
   message?: string;
 }
 
@@ -4497,7 +4492,7 @@ export interface CreateDebitCardResponse {
  */
 export interface CreateDebitCardRequest {
   /** Account Identifier/ Payment Routing Number
- */
+   */
   accountId: string;
   /**
    * The total amount of cash that can be withdrawn in a single day. Resets at 00:00 each day.
@@ -4567,8 +4562,8 @@ export interface CardPinChangeRequest {
 /**
  * Reason for replacing card.
  */
-export type CardReplaceRequestReason = typeof CardReplaceRequestReason[keyof typeof CardReplaceRequestReason];
-
+export type CardReplaceRequestReason =
+  (typeof CardReplaceRequestReason)[keyof typeof CardReplaceRequestReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardReplaceRequestReason = {
@@ -4589,8 +4584,8 @@ export interface CardReplaceRequest {
 /**
  * Reason for cancelling card.
  */
-export type CardCancelRequestReason = typeof CardCancelRequestReason[keyof typeof CardCancelRequestReason];
-
+export type CardCancelRequestReason =
+  (typeof CardCancelRequestReason)[keyof typeof CardCancelRequestReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardCancelRequestReason = {
@@ -4612,8 +4607,8 @@ export interface CardCancelRequest {
 Optional field. Only use if you want to update the status of the card.
 
  */
-export type CardUpdateRequestStatus = typeof CardUpdateRequestStatus[keyof typeof CardUpdateRequestStatus];
-
+export type CardUpdateRequestStatus =
+  (typeof CardUpdateRequestStatus)[keyof typeof CardUpdateRequestStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestStatus = {
@@ -4627,8 +4622,8 @@ export const CardUpdateRequestStatus = {
  * Reason for replacing card. Only required if status is set to REPLACED.
 
  */
-export type CardUpdateRequestReplacementReason = typeof CardUpdateRequestReplacementReason[keyof typeof CardUpdateRequestReplacementReason];
-
+export type CardUpdateRequestReplacementReason =
+  (typeof CardUpdateRequestReplacementReason)[keyof typeof CardUpdateRequestReplacementReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestReplacementReason = {
@@ -4642,8 +4637,8 @@ export const CardUpdateRequestReplacementReason = {
  * Reason for cancelling card. Only required if status is set to CANCELLED.
 
  */
-export type CardUpdateRequestCancellingReason = typeof CardUpdateRequestCancellingReason[keyof typeof CardUpdateRequestCancellingReason];
-
+export type CardUpdateRequestCancellingReason =
+  (typeof CardUpdateRequestCancellingReason)[keyof typeof CardUpdateRequestCancellingReason];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardUpdateRequestCancellingReason = {
@@ -4658,13 +4653,13 @@ export const CardUpdateRequestCancellingReason = {
  */
 export interface CardUpdateRequest {
   /** Reason for cancelling card. Only required if status is set to CANCELLED.
- */
+   */
   cancellingReason?: CardUpdateRequestCancellingReason;
   /** Clears daily cashwithdrawal limits on this card. Set value to TRUE to remove any daily cashwithdrawal limits. If set to TRUE, any maxCashWithdrawalLimit limit is ignored. You can still apply daily spend limits even when clearCashWithdrawalLimit is set to TRUE.
- */
+   */
   clearCashWithdrawalLimit?: boolean;
   /** Clears spending limits on this card. Set value to TRUE to remove any daily spending limits. If set to TRUE, any maxSpendLimit limit is ignored. You can still apply daily cash withdrawal limits  even when clearSpendLimit is set to TRUE.
- */
+   */
   clearSpendLimit?: boolean;
   /**
    * The total amount of cash that can be withdrawn in a single day. Resets at 00:00 each day.
@@ -4683,7 +4678,7 @@ Optional field. Only include if setting a new PIN.
  */
   pin?: string;
   /** Reason for replacing card. Only required if status is set to REPLACED.
- */
+   */
   replacementReason?: CardUpdateRequestReplacementReason;
   /** New status of the card after request. Can be locked/unlocked/replaced/cancelled status.
 Optional field. Only use if you want to update the status of the card.
@@ -4694,8 +4689,8 @@ Optional field. Only use if you want to update the status of the card.
 /**
  * The current status of the card.
  */
-export type DebitCardStatus = typeof DebitCardStatus[keyof typeof DebitCardStatus];
-
+export type DebitCardStatus =
+  (typeof DebitCardStatus)[keyof typeof DebitCardStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DebitCardStatus = {
@@ -4741,8 +4736,8 @@ export interface DebitCard {
   status: DebitCardStatus;
 }
 
-export type CheckImageStatusFront = typeof CheckImageStatusFront[keyof typeof CheckImageStatusFront];
-
+export type CheckImageStatusFront =
+  (typeof CheckImageStatusFront)[keyof typeof CheckImageStatusFront];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CheckImageStatusFront = {
@@ -4751,8 +4746,8 @@ export const CheckImageStatusFront = {
   NOT_SUBMITTED: 'NOT_SUBMITTED',
 } as const;
 
-export type CheckImageStatusBack = typeof CheckImageStatusBack[keyof typeof CheckImageStatusBack];
-
+export type CheckImageStatusBack =
+  (typeof CheckImageStatusBack)[keyof typeof CheckImageStatusBack];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CheckImageStatusBack = {
@@ -4770,8 +4765,8 @@ export interface CheckImageStatus {
   front?: CheckImageStatusFront;
 }
 
-export type CheckDepositResponseStatus = typeof CheckDepositResponseStatus[keyof typeof CheckDepositResponseStatus];
-
+export type CheckDepositResponseStatus =
+  (typeof CheckDepositResponseStatus)[keyof typeof CheckDepositResponseStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CheckDepositResponseStatus = {
@@ -4786,32 +4781,32 @@ export const CheckDepositResponseStatus = {
  */
 export interface CheckDepositResponse {
   /** Financial value (amount of money) of the check deposit.
- */
+   */
   amount?: number;
   checkImageStatus?: CheckImageStatus;
   /** Date the check was submitted.
- */
+   */
   createdAt?: string;
   /** Account identifier of the creditor (the party being paid). This should match the Embedded Banking account into which the funds will be transferred.
- */
+   */
   creditorAccount?: string;
   /** The currency of the check, in three-character ISO currency code.
- */
+   */
   currency?: string;
   /** Debtor ABA (American Bankers Association) Routing Number.
- */
+   */
   debtorABA?: string;
   /** Account identifier of the debtor (the party making the payment).
- */
+   */
   debtorAccount?: string;
   /** The name of the debtor (the party making the payment).
- */
+   */
   debtorName?: string;
   /** A unique identifier for the check.
- */
+   */
   id?: string;
   /** A message or description of the check for the end user's reference.
- */
+   */
   memo?: string;
   status?: CheckDepositResponseStatus;
 }
@@ -4822,24 +4817,23 @@ export interface CheckDepositResponse {
  */
 export interface CheckDepositRequest {
   /** Account Identifier/ Payment Routing Number.
- */
+   */
   accountId: string;
   /** Financial value (amount of money) of the check deposit.
- */
+   */
   amount: number;
   /** The currency of the check, in three-character ISO currency code.
- */
+   */
   currency: string;
   /** A message or description of the check for the end user's reference.
- */
+   */
   memo?: string;
 }
 
 /**
  * month
  */
-export type BillingMonth = typeof BillingMonth[keyof typeof BillingMonth];
-
+export type BillingMonth = (typeof BillingMonth)[keyof typeof BillingMonth];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingMonth = {
@@ -4860,8 +4854,7 @@ export const BillingMonth = {
 /**
  * Billing period
  */
-export type PeriodType = typeof PeriodType[keyof typeof PeriodType];
-
+export type PeriodType = (typeof PeriodType)[keyof typeof PeriodType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PeriodType = {
@@ -4871,8 +4864,8 @@ export const PeriodType = {
 /**
  * Used to calculate transaction fee
  */
-export type CalculationType = typeof CalculationType[keyof typeof CalculationType];
-
+export type CalculationType =
+  (typeof CalculationType)[keyof typeof CalculationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CalculationType = {
@@ -4883,8 +4876,7 @@ export const CalculationType = {
 /**
  * Type of billing the client is enrolled in
  */
-export type BillingType = typeof BillingType[keyof typeof BillingType];
-
+export type BillingType = (typeof BillingType)[keyof typeof BillingType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingType = {
@@ -4896,8 +4888,7 @@ export const BillingType = {
 /**
  * Parent platform of the client
  */
-export type Platform = typeof Platform[keyof typeof Platform];
-
+export type Platform = (typeof Platform)[keyof typeof Platform];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Platform = {
@@ -4907,8 +4898,8 @@ export const Platform = {
 /**
  * Billing product sub-type
  */
-export type BillingProductSubType = typeof BillingProductSubType[keyof typeof BillingProductSubType];
-
+export type BillingProductSubType =
+  (typeof BillingProductSubType)[keyof typeof BillingProductSubType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingProductSubType = {
@@ -4921,8 +4912,8 @@ export const BillingProductSubType = {
 /**
  * Billing product type
  */
-export type BillingProductType = typeof BillingProductType[keyof typeof BillingProductType];
-
+export type BillingProductType =
+  (typeof BillingProductType)[keyof typeof BillingProductType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingProductType = {
@@ -4933,8 +4924,8 @@ export const BillingProductType = {
 /**
  * How the fee is going to be calculated on a pay as you go billing type or if the client has excedeed their allwance on a subscription.
  */
-export type BillingEventCalculationType = typeof BillingEventCalculationType[keyof typeof BillingEventCalculationType];
-
+export type BillingEventCalculationType =
+  (typeof BillingEventCalculationType)[keyof typeof BillingEventCalculationType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingEventCalculationType = {
@@ -4945,8 +4936,8 @@ export const BillingEventCalculationType = {
 /**
  * The billing product type.
  */
-export type BillingEventBillingEventType = typeof BillingEventBillingEventType[keyof typeof BillingEventBillingEventType];
-
+export type BillingEventBillingEventType =
+  (typeof BillingEventBillingEventType)[keyof typeof BillingEventBillingEventType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingEventBillingEventType = {
@@ -4956,8 +4947,8 @@ export const BillingEventBillingEventType = {
 /**
  * The billing product sub-type.
  */
-export type BillingEventBillingEventSubType = typeof BillingEventBillingEventSubType[keyof typeof BillingEventBillingEventSubType];
-
+export type BillingEventBillingEventSubType =
+  (typeof BillingEventBillingEventSubType)[keyof typeof BillingEventBillingEventSubType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingEventBillingEventSubType = {
@@ -5000,8 +4991,8 @@ export interface BillingEvent {
 /**
  * The type of billing the client is currently using.
  */
-export type BillingClientDetailsResponseType = typeof BillingClientDetailsResponseType[keyof typeof BillingClientDetailsResponseType];
-
+export type BillingClientDetailsResponseType =
+  (typeof BillingClientDetailsResponseType)[keyof typeof BillingClientDetailsResponseType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingClientDetailsResponseType = {
@@ -5012,8 +5003,8 @@ export const BillingClientDetailsResponseType = {
 /**
  * The period when the client would be billed if they are on a subscription.
  */
-export type BillingClientDetailsResponsePeriodType = typeof BillingClientDetailsResponsePeriodType[keyof typeof BillingClientDetailsResponsePeriodType];
-
+export type BillingClientDetailsResponsePeriodType =
+  (typeof BillingClientDetailsResponsePeriodType)[keyof typeof BillingClientDetailsResponsePeriodType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingClientDetailsResponsePeriodType = {
@@ -5024,8 +5015,8 @@ export const BillingClientDetailsResponsePeriodType = {
 /**
  * The charge currency.
  */
-export type BillingClientDetailsResponseCurrency = typeof BillingClientDetailsResponseCurrency[keyof typeof BillingClientDetailsResponseCurrency];
-
+export type BillingClientDetailsResponseCurrency =
+  (typeof BillingClientDetailsResponseCurrency)[keyof typeof BillingClientDetailsResponseCurrency];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingClientDetailsResponseCurrency = {
@@ -5035,8 +5026,8 @@ export const BillingClientDetailsResponseCurrency = {
 /**
  * The month in which the client will be billed if they are on an yearly subscription.
  */
-export type BillingClientDetailsResponseBillingMonth = typeof BillingClientDetailsResponseBillingMonth[keyof typeof BillingClientDetailsResponseBillingMonth];
-
+export type BillingClientDetailsResponseBillingMonth =
+  (typeof BillingClientDetailsResponseBillingMonth)[keyof typeof BillingClientDetailsResponseBillingMonth];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BillingClientDetailsResponseBillingMonth = {
@@ -5089,8 +5080,8 @@ export interface BillingClientDetailsResponse {
 /**
  * Payment intent status
  */
-export type PaymentIntentType = typeof PaymentIntentType[keyof typeof PaymentIntentType];
-
+export type PaymentIntentType =
+  (typeof PaymentIntentType)[keyof typeof PaymentIntentType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentIntentType = {
@@ -5100,8 +5091,8 @@ export const PaymentIntentType = {
 /**
  * Payment intent status
  */
-export type PaymentIntentStatus = typeof PaymentIntentStatus[keyof typeof PaymentIntentStatus];
-
+export type PaymentIntentStatus =
+  (typeof PaymentIntentStatus)[keyof typeof PaymentIntentStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentIntentStatus = {
@@ -5130,7 +5121,7 @@ export interface PaymentIntent {
   /** The name of the account holder receiving the payment. This is either the name of the account holder’s business or their first and last name. */
   creditorName?: string;
   /** The currency of the check, in three-character ISO currency code.
- */
+   */
   currency?: string;
   /** ID of the account to make the payment from. */
   debtorAccountId?: string;
@@ -5169,7 +5160,7 @@ export interface PaymentIntentRequest {
   /** @minimum 0.01 */
   amount: number;
   /** Transaction currency
- */
+   */
   currency: string;
   /**
    * ID of the account to make the payment from.
@@ -5271,8 +5262,8 @@ export interface ListBalanceHoldGetResponse {
 /**
  * Accounting type (Credit (CR) / Debit (DR)) for transaction
  */
-export type AccountingType = typeof AccountingType[keyof typeof AccountingType];
-
+export type AccountingType =
+  (typeof AccountingType)[keyof typeof AccountingType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountingType = {
@@ -5437,8 +5428,8 @@ export interface ListTransactionsSearchResponse {
 /**
  * The types of transaction that the client is allowed to search by.
  */
-export type RequestTransactionTypeV2 = typeof RequestTransactionTypeV2[keyof typeof RequestTransactionTypeV2];
-
+export type RequestTransactionTypeV2 =
+  (typeof RequestTransactionTypeV2)[keyof typeof RequestTransactionTypeV2];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RequestTransactionTypeV2 = {
@@ -5456,8 +5447,8 @@ export const RequestTransactionTypeV2 = {
 /**
  * The types of transaction that the client is allowed to search by.
  */
-export type RequestTransactionType = typeof RequestTransactionType[keyof typeof RequestTransactionType];
-
+export type RequestTransactionType =
+  (typeof RequestTransactionType)[keyof typeof RequestTransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RequestTransactionType = {
@@ -5474,8 +5465,8 @@ export const RequestTransactionType = {
 /**
  * The statuses of the transaction that the client is allowed to search by.
  */
-export type RequestTransactionStatus = typeof RequestTransactionStatus[keyof typeof RequestTransactionStatus];
-
+export type RequestTransactionStatus =
+  (typeof RequestTransactionStatus)[keyof typeof RequestTransactionStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RequestTransactionStatus = {
@@ -5492,8 +5483,8 @@ export const RequestTransactionStatus = {
 /**
  * Defines the transaction according to specific types. For example, whether money has been paid into or out of the account.
  */
-export type TransactionType1 = typeof TransactionType1[keyof typeof TransactionType1];
-
+export type TransactionType1 =
+  (typeof TransactionType1)[keyof typeof TransactionType1];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TransactionType1 = {
@@ -5531,8 +5522,8 @@ export const TransactionType1 = {
  * `UNDEFINED` - The status of this transaction cannot be found.
 
  */
-export type TransactionStatus = typeof TransactionStatus[keyof typeof TransactionStatus];
-
+export type TransactionStatus =
+  (typeof TransactionStatus)[keyof typeof TransactionStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TransactionStatus = {
@@ -5632,7 +5623,8 @@ export type TransactionGetResponseAllOf = {
   transactionType?: TransactionType1;
 };
 
-export type TransactionGetResponse = TransactionGetResponseDetails & TransactionGetResponseAllOf;
+export type TransactionGetResponse = TransactionGetResponseDetails &
+  TransactionGetResponseAllOf;
 
 export interface TransactionResponse {
   accountId?: string;
@@ -5653,8 +5645,7 @@ export interface TransactionResponse {
 /**
  * The type of the fee transaction. Use this to differentiate between the fee transactions that were charged and those that were reversed. * CHARGE - the fee that was incurred as a result of a transaction. * REVERSAL - the fee was incurred and then voided on a transaction.
  */
-export type FeeType = typeof FeeType[keyof typeof FeeType];
-
+export type FeeType = (typeof FeeType)[keyof typeof FeeType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FeeType = {
@@ -5665,8 +5656,8 @@ export const FeeType = {
 /**
  * The transaction type of the originating transaction that incurred a fee. This is only available for fee transactions. * ACH_PAYOUT - the original transaction was a payout made by ACH payment route. * RTP_PAYOUT - the original transaction was a payout made by ACH payment route. * WIRE_PAYOUT - the original transaction was a payout made by WIRE payment route. * DEBIT_CARD_REQUEST - the original transaction was a debit card request. * FEE - the original transaction was a fee that was reversed.
  */
-export type OriginatingTransactionType = typeof OriginatingTransactionType[keyof typeof OriginatingTransactionType];
-
+export type OriginatingTransactionType =
+  (typeof OriginatingTransactionType)[keyof typeof OriginatingTransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OriginatingTransactionType = {
@@ -5680,8 +5671,7 @@ export const OriginatingTransactionType = {
 /**
  * The method by which the payment was made - RTP, WIRE, ACH
  */
-export type PaymentRoute = typeof PaymentRoute[keyof typeof PaymentRoute];
-
+export type PaymentRoute = (typeof PaymentRoute)[keyof typeof PaymentRoute];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentRoute = {
@@ -5724,8 +5714,7 @@ export interface TransactionGetResponseDetails {
 /**
  * Payment method - ACH, RTP, WIRE, ACH, TRANSFER. Only ACH (for payouts) and TRANSFER (for payments between embedded accounts) are used in Embedded Payments transactions.
  */
-export type PaymentType = typeof PaymentType[keyof typeof PaymentType];
-
+export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentType = {
@@ -5738,8 +5727,8 @@ export const PaymentType = {
 /**
  * Payment currency - currently supported: USD
  */
-export type PostTransactionRequestCurrency = typeof PostTransactionRequestCurrency[keyof typeof PostTransactionRequestCurrency];
-
+export type PostTransactionRequestCurrency =
+  (typeof PostTransactionRequestCurrency)[keyof typeof PostTransactionRequestCurrency];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostTransactionRequestCurrency = {
@@ -5782,8 +5771,8 @@ export interface PostTransactionRequest {
 /**
  * Defines the transaction according to specific types. For example, whether money has been paid into or out of the account.
  */
-export type TransactionType = typeof TransactionType[keyof typeof TransactionType];
-
+export type TransactionType =
+  (typeof TransactionType)[keyof typeof TransactionType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TransactionType = {
@@ -5812,8 +5801,8 @@ export const TransactionType = {
 /**
  * The transaction type of the transaction. Some transaction types are not available to be initiated via API and are therefore not included in the transaction request type field.
  */
-export type PaymentTypeResponse = typeof PaymentTypeResponse[keyof typeof PaymentTypeResponse];
-
+export type PaymentTypeResponse =
+  (typeof PaymentTypeResponse)[keyof typeof PaymentTypeResponse];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentTypeResponse = {
@@ -5932,7 +5921,8 @@ export type TransactionGetResponseV2AllOf = {
   status?: TransactionStatus;
 };
 
-export type TransactionGetResponseV2 = TransactionGetResponseDetailsV2 & TransactionGetResponseV2AllOf;
+export type TransactionGetResponseV2 = TransactionGetResponseDetailsV2 &
+  TransactionGetResponseV2AllOf;
 
 export interface TransactionResponseV2 {
   /**
@@ -5986,8 +5976,8 @@ export interface TransactionRecipientDetailsV2 {
 /**
  * Transaction currency
  */
-export type PostTransactionRequestV2Currency = typeof PostTransactionRequestV2Currency[keyof typeof PostTransactionRequestV2Currency];
-
+export type PostTransactionRequestV2Currency =
+  (typeof PostTransactionRequestV2Currency)[keyof typeof PostTransactionRequestV2Currency];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostTransactionRequestV2Currency = {
@@ -6067,7 +6057,7 @@ export interface ListDocumentsDetailsResponse {
 export interface DocumentDetails {
   documentType?: DocumentType;
   /** The unique id generated by the system for the uploaded document,  which can be used for future retrieval.
- */
+   */
   id?: string;
   /**
    * @minItems 0
@@ -6080,8 +6070,8 @@ export interface DocumentDetails {
 /**
  * Key value can be PARTY_ID or COUNTRY_CODE
  */
-export type DocumentMetadataKey = typeof DocumentMetadataKey[keyof typeof DocumentMetadataKey];
-
+export type DocumentMetadataKey =
+  (typeof DocumentMetadataKey)[keyof typeof DocumentMetadataKey];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentMetadataKey = {
@@ -6115,8 +6105,7 @@ export interface DocumentMetadata {
 /**
  * Product type identifies which domain the document is being uploaded to.
  */
-export type ProductType = typeof ProductType[keyof typeof ProductType];
-
+export type ProductType = (typeof ProductType)[keyof typeof ProductType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ProductType = {
@@ -6127,8 +6116,7 @@ export const ProductType = {
 /**
  * Supported document types.
  */
-export type DocumentType = typeof DocumentType[keyof typeof DocumentType];
-
+export type DocumentType = (typeof DocumentType)[keyof typeof DocumentType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DocumentType = {
@@ -6168,8 +6156,8 @@ export interface DocumentUploadData {
 /**
  * The product onboarding status
  */
-export type OnboardingStatus = typeof OnboardingStatus[keyof typeof OnboardingStatus];
-
+export type OnboardingStatus =
+  (typeof OnboardingStatus)[keyof typeof OnboardingStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const OnboardingStatus = {
@@ -6191,8 +6179,7 @@ export const OnboardingStatus = {
   OFFBOARDING_COMPLETE: 'OFFBOARDING_COMPLETE',
 } as const;
 
-export type Action = typeof Action[keyof typeof Action];
-
+export type Action = (typeof Action)[keyof typeof Action];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Action = {
@@ -6209,10 +6196,10 @@ export type ProfileConfigurationOnboardedProductsItem = {
 
 export interface ProfileConfiguration {
   /** Date the profile was created.
- */
+   */
   createdAt?: string;
   /** Once KYC has completed and approved, clients will be able to make payments out of their Embedded Bank Account. This flag will be set to FALSE until this process completes. Only present for clients.
- */
+   */
   enablePayouts?: boolean;
   /**
    * @minItems 0
@@ -6222,7 +6209,7 @@ export interface ProfileConfiguration {
   /** The client onboarding status */
   onboardingStatus?: string;
   /** Client ID of the platform entity the client is onboarded to.
- */
+   */
   parentClientId?: string;
   /** active | deleted */
   profileStatus?: string;
@@ -6297,7 +6284,7 @@ export interface IdentityDTO {
   /** Identification issuer country code e.g. US */
   idIssuer: string;
   /** IdType denotes the type of taxpayer identification numbers e.g. SSN/EIN. EIN is acceptable idType for Privately Owned Business. Sole Proprietorship can have EIN/SSN as idType. For individuals like Owners and Controllers SSN is accepted as idType. Decision Makers do not require any tax identifier.
- */
+   */
   idType: string;
   /**
    * Value of the identification type. EIN/SSN must be of 9 digits.
@@ -6345,7 +6332,7 @@ export type RelatedPartyAllOf = {
    */
   firstName?: string;
   /** Job title in case of party type being an individual. JobTitle is required field for Controllers. Also, If Privately Owned Business is selected as the business type, Job Title should be a required field for Decision Makers. e.g. CEO|CFO|COO|President|Chairman|Senior Branch Manager|Other
- */
+   */
   jobTitle?: string;
   /**
    * In case on jobTitle is Other then Job title description is required.
@@ -6369,7 +6356,7 @@ export type RelatedPartyAllOf = {
    */
   middleName?: string;
   /** Nature of ownership e.g. Direct|Indirect
- */
+   */
   natureOfOwnership?: string;
   /**
    * A Party role which could have one or more of the following values: CLIENT, CONTROLLER, MARKETPLACE_OPERATOR, OWNER, PAYEE, DECISION_MAKER
@@ -6380,7 +6367,7 @@ If a SMB controller and owner is the same person - you have to send two parties 
    */
   partyRole?: string[];
   /** A Party type which could have one of the following distinct values: Organization, Individual, NonIndividual
- */
+   */
   partyType?: string;
   soleOwner?: boolean;
 };
@@ -6393,7 +6380,7 @@ export type RelatedPartyRequest = RelatedParty & RelatedPartyRequestAllOf;
 
 export type RelatedPartyResponseAllOf = {
   /** Individual/NonIndividual client id, as UUID, that uniquely identifies the resource.
- */
+   */
   id: string;
   /** Status of the request. Can be active or deleted. */
   status?: string;
@@ -6403,22 +6390,22 @@ export type RelatedPartyResponse = RelatedParty & RelatedPartyResponseAllOf;
 
 export type ClientInformationResponseAllOf = {
   /** Date the profile was created.
- */
+   */
   createdAt?: string;
   /** Once KYC has completed and approved, clients will be able to make payments out of their Embedded Bank Account.
 This flag will be set to FALSE until this process completes. Only present for clients.
  */
   enablePayouts?: boolean;
   /** Client ID. The unique identifier for a client.
- */
+   */
   id: string;
   /** The jurisdiction where the client would be onboarding.
- */
+   */
   jurisdiction?: string;
   /** The client onboarding status */
   onboardingStatus?: string;
   /** Client ID of the platform entity the client is onboarded to.
- */
+   */
   parentClientId?: string;
   /**
    * The products available for clients in a jurisdiction.
@@ -6436,7 +6423,8 @@ This flag will be set to FALSE until this process completes. Only present for cl
   status?: string;
 };
 
-export type ClientInformationResponse = PartyDetailBusiness & ClientInformationResponseAllOf;
+export type ClientInformationResponse = PartyDetailBusiness &
+  ClientInformationResponseAllOf;
 
 export interface ListClientInformationResponse {
   /**
@@ -6451,10 +6439,10 @@ export type RelatedPartiesRequest = RelatedPartyRequest;
 
 export type PartyDetailBusinessAllOf = {
   /** Any alias names for the business connected to the client.
- */
+   */
   businessAliasName?: string;
   /** The business’s description.
- */
+   */
   businessDescription?: string;
   /**
    * The business’s legal name. It is the official name of the person or entity that owns a company. Must be the name used on the client's government forms and business paperwork
@@ -6463,7 +6451,7 @@ export type PartyDetailBusinessAllOf = {
    */
   businessName?: string;
   /** The type of business connected to the client. You can use the Reference Data resource to get a list of acceptable values. Examples include: Privately Owned Business. Sole Proprietorship.
- */
+   */
   businessType?: string;
   /** Country code in alpha-2 format */
   countryOfFormation?: string;
@@ -6475,21 +6463,21 @@ export type PartyDetailBusinessAllOf = {
    */
   email?: string;
   /** Entities in ownership means that one or more businesses own part of the business conected to the client. Always required for a Privately Owned Business.
- */
+   */
   entitiesInOwnership?: boolean;
   /** The industry category of the business connected to the client. For example, Accommodation and Food Services. You can use the Reference Data resource to get a list of acceptable values.
- */
+   */
   industryCategory?: string;
   /** The industry type of the business connected to the client. You can use the Reference Data resource to get a list of acceptable values.
- */
+   */
   industryType?: string;
   /** Legal Structure of the business entity. Legal structure is required for Privately Owned Business and Sole Proprietorship. Distinct legal structure. e.g. - Limited Liability Company - Corporation - Limited Partnership - Sole Proprietorship
- */
+   */
   legalStructure?: string;
   /** The parent (platform) relationship owner's ID. */
   parentClientId?: string;
   /** Significant ownership means there individuals who own 25% or more of the client's business. Always required for a Privately Owned Business. If Significant Ownership is selected as True, At least one related party should have the role of owner.
- */
+   */
   significantOwnership?: boolean;
   /**
    * Website of the business connected to the client. Always required if websiteAvailable is true.
@@ -6498,7 +6486,7 @@ export type PartyDetailBusinessAllOf = {
    */
   website?: string;
   /** Whether or not the business connected to the client has a website.
- */
+   */
   websiteAvailable?: boolean;
   /**
    * Year of company formation. Max and Min length is 4.
@@ -6512,17 +6500,19 @@ export type PartyDetailBusiness = PartyDetailCommon & PartyDetailBusinessAllOf;
 
 export type PartyDetailBusinessResponseAllOf = { [key: string]: any };
 
-export type PartyDetailBusinessResponse = PartyDetailBusiness & PartyDetailBusinessResponseAllOf;
+export type PartyDetailBusinessResponse = PartyDetailBusiness &
+  PartyDetailBusinessResponseAllOf;
 
 export type PartyDetailBusinessRequestAllOf = { [key: string]: any };
 
-export type PartyDetailBusinessRequest = PartyDetailBusiness & PartyDetailBusinessRequestAllOf;
+export type PartyDetailBusinessRequest = PartyDetailBusiness &
+  PartyDetailBusinessRequestAllOf;
 
 export type EntityDetailBusinessRequest = PartyDetailBusinessRequest;
 
 export type CreateClientRequestAllOf = {
   /** The jurisdiction where the client would be onboarding.
- */
+   */
   jurisdiction?: string;
   /**
    * The products available for clients in a jurisdiction.
@@ -6535,9 +6525,9 @@ export type CreateClientRequestAllOf = {
   relatedParties: RelatedPartiesRequest[];
 };
 
-export type CreateClientRequest = EntityDetailBusinessRequest & CreateClientRequestAllOf;
+export type CreateClientRequest = EntityDetailBusinessRequest &
+  CreateClientRequestAllOf;
 
 export interface DocumentResponse {
   id?: string;
 }
-

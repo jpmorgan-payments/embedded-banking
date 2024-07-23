@@ -9,7 +9,6 @@ import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { businessSchema } from '../StepsSchema';
-
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 
