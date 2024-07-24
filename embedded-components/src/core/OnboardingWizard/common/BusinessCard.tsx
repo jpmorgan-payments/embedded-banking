@@ -16,6 +16,7 @@ type DecisionMakersCardProps = {
   controller?: boolean;
   parentPartyId: string;
   refetch?: any;
+  partyId: string;
 };
 
 const fieldsController = (individual: any) => {
@@ -39,12 +40,11 @@ const BusinessCard = ({
   controller,
   parentPartyId,
   refetch,
+  partyId,
 }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);
-
-  console.log('@@individual', individual);
 
   const [open, setOpen] = useState(false);
   return (
@@ -110,6 +110,7 @@ const BusinessCard = ({
                         }
                       }}
                       parentPartyId={parentPartyId}
+                      partyId={partyId}
                     />
                   </Dialog>
                 )}

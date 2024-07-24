@@ -6,6 +6,7 @@ import {
 // import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 // import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromDateToString } from '../WizardSteps/utils/fromDateToString';
+import { transformDobToApi } from './transformDobtoApi';
 
 export const fromFormToOrgParty = (form: any) => {
   let orgParty: OrganizationDetails = {};
@@ -89,7 +90,7 @@ export const fromFormToIndParty = (form: any) => {
     lastName: form.lastName,
     birthDate:
       typeof form?.birthDate === 'string'
-        ? form?.birthDate
+        ? transformDobToApi(form?.birthDate)
         : fromDateToString(form?.birthDate as Date),
     jobTitle: form?.jobTitle,
     jobTitleDescription: form?.jobTitleDescription,

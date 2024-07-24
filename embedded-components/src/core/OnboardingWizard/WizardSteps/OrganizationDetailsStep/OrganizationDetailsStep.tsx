@@ -27,8 +27,6 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
     return data && fromApiToForm(data);
   }, [data]);
 
-  console.log('@@data', data, clientDataForm);
-
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
 

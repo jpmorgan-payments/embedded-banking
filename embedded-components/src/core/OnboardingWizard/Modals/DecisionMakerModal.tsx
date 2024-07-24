@@ -42,6 +42,7 @@ type DecisionMakerModalProps = {
   title: string;
   onCancel: any;
   parentPartyId?: string;
+  partyId?: string;
 };
 
 const DecisionMakerModal = ({
@@ -50,6 +51,7 @@ const DecisionMakerModal = ({
   index,
   title,
   parentPartyId,
+  partyId,
 }: DecisionMakerModalProps) => {
   // const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
   const { getContentToken: getUserToken } = useContentData(
@@ -63,17 +65,18 @@ const DecisionMakerModal = ({
 
   const form = useForm<any>({
     defaultValues: defaultInitialValues,
-    resolver: yupResolver({} as any),
+    // resolver: yupResolver({} as any),
   });
 
   const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
+
     if (!Object.values(errors).length) {
       const data = fromFormToIndParty(form.getValues());
 
-      if (!owner) {
+      if (partyId) {
         const res = await updateParty({
-          id: owner.id,
+          id: partyId ?? '',
           data: {
             email: owner?.email,
             individualDetails: data,
@@ -93,7 +96,6 @@ const DecisionMakerModal = ({
             roles: ['DECISION_MAKER'],
           },
         });
-
         if (res?.id) {
           onOpenChange(res?.id);
         }

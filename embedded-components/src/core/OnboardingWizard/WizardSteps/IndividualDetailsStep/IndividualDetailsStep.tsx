@@ -11,6 +11,7 @@ import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { fromApiToForm } from '../../utils/fromApiToForm';
+import { fromFormToIndParty } from '../../utils/fromFormToApi';
 import { useGetDataByClientId } from '../hooks';
 import { individualSchema } from '../StepsSchema';
 import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole';
@@ -60,13 +61,12 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
       const {
         organizationName,
         countryOfFormation,
-        firstName,
-        lastName,
         businessEmail,
-        countryOfResidence,
         organizationType,
         individualEmail,
+        ...indi
       } = form.getValues();
+      const data = fromFormToIndParty({ email: individualEmail, ...indi });
 
       try {
         // TODO: RAW, will need to Update this
@@ -88,11 +88,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
                 partyType: 'INDIVIDUAL',
                 email: individualEmail || businessEmail,
                 roles: ['CONTROLLER'],
-                individualDetails: {
-                  firstName,
-                  lastName,
-                  countryOfResidence,
-                },
+                individualDetails: data,
               },
             ],
             products: ['EMBEDDED_PAYMENTS'],

@@ -37,7 +37,6 @@ const BusinessOwnersStep = () => {
   const { activeStep, setCurrentStep } = useStepper();
 
   const { data, refetch } = useGetDataByClientId('client');
-  console.log('@@data', data);
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
@@ -137,6 +136,7 @@ const BusinessOwnersStep = () => {
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
+                      partyId={controller.id}
                     ></BusinessCard>
                   </div>
                 );
@@ -150,11 +150,14 @@ const BusinessOwnersStep = () => {
               })
               .map((contollerID: any) => {
                 const controller = reviewData.individualDetails[contollerID];
+
                 return (
                   <div key={contollerID} className=" eb-grid-cols-subgrid">
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}
+                      refetch={refetch}
+                      partyId={controller.id}
                     ></BusinessCard>
                   </div>
                 );
@@ -169,7 +172,7 @@ const BusinessOwnersStep = () => {
               >
                 <DialogTrigger>Click to add a business owner</DialogTrigger>
               </Button>
-              {/* <DecisionMakerModal
+              <DecisionMakerModal
                 onOpenChange={(id: string) => {
                   setOpen(false);
                   if (id) {
@@ -177,7 +180,13 @@ const BusinessOwnersStep = () => {
                   }
                 }}
                 title="Enter business owner details"
-              /> */}
+                onCancel={(id: string) => {
+                  setOpen(false);
+                  if (id) {
+                    refetch();
+                  }
+                }}
+              />
             </Dialog>
           </div>
         </>

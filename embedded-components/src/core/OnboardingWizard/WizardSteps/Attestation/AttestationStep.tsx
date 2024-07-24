@@ -40,13 +40,14 @@ import { useStepper } from '../../Stepper/useStepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { PdfDisplay } from './PdfDisplay';
+import termsFile from './terms.pdf';
 
 const AttestationStep = () => {
   const form = useFormContext();
   const { clientId } = useRootConfig();
   const { setCurrentStep, activeStep } = useStepper();
   const { onboardingForm }: any = useOnboardingForm();
-  const [setDocs] = useState<any>(null);
+  const [, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
@@ -138,6 +139,7 @@ const AttestationStep = () => {
     clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
   const businessName =
     clientDataForm?.onganizationDetails?.orgDetails?.businessName;
+  console.log('@@PDF', termsFile);
 
   return (
     <section>
@@ -147,7 +149,8 @@ const AttestationStep = () => {
 
       <PdfDisplay
         data-testid="pdf-display"
-        file={termsAndConditionsDoc}
+        // file={termsAndConditionsDoc}
+        file={termsFile}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
@@ -160,7 +163,7 @@ const AttestationStep = () => {
       <>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <Group>
-            <Text size="md">Trouble viewing the document, click here: </Text>
+            {/* <Text size="md">Trouble viewing the document, click here: </Text> */}
             {/* TODO: Anchor component */}
             {/* <Anchor
               href={termsAndConditionsDoc ?? '/assets/docs/terms.pdf'}
@@ -173,7 +176,7 @@ const AttestationStep = () => {
                 <Text> Terms and Conditions</Text>
               </Group>
             </Anchor> */}
-
+            {/* 
             {form.getValues().reviewedTerms ? (
               <Badge>
                 <Group>
@@ -186,11 +189,11 @@ const AttestationStep = () => {
                   <IconX size={14} /> {getContentToken(`groupX`)}
                 </Group>
               </Badge>
-            )}
+            )} */}
           </Group>
           <Separator />
-          <Text>{form.getValues().error}</Text>
-          <Title as="h3">{getContentToken(`title2`)}</Title>
+          {/* <Text>{form.getValues().error}</Text>
+          <Title as="h3">{getContentToken(`title2`)}</Title> */}
           <Group>
             {/* <Anchor
               href={disclosureAndConsentDoc ?? '/assets/docs/disclosure.pdf'}
@@ -204,7 +207,7 @@ const AttestationStep = () => {
               </Group>
             </Anchor> */}
 
-            {form.getValues().reviewedDisclosure ? (
+            {/* {form.getValues().reviewedDisclosure ? (
               <Badge>
                 <Group>
                   <IconCheck size={14} /> {getContentToken(`badge`)}
@@ -216,7 +219,7 @@ const AttestationStep = () => {
                   <IconX size={14} /> {getContentToken(`badgeX`)}
                 </Group>
               </Badge>
-            )}
+            )} */}
           </Group>
           <Text>{form.getValues().error}</Text>
 
