@@ -19,6 +19,7 @@ export type EBThemeVariables = {
   popoverColor?: string;
   popoverForegroundColor?: string;
   borderRadius?: string;
+  buttonBorderRadius?: string;
   borderColor?: string;
   inputColor?: string;
   ringColor?: string;
