@@ -55,7 +55,9 @@ export const LinkedAccountWidget: React.FC<LinkedAccountWidgetProps> = ({
       <CardContent>
         <div className="eb-space-y-4">
           {status === 'pending' && <p>Loading...</p>}
-          {status === 'error' && <p>{failureReason?.message}</p>}
+          {status === 'error' && (
+            <p>Error: {failureReason?.message ?? 'Unknown error'}</p>
+          )}
 
           {status === 'success' &&
             modifiedRecipients &&

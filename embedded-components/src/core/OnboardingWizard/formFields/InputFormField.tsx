@@ -19,7 +19,7 @@ const InputFormField = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="first:eb-mt-2">
+        <FormItem>
           {labelToken && (
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}
