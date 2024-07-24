@@ -25,6 +25,7 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useStepper } from '../../Stepper/Stepper';
 import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { fromApiToForm } from '../../utils/fromApiToForm';
+import { useGetDataByClientId } from '../hooks';
 
 // TODO: Modal on adding descion maker
 // import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
@@ -39,10 +40,7 @@ const DecisionMakersStep = () => {
   const { clientId, mockSteps, isMockResponse, onRegistration } =
     useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
-
-  const { data }: any = isMockResponse
-    ? { data: mockSteps.review, refetch: () => null, isPending: false }
-    : useSmbdoGetClient((clientId || onboardingForm?.id) ?? '');
+  const { data, refetch } = useGetDataByClientId('client');
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
@@ -139,6 +137,10 @@ const DecisionMakersStep = () => {
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
+                      parentPartyId={controller.parentPartyId}
+                      refetch={refetch}
+                      partyId={controller.id}
+                      type={'decision'}
                     ></BusinessCard>
                   </div>
                 );
@@ -155,8 +157,11 @@ const DecisionMakersStep = () => {
                 return (
                   <div key={contollerID} className=" eb-grid-cols-subgrid">
                     <BusinessCard
-                      controller
                       individual={controller.indDetails}
+                      parentPartyId={controller.parentPartyId}
+                      refetch={refetch}
+                      partyId={controller.id}
+                      type={'decision'}
                     ></BusinessCard>
                   </div>
                 );
