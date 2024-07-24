@@ -1,18 +1,20 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Card, CardContent, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import NavigationButtons from '../../Stepper/NavigationButtons';
 import { introSchema } from '../StepsSchema';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 
-const IntroStep = ({ formSchema, yupSchema, children }: any) => {
-  const { jurisdictions, entityType } = useRootConfig();
+const IntroStep = ({ formSchema, yupSchema }: any) => {
+  const { jurisdictions, entityType, onRegistration } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -41,14 +43,41 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
     }
   }, [entityType, jurisdictions]);
 
-  const onSubmit = useCallback(async () => {
-    const errors = form?.formState?.errors;
+  const { mutateAsync: postClient, status: postClientStatus } =
+    useSmbdoPostClients();
 
-    if (Object.keys(errors)?.length) {
-      return;
-    }
-    setCurrentStep(activeStep + 1);
-  }, [activeStep]);
+  const onSubmit = async () => {
+    const {
+      organizationName,
+      organizationType,
+      businessEmail,
+      countryOfFormation,
+    } = form.getValues();
+
+    await postClient({
+      data: {
+        parties: [
+          {
+            partyType: 'ORGANIZATION',
+            email: businessEmail,
+            roles: ['CLIENT'],
+            organizationDetails: {
+              organizationName,
+              organizationType,
+              countryOfFormation,
+            },
+          },
+        ],
+        products: ['EMBEDDED_PAYMENTS'],
+      },
+    })
+      .then(async (clientResponse) => {
+        await onRegistration?.({ clientId: clientResponse?.id });
+      })
+      .then(() => {
+        setCurrentStep(activeStep + 1);
+      });
+  };
 
   return (
     <Stack>
@@ -123,7 +152,11 @@ const IntroStep = ({ formSchema, yupSchema, children }: any) => {
               </CardContent>
             </Card>
           </Box>
-          {children}
+          <NavigationButtons
+            setActiveStep={setCurrentStep}
+            activeStep={activeStep}
+            disabled={postClientStatus === 'pending'}
+          />
         </form>
       </Box>
     </Stack>
