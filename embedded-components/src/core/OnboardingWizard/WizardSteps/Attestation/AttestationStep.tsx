@@ -143,7 +143,6 @@ const AttestationStep = () => {
     <section>
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
-      <Title as="h3">{getContentToken(`title1`)}</Title>
 
       <PdfDisplay
         data-testid="pdf-display"
@@ -221,7 +220,7 @@ const AttestationStep = () => {
           </Group>
           <Text>{form.getValues().error}</Text>
 
-          <Stack>
+          <Stack className="eb-mt-10">
             <FormField
               control={form.control}
               name="attestedAuthorized"
@@ -248,28 +247,7 @@ const AttestationStep = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="attestedReadDocuments"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={() => {}}
-                      disabled={
-                        !form.getValues().reviewedDisclosure ||
-                        !form.getValues().reviewedTerms
-                      }
-                    />
-                  </FormControl>
-                  <FormLabel className="eb-p-3">
-                    {getContentToken(`attestedReadDocuments`)}
-                  </FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
           </Stack>
         </form>
       </>
