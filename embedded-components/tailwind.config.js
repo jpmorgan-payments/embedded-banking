@@ -23,7 +23,7 @@ module.exports = {
     },
     extend: {
       height: {
-        'modal-overflow' : 'calc(100% - 25dvh)'
+        'modal-overflow': 'calc(100% - 25dvh)',
       },
       colors: {
         border: 'hsl(var(--eb-border))',
@@ -64,6 +64,7 @@ module.exports = {
         lg: 'calc(var(--eb-radius) + 2px)',
         md: 'var(--eb-radius)',
         sm: 'calc(var(--eb-radius) - 4px)',
+        button: 'var(--eb-button-radius)',
       },
       keyframes: {
         'accordion-down': {
