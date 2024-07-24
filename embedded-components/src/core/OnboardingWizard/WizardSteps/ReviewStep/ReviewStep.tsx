@@ -48,7 +48,7 @@ const ReviewStep = () => {
 
   const { data, isPending } = useGetDataByClientId('client');
 
-  // STEP BUILDER, setOnboaring Form is not requried
+  // STEP BUILDER, setOnboarding Form is not required
   useEffect(() => {
     if (data?.id) {
       const reviewData = fromApiToForm(data);
@@ -139,6 +139,11 @@ const ReviewStep = () => {
                       value: individualDetails?.birthDate,
                     },
                     {
+                      label: 'Email',
+                      // @ts-ignore
+                      value: individualDetailsArray?.[0]?.email,
+                    },
+                    {
                       label: 'Phone',
                       value: individualDetails?.phone?.phoneNumber,
                     },
@@ -152,11 +157,22 @@ const ReviewStep = () => {
                     },
                     {
                       label: 'Nature of ownership',
-                      value: individualDetails?.natureOfOwnership,
+                      value:
+                        typeof individualDetails?.natureOfOwnership ===
+                        'undefined'
+                          ? undefined
+                          : individualDetails?.natureOfOwnership
+                            ? 'Yes'
+                            : 'No',
                     },
                     {
                       label: 'Sole owner?',
-                      value: individualDetails?.soleOwner ? 'Yes' : 'No',
+                      value:
+                        typeof individualDetails?.soleOwner === 'undefined'
+                          ? undefined
+                          : individualDetails?.soleOwner
+                            ? 'Yes'
+                            : 'No',
                     },
                     {
                       label: 'Country of Residence',
@@ -217,6 +233,11 @@ const ReviewStep = () => {
                       value: organizationDetails?.organizationDescription,
                     },
                     {
+                      label: 'Email',
+                      // @ts-ignore
+                      value: organizationDetailsArray?.[0]?.email,
+                    },
+                    {
                       label: 'Website',
                       value: organizationDetails?.website,
                     },
@@ -242,21 +263,33 @@ const ReviewStep = () => {
                     },
                     {
                       label: 'Entities in ownership?',
-                      value: organizationDetails?.entitiesInOwnership
-                        ? 'Yes'
-                        : 'No',
+                      value:
+                        typeof organizationDetails?.entitiesInOwnership ===
+                        'undefined'
+                          ? undefined
+                          : organizationDetails?.entitiesInOwnership
+                            ? 'Yes'
+                            : 'No',
                     },
                     {
                       label: 'Significant ownership?',
-                      value: organizationDetails?.significantOwnership
-                        ? 'Yes'
-                        : 'No',
+                      value:
+                        typeof organizationDetails?.significantOwnership ===
+                        'undefined'
+                          ? undefined
+                          : organizationDetails?.significantOwnership
+                            ? 'Yes'
+                            : 'No',
                     },
                     {
                       label: 'Trade over internet?',
-                      value: organizationDetails?.tradeOverInternet
-                        ? 'Yes'
-                        : 'No',
+                      value:
+                        typeof organizationDetails?.tradeOverInternet ===
+                        'undefined'
+                          ? undefined
+                          : organizationDetails?.tradeOverInternet
+                            ? 'Yes'
+                            : 'No',
                     },
                   ]}
                 />
