@@ -137,6 +137,7 @@ const BusinessOwnersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
+                      type={'owner'}
                     ></BusinessCard>
                   </div>
                 );
@@ -144,8 +145,8 @@ const BusinessOwnersStep = () => {
 
             {Object.keys(reviewData?.individualDetails)
               .filter((indID) => {
-                return !reviewData.individualDetails[indID].roles.includes(
-                  'CONTROLLER'
+                return reviewData.individualDetails[indID].roles.includes(
+                  'BENEFICIAL_OWNER'
                 );
               })
               .map((contollerID: any) => {
@@ -158,34 +159,29 @@ const BusinessOwnersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
+                      type={'owner'}
                     ></BusinessCard>
                   </div>
                 );
               })}
 
             <Dialog open={open} onOpenChange={setOpen}>
-              <Button
-                onClick={() => setOpen(true)}
-                type="button"
-                variant="outline"
-                className="eb-max-w-56"
-              >
-                <DialogTrigger>Click to add a business owner</DialogTrigger>
-              </Button>
+              <DialogTrigger asChild>
+                <Button type="button" variant="outline" className="eb-max-w-56">
+                  Click to add a business owner
+                </Button>
+              </DialogTrigger>
               <DecisionMakerModal
                 onOpenChange={(id: string) => {
-                  setOpen(false);
+                  setOpen((s) => !s);
+
                   if (id) {
                     refetch();
                   }
                 }}
                 title="Enter business owner details"
-                onCancel={(id: string) => {
-                  setOpen(false);
-                  if (id) {
-                    refetch();
-                  }
-                }}
+                parentPartyId={data.partyId}
+                type={'owner'}
               />
             </Dialog>
           </div>

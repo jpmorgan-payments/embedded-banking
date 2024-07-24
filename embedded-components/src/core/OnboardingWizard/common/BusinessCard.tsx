@@ -17,6 +17,7 @@ type DecisionMakersCardProps = {
   parentPartyId: string;
   refetch?: any;
   partyId: string;
+  type: 'owner' | 'decision';
 };
 
 const fieldsController = (individual: any) => {
@@ -41,6 +42,7 @@ const BusinessCard = ({
   parentPartyId,
   refetch,
   partyId,
+  type,
 }: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
@@ -89,9 +91,8 @@ const BusinessCard = ({
                   </Text>
                 ) : (
                   <Dialog onOpenChange={setOpen} open={open}>
-                    <DialogTrigger>
+                    <DialogTrigger asChild>
                       <Button
-                        onClick={() => setOpen(true)}
                         type="button"
                         className="eb-mt-1"
                         variant="outline"
@@ -101,16 +102,20 @@ const BusinessCard = ({
                     </DialogTrigger>
                     <DecisionMakerModal
                       owner={individual}
-                      onOpenChange={setOpen}
-                      title="Enter business owner details"
-                      onCancel={(id: string) => {
-                        setOpen(false);
+                      title={
+                        type === 'owner'
+                          ? 'Enter business owner details'
+                          : 'Enter decision maker details'
+                      }
+                      onOpenChange={(id: string) => {
+                        setOpen((s) => !s);
                         if (id) {
                           refetch();
                         }
                       }}
                       parentPartyId={parentPartyId}
                       partyId={partyId}
+                      type={type}
                     />
                   </Dialog>
                 )}
