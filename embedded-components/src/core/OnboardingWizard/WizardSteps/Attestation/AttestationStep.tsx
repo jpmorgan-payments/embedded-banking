@@ -40,7 +40,6 @@ import { useStepper } from '../../Stepper/useStepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { PdfDisplay } from './PdfDisplay';
-import termsFile from './terms.pdf';
 
 const AttestationStep = () => {
   const form = useFormContext();
@@ -139,7 +138,6 @@ const AttestationStep = () => {
     clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
   const businessName =
     clientDataForm?.onganizationDetails?.orgDetails?.businessName;
-  console.log('@@PDF', termsFile);
 
   return (
     <section>
@@ -150,7 +148,7 @@ const AttestationStep = () => {
       <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
-        file={termsFile}
+        file={'/asset/terms.pdf'}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
