@@ -45,7 +45,8 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
         baseURL: apiBaseUrl,
       };
     });
-  }, []);
+    queryClient.invalidateQueries();
+  }, [JSON.stringify(headers), apiBaseUrl]);
 
   useEffect(() => {
     const root = window.document.documentElement;
