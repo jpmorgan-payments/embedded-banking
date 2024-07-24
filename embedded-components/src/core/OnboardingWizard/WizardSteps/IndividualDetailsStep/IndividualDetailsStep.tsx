@@ -66,7 +66,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         individualEmail,
         ...indi
       } = form.getValues();
-      const data = fromFormToIndParty({ email: individualEmail, ...indi });
+      const dataParty = fromFormToIndParty({ email: individualEmail, ...indi });
 
       try {
         // TODO: RAW, will need to Update this
@@ -88,7 +88,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
                 partyType: 'INDIVIDUAL',
                 email: individualEmail || businessEmail,
                 roles: ['CONTROLLER'],
-                individualDetails: data,
+                individualDetails: dataParty,
               },
             ],
             products: ['EMBEDDED_PAYMENTS'],

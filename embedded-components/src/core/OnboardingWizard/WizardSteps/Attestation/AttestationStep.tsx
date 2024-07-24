@@ -1,11 +1,5 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  IconCheck,
-  // IconClipboardCheck,
-  // IconExternalLink,
-  IconX,
-} from '@tabler/icons-react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -18,7 +12,6 @@ import {
 } from '@/api/generated/embedded-banking';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import {
-  Badge,
   Checkbox,
   FormControl,
   FormField,
@@ -147,7 +140,7 @@ const AttestationStep = () => {
       <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
-        file={'/asset/terms.pdf'}
+        file="/asset/terms.pdf"
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {

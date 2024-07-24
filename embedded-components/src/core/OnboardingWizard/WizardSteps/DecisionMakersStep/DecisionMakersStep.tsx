@@ -2,10 +2,7 @@ import { useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 
-import {
-  useSmbdoGetClient,
-  useSmbdoPostClients,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
   FormControl,
@@ -18,6 +15,7 @@ import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
+// eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
 import { useOnboardingForm } from '../../context/form.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -37,8 +35,7 @@ const DecisionMakersStep = () => {
     useState(false);
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const { clientId, mockSteps, isMockResponse, onRegistration } =
-    useRootConfig();
+  const { onRegistration } = useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
   const { data, refetch } = useGetDataByClientId('client');
 
@@ -140,7 +137,7 @@ const DecisionMakersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
-                      type={'decision'}
+                      type="decision"
                     ></BusinessCard>
                   </div>
                 );
@@ -161,7 +158,7 @@ const DecisionMakersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
-                      type={'decision'}
+                      type="decision"
                     ></BusinessCard>
                   </div>
                 );

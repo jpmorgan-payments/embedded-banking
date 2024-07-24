@@ -24,7 +24,6 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     buildStepper,
     CurrentStep,
     currentFormSchema,
-    removeSteps,
   } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { data: ipAddress, status: ipFetchStatus } = useIPAddress();

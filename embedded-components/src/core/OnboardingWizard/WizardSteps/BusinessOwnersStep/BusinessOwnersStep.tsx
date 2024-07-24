@@ -15,6 +15,7 @@ import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
+// eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
 import { useOnboardingForm } from '../../context/form.context';
 // eslint-disable-next-line
@@ -137,7 +138,7 @@ const BusinessOwnersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
-                      type={'owner'}
+                      type="owner"
                     ></BusinessCard>
                   </div>
                 );
@@ -159,7 +160,7 @@ const BusinessOwnersStep = () => {
                       parentPartyId={controller.parentPartyId}
                       refetch={refetch}
                       partyId={controller.id}
-                      type={'owner'}
+                      type="owner"
                     ></BusinessCard>
                   </div>
                 );
@@ -181,7 +182,7 @@ const BusinessOwnersStep = () => {
                 }}
                 title="Enter business owner details"
                 parentPartyId={data.partyId}
-                type={'owner'}
+                type="owner"
               />
             </Dialog>
           </div>

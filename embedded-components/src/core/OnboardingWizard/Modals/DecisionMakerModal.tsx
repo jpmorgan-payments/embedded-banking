@@ -12,12 +12,9 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { Group } from '@/components/ui';
 import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
@@ -54,7 +51,7 @@ const DecisionMakerModal = ({
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
+  const { onboardingForm } = useOnboardingForm();
   const { mutateAsync: updateParty, isPending: updatePartyisPending } =
     useSmbdoUpdateParty();
   const { mutateAsync: createParty, isPending: createPartyisPending } =

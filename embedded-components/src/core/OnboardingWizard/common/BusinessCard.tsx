@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
 
+// eslint-disable-next-line
 import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
 
 // import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';

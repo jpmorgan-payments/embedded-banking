@@ -1,6 +1,6 @@
 const transformDobToApi = (dob: string): `${string}-${string}-${string}` => {
   if (dob.includes('-')) {
-    const [month, day, year] = dob?.split('-');
+    const [month, day, year] = dob.split('-');
     return `${year}-${month}-${day}`;
   }
 

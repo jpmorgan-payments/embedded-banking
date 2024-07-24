@@ -12,7 +12,6 @@ import uniqBy from 'lodash/uniqBy';
 import {
   AttestationStep,
   BusinessOwnersStep,
-  DecisionMakersStep,
   IndividualDetailsStep,
   IntroStep,
   OrganizationDetailsStep,
