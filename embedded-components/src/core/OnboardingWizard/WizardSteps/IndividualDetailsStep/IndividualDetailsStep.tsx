@@ -20,7 +20,7 @@ import { updateFormValues } from '../utils/updateFormValues';
 
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
-  const { onRegistration } = useRootConfig();
+  const { onRegistration, isMock } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -43,8 +43,6 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [yupSchema]);
 
   useEffect(() => {
-    console.log('@@clientData', clientDataForm);
-
     if (clientDataForm) {
       updateFormValues(
         getIndividualDetailsByRole(clientDataForm, 'CONTROLLER')[0],
@@ -123,6 +121,9 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         // setActiveStep(activeStep + 1);
       } catch (error) {
         console.log(error);
+        if (isMock) {
+          setCurrentStep(activeStep + 1);
+        }
       }
     }
   }, [activeStep]);

@@ -2,6 +2,10 @@ import { useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import {
+  useSmbdoPostParties,
+  useSmbdoUpdateParty,
+} from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -19,6 +23,7 @@ import {
 } from '@/core/OnboardingWizard/utils/actions';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { fromFormToIndParty } from '../utils/fromFormToApi';
 import { individualSchema } from '../WizardSteps/StepsSchema';
 // eslint-disable-next-line
 import { RenderForms } from '../WizardSteps/utils/RenderForms';
@@ -34,34 +39,25 @@ type DecisionMakerModalProps = {
   owner?: any;
   onOpenChange: any;
   index?: number;
+  title: string;
+  onCancel: any;
+  parentPartyId?: string;
 };
-
-// {
-//   firstName: 'Mary',
-//   middleName: 'James',
-//   lastName: 'Sue',
-//   jobTitle: 'COO',
-//   email: 'maryjamessue@fake.website',
-//   addressLine1: '2468 Real Ave',
-//   city: 'New Fake City',
-//   state: 'NY',
-//   zipCode: '24680',
-//   phone: '2017700500',
-//   birthDate: new Date('03-03-1933'),
-//   ssn9: '394943213',
-// },
 
 const DecisionMakerModal = ({
   owner,
   onOpenChange,
   index,
+  title,
+  parentPartyId,
 }: DecisionMakerModalProps) => {
   // const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-
+  const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
+  const { mutateAsync: createParty } = useSmbdoPostParties();
   const defaultInitialValues = owner?.firstName ? owner : {};
   // : createPersonalDetailsSchema().cast({});
 
@@ -70,24 +66,37 @@ const DecisionMakerModal = ({
     resolver: yupResolver({} as any),
   });
 
-  const onSave: SubmitHandler<any> = () => {
+  const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
     if (!Object.values(errors).length) {
-      if (owner && index != null) {
-        const newOnboardingForm = updateOtherOwner(
-          onboardingForm,
-          form.getValues(),
-          index
-        );
-        setOnboardingForm(newOnboardingForm);
-        onOpenChange(false);
+      const data = fromFormToIndParty(form.getValues());
+
+      if (!owner) {
+        const res = await updateParty({
+          id: owner.id,
+          data: {
+            email: owner?.email,
+            individualDetails: data,
+          },
+        });
+
+        if (res?.id) {
+          onOpenChange(res?.id);
+        }
       } else {
-        const newOnboardingForm = addOtherOwner(
-          onboardingForm,
-          form.getValues()
-        );
-        setOnboardingForm(newOnboardingForm);
-        onOpenChange(false);
+        const res = await createParty({
+          data: {
+            partyType: 'INDIVIDUAL',
+            email: owner?.email,
+            parentPartyId,
+            individualDetails: data,
+            roles: ['DECISION_MAKER'],
+          },
+        });
+
+        if (res?.id) {
+          onOpenChange(res?.id);
+        }
       }
     }
   };
@@ -108,7 +117,7 @@ const DecisionMakerModal = ({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Enter decision maker details</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form noValidate onSubmit={form.handleSubmit(onSave)} className="">
@@ -134,7 +143,7 @@ const DecisionMakerModal = ({
               ) : (
                 <></>
               )}
-              <Button type="submit">Save</Button>
+              <Button type="submit">{owner ? 'Update' : 'Save'}</Button>
             </div>
           </form>
         </Form>

@@ -6,12 +6,16 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
 
+import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
+
 // import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
 type DecisionMakersCardProps = {
   individual: any;
   index?: number;
-  controller: boolean;
+  controller?: boolean;
+  parentPartyId: string;
+  refetch?: any;
 };
 
 const fieldsController = (individual: any) => {
@@ -30,10 +34,17 @@ const fieldsOther = (individual: any) => {
   ];
 };
 
-const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
+const BusinessCard = ({
+  individual,
+  controller,
+  parentPartyId,
+  refetch,
+}: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);
+
+  console.log('@@individual', individual);
 
   const [open, setOpen] = useState(false);
   return (
@@ -88,11 +99,18 @@ const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
                         View/Edit Details
                       </Button>
                     </DialogTrigger>
-                    {/* <DecisionMakerModal
+                    <DecisionMakerModal
                       owner={individual}
-                      index={index}
                       onOpenChange={setOpen}
-                    /> */}
+                      title="Enter business owner details"
+                      onCancel={(id: string) => {
+                        setOpen(false);
+                        if (id) {
+                          refetch();
+                        }
+                      }}
+                      parentPartyId={parentPartyId}
+                    />
                   </Dialog>
                 )}
               </div>

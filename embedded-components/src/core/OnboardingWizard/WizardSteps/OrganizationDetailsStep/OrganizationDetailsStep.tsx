@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
@@ -8,9 +8,13 @@ import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { fromApiToForm } from '../../utils/fromApiToForm';
+import { useGetDataByClientId } from '../hooks';
 import { businessSchema } from '../StepsSchema';
+import { getOrgDetails } from '../utils/getOrgDetails';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
+import { updateFormValues } from '../utils/updateFormValues';
 
 const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
@@ -18,9 +22,21 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   // const { mutateAsync: postClient, isPending: isPendingClientPost } =
   //   useSmbdoPostClients();
+  const { data } = useGetDataByClientId('client');
+  const clientDataForm = useMemo(() => {
+    return data && fromApiToForm(data);
+  }, [data]);
+
+  console.log('@@data', data, clientDataForm);
 
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
+
+  useEffect(() => {
+    if (clientDataForm) {
+      updateFormValues(getOrgDetails(clientDataForm), form.setValue);
+    }
+  }, [clientDataForm]);
 
   useEffect(() => {
     updateSchema(yupSchema);

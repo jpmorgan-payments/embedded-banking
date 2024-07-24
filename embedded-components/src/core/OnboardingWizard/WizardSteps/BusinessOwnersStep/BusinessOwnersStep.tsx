@@ -26,17 +26,18 @@ import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 
-// TODO: neeed to add arguments for mock testing
+// TODO: neeed to make sure that we actuall update or remove
 const BusinessOwnersStep = () => {
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
   const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const { onRegistration } = useRootConfig();
+  const { onRegistration, isMock } = useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
 
-  const { data } = useGetDataByClientId('client');
+  const { data, refetch } = useGetDataByClientId('client');
+  console.log('@@data', data);
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
@@ -72,6 +73,9 @@ const BusinessOwnersStep = () => {
       setCurrentStep(activeStep + 1);
     } catch (error) {
       console.log(error);
+      if (isMock) {
+        setCurrentStep(activeStep + 1);
+      }
     }
   };
 
@@ -131,6 +135,8 @@ const BusinessOwnersStep = () => {
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
+                      parentPartyId={controller.parentPartyId}
+                      refetch={refetch}
                     ></BusinessCard>
                   </div>
                 );
@@ -147,8 +153,8 @@ const BusinessOwnersStep = () => {
                 return (
                   <div key={contollerID} className=" eb-grid-cols-subgrid">
                     <BusinessCard
-                      controller
                       individual={controller.indDetails}
+                      parentPartyId={controller.parentPartyId}
                     ></BusinessCard>
                   </div>
                 );
@@ -163,7 +169,15 @@ const BusinessOwnersStep = () => {
               >
                 <DialogTrigger>Click to add a business owner</DialogTrigger>
               </Button>
-              <DecisionMakerModal onOpenChange={setOpen} />
+              {/* <DecisionMakerModal
+                onOpenChange={(id: string) => {
+                  setOpen(false);
+                  if (id) {
+                    refetch();
+                  }
+                }}
+                title="Enter business owner details"
+              /> */}
             </Dialog>
           </div>
         </>

@@ -11,6 +11,7 @@ export interface RootConfig {
   mockSteps?: any;
   onRegistration: ({ clientId }: onRegistrationProp) => void;
   isMockResponse?: boolean;
+  isMock?: boolean;
 }
 
 export const defaultRootConfig = {
