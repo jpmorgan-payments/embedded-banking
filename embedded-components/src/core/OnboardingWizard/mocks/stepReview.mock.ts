@@ -262,7 +262,7 @@ export const stepReviewMockWithQuestions = {
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2024-06-21T18:12:21.005Z',
-      roles: [ 'BENEFICIAL_OWNER'],
+      roles: ['BENEFICIAL_OWNER'],
       individualDetails: {
         firstName: 'Mary',
         lastName: 'Sue',
@@ -275,7 +275,7 @@ export const stepReviewMockWithQuestions = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['2468 Real Ave', 'Apt 2E','Suit 2E'],
+            addressLines: ['2468 Real Ave', 'Apt 2E', 'Suit 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
