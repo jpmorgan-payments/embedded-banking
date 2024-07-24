@@ -14,7 +14,7 @@ const TextareaFormField = ({ name, form, labelToken, required }: any) => {
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="first:eb-mt-4">
+        <FormItem>
           <Stack className="">
             {labelToken && (
               <FormLabel asterisk={required} className="eb-mb-4">

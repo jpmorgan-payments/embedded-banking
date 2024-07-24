@@ -247,7 +247,6 @@ const AttestationStep = () => {
                 </FormItem>
               )}
             />
-
           </Stack>
         </form>
       </>

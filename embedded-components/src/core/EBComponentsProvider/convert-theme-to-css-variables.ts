@@ -41,6 +41,8 @@ const convertThemeVariablesToCssVariables = (
       variables.destructiveForegroundColor
     ),
     '--eb-radius': variables.borderRadius,
+    '--eb-button-radius':
+      variables.buttonBorderRadius ?? variables.borderRadius,
     '--eb-border': colorToHsl(variables.borderColor),
     '--eb-input': colorToHsl(variables.inputColor),
     '--eb-ring': colorToHsl(variables.ringColor),

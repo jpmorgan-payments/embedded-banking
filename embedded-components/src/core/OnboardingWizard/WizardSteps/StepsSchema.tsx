@@ -131,7 +131,7 @@ const individualSchema = {
       required: true,
     },
     {
-      name: 'email',
+      name: 'individualEmail',
       fieldType: 'input',
       labelToken: 'Email',
       placeholderToken: 'example@example.com',
