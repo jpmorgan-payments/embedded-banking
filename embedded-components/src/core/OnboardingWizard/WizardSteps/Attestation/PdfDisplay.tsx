@@ -33,7 +33,7 @@ export const PdfDisplay = ({
   ...rest
 }: PdfDisplayProps) => {
   const pdfMaxWidth = 800;
-  const pdfMaxHeight = 800;
+  const pdfMaxHeight = 300;
 
   const [ref, rect] = useResizeObserver();
   const [numPages, setNumPages] = useState(0);

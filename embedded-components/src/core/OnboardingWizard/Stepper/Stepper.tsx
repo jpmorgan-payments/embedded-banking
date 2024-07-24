@@ -67,7 +67,7 @@ const stepsWizard: any = {
   Questions: QuestionsStep,
   Review: ReviewStep,
   Attestation: AttestationStep,
-  'Decision Makers': DecisionMakersStep,
+  /*'Decision Makers': DecisionMakersStep,*/
   'Business Owners': BusinessOwnersStep,
 };
 
