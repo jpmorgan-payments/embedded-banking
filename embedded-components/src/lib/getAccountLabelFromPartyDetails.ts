@@ -2,12 +2,12 @@ import { Recipient } from '@/api/generated/embedded-banking.schemas';
 
 export const getRecipientLabel = (recipient: Recipient) => {
   const name =
-    recipient.partyDetails.type === 'INDIVIDUAL'
+    recipient.partyDetails?.type === 'INDIVIDUAL'
       ? [
-          recipient.partyDetails.firstName,
-          recipient.partyDetails.lastName,
+          recipient.partyDetails?.firstName,
+          recipient.partyDetails?.lastName,
         ].join(' ')
-      : recipient.partyDetails.businessName;
+      : recipient.partyDetails?.businessName;
 
-  return `${name} (...${recipient.account ? recipient.account.number.slice(-4) : ''})`;
+  return `${name} (...${recipient.account ? recipient.account.number?.slice(-4) : ''})`;
 };
