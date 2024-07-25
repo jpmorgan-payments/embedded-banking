@@ -102,7 +102,7 @@ export const fromFormToIndParty = (form: any) => {
         addressLines: [addressLines],
         city: form.city,
         state: form.state,
-        postalCode: form.zip,
+        postalCode: form.postalCode,
         country: 'US',
       },
     ],

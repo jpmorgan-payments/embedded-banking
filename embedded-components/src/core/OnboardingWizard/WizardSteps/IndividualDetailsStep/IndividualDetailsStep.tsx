@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoPostParties } from '@/api/generated/embedded-banking';
+import {
+  useSmbdoUpdateClient,
+  useSmbdoUpdateParty,
+} from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
@@ -13,11 +16,16 @@ import { fromApiToForm } from '../../utils/fromApiToForm';
 import { fromFormToIndParty } from '../../utils/fromFormToApi';
 import { useGetDataByClientId } from '../hooks';
 import { individualSchema } from '../StepsSchema';
-import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole';
+import {
+  getIndividualByRole,
+  getIndividualDetailsByRole,
+} from '../utils/getIndividualDetailsByRole';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
 
+//TODO: when updating we need to make sure when we come back the data is actual
+//TODO: Next step double called, so we skip step
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
   const { isMock, clientId } = useRootConfig();
@@ -30,15 +38,24 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   // );
 
   const { data } = useGetDataByClientId('client');
-  // const { mutateAsync: postClient, isPending: isPendingClientPost } =
-  //   useSmbdoPostClients();
-  const { mutateAsync: createParty, isPending: createPartyisPending } =
-    useSmbdoPostParties();
-  // const { mutateAsync: updateParty, isPending: updatePartyisPending } =
-  //   useSmbdoUpdateParty();
+
+  const { mutateAsync: updateParty, isPending: updatePartyisPending } =
+    useSmbdoUpdateParty();
+  const { mutateAsync: createController, isPending: createPartyisPending } =
+    useSmbdoUpdateClient();
+
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
+
+  const indController = getIndividualDetailsByRole(
+    clientDataForm,
+    'CONTROLLER'
+  )?.[0];
+  const indControllerData = getIndividualByRole(
+    clientDataForm,
+    'CONTROLLER'
+  )?.[0];
 
   useEffect(() => {
     updateSchema(yupSchema);
@@ -46,59 +63,53 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   useEffect(() => {
     if (clientDataForm && !isMock) {
-      const indController = getIndividualDetailsByRole(
-        clientDataForm,
-        'CONTROLLER'
-      )[0];
-
-      updateFormValues(indController, form.setValue);
-      form.setValue('individualEmail', indController.email);
+      if (indController) {
+        updateFormValues(indController, form.setValue);
+        form.setValue('individualEmail', indController.email);
+      }
     }
-  }, [clientDataForm]);
+  }, [clientDataForm, indController]);
 
-  const onSubmit = useCallback(async () => {
+  const onSubmit = async () => {
     const errors = form?.formState?.errors;
 
     if (!Object.values(errors).length) {
-      // TODO: update this
-      // const apiForm = formToAPIBody(form.getValues());
-      const {
-        organizationName,
-        countryOfFormation,
-        businessEmail,
-        organizationType,
-        individualEmail,
-        ...indi
-      } = form.getValues();
+      const { individualEmail, ...indi } = form.getValues();
       const dataParty = fromFormToIndParty({ email: individualEmail, ...indi });
-      console.log(
-        '@@dataParty',
-        dataParty,
-        '\n',
-        form.getValues(),
-        '>>>',
-        clientId
-      );
 
       try {
-        await createParty({
-          data: {
-            partyType: 'INDIVIDUAL',
-            email: individualEmail,
-            roles: ['CONTROLLER'],
-            individualDetails: dataParty,
-          },
-        });
+        if (!indController) {
+          await createController({
+            id: clientId ?? '',
+            data: {
+              addParties: [
+                {
+                  partyType: 'INDIVIDUAL',
+                  email: individualEmail,
+                  individualDetails: dataParty,
+                  roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
+                },
+              ],
+            },
+          });
+        } else if (true) {
+          await updateParty({
+            id: indControllerData.id ?? '',
+            data: {
+              email: individualEmail,
+              individualDetails: dataParty,
+            },
+          });
+        }
 
         setCurrentStep(activeStep + 1);
       } catch (error) {
-        console.log(error);
         if (isMock) {
           setCurrentStep(activeStep + 1);
         }
       }
     }
-  }, [activeStep]);
+  };
 
   return (
     <Stack className="eb-w-full">
@@ -125,7 +136,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={createPartyisPending}
+          disabled={updatePartyisPending || createPartyisPending}
         />
       </form>
     </Stack>

@@ -24,6 +24,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
     isMock,
     mockData,
     setClientId,
+    setPartyId,
   } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
@@ -51,7 +52,6 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
           'CONTROLLER'
         )[0];
 
-        console.log('@@formData', formData, '>>', indController);
         updateFormValues(indController, form.setValue);
         updateFormValues(
           formData.organizationDetails.orgDetails,
@@ -103,6 +103,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
     }).then(async (clientResponse) => {
       onRegistration?.({ clientId: clientResponse?.id, clientResponse });
       setClientId(clientResponse.id);
+      setPartyId(clientResponse.partyId);
       setCurrentStep(activeStep + 1);
     });
   };

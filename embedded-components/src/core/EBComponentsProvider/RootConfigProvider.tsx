@@ -15,7 +15,8 @@ export interface RootConfig {
   isMockResponse?: boolean;
   isMock?: boolean;
   mockData?: any;
-  setClientId: any;
+  setClientId?: any;
+  setPartyId?: any;
 }
 
 export const defaultRootConfig = {
@@ -24,6 +25,7 @@ export const defaultRootConfig = {
   jurisdictions: undefined,
   products: undefined,
   entityType: undefined,
+  partyId: undefined,
 };
 
 export const RootConfigContext: any = createContext(defaultRootConfig);

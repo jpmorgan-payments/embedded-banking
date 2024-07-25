@@ -227,7 +227,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
 
             case 'textarea':
               return (
-                <Box className="eb-col-span-3">
+                <Box className="eb-col-span-3" key={name}>
                   <TextareaFormField
                     key={name}
                     {...{
@@ -245,7 +245,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
 
             case 'website':
               return (
-                <Box className="eb-col-span-3">
+                <Box className="eb-col-span-3" key={name}>
                   <WebsiteFromField
                     key={name}
                     {...{
@@ -263,7 +263,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
 
             case 'industryType':
               return (
-                <Box className="eb-col-span-3">
+                <Box className="eb-col-span-3" key={name}>
                   <IndustryFormField
                     key={name}
                     {...{
@@ -281,7 +281,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
 
             case 'address':
               return (
-                <Box className="eb-col-span-3">
+                <Box className="eb-col-span-3" key={name}>
                   <AddressFormFields
                     key={name}
                     {...{
