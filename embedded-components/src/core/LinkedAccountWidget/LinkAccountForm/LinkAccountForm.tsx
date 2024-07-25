@@ -268,6 +268,20 @@ export const LinkAccountFormDialogTrigger: FC<
 
                   <FormField
                     control={form.control}
+                    name="accountNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Account Number</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
                     name="certify"
                     render={({ field }) => (
                       <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0">

@@ -54,12 +54,14 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
     );
 
     setInterceptor(ebInterceptor);
+  }, [JSON.stringify(headers), apiBaseUrl]);
 
+  useEffect(() => {
     const resetQueries = async () => {
       await queryClient.resetQueries();
     };
     resetQueries();
-  }, [JSON.stringify(headers), apiBaseUrl]);
+  }, [interceptor]);
 
   useEffect(() => {
     const root = window.document.documentElement;
