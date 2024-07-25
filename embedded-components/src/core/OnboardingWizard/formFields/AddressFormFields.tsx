@@ -41,9 +41,9 @@ const addressSchemaIndividual = [
     required: true,
   },
   {
-    name: 'zip',
+    name: 'postalCode',
     fieldType: 'input',
-    labelToken: 'Zip',
+    labelToken: 'Postal Code',
     required: true,
   },
   {
