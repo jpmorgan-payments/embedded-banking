@@ -42,7 +42,7 @@ export const RootConfigProvider: React.FC<{
 }> = ({ children, clientOptions }) => {
   const [clientId, setClientId] = useState(clientOptions?.clientId);
   const [partyId, setPartyId] = useState(clientOptions?.partyId);
-  
+
   //TODO: It maybe needed to have a state set up for trigering rerenders for clientOptions changes
   return (
     <RootConfigContext.Provider
