@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui';
+import { Badge, Checkbox } from '@/components/ui';
 
 import {
   LinkAccountFormDataType,
@@ -59,6 +59,7 @@ export const LinkAccountFormDialogTrigger: FC<
       lastName: '',
       routingNumber: '',
       accountNumber: '',
+      certify: false,
     },
   });
 
@@ -170,7 +171,7 @@ export const LinkAccountFormDialogTrigger: FC<
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <ScrollArea className="eb-max-h-[calc(min(60rem,100vh)-5.5rem)] eb-border-t-2">
-                <div className="eb-grid eb-gap-2 eb-px-6 eb-pt-4">
+                <div className="eb-grid eb-gap-4 eb-px-6 eb-py-4">
                   <FormField
                     control={form.control}
                     name="accountType"
@@ -267,14 +268,22 @@ export const LinkAccountFormDialogTrigger: FC<
 
                   <FormField
                     control={form.control}
-                    name="accountNumber"
+                    name="certify"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Account Number</FormLabel>
+                      <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0">
                         <FormControl>
-                          <Input {...field} />
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
                         </FormControl>
-                        <FormMessage />
+                        <div className="eb-space-y-1 eb-leading-none">
+                          <FormLabel>
+                            I authorize verification of my external bank
+                            account, including my micro-deposit
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
                       </FormItem>
                     )}
                   />
