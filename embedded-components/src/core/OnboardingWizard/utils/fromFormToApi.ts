@@ -116,7 +116,7 @@ export const fromFormToIndParty = (form: any) => {
     // TODO: missing request
     natureOfOwnership: 'Direct',
     //TODO: no desicion maker
-    soleOwner: true,
+    // soleOwner: true,
     individualIds: [
       {
         idType: 'SSN',
@@ -125,6 +125,7 @@ export const fromFormToIndParty = (form: any) => {
       },
     ],
   };
+
   if (form?.middleName) {
     indParty.middleName = form?.middleName as string;
   }

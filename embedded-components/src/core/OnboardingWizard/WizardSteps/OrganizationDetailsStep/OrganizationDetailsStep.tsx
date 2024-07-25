@@ -20,8 +20,6 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
 
-  // const { mutateAsync: postClient, isPending: isPendingClientPost } =
-  //   useSmbdoPostClients();
   const { data } = useGetDataByClientId('client');
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);

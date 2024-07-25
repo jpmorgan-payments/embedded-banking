@@ -74,7 +74,7 @@ const DecisionMakerModal = ({
         const res = await updateParty({
           id: partyId,
           data: {
-            email: form.getValues().email,
+            email: form.getValues().individualEmail,
             individualDetails: data,
           },
         });
@@ -86,7 +86,7 @@ const DecisionMakerModal = ({
         const res = await createParty({
           data: {
             partyType: 'INDIVIDUAL',
-            email: form.getValues().email,
+            email: form.getValues().individualEmail,
             parentPartyId,
             individualDetails: data,
             roles: type === 'owner' ? ['BENEFICIAL_OWNER'] : ['DECISION_MAKER'],

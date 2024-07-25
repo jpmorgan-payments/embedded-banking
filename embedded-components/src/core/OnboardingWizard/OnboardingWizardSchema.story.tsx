@@ -48,6 +48,7 @@ export const Default: Story = {
     mockSteps: {
       client: stepReviewMockWithQuestions,
     },
+    mockData: stepReviewMockWithQuestions,
   },
 };
 

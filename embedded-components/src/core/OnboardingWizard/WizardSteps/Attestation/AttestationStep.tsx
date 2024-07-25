@@ -36,6 +36,7 @@ import { PdfDisplay } from './PdfDisplay';
 
 const AttestationStep = () => {
   const form = useFormContext();
+  const { isMock } = useRootConfig();
   const { clientId } = useRootConfig();
   const { setCurrentStep, activeStep } = useStepper();
   const { onboardingForm }: any = useOnboardingForm();
@@ -140,7 +141,8 @@ const AttestationStep = () => {
       <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
-        file="/asset/terms.pdf"
+
+        file={isMock ? '/asset/terms.pdf' : termsAndConditionsDoc}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
