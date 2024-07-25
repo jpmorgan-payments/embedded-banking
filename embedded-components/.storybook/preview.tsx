@@ -29,7 +29,9 @@ function ColorSchemeWrapper({
   return (
     <EBComponentsProvider
       apiBaseUrl={baseUrl}
-      theme={{ colorScheme: colorScheme }}
+      theme={{
+        colorScheme: colorScheme,
+      }}
       headers={{
         api_gateway_client_id: 'OBTSTSTCL1',
       }}
