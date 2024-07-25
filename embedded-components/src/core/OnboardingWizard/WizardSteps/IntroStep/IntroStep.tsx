@@ -9,12 +9,22 @@ import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';
+import { fromApiToForm } from '../../utils/fromApiToForm';
 import { introSchema } from '../StepsSchema';
+import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
+import { updateFormValues } from '../utils/updateFormValues';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
-  const { jurisdictions, entityType, onRegistration } = useRootConfig();
+  const {
+    jurisdictions,
+    entityType,
+    onRegistration,
+    isMock,
+    mockData,
+    setClientId,
+  } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -31,6 +41,26 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
       updateSchema(introSchema);
     }
   }, [yupSchema]);
+
+  useEffect(() => {
+    if (isMock) {
+      if (mockData) {
+        const formData = fromApiToForm(mockData);
+        const indController = getIndividualDetailsByRole(
+          formData,
+          'CONTROLLER'
+        )[0];
+
+        console.log('@@formData', formData, '>>', indController);
+        updateFormValues(indController, form.setValue);
+        updateFormValues(
+          formData.organizationDetails.orgDetails,
+          form.setValue
+        );
+        form.setValue('individualEmail', indController.email);
+      }
+    }
+  }, [isMock]);
 
   //TODO: Should be API driven, and token Content?
   useEffect(() => {
@@ -70,13 +100,11 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
         ],
         products: ['EMBEDDED_PAYMENTS'],
       },
-    })
-      .then(async (clientResponse) => {
-        await onRegistration?.({ clientId: clientResponse?.id });
-      })
-      .then(() => {
-        setCurrentStep(activeStep + 1);
-      });
+    }).then(async (clientResponse) => {
+      onRegistration?.({ clientId: clientResponse?.id, clientResponse });
+      setClientId(clientResponse.id);
+      setCurrentStep(activeStep + 1);
+    });
   };
 
   return (

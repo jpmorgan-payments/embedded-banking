@@ -79,21 +79,21 @@ const orgAddress = [
     required: false,
   },
   {
-    name: 'cityBusiness',
+    name: 'city',
     fieldType: 'input',
     labelToken: 'City',
     required: true,
   },
   {
-    name: 'stateBusiness',
+    name: 'state',
     fieldType: 'state',
     labelToken: 'State',
     required: true,
   },
   {
-    name: 'zipBusiness',
+    name: 'postalCode',
     fieldType: 'input',
-    labelToken: 'Zip',
+    labelToken: 'Postal Code',
     required: true,
   },
 ];

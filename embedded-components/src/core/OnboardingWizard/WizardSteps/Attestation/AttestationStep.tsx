@@ -1,11 +1,5 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  IconCheck,
-  // IconClipboardCheck,
-  // IconExternalLink,
-  IconX,
-} from '@tabler/icons-react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -18,7 +12,6 @@ import {
 } from '@/api/generated/embedded-banking';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import {
-  Badge,
   Checkbox,
   FormControl,
   FormField,
@@ -43,10 +36,11 @@ import { PdfDisplay } from './PdfDisplay';
 
 const AttestationStep = () => {
   const form = useFormContext();
+  const { isMock } = useRootConfig();
   const { clientId } = useRootConfig();
   const { setCurrentStep, activeStep } = useStepper();
   const { onboardingForm }: any = useOnboardingForm();
-  const [setDocs] = useState<any>(null);
+  const [, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
@@ -143,11 +137,12 @@ const AttestationStep = () => {
     <section>
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
-      <Title as="h3">{getContentToken(`title1`)}</Title>
 
       <PdfDisplay
         data-testid="pdf-display"
-        file={termsAndConditionsDoc}
+        // file={termsAndConditionsDoc}
+
+        file={isMock ? '/asset/terms.pdf' : termsAndConditionsDoc}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
@@ -160,7 +155,7 @@ const AttestationStep = () => {
       <>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <Group>
-            <Text size="md">Trouble viewing the document, click here: </Text>
+            {/* <Text size="md">Trouble viewing the document, click here: </Text> */}
             {/* TODO: Anchor component */}
             {/* <Anchor
               href={termsAndConditionsDoc ?? '/assets/docs/terms.pdf'}
@@ -173,7 +168,7 @@ const AttestationStep = () => {
                 <Text> Terms and Conditions</Text>
               </Group>
             </Anchor> */}
-
+            {/* 
             {form.getValues().reviewedTerms ? (
               <Badge>
                 <Group>
@@ -186,11 +181,11 @@ const AttestationStep = () => {
                   <IconX size={14} /> {getContentToken(`groupX`)}
                 </Group>
               </Badge>
-            )}
+            )} */}
           </Group>
           <Separator />
-          <Text>{form.getValues().error}</Text>
-          <Title as="h3">{getContentToken(`title2`)}</Title>
+          {/* <Text>{form.getValues().error}</Text>
+          <Title as="h3">{getContentToken(`title2`)}</Title> */}
           <Group>
             {/* <Anchor
               href={disclosureAndConsentDoc ?? '/assets/docs/disclosure.pdf'}
@@ -204,7 +199,7 @@ const AttestationStep = () => {
               </Group>
             </Anchor> */}
 
-            {form.getValues().reviewedDisclosure ? (
+            {/* {form.getValues().reviewedDisclosure ? (
               <Badge>
                 <Group>
                   <IconCheck size={14} /> {getContentToken(`badge`)}
@@ -216,11 +211,11 @@ const AttestationStep = () => {
                   <IconX size={14} /> {getContentToken(`badgeX`)}
                 </Group>
               </Badge>
-            )}
+            )} */}
           </Group>
           <Text>{form.getValues().error}</Text>
 
-          <Stack>
+          <Stack className="eb-mt-10">
             <FormField
               control={form.control}
               name="attestedAuthorized"
@@ -242,28 +237,6 @@ const AttestationStep = () => {
                         {getContentToken(`attestationLabelAfterName`)}
                       </span>
                     )}
-                  </FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="attestedReadDocuments"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={() => {}}
-                      disabled={
-                        !form.getValues().reviewedDisclosure ||
-                        !form.getValues().reviewedTerms
-                      }
-                    />
-                  </FormControl>
-                  <FormLabel className="eb-p-3">
-                    {getContentToken(`attestedReadDocuments`)}
                   </FormLabel>
                   <FormMessage />
                 </FormItem>

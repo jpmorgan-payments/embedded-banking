@@ -6,12 +6,19 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
 
+// eslint-disable-next-line
+import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
+
 // import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
 type DecisionMakersCardProps = {
   individual: any;
   index?: number;
-  controller: boolean;
+  controller?: boolean;
+  parentPartyId: string;
+  refetch?: any;
+  partyId: string;
+  type: 'owner' | 'decision';
 };
 
 const fieldsController = (individual: any) => {
@@ -30,7 +37,14 @@ const fieldsOther = (individual: any) => {
   ];
 };
 
-const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
+const BusinessCard = ({
+  individual,
+  controller,
+  parentPartyId,
+  refetch,
+  partyId,
+  type,
+}: DecisionMakersCardProps) => {
   const fields = controller
     ? fieldsController(individual)
     : fieldsOther(individual);
@@ -78,9 +92,8 @@ const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
                   </Text>
                 ) : (
                   <Dialog onOpenChange={setOpen} open={open}>
-                    <DialogTrigger>
+                    <DialogTrigger asChild>
                       <Button
-                        onClick={() => setOpen(true)}
                         type="button"
                         className="eb-mt-1"
                         variant="outline"
@@ -88,11 +101,23 @@ const BusinessCard = ({ individual, controller }: DecisionMakersCardProps) => {
                         View/Edit Details
                       </Button>
                     </DialogTrigger>
-                    {/* <DecisionMakerModal
+                    <DecisionMakerModal
                       owner={individual}
-                      index={index}
-                      onOpenChange={setOpen}
-                    /> */}
+                      title={
+                        type === 'owner'
+                          ? 'Enter business owner details'
+                          : 'Enter decision maker details'
+                      }
+                      onOpenChange={(id: string) => {
+                        setOpen((s) => !s);
+                        if (id) {
+                          refetch();
+                        }
+                      }}
+                      parentPartyId={parentPartyId}
+                      partyId={partyId}
+                      type={type}
+                    />
                   </Dialog>
                 )}
               </div>

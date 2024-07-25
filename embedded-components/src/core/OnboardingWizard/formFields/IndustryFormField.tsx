@@ -42,7 +42,7 @@ const IndustryFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={field.value}
+              value={field.value}
             >
               <FormControl>
                 <SelectTrigger>
@@ -86,7 +86,7 @@ const IndustryFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={field.value}
+              value={field.value}
             >
               <FormControl>
                 <SelectTrigger>

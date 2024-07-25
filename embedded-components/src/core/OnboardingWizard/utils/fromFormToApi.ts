@@ -6,6 +6,7 @@ import {
 // import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 // import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
 import { fromDateToString } from '../WizardSteps/utils/fromDateToString';
+import { transformDobToApi } from './transformDobtoApi';
 
 export const fromFormToOrgParty = (form: any) => {
   let orgParty: OrganizationDetails = {};
@@ -74,6 +75,7 @@ export const fromFormToOrgParty = (form: any) => {
 // any
 export const fromFormToIndParty = (form: any) => {
   let indParty: IndividualDetails = {};
+  console.log('@@form', form.birthDate);
 
   const addressLines = [
     form?.addressLine1,
@@ -89,7 +91,7 @@ export const fromFormToIndParty = (form: any) => {
     lastName: form.lastName,
     birthDate:
       typeof form?.birthDate === 'string'
-        ? form?.birthDate
+        ? transformDobToApi(form?.birthDate)
         : fromDateToString(form?.birthDate as Date),
     jobTitle: form?.jobTitle,
     jobTitleDescription: form?.jobTitleDescription,
@@ -114,7 +116,7 @@ export const fromFormToIndParty = (form: any) => {
     // TODO: missing request
     natureOfOwnership: 'Direct',
     //TODO: no desicion maker
-    soleOwner: true,
+    // soleOwner: true,
     individualIds: [
       {
         idType: 'SSN',
@@ -123,6 +125,7 @@ export const fromFormToIndParty = (form: any) => {
       },
     ],
   };
+
   if (form?.middleName) {
     indParty.middleName = form?.middleName as string;
   }

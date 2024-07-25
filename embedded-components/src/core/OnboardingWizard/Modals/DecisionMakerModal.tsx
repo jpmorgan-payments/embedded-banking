@@ -1,24 +1,24 @@
 import { useCallback } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import {
+  useSmbdoPostParties,
+  useSmbdoUpdateParty,
+} from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import {
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
-import {
-  addOtherOwner,
-  removeOtherOwner,
-  updateOtherOwner,
-} from '@/core/OnboardingWizard/utils/actions';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { fromFormToIndParty } from '../utils/fromFormToApi';
 import { individualSchema } from '../WizardSteps/StepsSchema';
 // eslint-disable-next-line
 import { RenderForms } from '../WizardSteps/utils/RenderForms';
@@ -33,69 +33,77 @@ import { RenderForms } from '../WizardSteps/utils/RenderForms';
 type DecisionMakerModalProps = {
   owner?: any;
   onOpenChange: any;
-  index?: number;
+  title: string;
+  parentPartyId?: string;
+  partyId?: string;
+  type: 'owner' | 'decision';
 };
-
-// {
-//   firstName: 'Mary',
-//   middleName: 'James',
-//   lastName: 'Sue',
-//   jobTitle: 'COO',
-//   email: 'maryjamessue@fake.website',
-//   addressLine1: '2468 Real Ave',
-//   city: 'New Fake City',
-//   state: 'NY',
-//   zipCode: '24680',
-//   phone: '2017700500',
-//   birthDate: new Date('03-03-1933'),
-//   ssn9: '394943213',
-// },
 
 const DecisionMakerModal = ({
   owner,
   onOpenChange,
-  index,
+  title,
+  parentPartyId,
+  partyId,
+  type,
 }: DecisionMakerModalProps) => {
   // const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-
+  const { onboardingForm } = useOnboardingForm();
+  const { mutateAsync: updateParty, isPending: updatePartyisPending } =
+    useSmbdoUpdateParty();
+  const { mutateAsync: createParty, isPending: createPartyisPending } =
+    useSmbdoPostParties();
   const defaultInitialValues = owner?.firstName ? owner : {};
   // : createPersonalDetailsSchema().cast({});
 
   const form = useForm<any>({
     defaultValues: defaultInitialValues,
-    resolver: yupResolver({} as any),
+    // resolver: yupResolver({} as any),
   });
 
-  const onSave: SubmitHandler<any> = () => {
+  const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
+
     if (!Object.values(errors).length) {
-      if (owner && index != null) {
-        const newOnboardingForm = updateOtherOwner(
-          onboardingForm,
-          form.getValues(),
-          index
-        );
-        setOnboardingForm(newOnboardingForm);
-        onOpenChange(false);
+      const data = fromFormToIndParty(form.getValues());
+
+      if (partyId) {
+        const res = await updateParty({
+          id: partyId,
+          data: {
+            email: form.getValues().individualEmail,
+            individualDetails: data,
+          },
+        });
+
+        if (res?.id) {
+          onOpenChange(res?.id);
+        }
       } else {
-        const newOnboardingForm = addOtherOwner(
-          onboardingForm,
-          form.getValues()
-        );
-        setOnboardingForm(newOnboardingForm);
-        onOpenChange(false);
+        const res = await createParty({
+          data: {
+            partyType: 'INDIVIDUAL',
+            email: form.getValues().individualEmail,
+            parentPartyId,
+            individualDetails: data,
+            roles: type === 'owner' ? ['BENEFICIAL_OWNER'] : ['DECISION_MAKER'],
+          },
+        });
+
+        if (res?.id) {
+          onOpenChange(res?.id);
+        }
       }
     }
   };
 
   const handleRemoveOwner = useCallback(() => {
     if (owner) {
-      const newOnboardingForm = removeOtherOwner(onboardingForm, owner);
-      setOnboardingForm(newOnboardingForm);
+      // const newOnboardingForm = removeOtherOwner(onboardingForm, owner);
+      // setOnboardingForm(newOnboardingForm);
       onOpenChange(false);
     } else {
       //TODO handle error
@@ -103,25 +111,32 @@ const DecisionMakerModal = ({
   }, [onboardingForm]);
 
   return (
-    <DialogPortal>
-      <DialogOverlay />
-
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Enter decision maker details</DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form noValidate onSubmit={form.handleSubmit(onSave)} className="">
-            <RenderForms
-              {...{
-                form,
-                formSchema: individualSchema.form,
-                getContentToken: getUserToken,
-                className: `eb-h-modal-overflow eb-overflow-auto eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4 first:eb-mt-8 `,
-              }}
-            />
-
-            <div className="eb-mb-sm eb-mt-[25px] eb-flex eb-justify-end">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{title}</DialogTitle>
+      </DialogHeader>
+      <Form {...form}>
+        <form noValidate onSubmit={form.handleSubmit(onSave)} className="">
+          <RenderForms
+            {...{
+              form,
+              formSchema: individualSchema.form,
+              getContentToken: getUserToken,
+              className: `eb-h-modal-overflow eb-overflow-auto eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4 first:eb-mt-8 `,
+            }}
+          />
+          <DialogFooter className="eb-pt-4">
+            <DialogClose asChild className="eb-mr-auto ">
+              <Button
+                // onClick={() => {
+                //   onOpenChange();
+                // }}
+                disabled={createPartyisPending || updatePartyisPending}
+              >
+                cancel
+              </Button>
+            </DialogClose>
+            <div className=" eb-flex eb-justify-end">
               {owner ? (
                 <Button
                   onClick={handleRemoveOwner}
@@ -134,12 +149,17 @@ const DecisionMakerModal = ({
               ) : (
                 <></>
               )}
-              <Button type="submit">Save</Button>
+              <Button
+                type="submit"
+                disabled={createPartyisPending || updatePartyisPending}
+              >
+                {owner ? 'Update' : 'Save'}
+              </Button>
             </div>
-          </form>
-        </Form>
-      </DialogContent>
-    </DialogPortal>
+          </DialogFooter>
+        </form>
+      </Form>
+    </DialogContent>
   );
 };
 

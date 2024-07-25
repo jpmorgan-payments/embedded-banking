@@ -39,7 +39,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
       setOnboardingForm({
         businessDetails: businessDetailsMock,
         controller: controllerMock,
-        id: '1000010400',
+        id: clientId,
         legalStructure: undefined,
         decisionMakers: undefined,
         outstandingItems: {
@@ -64,14 +64,32 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
   // Building steps
   useEffect(() => {
     if (clientId) {
-      buildStepper(['Review']);
+      const steps = [
+        'Individual',
+        'Organization',
+        'Business Owners',
+        'Decision Makers',
+        'Questions',
+        'Review',
+        'Attestation',
+      ];
+      buildStepper(steps);
     } else {
       buildStepper();
     }
 
     if (!CurrentStep) {
+      const steps = [
+        'Individual',
+        'Organization',
+        'Business Owners',
+        'Decision Makers',
+        'Questions',
+        'Review',
+        'Attestation',
+      ];
       if (clientId) {
-        buildStepper(['Review']);
+        buildStepper(steps);
       } else {
         buildStepper();
       }

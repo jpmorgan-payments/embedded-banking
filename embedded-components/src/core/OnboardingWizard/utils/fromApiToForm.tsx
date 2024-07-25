@@ -44,9 +44,9 @@ const fromApiToForm = (client: ClientResponse) => {
       const orgD: OrganizationDetails = party.organizationDetails;
 
       orgDetails.organizationType = orgD.organizationType;
-      orgDetails.businessName = orgD.organizationName;
-      orgDetails.businessAliasName = orgD.dbaName;
-      orgDetails.businessDescription = orgD.organizationDescription;
+      orgDetails.organizationName = orgD.organizationName;
+      orgDetails.dbaName = orgD.dbaName;
+      orgDetails.organizationDescription = orgD.organizationDescription;
       orgDetails.industryCategory = orgD.industryCategory;
       orgDetails.industryType = orgD.industryType;
       orgDetails.countryOfFormation = orgD.countryOfFormation;
@@ -65,9 +65,9 @@ const fromApiToForm = (client: ClientResponse) => {
         address.addressLines.forEach((addLine, idx) => {
           orgDetails[`businessAddressLine${idx + 1}`] = addLine;
         });
-        orgDetails.businessCity = address.city;
-        orgDetails.businessState = address.state;
-        orgDetails.businessZipCode = address.postalCode;
+        orgDetails.city = address.city;
+        orgDetails.state = address.state;
+        orgDetails.postalCode = address.postalCode;
         orgDetails.country = address.country;
       });
 
