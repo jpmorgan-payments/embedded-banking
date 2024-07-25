@@ -29,7 +29,12 @@ function ColorSchemeWrapper({
   return (
     <EBComponentsProvider
       apiBaseUrl={baseUrl}
-      theme={{ colorScheme: colorScheme }}
+      theme={{
+        colorScheme: colorScheme,
+        variables: {
+          fontFamily: 'Nunito Sans',
+        },
+      }}
       headers={{
         api_gateway_client_id: 'OBTSTSTCL1',
       }}

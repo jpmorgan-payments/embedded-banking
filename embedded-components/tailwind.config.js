@@ -2,6 +2,7 @@ import {
   isolateForComponents,
   scopedPreflightStyles,
 } from 'tailwindcss-scoped-preflight';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,6 +21,9 @@ module.exports = {
       screens: {
         '2xl': '1400px',
       },
+    },
+    fontFamily: {
+      sans: `var(--eb-font-family) ${defaultTheme.fontFamily.sans.join(', ')}`,
     },
     extend: {
       height: {
