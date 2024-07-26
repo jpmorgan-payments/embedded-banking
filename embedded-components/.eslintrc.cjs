@@ -10,6 +10,13 @@ module.exports = {
     'linebreak-style': 'off',
     'arrow-body-style': 'off',
     'tailwindcss/classnames-order': 'error',
+    'tailwindcss/no-custom-classname': [
+      'warn',
+      {
+        config: 'tailwind.config.js',
+        whitelist: ['eb\\-.*'], // Whitelist your custom prefix
+      },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
