@@ -1,19 +1,8 @@
-import {
-  useSmbdoGetClient,
-  useSmbdoListQuestions,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 const useGetQuestions = (questionsIds: string[]) => {
-  const {
-    clientId,
-    mockSteps,
-    isMockResponse,
-    setPartyId,
-    mockData,
-    isMock,
-    mockQuestions,
-  } = useRootConfig();
+  const { isMock, mockQuestions } = useRootConfig();
 
   const { data, refetch, isPending, isSuccess } = isMock
     ? {

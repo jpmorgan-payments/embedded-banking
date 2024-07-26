@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
+import { questionListMock } from './mocks/questionList.mock';
 import {
   stepReviewMockNoQuestions,
   stepReviewMockWithAttestations,
   stepReviewMockWithQuestions,
 } from './mocks/stepReview.mock';
 import { OnboardingWizard } from './OboardingWizard';
-import { questionListMock } from './mocks/questionList.mock';
 
 const meta: Meta<typeof OnboardingWizard> = {
   title: 'Onboarding Wizard Schema',
@@ -50,7 +50,7 @@ export const Default: Story = {
       client: stepReviewMockWithQuestions,
     },
     mockData: stepReviewMockWithQuestions,
-    mockQuestions: questionListMock
+    mockQuestions: questionListMock,
   },
 };
 

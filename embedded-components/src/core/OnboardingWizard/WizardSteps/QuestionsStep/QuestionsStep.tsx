@@ -2,10 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import * as yup from 'yup';
 
-import {
-  useSmbdoListQuestions,
-  useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 import {
   QuestionListResponse,
   SchemasQuestionResponse,

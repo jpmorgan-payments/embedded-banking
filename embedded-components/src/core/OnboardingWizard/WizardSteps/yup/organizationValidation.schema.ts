@@ -100,22 +100,18 @@ export const organizationValidation: any = (getContentToken: any) => {
           schema
             .url()
             .required(getContentToken?.(`websiteReq`) ?? '')
-            .test(
-              'https',
-              getContentToken?.(`websiteTest`) ?? '',
-              function (value) {
-                /*
+            .test('https', getContentToken?.(`websiteTest`) ?? '', (value) => {
+              /*
                  - http(s)? - protocol validation
                  - www - we require www subdomain
                  - [a-zA-Z0-9@:%._+~#=]{2,256} - domain name format validation, https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DomainNameFormat.html
                  - [a-z]{2,63} - top level domain https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_domain_name
                  - ([a-zA-Z0-9-@:%_+.~#?&/=\\]*) - query validation (e.g. '/test')
                 */
-                return /^http(s)?:\/\/www\.[a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.]{1,256}\.[a-z]{2,63}\b([a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.\\]*)$/.test(
-                  value
-                );
-              }
-            ),
+              return /^http(s)?:\/\/www\.[a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.]{1,256}\.[a-z]{2,63}\b([a-zA-Z0-9-@!"#$%&'()*+,/:;<=>?[\]_`{|}~.\\]*)$/.test(
+                value
+              );
+            }),
       }),
     websiteAvailable: yup.boolean().default(false),
     organizationDescription: yup
