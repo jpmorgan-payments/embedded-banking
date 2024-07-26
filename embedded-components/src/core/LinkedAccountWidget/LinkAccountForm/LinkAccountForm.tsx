@@ -156,7 +156,7 @@ export const LinkAccountFormDialogTrigger: FC<
                     <Badge>{createRecipientResponse.status}</Badge>
                   </div>
                   <p className="eb-text-sm eb-text-muted-foreground">
-                    {createRecipientResponse.partyDetails.type.toLocaleUpperCase()}
+                    {createRecipientResponse?.partyDetails?.type?.toLocaleUpperCase()}
                   </p>
                 </div>
               </div>
