@@ -6,6 +6,12 @@ const baseSchema = z.object({
     .min(9, 'Routing number must be 9 digits')
     .max(9, 'Routing number must be 9 digits'),
   accountNumber: z.string().min(1, 'Account number is required'),
+  certify: z
+    .boolean()
+    .default(false)
+    .refine((val) => val === true, {
+      message: 'Please authorize to continue',
+    }),
 });
 
 export const LinkAccountFormSchema = z.discriminatedUnion('accountType', [
