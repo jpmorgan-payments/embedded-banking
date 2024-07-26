@@ -21,6 +21,7 @@ import { useStepper } from '../../Stepper/useStepper';
 // import { updateOutstandingItems } from '../../utils/actions';
 import { makeQuestionsAPIBody } from '../../utils/apiUtilsParsers';
 import { useContentData } from '../../utils/useContentData';
+import { useGetQuestions } from '../hooks/useGetQuestions';
 import { q } from './q';
 
 const QuestionsStep = ({ questionsIds, children }: any) => {
@@ -29,11 +30,11 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
   const { clientId } = useRootConfig();
-  //TODO: When questions are answered, and no questions found, we need to say something here
-  const { data: questionsList, isSuccess } = useSmbdoListQuestions({
-    questionIds:
-      questionsIds?.join(',') || onboardingForm?.questionsIds?.join(','),
-  });
+
+  const { data: questionsList, isSuccess } = useGetQuestions(
+    questionsIds?.join(',')
+  );
+
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
 

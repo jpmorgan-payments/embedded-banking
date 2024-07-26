@@ -12,6 +12,7 @@ import uniqBy from 'lodash/uniqBy';
 import {
   AttestationStep,
   BusinessOwnersStep,
+  DecisionMakersStep,
   IndividualDetailsStep,
   IntroStep,
   OrganizationDetailsStep,
@@ -66,7 +67,7 @@ const stepsWizard: any = {
   Questions: QuestionsStep,
   Review: ReviewStep,
   Attestation: AttestationStep,
-  /*'Decision Makers': DecisionMakersStep,*/
+  'Decision Makers': DecisionMakersStep,
   'Business Owners': BusinessOwnersStep,
 };
 

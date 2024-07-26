@@ -55,6 +55,20 @@ const businessSchema = {
       required: true,
     },
     {
+      name: 'organizationType',
+      fieldType: 'orgType',
+      labelToken: 'Organization Type',
+      placeholderToken: 'Select type',
+      required: true,
+    },
+    {
+      name: 'countryOfFormation',
+      fieldType: 'country',
+      labelToken: 'Country Formation',
+      placeholderToken: 'Select country',
+      required: true,
+    },
+    {
       name: 'ein',
       fieldType: 'ein',
       labelToken: 'solePropBusinessIdentification.option.ein',
@@ -63,6 +77,10 @@ const businessSchema = {
     {
       name: 'industryCategory',
       fieldType: 'industryType',
+    },
+    {
+      name: 'industryType',
+      fieldType: null,
     },
     {
       name: 'organizationDescription',
@@ -75,6 +93,10 @@ const businessSchema = {
       fieldType: 'website',
       labelToken: 'businessWebsite.label',
       required: true,
+    },
+    {
+      name: 'websiteAvailable',
+      fieldType: null,
     },
     {
       name: 'businessPhone',
@@ -102,6 +124,30 @@ const businessSchema = {
       labelToken: 'What is your address?',
       fieldType: 'address',
       type: 'organization',
+    },
+    {
+      name: 'businessAddressLine1',
+      fieldType: null,
+    },
+    {
+      name: 'businessAddressLine2',
+      fieldType: null,
+    },
+    {
+      name: 'businessAddressLine3',
+      fieldType: null,
+    },
+    {
+      name: 'city',
+      fieldType: null,
+    },
+    {
+      name: 'state',
+      fieldType: null,
+    },
+    {
+      name: 'postalCode',
+      fieldType: null,
     },
   ],
 };
@@ -144,16 +190,12 @@ const individualSchema = {
       placeholderToken: 'Select Job Title',
       required: true,
     },
-    // {
-    //   name: 'jobTitleDescription',
-    //   // TODO: add Special field type, if fieldType is just a placeholder
-    //   fieldType: null,
-    //   labelToken: 'Job Description',
-    //   required: true,
-    // },
+    {
+      name: 'jobTitleDescription',
+      fieldType: null,
+    },
     {
       name: 'phone',
-
       fieldType: 'phone',
       labelToken: 'Phone',
       required: true,
@@ -170,11 +212,38 @@ const individualSchema = {
       labelToken: 'Social Security Number',
       required: true,
     },
-
     {
       labelToken: 'What is your address?',
       fieldType: 'address',
       type: 'individual',
+    },
+    {
+      name: 'addressLine1',
+      fieldType: null,
+    },
+    {
+      name: 'addressLine2',
+      fieldType: null,
+    },
+    {
+      name: 'addressLine3',
+      fieldType: null,
+    },
+    {
+      name: 'businessCity',
+      fieldType: null,
+    },
+    {
+      name: 'businessState',
+      fieldType: null,
+    },
+    {
+      name: 'businessPostalCode',
+      fieldType: null,
+    },
+    {
+      name: 'countryOfResidence',
+      fieldType: null,
     },
   ],
 };

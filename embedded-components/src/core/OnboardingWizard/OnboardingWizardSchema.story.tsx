@@ -7,6 +7,7 @@ import {
   stepReviewMockWithQuestions,
 } from './mocks/stepReview.mock';
 import { OnboardingWizard } from './OboardingWizard';
+import { questionListMock } from './mocks/questionList.mock';
 
 const meta: Meta<typeof OnboardingWizard> = {
   title: 'Onboarding Wizard Schema',
@@ -49,6 +50,7 @@ export const Default: Story = {
       client: stepReviewMockWithQuestions,
     },
     mockData: stepReviewMockWithQuestions,
+    mockQuestions: questionListMock
   },
 };
 
