@@ -36,8 +36,6 @@ const BusinessOwnersStep = () => {
     return data && fromApiToForm(data);
   }, [data]);
 
-  console.log('@@data', data, reviewData);
-
   const handleToggleButton = (val: string) => {
     if (val === 'No') setAdditionalDecisionMakers(false);
     if (val === 'Yes') setAdditionalDecisionMakers(true);

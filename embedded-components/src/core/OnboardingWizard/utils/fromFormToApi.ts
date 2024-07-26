@@ -45,7 +45,7 @@ export const fromFormToOrgParty = (form: any) => {
         addressLines: [addressLines],
         city: form.businessCity,
         state: form.businessState,
-        postalCode: form.businessZipCode,
+        postalCode: form.businessPostalCode,
         country: 'US',
       },
     ],

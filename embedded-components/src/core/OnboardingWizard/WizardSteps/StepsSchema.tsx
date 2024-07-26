@@ -138,15 +138,15 @@ const businessSchema = {
       fieldType: null,
     },
     {
-      name: 'city',
+      name: 'businessCity',
       fieldType: null,
     },
     {
-      name: 'state',
+      name: 'businessState',
       fieldType: null,
     },
     {
-      name: 'postalCode',
+      name: 'businessPostalCode',
       fieldType: null,
     },
   ],
@@ -230,15 +230,15 @@ const individualSchema = {
       fieldType: null,
     },
     {
-      name: 'businessCity',
+      name: 'city',
       fieldType: null,
     },
     {
-      name: 'businessState',
+      name: 'state',
       fieldType: null,
     },
     {
-      name: 'businessPostalCode',
+      name: 'postalCode',
       fieldType: null,
     },
     {
