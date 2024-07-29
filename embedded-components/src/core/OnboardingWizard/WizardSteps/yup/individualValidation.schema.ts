@@ -5,7 +5,6 @@ import { createRegExpAndMessage } from '@/lib/utils';
 
 export const individualValidation: any = (getContentToken: any) => {
   return {
-    //---- Individual
     firstName: yup
       .string()
       .default('')
@@ -66,30 +65,30 @@ export const individualValidation: any = (getContentToken: any) => {
       .string()
       .default('')
       .required(getContentToken?.(`controllerJobTitle`) ?? ''),
-    // jobTitleDescription: yup
-    //   .string()
-    //   .default('')
-    //   .max(50, getContentToken?.(`maxStringLengthAlert`, [50]) ?? '')
-    //   .when('controllerJobTitle', {
-    //     is: 'Other',
-    //     then: (schema) =>
-    //       schema
-    //         .matches(
-    //           ...createRegExpAndMessage(
-    //             getContentToken?.('validCharacters', undefined, 'common'),
-    //             getContentToken?.(
-    //               'invalidCharactersErrorMessage',
-    //               undefined,
-    //               'common'
-    //             )
-    //           )
-    //         )
-    //         .matches(
-    //           /^(?!\s)(.*[^\s])(?<!\s)$/,
-    //           getContentToken?.(`invalidWhiteSpaces`) ?? ''
-    //         )
-    //         .required(getContentToken?.(`controllerJobTitleDescription`) ?? ''),
-    //   }),
+    jobTitleDescription: yup
+      .string()
+      .default('')
+      .max(50, getContentToken?.(`maxStringLengthAlert`, [50]) ?? '')
+      .when('controllerJobTitle', {
+        is: 'Other',
+        then: (schema) =>
+          schema
+            .matches(
+              ...createRegExpAndMessage(
+                getContentToken?.('validCharacters', undefined, 'common'),
+                getContentToken?.(
+                  'invalidCharactersErrorMessage',
+                  undefined,
+                  'common'
+                )
+              )
+            )
+            .matches(
+              /^(?!\s)(.*[^\s])(?<!\s)$/,
+              getContentToken?.(`invalidWhiteSpaces`) ?? ''
+            )
+            .required(getContentToken?.(`controllerJobTitleDescription`) ?? ''),
+      }),
     ssn: yup
       .string()
       .default('')
@@ -140,31 +139,34 @@ export const individualValidation: any = (getContentToken: any) => {
       )
       .default('')
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
-    // controllerAddressLine3: yup
-    //   .string()
-    //   .nullable()
-    //   .transform((value, originalValue) =>
-    //     originalValue.trim() === '' ? null : value,
-    //   )
-    //   .matches(
-    //     ...createRegExpAndMessage(
-    //       getContentToken?.('addressValidCharacters', undefined, 'common'),
-    //       getContentToken?.(
-    //         'invalidCharactersErrorMessage',
-    //         undefined,
-    //         'common',
-    //       ),
-    //     ),
-    //   )
-    //   .default('')
-    //   .when('controllerAddressLine2', {
-    //     is: (line2: string) => !line2 || line2.trim() === '',
-    //     then: yup
-    //       .string()
-    //       .nullable()
-    //       .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-    //   })
-    //   .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
+    addressLine3: yup
+      .string()
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue.trim() === '' ? null : value
+      )
+      .matches(
+        ...createRegExpAndMessage(
+          getContentToken?.('addressValidCharacters', undefined, 'common'),
+          getContentToken?.(
+            'invalidCharactersErrorMessage',
+            undefined,
+            'common'
+          )
+        )
+      )
+      .default('')
+      .when('addressLine2', {
+        is: (line2: string) => !line2 || line2.trim() === '',
+        then: (schema) =>
+          schema
+            .nullable()
+            .matches(
+              /^$/,
+              getContentToken?.('line2Empty', undefined, 'common')
+            ),
+      })
+      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
     city: yup
       .string()
       .default('')
@@ -226,7 +228,6 @@ export const individualValidation: any = (getContentToken: any) => {
       .mixed()
       .oneOf(['US', 'Canada', 'UK'])
       .default('')
-      // TODO: update to token
       .required('Country required'),
   };
 };
