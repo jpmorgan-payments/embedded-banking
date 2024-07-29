@@ -5,7 +5,6 @@ import { createRegExpAndMessage } from '@/lib/utils';
 
 import { organizationType } from '../../utils/models';
 
-// TODO: Separate the files into better utils
 export const organizationValidation: any = (getContentToken: any) => {
   // const isBusiness = (value?: organizationType) => {
   //   return (
@@ -193,31 +192,34 @@ export const organizationValidation: any = (getContentToken: any) => {
       )
       .default('')
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
-    // businessAddressLine3: yup
-    //   .string()
-    //   .nullable()
-    //   .transform((value, originalValue) =>
-    //     originalValue.trim() === '' ? null : value
-    //   )
-    //   .matches(
-    //     ...createRegExpAndMessage(
-    //       getContentToken?.('addressValidCharacters', undefined, 'common'),
-    //       getContentToken?.(
-    //         'invalidCharactersErrorMessage',
-    //         undefined,
-    //         'common'
-    //       )
-    //     )
-    //   )
-    //   .default('')
-    //   .when('businessAddressLine2', {
-    //     is: (line2: string) => !line2 || line2.trim() === '',
-    //     then: yup
-    //       .string()
-    //       .nullable()
-    //       .matches(/^$/, getContentToken?.('line2Empty', undefined, 'common')),
-    //   })
-    //   .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
+    businessAddressLine3: yup
+      .string()
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue.trim() === '' ? null : value
+      )
+      .matches(
+        ...createRegExpAndMessage(
+          getContentToken?.('addressValidCharacters', undefined, 'common'),
+          getContentToken?.(
+            'invalidCharactersErrorMessage',
+            undefined,
+            'common'
+          )
+        )
+      )
+      .default('')
+      .when('businessAddressLine2', {
+        is: (line2: string) => !line2 || line2.trim() === '',
+        then: (schema) =>
+          schema
+            .nullable()
+            .matches(
+              /^$/,
+              getContentToken?.('line2Empty', undefined, 'common')
+            ),
+      })
+      .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
     businessCity: yup
       .string()
       .default('')

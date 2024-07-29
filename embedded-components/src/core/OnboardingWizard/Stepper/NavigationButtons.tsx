@@ -6,6 +6,7 @@ type NavigationButtonsProps = {
   onSubmit?: any;
   disableNext?: boolean;
   disabled?: boolean;
+  lastStep?: boolean;
 };
 
 const NavigationButtons = ({
@@ -14,6 +15,7 @@ const NavigationButtons = ({
   onSubmit,
   disableNext,
   disabled,
+  lastStep,
 }: NavigationButtonsProps) => {
   return (
     <div className="eb-mt-20 eb-grid eb-grid-cols-2">
@@ -41,7 +43,7 @@ const NavigationButtons = ({
           }}
           disabled={disableNext || disabled}
         >
-          Next
+          {lastStep ? 'Submit' : 'Next'}
         </Button>
       </div>
     </div>

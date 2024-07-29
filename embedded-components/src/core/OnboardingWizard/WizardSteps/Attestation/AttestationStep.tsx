@@ -1,11 +1,11 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IconExternalLink } from '@tabler/icons-react';
 import { useFormContext } from 'react-hook-form';
 
 import {
   useSmbdoDownloadDocument,
   useSmbdoGetAllDocumentDetails,
-  useSmbdoGetClient,
   // useSmbdoGetDocumentDetail,
   // useSmbdoGetDocumentRequest,
   // useSmbdoPostClientVerifications,
@@ -30,28 +30,28 @@ import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context'
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
-import { fromApiToForm } from '../../utils/fromApiToForm';
+// import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
-import { PdfDisplay } from './PdfDisplay';
+
+// import { PdfDisplay } from './PdfDisplay';
 
 const AttestationStep = () => {
   const form = useFormContext();
-  const { isMock } = useRootConfig();
+  const [TAC, setTAC] = useState(false);
+  const [EDC, setEDC] = useState(false);
+
+  // const { isMock } = useRootConfig();
   const { clientId } = useRootConfig();
   const { setCurrentStep, activeStep } = useStepper();
   const { onboardingForm }: any = useOnboardingForm();
-  const [, setDocs] = useState<any>(null);
+  const [doc, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
 
-  const { data: clientData } = useSmbdoGetClient(
-    (clientId || onboardingForm?.id) as string
-  );
-
-  const clientDataForm = useMemo(() => {
-    return clientData && fromApiToForm(clientData);
-  }, [clientData]);
+  // const { data: clientData } = useSmbdoGetClient(
+  //   (clientId || onboardingForm?.id) as string
+  // );
 
   // TODO: we need to list this?
   const termsAndConditionsDocId = verifications?.documentDetails?.find(
@@ -102,43 +102,23 @@ const AttestationStep = () => {
   //   disclosureAndConsentDocId
   // );
 
-  const [pdfLoaded, setPdfLoaded] = useState(false);
-  // console.log(
-  //   '@@verifications',
-  //   verifications,
-  //   termsAndConditionsDoc,
-  //   disclosureAndConsentDoc
-  // );
-
-  // const controllerFullName = [
-  //   form.values.controllerFirstName,
-  //   form.values.controllerMiddleName,
-  //   form.values.controllerLastName,
-  // ]
-  //   .filter(Boolean)
-  //   .join(' ');
-
-  // useEffect(() => {
-  //   form.setFieldValue('attestedDataCorrect', false);
-  //   form.setFieldValue('attestedReadDocuments', false);
-  //   form.setFieldValue('attestedAuthorized', false);
-  // }, []);
+  // const [pdfLoaded, setPdfLoaded] = useState(false);
 
   const onSubmit = () => {
     console.log('@@onSubmit');
   };
 
-  const organizationType =
-    clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
-  const businessName =
-    clientDataForm?.onganizationDetails?.orgDetails?.businessName;
+  // const organizationType =
+  //   clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
+  // const businessName =
+  //   clientDataForm?.onganizationDetails?.orgDetails?.businessName;
 
   return (
     <section>
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
 
-      <PdfDisplay
+      {/* <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
 
@@ -149,72 +129,12 @@ const AttestationStep = () => {
             form.setValue('reviewedTerms', true);
           }
         }}
-      />
+      /> */}
 
-      <Separator />
+      {/* <Separator /> */}
+
       <>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <Group>
-            {/* <Text size="md">Trouble viewing the document, click here: </Text> */}
-            {/* TODO: Anchor component */}
-            {/* <Anchor
-              href={termsAndConditionsDoc ?? '/assets/docs/terms.pdf'}
-              target="_blank"
-              size={18}
-              onClick={() => form.setFieldValue('reviewedTerms', true)}
-            >
-              <Group>
-                <IconExternalLink size={18} />
-                <Text> Terms and Conditions</Text>
-              </Group>
-            </Anchor> */}
-            {/* 
-            {form.getValues().reviewedTerms ? (
-              <Badge>
-                <Group>
-                  <IconCheck size={14} /> {getContentToken(`group`)}
-                </Group>
-              </Badge>
-            ) : (
-              <Badge>
-                <Group>
-                  <IconX size={14} /> {getContentToken(`groupX`)}
-                </Group>
-              </Badge>
-            )} */}
-          </Group>
-          <Separator />
-          {/* <Text>{form.getValues().error}</Text>
-          <Title as="h3">{getContentToken(`title2`)}</Title> */}
-          <Group>
-            {/* <Anchor
-              href={disclosureAndConsentDoc ?? '/assets/docs/disclosure.pdf'}
-              target="_blank"
-              size={18}
-              onClick={() => form.setFieldValue('reviewedDisclosure', true)}
-            >
-              <Group>
-                <IconExternalLink size={18} />
-                {getContentToken(`anchor`)}
-              </Group>
-            </Anchor> */}
-
-            {/* {form.getValues().reviewedDisclosure ? (
-              <Badge>
-                <Group>
-                  <IconCheck size={14} /> {getContentToken(`badge`)}
-                </Group>
-              </Badge>
-            ) : (
-              <Badge>
-                <Group>
-                  <IconX size={14} /> {getContentToken(`badgeX`)}
-                </Group>
-              </Badge>
-            )} */}
-          </Group>
-          <Text>{form.getValues().error}</Text>
-
           <Stack className="eb-mt-10">
             <FormField
               control={form.control}
@@ -225,32 +145,85 @@ const AttestationStep = () => {
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={() => {}}
+                      disabled={!TAC || !EDC}
                     />
                   </FormControl>
                   <FormLabel className="eb-p-3">
-                    {organizationType === 'SOLE_PROPRIETORSHIP' ? (
-                      getContentToken(`solePropAttestationLabel`)
-                    ) : (
-                      <span>
-                        {getContentToken(`attestationLabelBeforeName`)}
-                        <b>{businessName}</b>
-                        {getContentToken(`attestationLabelAfterName`)}
-                      </span>
-                    )}
+                    By checking the box, I acknowledge and agree to the
+                    following:
                   </FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </Stack>
+
+          <Separator />
+
+          <Stack className="eb-mt-4 eb-pl-6">
+            <ul className="eb-list-outside eb-list-[square] eb-space-y-6">
+              <li>
+                <Text>
+                  The Embedded Payment Account may only be used to receive funds
+                  through [the Platform] pursuant to [my Commerce Terms with the
+                  Platform] and I am appointing [the Platform] as my agent for
+                  the Account.
+                </Text>
+              </li>
+              <li>
+                <Text>
+                  The data I am providing is true, accurate, current and
+                  complete to the best of my knowledge.
+                </Text>
+              </li>
+              <li>
+                <Group>
+                  I have read and agree to the &nbsp;
+                  <a
+                    className="eb-underline eb-decoration-primary eb-underline-offset-4"
+                    href={doc ?? '/assets/docs/disclosure.pdf'}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => {
+                      setTAC(true);
+                    }}
+                  >
+                    <Group>
+                      J.P. Morgan Embedded Payment Terms & Conditions,
+                      <IconExternalLink size={12} />
+                    </Group>
+                  </a>
+                  &nbsp;
+                  <a
+                    className="eb-underline eb-decoration-primary eb-underline-offset-4"
+                    href={doc ?? '/assets/docs/disclosure.pdf'}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => {
+                      setEDC(true);
+                    }}
+                  >
+                    <Group>
+                      the E-Sign Disclosure and Consent,
+                      <IconExternalLink size={12} />
+                    </Group>
+                  </a>
+                  and the certifications directly above.
+                </Group>
+              </li>
+            </ul>
+          </Stack>
+          <Text>{form.getValues().error}</Text>
         </form>
       </>
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
+        disabled={!TAC || !EDC}
         onSubmit={() => {
           // setActiveStep(activeStep + 1);
         }}
+        lastStep
       />
     </section>
   );
