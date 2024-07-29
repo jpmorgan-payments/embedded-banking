@@ -65,9 +65,9 @@ const fromApiToForm = (client: ClientResponse) => {
         address.addressLines.forEach((addLine, idx) => {
           orgDetails[`businessAddressLine${idx + 1}`] = addLine;
         });
-        orgDetails.city = address.city;
-        orgDetails.state = address.state;
-        orgDetails.postalCode = address.postalCode;
+        orgDetails.businessCity = address.city;
+        orgDetails.businessState = address.state;
+        orgDetails.businessPostalCode = address.postalCode;
         orgDetails.country = address.country;
       });
 

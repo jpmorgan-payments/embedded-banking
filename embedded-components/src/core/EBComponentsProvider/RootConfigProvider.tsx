@@ -15,6 +15,7 @@ export interface RootConfig {
   isMockResponse?: boolean;
   isMock?: boolean;
   mockData?: any;
+  mockQuestions?: any;
   setClientId?: any;
   setPartyId?: any;
 }

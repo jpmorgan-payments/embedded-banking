@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { useSmbdoUpdateParty } from '@/api/generated/embedded-banking';
 // import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
 import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { fromApiToForm } from '../../utils/fromApiToForm';
+import { fromFormToOrgParty } from '../../utils/fromFormToApi';
 import { useGetDataByClientId } from '../hooks';
 import { businessSchema } from '../StepsSchema';
-import { getOrgDetails } from '../utils/getOrgDetails';
+import { getOrg, getOrgDetails } from '../utils/getOrgDetails';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
@@ -19,14 +22,17 @@ import { updateFormValues } from '../utils/updateFormValues';
 const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
-
+  const { isMock } = useRootConfig();
   const { data } = useGetDataByClientId('client');
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
-
+  const { mutateAsync: updateParty, isPending: updatePartyisPending } =
+    useSmbdoUpdateParty();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
+
+  const orgData = getOrg(clientDataForm);
 
   useEffect(() => {
     if (clientDataForm) {
@@ -39,8 +45,38 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [yupSchema]);
 
   const onSubmit = useCallback(async () => {
-    // const errors = form?.formState?.errors;
-    setCurrentStep(activeStep + 1);
+    const dataParty = fromFormToOrgParty(form.getValues());
+    try {
+      if (!clientDataForm) {
+        // await createController({
+        //   id: clientId ?? '',
+        //   data: {
+        //     addParties: [
+        //       {
+        //         partyType: 'INDIVIDUAL',
+        //         email: individualEmail,
+        //         individualDetails: dataParty,
+        //         roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
+        //       },
+        //     ],
+        //   },
+        // });
+      } else {
+        await updateParty({
+          id: orgData.id ?? '',
+          data: {
+            email: orgData.email,
+            organizationDetails: dataParty,
+          },
+        });
+      }
+
+      setCurrentStep(activeStep + 1);
+    } catch (error) {
+      if (isMock) {
+        setCurrentStep(activeStep + 1);
+      }
+    }
   }, [activeStep]);
 
   return (
@@ -69,7 +105,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          // disabled={isPendingClientPost}
+          disabled={updatePartyisPending}
         />
       </form>
     </Stack>

@@ -92,7 +92,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
               ],
             },
           });
-        } else if (true) {
+        } else {
           await updateParty({
             id: indControllerData.id ?? '',
             data: {
@@ -104,9 +104,9 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
 
         setCurrentStep(activeStep + 1);
       } catch (error) {
-        if (isMock) {
-          setCurrentStep(activeStep + 1);
-        }
+        // if (isMock) {
+        //   setCurrentStep(activeStep + 1);
+        // }
       }
     }
   };

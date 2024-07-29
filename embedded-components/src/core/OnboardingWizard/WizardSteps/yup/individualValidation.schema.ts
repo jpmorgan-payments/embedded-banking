@@ -3,85 +3,8 @@ import * as yup from 'yup';
 
 import { createRegExpAndMessage } from '@/lib/utils';
 
-import { organizationType } from '../../utils/models';
-
-// TODO: Separate the files into better utils
-const schemaShapes: any = (getContentToken: any) => {
-  // const isBusiness = (value?: organizationType) => {
-  //   return (
-  //     value === 'Corporation' ||
-  //     value === 'Limited Partnership' ||
-  //     value === 'Limited Liability Company'
-  //   );
-  // };
+export const individualValidation: any = (getContentToken: any) => {
   return {
-    //---- Organization
-    organizationName: yup
-      .string()
-      .default('')
-      .matches(
-        ...createRegExpAndMessage(
-          getContentToken?.('validCharacters', undefined, 'common'),
-          getContentToken?.(
-            'invalidCharactersErrorMessage',
-            undefined,
-            'common'
-          )
-        )
-      )
-      .matches(
-        /^(?!\s)(.*[^\s])(?<!\s)$/,
-        getContentToken?.(`invalidWhiteSpaces`) ?? ''
-      )
-      .required(getContentToken?.(`businessName`) ?? ''),
-    businessAliasName: yup
-      .string()
-      .nullable()
-      .transform((value, originalValue) =>
-        originalValue.trim() === '' ? null : value
-      )
-      .matches(
-        ...createRegExpAndMessage(
-          getContentToken?.('validCharacters', undefined, 'common'),
-          getContentToken?.(
-            'invalidCharactersErrorMessage',
-            undefined,
-            'common'
-          )
-        )
-      )
-      .default('')
-      .optional(),
-    organizationType: yup
-      .mixed<organizationType>()
-      .oneOf(
-        [
-          'SOLE_PROPRIETORSHIP',
-          'LIMITED_LIABILITY_COMPANY',
-          'S_CORPORATION',
-          'C_CORPORATION',
-          'UNINCORPORATED_ASSOCIATION',
-          'PARTNERSHIP',
-          'PUBLICLY_TRADED_COMPANY',
-          'NON_PROFIT_CORPORATION',
-          'GOVERNMENT_ENTITY',
-        ],
-        getContentToken?.(`schemaLegal`) ?? ''
-      )
-      .default('')
-      .required(),
-    businessEmail: yup
-      .string()
-      .email(getContentToken?.(`businessEmail`) ?? '')
-      .default('')
-      .optional(),
-    countryOfFormation: yup
-      .mixed()
-      .oneOf(['US', 'Canada', 'UK'])
-      .default('')
-      // TODO: update to token
-      .required('Country required'),
-
     //---- Individual
     firstName: yup
       .string()
@@ -143,30 +66,30 @@ const schemaShapes: any = (getContentToken: any) => {
       .string()
       .default('')
       .required(getContentToken?.(`controllerJobTitle`) ?? ''),
-    jobTitleDescription: yup
-      .string()
-      .default('')
-      .max(50, getContentToken?.(`maxStringLengthAlert`, [50]) ?? '')
-      .when('controllerJobTitle', {
-        is: 'Other',
-        then: (schema) =>
-          schema
-            .matches(
-              ...createRegExpAndMessage(
-                getContentToken?.('validCharacters', undefined, 'common'),
-                getContentToken?.(
-                  'invalidCharactersErrorMessage',
-                  undefined,
-                  'common'
-                )
-              )
-            )
-            .matches(
-              /^(?!\s)(.*[^\s])(?<!\s)$/,
-              getContentToken?.(`invalidWhiteSpaces`) ?? ''
-            )
-            .required(getContentToken?.(`controllerJobTitleDescription`) ?? ''),
-      }),
+    // jobTitleDescription: yup
+    //   .string()
+    //   .default('')
+    //   .max(50, getContentToken?.(`maxStringLengthAlert`, [50]) ?? '')
+    //   .when('controllerJobTitle', {
+    //     is: 'Other',
+    //     then: (schema) =>
+    //       schema
+    //         .matches(
+    //           ...createRegExpAndMessage(
+    //             getContentToken?.('validCharacters', undefined, 'common'),
+    //             getContentToken?.(
+    //               'invalidCharactersErrorMessage',
+    //               undefined,
+    //               'common'
+    //             )
+    //           )
+    //         )
+    //         .matches(
+    //           /^(?!\s)(.*[^\s])(?<!\s)$/,
+    //           getContentToken?.(`invalidWhiteSpaces`) ?? ''
+    //         )
+    //         .required(getContentToken?.(`controllerJobTitleDescription`) ?? ''),
+    //   }),
     ssn: yup
       .string()
       .default('')
@@ -198,7 +121,7 @@ const schemaShapes: any = (getContentToken: any) => {
         getContentToken?.(`invalidWhiteSpaces`) ?? ''
       )
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? '')
-      .required(getContentToken?.(`controllerAddressLine1`) ?? ''),
+      .required(getContentToken?.(`controllerAddressLine1`) ?? 'Req'),
     addressLine2: yup
       .string()
       .nullable()
@@ -307,5 +230,3 @@ const schemaShapes: any = (getContentToken: any) => {
       .required('Country required'),
   };
 };
-
-export { schemaShapes };

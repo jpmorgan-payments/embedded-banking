@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
+import { questionListMock } from './mocks/questionList.mock';
 import {
   stepReviewMockNoQuestions,
   stepReviewMockWithAttestations,
@@ -49,6 +50,7 @@ export const Default: Story = {
       client: stepReviewMockWithQuestions,
     },
     mockData: stepReviewMockWithQuestions,
+    mockQuestions: questionListMock,
   },
 };
 

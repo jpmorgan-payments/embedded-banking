@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { schemaShapes } from './schemaShapes';
+import { fullYupValidationSchema } from '../yup/fullYupValidationSchema';
 
 const createYupSchema = ({ formSchema, getContentToken }: any) => {
   const shape: any = {};
@@ -9,7 +9,8 @@ const createYupSchema = ({ formSchema, getContentToken }: any) => {
     //   throw new Error('Schema is incorrectly formatted');
     // }
     if (fields.name) {
-      shape[fields.name] = schemaShapes(getContentToken)[fields.name];
+      shape[fields.name] =
+        fullYupValidationSchema(getContentToken)[fields.name];
     }
   });
   return yup.object().shape(shape);

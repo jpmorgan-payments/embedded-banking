@@ -6,4 +6,11 @@ const getOrgDetails = (orgDetailsData: any): any => {
   };
 };
 
-export { getOrgDetails };
+const getOrg = (orgDetailsData: any): any => {
+  const orgDetails = orgDetailsData?.organizationDetails;
+  return {
+    ...orgDetails,
+    email: orgDetailsData.organizationDetails.email,
+  };
+};
+export { getOrgDetails, getOrg };

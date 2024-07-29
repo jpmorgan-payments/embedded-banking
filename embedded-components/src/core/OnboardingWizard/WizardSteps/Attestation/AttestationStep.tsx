@@ -142,7 +142,7 @@ const AttestationStep = () => {
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
 
-        file={isMock ? '/asset/terms.pdf' : termsAndConditionsDoc}
+        file={isMock ? '/asset/docs/terms.pdf' : termsAndConditionsDoc}
         onLoad={() => setPdfLoaded(true)}
         onScrolledToBottom={() => {
           if (pdfLoaded) {
