@@ -14,6 +14,7 @@ import {
 import { useMediaQuery } from '@mantine/hooks';
 
 import { NavbarLinks } from './NavbarLinks/NavbarLinks';
+import { NavbarLinksComponentShowcase } from './NavbarLinks/NavbarLinksComponentShowcase';
 import {
   ThemeSelectMenu,
   ThemeSelectMenuProps,
@@ -38,6 +39,10 @@ export const Layout = ({
   }, [location]);
 
   const lessThanSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const appTitle =
+    location?.pathname === '/embedded-components'
+      ? 'Embedded Components'
+      : 'Embedded Banking Showcase';
 
   return (
     <AppShell
@@ -58,7 +63,11 @@ export const Layout = ({
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
-          <NavbarLinks />
+          {location?.pathname === '/embedded-components' ? (
+            <NavbarLinksComponentShowcase />
+          ) : (
+            <NavbarLinks />
+          )}
         </Navbar>
       }
       header={
@@ -86,7 +95,7 @@ export const Layout = ({
                   : theme.colors.dark[4]
               }
             >
-              {lessThanSm ? 'EB Showcase' : 'Embedded Banking Showcase'}
+              {lessThanSm ? 'EB Showcase' : appTitle}
             </Text>
 
             <ThemeSelectMenu {...themeProps} />

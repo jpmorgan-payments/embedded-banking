@@ -5,7 +5,7 @@ import App from './App';
 import { worker } from 'mockServiceWorker/browser';
 
 async function prepare() {
-  return worker.start({
+  return worker?.start({
     onUnhandledRequest: 'bypass',
   });
 }

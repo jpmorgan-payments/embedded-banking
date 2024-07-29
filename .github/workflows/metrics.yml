@@ -1,0 +1,46 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Run metrics
+
+on:
+  schedule:
+    - cron: "34 10 * * *"
+
+jobs:
+  generate-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+    defaults:
+      run:
+        working-directory: ./metrics
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: metrics
+      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Gather metrics
+        env: # Set the secret as an input
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_METRICS }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install github_traffic_stats
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          gts maria-mcparland:$ACCESS_TOKEN 'embedded-banking' 'save_csv' -o jpmorgan-payments
+          ls
+      - name: Run merge script
+        run: |
+          ./merge.sh clone-stats.csv clone-stats   
+          ./merge.sh traffic-stats.csv traffic-stats
+          ./merge.sh referrer-stats.csv referrer-stats
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Apply metrics changes
+          branch: metrics

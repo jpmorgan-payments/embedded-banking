@@ -17,10 +17,12 @@ interface PanelProps extends PaperProps {
   objectDisplayHeight?: number;
   requestBody?: object;
   responseBody?: object;
+  sampleCode?: string;
   isLoading?: boolean;
   title?: string;
   apiCallType?: 'GET' | 'POST' | 'DELETE';
   apiEndpoint?: string;
+  customBadge?: React.ReactNode;
 }
 
 const callTypeColor = {
@@ -37,10 +39,12 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(
       objectDisplayHeight,
       requestBody,
       responseBody,
+      sampleCode,
       isLoading = false,
       title,
       apiCallType,
       apiEndpoint,
+      customBadge,
       style,
       ...props
     },
@@ -57,6 +61,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(
         }}
         ref={ref}
         {...props}
+        id={`${title?.trim()}-panel`}
       >
         <Grid>
           <Grid.Col xs={12} lg="auto">
@@ -78,6 +83,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(
                         {apiCallType}
                       </Badge>
                     ) : null}
+                    {customBadge}
                     <Code sx={{ backgroundColor: 'unset' }}>{apiEndpoint}</Code>
                   </Group>
                 </Group>
@@ -85,12 +91,13 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(
               {children}
             </Box>
           </Grid.Col>
-          {requestBody || responseBody || isLoading ? (
+          {requestBody || responseBody || sampleCode || isLoading ? (
             <Grid.Col xs={12} lg="content">
               <MediaQuery styles={{ width: '100%' }} smallerThan="lg">
                 <ObjectDisplay
                   request={requestBody}
                   response={responseBody}
+                  sampleCode={sampleCode}
                   isLoading={isLoading}
                   w={480}
                   h="100%"

@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm use 18
         - cd app
         - yarn install
     build:

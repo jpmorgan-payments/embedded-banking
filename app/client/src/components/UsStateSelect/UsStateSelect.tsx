@@ -9,7 +9,6 @@ export const UsStateSelect = (props: UsStateSelectProps) => {
   return (
     <NativeSelect
       label="State"
-      placeholder="State"
       data={
         usStates.format({
           value: 'abbreviation',

@@ -12,10 +12,11 @@ You can:
 
 ## What's included in this repo?
 
-There are two main directories for you to access:
+There are three main directories for you to access:
 
 - `/app` for the showcase UI and server experience.
 - `/postman` for the Postman Collection.
+- `/embedded-finance-sdk` for the Embedded Finance SDK
 
 ### Application (App)
 
@@ -27,6 +28,10 @@ All your actions on this application are served by mock data included in the app
 
 Get straight to the API endpoints in action, make calls and see responses.
 To use the Postman collection, import the collection file to Postman and follow the included setup instructions to access all possible calls to the Embedded Banking API. You will need certificates to run these calls.
+
+### [Embedded Finance SDK](./embedded-finance-sdk/)
+
+Embedded Finance SDK provides a set of tools to validate payment data based on the given country, handle complex conditional logic, and ensure a smooth implementation of UI. Currently published to NPM as [@jpmorgan-payments/embedded-finance-sdk](https://www.npmjs.com/package/@jpmorgan-payments/embedded-finance-sdk)
 
 ## Included in the App project folders
 
@@ -40,6 +45,8 @@ Such capabilities include:
 - Requesting a debit card.
 - Adding a recipient. A recipient is someone you can make a payment to.
 - Checking an account balance.
+- Authenticating with ForgeRock using forgerock-javascript-sdk
+  - To test this locally, you will need to define `VITE_FR_URL` and `VITE_FR_CLIENT` in `./app/client/.env`
 
 Check out the [features](./app/client/src/features/) directory to explore the the components and hooks that explore these features.
 
@@ -57,7 +64,7 @@ This example requires Yarn.
 
 To start our client code with mocked responses:
 
-1. Clone this repo.
+1. Clone this repo
 
 2. Install the `client` folder:
 
