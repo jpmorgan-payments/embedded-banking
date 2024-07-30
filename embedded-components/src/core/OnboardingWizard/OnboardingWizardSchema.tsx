@@ -63,6 +63,8 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
 
   // Building steps
   useEffect(() => {
+    console.log('@@ID',clientId);
+    
     if (clientId) {
       const steps = [
         'Individual',

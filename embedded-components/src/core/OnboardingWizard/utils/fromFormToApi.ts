@@ -75,7 +75,6 @@ export const fromFormToOrgParty = (form: any) => {
 // any
 export const fromFormToIndParty = (form: any) => {
   let indParty: IndividualDetails = {};
-  console.log('@@form', form.birthDate);
 
   const addressLines = [
     form?.addressLine1,
