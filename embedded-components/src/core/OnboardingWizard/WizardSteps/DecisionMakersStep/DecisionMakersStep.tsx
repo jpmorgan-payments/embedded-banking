@@ -21,9 +21,6 @@ import { useStepper } from '../../Stepper/Stepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 
-// TODO: Modal on adding descion maker
-// import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
-
 // TODO: neeed to add arguments for mock testing
 const DecisionMakersStep = () => {
   const [open, setOpen] = useState(false);
