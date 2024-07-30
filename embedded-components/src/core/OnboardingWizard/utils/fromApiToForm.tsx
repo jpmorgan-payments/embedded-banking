@@ -116,13 +116,13 @@ const fromApiToForm = (client: ClientResponse) => {
         });
         indDetails.city = address.city;
         indDetails.state = address.state;
-        indDetails.zip = address.postalCode;
+        indDetails.postalCode = address.postalCode;
         indDetails.country = address.country;
       });
 
       indD?.individualIds?.forEach((indId: IndividualIdentityDTO) => {
         const { idType, value } = indId;
-        indDetails[`${idType.toLocaleLowerCase()}`] = value;
+        indDetails[`${idType.toLocaleLowerCase()}`] = value.trim();
       });
     }
   });

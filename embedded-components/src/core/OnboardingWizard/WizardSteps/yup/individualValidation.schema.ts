@@ -67,9 +67,10 @@ export const individualValidation: any = (getContentToken: any) => {
       .required(getContentToken?.(`controllerJobTitle`) ?? ''),
     jobTitleDescription: yup
       .string()
+      .nullable()
       .default('')
       .max(50, getContentToken?.(`maxStringLengthAlert`, [50]) ?? '')
-      .when('controllerJobTitle', {
+      .when('jobTitle', {
         is: 'Other',
         then: (schema) =>
           schema
@@ -212,7 +213,7 @@ export const individualValidation: any = (getContentToken: any) => {
       .default(null)
       .required(getContentToken?.(`controllerBirthDateReq`) ?? '')
       .test(
-        'birthday',
+        'birthDate',
         getContentToken?.(`controllerBirthDateTest`) ?? '',
         (value) => {
           if (value !== null) {

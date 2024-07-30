@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
 
 import {
   IndividualDetails,
@@ -12,7 +11,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Group, Stack, Title } from '@/components/ui';
-import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
@@ -42,32 +40,17 @@ const LabelValueTable = ({
 const ReviewStep = () => {
   // const { getContentToken } = useContentData('steps.ReviewStep');
 
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
-  const form = useFormContext();
   const { setCurrentStep, buildStepper, activeStep } = useStepper();
 
   const { data, isPending } = useGetDataByClientId('client');
 
   // STEP BUILDER, setOnboarding Form is not required
   useEffect(() => {
-    if (data?.id) {
-      const reviewData = fromApiToForm(data);
-      setOnboardingForm(reviewData);
-    }
-
     if (data?.outstanding?.questionIds?.length) {
       buildStepper(['Review', 'Questions']);
-      setOnboardingForm({
-        ...onboardingForm,
-        questionsIds: data?.outstanding?.questionIds || [],
-      });
     }
     if (data?.outstanding?.attestationDocumentIds?.length) {
       buildStepper(['Attestation']);
-      setOnboardingForm({
-        ...onboardingForm,
-        questionsIds: data?.outstanding?.questionIds || [],
-      });
     }
   }, [data]);
 
@@ -75,13 +58,6 @@ const ReviewStep = () => {
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
-
-  const onSubmit = useCallback(async () => {
-    const errors = form?.formState?.errors;
-    if (!Object.values(errors).length) {
-      setCurrentStep(activeStep + 1);
-    }
-  }, [activeStep]);
 
   const individualDetailsArray = [];
 
@@ -298,13 +274,14 @@ const ReviewStep = () => {
           </Accordion>
         </div>
 
-        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <NavigationButtons
-            setActiveStep={setCurrentStep}
-            activeStep={activeStep}
-            disabled={isPending}
-          />
-        </form>
+        <NavigationButtons
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+          disabled={isPending}
+          onSubmit={() => {
+            setCurrentStep(activeStep + 1);
+          }}
+        />
       </Stack>
     </>
   );

@@ -137,6 +137,7 @@ export const organizationValidation: any = (getContentToken: any) => {
         (value) => !value.includes('\n')
       )
       .required(getContentToken?.(`businessDescriptionReq`) ?? ''),
+    // businessAddressSameAsController: yup.boolean().default(false),
     businessAddressLine1: yup
       .string()
       .default('')
@@ -220,6 +221,7 @@ export const organizationValidation: any = (getContentToken: any) => {
             ),
       })
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
+
     businessCity: yup
       .string()
       .default('')

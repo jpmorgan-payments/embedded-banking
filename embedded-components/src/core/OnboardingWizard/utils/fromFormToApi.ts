@@ -60,7 +60,7 @@ export const fromFormToOrgParty = (form: any) => {
           {
             idType: 'EIN',
             issuer: 'US',
-            value: form?.ein,
+            value: form?.ein.replace('-', ''),
           },
         ]
       : [],
