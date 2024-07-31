@@ -41,11 +41,7 @@ const ReviewStep = () => {
                 className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
-<<<<<<< HEAD
-                <dd className="sm:pl-4  sm:eb-w-2/3">
-=======
                 <dd className="sm:eb-w-2/3  sm:eb-pl-4">
->>>>>>> ada3455ada953eca24ededfc99330b774153636e
                   {typeof value === 'boolean'
                     ? value.toString()
                     : Array.isArray(value)
