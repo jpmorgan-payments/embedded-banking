@@ -15,6 +15,7 @@ import { useGetDataByClientId } from '../hooks';
 // import { useContentData } from '../../utils/useContentData';
 import { reviewSchema } from '../StepsSchema';
 import { individualFields, organizationFields } from './partyFields';
+import OutstandingKYCRequirements from './OustandingKYCRequirements';
 
 const ReviewStep = () => {
   // const { getContentToken } = useContentData('steps.ReviewStep');
@@ -22,9 +23,11 @@ const ReviewStep = () => {
   const form = useFormContext();
   const { setCurrentStep, activeStep } = useStepper();
 
-  const { data, isPending } = useGetDataByClientId('client');
-
-  const clientData: ClientResponse = data;
+  const {
+    data: clientData,
+    isPending,
+  }: { data: ClientResponse; isPending: boolean } =
+    useGetDataByClientId('client');
 
   const onSubmit = useCallback(async () => {
     const errors = form?.formState?.errors;
@@ -51,7 +54,7 @@ const ReviewStep = () => {
                 className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
-                <dd className="sm:pl-4  sm:eb-w-2/3">
+                <dd className="sm:eb-w-2/3  sm:eb-pl-4">
                   {typeof value === 'boolean'
                     ? value.toString()
                     : Array.isArray(value)
@@ -74,9 +77,10 @@ const ReviewStep = () => {
         <Group className="eb-my-4">
           <Title as="h5">STATUS: &nbsp;</Title>
           <Title as="h5" className="eb-text-green-500">
-            {data?.status}
+            {clientData?.status}
           </Title>
         </Group>
+        <OutstandingKYCRequirements clientData={clientData} />
         <div className="eb-w-xl eb-px-4">
           {clientData?.parties?.map((party) =>
             party.partyType === 'ORGANIZATION'
