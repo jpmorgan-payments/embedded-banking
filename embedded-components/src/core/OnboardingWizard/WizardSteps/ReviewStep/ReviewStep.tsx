@@ -11,6 +11,7 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useStepper } from '../../Stepper/useStepper';
 import { useGetDataByClientId } from '../hooks';
 import { reviewSchema } from '../StepsSchema';
+import OutstandingKYCRequirements from './OustandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
 
 const ReviewStep = () => {
@@ -18,9 +19,11 @@ const ReviewStep = () => {
 
   const { setCurrentStep, activeStep } = useStepper();
 
-  const { data, isPending } = useGetDataByClientId('client');
-
-  const clientData: ClientResponse = data;
+  const {
+    data: clientData,
+    isPending,
+  }: { data: ClientResponse; isPending: boolean } =
+    useGetDataByClientId('client');
 
   const renderParty = (
     party: PartyResponse,
@@ -38,7 +41,11 @@ const ReviewStep = () => {
                 className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
+<<<<<<< HEAD
                 <dd className="sm:pl-4  sm:eb-w-2/3">
+=======
+                <dd className="sm:eb-w-2/3  sm:eb-pl-4">
+>>>>>>> ada3455ada953eca24ededfc99330b774153636e
                   {typeof value === 'boolean'
                     ? value.toString()
                     : Array.isArray(value)
@@ -61,9 +68,10 @@ const ReviewStep = () => {
         <Group className="eb-my-4">
           <Title as="h5">STATUS: &nbsp;</Title>
           <Title as="h5" className="eb-text-green-500">
-            {data?.status}
+            {clientData?.status}
           </Title>
         </Group>
+        <OutstandingKYCRequirements clientData={clientData} />
         <div className="eb-w-xl eb-px-4">
           {clientData?.parties?.map((party) =>
             party.partyType === 'ORGANIZATION'
