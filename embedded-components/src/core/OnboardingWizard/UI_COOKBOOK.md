@@ -1,7 +1,6 @@
 ⚠️ DRAFT - UNDER REVIEW ⚠️
 
 This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
-Last updated: Jul-31-2024
 
 # Digital Onboarding UI/UX Cookbook
 
@@ -9,6 +8,7 @@ Last updated: Jul-31-2024
 
 This cookbook provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. There are multiple ways how complex forms can be implemented, but we recommend to use a stepper wizard layout. The wizard will guide the user through the onboarding process and provide feedback on the current step.
 Advantages of the stepper wizard layout:
+
 - Clear progression: Users can easily see their progress through the form.
 - Reduced cognitive load: By breaking the form into manageable steps, users aren't overwhelmed by a long form.
 - Improved focus: Users can concentrate on one section at a time.
@@ -23,19 +23,22 @@ Advantages of the stepper wizard layout:
 
 ## Stepper Wizard Implementation
 
-Create a main component with a wizard / stepper and individual step components. Use React state to manage the active step and client ID.
+Create a main component with a wizard / stepper and individual step components. Use React state or create a context to manage the active step and client ID as well as sycnhronize the form data with the server state.
 
 ## Step 1: Intro
 
 ### API Operations
+
 - Use the `POST /clients` endpoint to create a new client.
 
 ### Hooks
+
 ```typescript
 const { mutate: createClient } = useCreateClient();
 ```
 
 ### UX Best Practices
+
 - Implement form validation using Yup schema validation.
 - Display clear error messages for invalid inputs.
 - Use dropdown menus for fields with predefined options (e.g., business type, products) - options will be provided from the respective user guides or reference data APIs.
@@ -44,16 +47,63 @@ const { mutate: createClient } = useCreateClient();
 ## Step 2: Individual and Business Details
 
 ### API Operations
+
 - Use `GET /clients/:id` to fetch existing client data.
 - Use `POST /clients/:id` to update client information.
 
 ### Hooks
+
 ```typescript
 const { data: clientData, isLoading } = useGetClient(clientId);
 const { mutate: updateClient } = useUpdateClient();
 ```
 
+### Update Party specifics
+
+All update parties operations could be done inline useUpdateClient() hook with different attributes for different actions
+
+- create a new party - omit the id or parentPartyId
+```json
+{
+    "addParties": [{
+        ...
+    }]
+}
+```
+
+- update an existing party
+```json
+{
+    "addParties": [{
+        "id": "id-of-the-party-to-be-updated",
+        ...
+    }]
+}
+```
+
+- create a new related party
+```json
+{
+    "addParties": [{
+        "parentPartyId": "id-of-the-parent-party",
+        ...
+    }]
+}
+```
+
+- remove a party
+```json
+{
+    "addParties": [{
+        "id": "id-of-the-party-to-be-removed",
+        "status": "INACTIVE"
+        ...
+    }]
+}
+```
+
 ### UX Best Practices
+
 - Pre-fill form fields with existing data from the API.
 - Implement real-time validation as the user types.
 - Use appropriate input types (e.g., date picker for birth date).
@@ -62,14 +112,17 @@ const { mutate: updateClient } = useUpdateClient();
 ## Steps 3 & 4: Business Owners and Decision Makers
 
 ### API Operations
+
 - Use `POST /clients/:id` to update client information with related parties.
 
 ### Hooks
+
 ```typescript
 const { mutate: updateClient } = useUpdateClient();
 ```
 
 ### UX Best Practices
+
 - Will depend on the business type. For example, Sole Proprietorships will have a single owner, while Corporations or Partnerships could have multiple owners and additional decision makers. we recomment to ask a questions whether there are multiple owners or decision makers and then show the respective UI components.
 - Allow adding multiple owners/decision makers dynamically.
 - Implement a summary view of added parties with edit/delete options.
@@ -78,18 +131,23 @@ const { mutate: updateClient } = useUpdateClient();
 ## Step 5: Due Diligence additional questions
 
 ### API Operations
+
 - Use `GET /clients/:id` to fetch outstanding questions.
 - Use `GET /questions?questionIds=<comma-separated-question-ids>` to fetch question details.
 - Use `POST /clients/:id` to submit question responses.
 
 ### Hooks
+
 ```typescript
 const { data: clientData } = useGetClient(clientId);
-const { data: questions } = useGetQuestions({ questionIds: questionIds.join(',') });
+const { data: questions } = useGetQuestions({
+  questionIds: questionIds.join(','),
+});
 const { mutate: updateClient } = useUpdateClient();
 ```
 
 ### UX Best Practices
+
 - Dynamically render questions based on the API response.
 - Use appropriate input types based on question format (e.g., radio buttons for boolean questions).
 - Implement conditional rendering for follow-up questions.
@@ -98,16 +156,19 @@ const { mutate: updateClient } = useUpdateClient();
 ## Step 6: Review and Attestation
 
 ### API Operations
+
 - Use `GET /clients/:id` to fetch all client data for review.
 - Use `POST /clients/:id` to submit attestations.
 
 ### Hooks
+
 ```typescript
 const { data: clientData } = useGetClient(clientId);
 const { mutate: updateClient } = useUpdateClient();
 ```
 
 ### UX Best Practices
+
 - Present a clear summary of all provided information.
 - Highlight any missing or incomplete information.
 - Allow users to navigate back to previous steps to make changes.
@@ -117,16 +178,19 @@ const { mutate: updateClient } = useUpdateClient();
 ## Step 7: Trigger Verification
 
 ### API Operations
+
 - Use `POST /clients/:id/verifications` to trigger KYC process.
 - Use `GET /clients/:id` to fetch updated client status.
 
 ### Hooks
+
 ```typescript
 const { mutate: triggerVerification } = useTriggerVerification();
 const { data: clientData } = useGetClient(clientId);
 ```
 
 ### UX Best Practices
+
 - Clearly communicate that this is the final step and no further edits will be possible.
 - Show a progress indicator during the verification process.
 - Display the current client status and any required additional documents.
