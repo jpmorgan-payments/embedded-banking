@@ -1,5 +1,6 @@
 import { get } from 'lodash';
 
+import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
 import {
   ClientResponse,
   PartyResponse,
@@ -25,20 +26,26 @@ const ReviewStep = () => {
   }: { data: ClientResponse; isPending: boolean } =
     useGetDataByClientId('client');
 
+  const { data: questionsDetails } = useSmbdoListQuestions({
+    questionIds: clientData?.questionResponses
+      ?.map((r) => r.questionId)
+      .join(','),
+  });
+
   const renderParty = (
     party: PartyResponse,
     fields: { label: any; path: any }[]
   ) => (
     <div key={party.id} className="eb-mb-4 eb-p-4">
       <h2 className="eb-mb-4 eb-text-xl eb-font-bold">{party.partyType}</h2>
-      <dl className="eb-space-y-2">
+      <dl className="eb-ml-2 eb-space-y-2">
         {fields.map(({ label, path }) => {
           const value = get(party, path);
           if (value !== undefined && value !== null) {
             return (
               <div
                 key={path}
-                className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1 sm:eb-justify-between"
+                className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
                 <dd className="sm:eb-w-2/3  sm:eb-pl-4">
@@ -59,7 +66,7 @@ const ReviewStep = () => {
 
   return (
     <>
-      <Stack className="eb-w-full">
+      <Stack className="eb-w-full eb-text-sm">
         <Title as="h2">Review</Title>
         <Group className="eb-my-4">
           <Title as="h5">STATUS: &nbsp;</Title>
@@ -75,6 +82,24 @@ const ReviewStep = () => {
               : renderParty(party, individualFields)
           )}
         </div>
+
+        <h2 className="eb-mb-4 eb-text-xl eb-font-bold">Question Responses</h2>
+        {clientData?.questionResponses?.map((questionResponse) => (
+          <div key={questionResponse.questionId} className="eb-mb-4 eb-p-4">
+            <dl className="eb-ml-2 eb-space-y-2">
+              <dt className="eb-w-1/3 sm:eb-mb-0">
+                {
+                  questionsDetails?.questions?.find(
+                    (q) => q.id === questionResponse.questionId
+                  )?.description
+                }
+              </dt>
+              <dd className="sm:eb-w-2/3  sm:eb-pl-4">
+                {questionResponse?.values?.join(', ')}
+              </dd>
+            </dl>
+          </div>
+        ))}
 
         <NavigationButtons
           setActiveStep={setCurrentStep}
