@@ -126,7 +126,6 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   }, [isSuccess]);
 
   const onSubmit = useCallback(async () => {
-
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
 
     try {
