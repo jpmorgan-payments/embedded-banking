@@ -1,6 +1,4 @@
-import { useCallback } from 'react';
 import { get } from 'lodash';
-import { useFormContext } from 'react-hook-form';
 
 import {
   ClientResponse,
@@ -12,7 +10,6 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
 import { useGetDataByClientId } from '../hooks';
-// import { useContentData } from '../../utils/useContentData';
 import { reviewSchema } from '../StepsSchema';
 import OutstandingKYCRequirements from './OustandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
@@ -20,7 +17,6 @@ import { individualFields, organizationFields } from './partyFields';
 const ReviewStep = () => {
   // const { getContentToken } = useContentData('steps.ReviewStep');
 
-  const form = useFormContext();
   const { setCurrentStep, activeStep } = useStepper();
 
   const {
@@ -29,21 +25,12 @@ const ReviewStep = () => {
   }: { data: ClientResponse; isPending: boolean } =
     useGetDataByClientId('client');
 
-  const onSubmit = useCallback(async () => {
-    const errors = form?.formState?.errors;
-    if (!Object.values(errors).length) {
-      setCurrentStep(activeStep + 1);
-    }
-  }, [activeStep]);
-
   const renderParty = (
     party: PartyResponse,
     fields: { label: any; path: any }[]
   ) => (
     <div key={party.id} className="eb-mb-4 eb-p-4">
-      <h2 className="eb-mb-4 eb-text-xl eb-font-bold">
-        {party.partyType} Party
-      </h2>
+      <h2 className="eb-mb-4 eb-text-xl eb-font-bold">{party.partyType}</h2>
       <dl className="eb-space-y-2">
         {fields.map(({ label, path }) => {
           const value = get(party, path);
@@ -89,13 +76,14 @@ const ReviewStep = () => {
           )}
         </div>
 
-        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <NavigationButtons
-            setActiveStep={setCurrentStep}
-            activeStep={activeStep}
-            disabled={isPending}
-          />
-        </form>
+        <NavigationButtons
+          setActiveStep={setCurrentStep}
+          activeStep={activeStep}
+          disabled={isPending}
+          onSubmit={() => {
+            setCurrentStep(activeStep + 1);
+          }}
+        />
       </Stack>
     </>
   );

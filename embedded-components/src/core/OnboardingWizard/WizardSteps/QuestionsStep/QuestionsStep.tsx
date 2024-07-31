@@ -18,19 +18,21 @@ import { useStepper } from '../../Stepper/useStepper';
 // import { updateOutstandingItems } from '../../utils/actions';
 import { makeQuestionsAPIBody } from '../../utils/apiUtilsParsers';
 import { useContentData } from '../../utils/useContentData';
+import { useGetDataByClientId } from '../hooks';
 import { useGetQuestions } from '../hooks/useGetQuestions';
 import { q } from './q';
 
 const QuestionsStep = ({ questionsIds, children }: any) => {
-  const { activeStep } = useStepper();
+  const { activeStep, setCurrentStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
-  const { onboardingForm, setOnboardingForm } = useOnboardingForm();
+  const { data } = useGetDataByClientId('client');
+  const { onboardingForm } = useOnboardingForm();
   const { clientId } = useRootConfig();
 
-  const { data: questionsList, isSuccess } = useGetQuestions(
-    questionsIds?.join(',')
-  );
+  console.log('@@data', data, '>>', data?.outstanding?.questionIds);
+  const questionList = data?.outstanding?.questionIds || questionsIds;
+  const { data: questionsList, isSuccess } = useGetQuestions(questionList);
 
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
@@ -124,27 +126,18 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   }, [isSuccess]);
 
   const onSubmit = useCallback(async () => {
-    const errors = form?.formState?.errors;
-    if (errors) {
-      return;
-    }
-    const questionList =
-      questionsIds?.join(',') ||
-      onboardingForm?.outstandingItems?.questionIds?.join(',');
-
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
 
-    const res = await submitQuestions({
-      id: (onboardingForm?.id || clientId) ?? '',
-      data: postBody,
-    });
+    try {
+      await submitQuestions({
+        id: (onboardingForm?.id || clientId) ?? '',
+        data: postBody,
+      });
 
-    setOnboardingForm({
-      ...onboardingForm,
-      outstandingItems: res?.outstanding,
-      attestations: res?.attestations?.map((map) => map.documentId) || [],
-    });
-    // setCurrentStep(activeStep + 1);
+      setCurrentStep(activeStep + 1);
+    } catch (err) {
+      console.log('@@err', err);
+    }
   }, [activeStep]);
 
   return (

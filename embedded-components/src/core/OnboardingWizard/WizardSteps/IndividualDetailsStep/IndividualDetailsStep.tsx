@@ -104,9 +104,10 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
 
         setCurrentStep(activeStep + 1);
       } catch (error) {
-        // if (isMock) {
-        //   setCurrentStep(activeStep + 1);
-        // }
+        if (isMock) {
+          setCurrentStep(activeStep + 1);
+        }
+        console.log('@@error');
       }
     }
   };

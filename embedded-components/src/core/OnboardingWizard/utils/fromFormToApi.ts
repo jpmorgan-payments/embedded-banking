@@ -60,7 +60,7 @@ export const fromFormToOrgParty = (form: any) => {
           {
             idType: 'EIN',
             issuer: 'US',
-            value: form?.ein,
+            value: form?.ein.replace('-', ''),
           },
         ]
       : [],
@@ -75,7 +75,6 @@ export const fromFormToOrgParty = (form: any) => {
 // any
 export const fromFormToIndParty = (form: any) => {
   let indParty: IndividualDetails = {};
-  console.log('@@form', form.birthDate);
 
   const addressLines = [
     form?.addressLine1,

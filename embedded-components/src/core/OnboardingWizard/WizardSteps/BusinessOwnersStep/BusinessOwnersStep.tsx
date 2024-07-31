@@ -25,7 +25,7 @@ import { useGetDataByClientId } from '../hooks';
 // TODO: neeed to make sure that we actuall update or remove
 const BusinessOwnersStep = () => {
   const [open, setOpen] = useState(false);
-  const [additionalDecisionMakers, setAdditionalDecisionMakers] =
+  const [additionalBusinessOwners, setAdditionalBusinessOwners] =
     useState(false);
 
   const { activeStep, setCurrentStep } = useStepper();
@@ -37,8 +37,8 @@ const BusinessOwnersStep = () => {
   }, [data]);
 
   const handleToggleButton = (val: string) => {
-    if (val === 'No') setAdditionalDecisionMakers(false);
-    if (val === 'Yes') setAdditionalDecisionMakers(true);
+    if (val === 'No') setAdditionalBusinessOwners(false);
+    if (val === 'Yes') setAdditionalBusinessOwners(true);
   };
 
   const onSubmit = async () => {
@@ -51,7 +51,7 @@ const BusinessOwnersStep = () => {
 
       <form noValidate>
         <FormField
-          name="additionalDecisionMakers"
+          name="additionalBusinessOwners"
           render={() => (
             <FormItem>
               <FormLabel asterisk>
@@ -81,7 +81,7 @@ const BusinessOwnersStep = () => {
         />
       </form>
 
-      {additionalDecisionMakers && reviewData?.individualDetails && (
+      {additionalBusinessOwners && reviewData?.individualDetails && (
         <>
           <Title as="h4" className="eb-my-5">
             Listed business owners
