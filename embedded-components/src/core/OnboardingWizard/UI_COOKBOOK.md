@@ -161,9 +161,9 @@ const { data: clientData } = useGetClient(clientId);
 
 ## API Error Handling
 
-- Implement a global error handling mechanism for API calls.
-- Display user-friendly error messages based on API error responses.
+- Anticipate server-side errors and display user-friendly error messages based on API error responses.
 - Provide guidance on how to resolve common errors.
+- In case of long complex forms, summarize and repeat client side validation errors near the Next step (or other CTA) button to avoid missing important information.
 
 Example error handling:
 
