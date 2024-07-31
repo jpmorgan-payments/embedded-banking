@@ -5,7 +5,7 @@ import { useSmbdoGetParty } from '@/api/generated/embedded-banking';
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const MissingPartyFields = ({partyId}: {partyId: string}) => {
+const MissingPartyFields = ({ partyId }: { partyId: string }) => {
   const { data: party } = useSmbdoGetParty(partyId);
   const partyValidationResponseFields = party?.validationResponse?.filter(
     (r) => r.validationStatus !== 'NEEDS_INFO'
@@ -39,7 +39,7 @@ const OutstandingKYCRequirements = ({
   const outstanding = clientData?.outstanding;
 
   return (
-    <Alert variant="destructive" color='orange' className="eb-max-w-xl">
+    <Alert variant="destructive" color="orange" className="eb-max-w-xl">
       <AlertCircle className="eb-h-4 eb-w-4" />
       <AlertTitle>Outstanding KYC Requirements</AlertTitle>
       <AlertDescription>
@@ -81,7 +81,9 @@ const OutstandingKYCRequirements = ({
         {!!outstanding?.partyIds?.length && (
           <div className="eb-mt-2">
             <h4 className="eb-font-semibold">Incomplete Party Information</h4>
-            {outstanding.partyIds.map((partyId) => <MissingPartyFields partyId={partyId} />)}
+            {outstanding.partyIds.map((partyId) => (
+              <MissingPartyFields partyId={partyId} />
+            ))}
           </div>
         )}
 

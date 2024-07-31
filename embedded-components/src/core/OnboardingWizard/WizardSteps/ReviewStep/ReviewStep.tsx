@@ -14,8 +14,8 @@ import { useStepper } from '../../Stepper/useStepper';
 import { useGetDataByClientId } from '../hooks';
 // import { useContentData } from '../../utils/useContentData';
 import { reviewSchema } from '../StepsSchema';
-import { individualFields, organizationFields } from './partyFields';
 import OutstandingKYCRequirements from './OustandingKYCRequirements';
+import { individualFields, organizationFields } from './partyFields';
 
 const ReviewStep = () => {
   // const { getContentToken } = useContentData('steps.ReviewStep');
