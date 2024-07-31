@@ -30,7 +30,6 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   const { onboardingForm } = useOnboardingForm();
   const { clientId } = useRootConfig();
 
-  console.log('@@data', data, '>>', data?.outstanding?.questionIds);
   const questionList = data?.outstanding?.questionIds || questionsIds;
   const { data: questionsList, isSuccess } = useGetQuestions(questionList);
 

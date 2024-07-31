@@ -2,6 +2,7 @@ import {
   RootConfig,
   RootConfigProvider,
 } from '../EBComponentsProvider/RootConfigProvider';
+import { ErrorProvider } from './context/error.context';
 import { OnboardingFormProvider } from './context/form.context';
 import { OnboardingWizardSchema } from './OnboardingWizardSchema';
 import { StepperProvider } from './Stepper/Stepper';
@@ -23,7 +24,9 @@ const OnboardingWizard = ({
     <RootConfigProvider clientOptions={{ clientId, onRegistration, ...props }}>
       <StepperProvider>
         <OnboardingFormProvider>
-          <OnboardingWizardSchema {...props} />
+          <ErrorProvider>
+            <OnboardingWizardSchema {...props} />
+          </ErrorProvider>
         </OnboardingFormProvider>
       </StepperProvider>
     </RootConfigProvider>
