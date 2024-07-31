@@ -7,12 +7,18 @@ Last updated: Jul-31-2024
 
 ## Introduction
 
-This cookbook provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. We'll focus on creating a stepper wizard layout for the onboarding process, highlighting API operations and UX best practices for each step.
+This cookbook provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. There are multiple ways how complex forms can be implemented, but we recommend to use a stepper wizard layout. The wizard will guide the user through the onboarding process and provide feedback on the current step.
+Advantages of the stepper wizard layout:
+- Clear progression: Users can easily see their progress through the form.
+- Reduced cognitive load: By breaking the form into manageable steps, users aren't overwhelmed by a long form.
+- Improved focus: Users can concentrate on one section at a time.
+- Better mobile experience: Each step can be optimized for mobile viewing.
+- Easier error management: Errors can be addressed at each step before proceeding.
 
 ## Setup
 
 1. Set up a new React project (Create React App or Next.js).
-2. Install dependencies: `react-query`, `axios`, `formik` (or other form library), `yup` (or other JSON schema validation library), and components library of your choice (Mantine, shadcn, Material-UI, Ant Design, etc.).
+2. Install dependencies: `react-query`, `axios`, `react-hook-form` (or other form library), `yup` (or other JSON schema validation library), and components library of your choice (Mantine, shadcn, Material-UI, Ant Design, etc.).
 3. We recommend to use Orval to generate React Query hooks and TypeScript types from the OpenAPI specification.
 
 ## Stepper Wizard Implementation
@@ -64,6 +70,7 @@ const { mutate: updateClient } = useUpdateClient();
 ```
 
 ### UX Best Practices
+- Will depend on the business type. For example, Sole Proprietorships will have a single owner, while Corporations or Partnerships could have multiple owners and additional decision makers. we recomment to ask a questions whether there are multiple owners or decision makers and then show the respective UI components.
 - Allow adding multiple owners/decision makers dynamically.
 - Implement a summary view of added parties with edit/delete options.
 - Use consistent validation across all party forms.
