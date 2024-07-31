@@ -11,9 +11,19 @@ const useGetDataByClientId = (screeName: 'review' | 'client' = 'review') => {
     useRootConfig();
 
   const { data, refetch, isPending, isError } = isMockResponse
-    ? { data: mockSteps[screeName], refetch: () => null, isPending: false }
+    ? {
+        data: mockSteps[screeName],
+        refetch: () => null,
+        isPending: false,
+        isError: false,
+      }
     : isMock
-      ? { data: mockData, refetch: () => null, isPending: false }
+      ? {
+          data: mockData,
+          refetch: () => null,
+          isPending: false,
+          isError: false,
+        }
       : useSmbdoGetClient(clientId as string);
 
   useEffect(() => {
