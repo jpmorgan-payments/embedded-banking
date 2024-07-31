@@ -7,6 +7,7 @@ import {
   PartyResponse,
 } from '@/api/generated/embedded-banking.schemas';
 import { Group, Stack, Title } from '@/components/ui';
+
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
@@ -47,10 +48,10 @@ const ReviewStep = () => {
             return (
               <div
                 key={path}
-                className="eb-flex sm:eb-justify-between eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1"
+                className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 eb-pb-1 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
-                <dd className="sm:eb-w-2/3  sm:pl-4">
+                <dd className="sm:pl-4  sm:eb-w-2/3">
                   {typeof value === 'boolean'
                     ? value.toString()
                     : Array.isArray(value)
