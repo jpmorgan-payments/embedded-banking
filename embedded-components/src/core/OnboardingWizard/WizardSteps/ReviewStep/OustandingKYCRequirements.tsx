@@ -8,7 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 const MissingPartyFields = ({ partyId }: { partyId: string }) => {
   const { data: party } = useSmbdoGetParty(partyId);
   const partyValidationResponseFields = party?.validationResponse?.filter(
-    (r) => r.validationStatus !== 'NEEDS_INFO'
+    (r) => r.validationStatus === 'NEEDS_INFO'
   )?.[0]?.fields;
 
   if (!partyValidationResponseFields) {
@@ -39,9 +39,9 @@ const OutstandingKYCRequirements = ({
   const outstanding = clientData?.outstanding;
 
   return (
-    <Alert variant="destructive" color="orange" className="eb-max-w-xl">
+    <Alert variant="destructive" color="orange" className="eb-max-w-2xl">
       <AlertCircle className="eb-h-4 eb-w-4" />
-      <AlertTitle>Outstanding KYC Requirements</AlertTitle>
+      <AlertTitle className="eb-mt-2">Outstanding KYC Requirements</AlertTitle>
       <AlertDescription>
         <p>Please complete the following before initiating KYC:</p>
 
