@@ -41,7 +41,7 @@ const OutstandingKYCRequirements = ({
   return (
     <Alert variant="destructive" color="orange" className="eb-max-w-2xl">
       <AlertCircle className="eb-h-4 eb-w-4" />
-      <AlertTitle className='eb-mt-2'>Outstanding KYC Requirements</AlertTitle>
+      <AlertTitle className="eb-mt-2">Outstanding KYC Requirements</AlertTitle>
       <AlertDescription>
         <p>Please complete the following before initiating KYC:</p>
 
