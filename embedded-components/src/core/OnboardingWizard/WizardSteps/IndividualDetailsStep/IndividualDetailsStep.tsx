@@ -12,6 +12,7 @@ import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { useError } from '../../context/error.context';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { fromFormToIndParty } from '../../utils/fromFormToApi';
 import { useGetDataByClientId } from '../hooks';
@@ -32,6 +33,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
+  const { setError } = useError();
 
   // const { getContentToken: ownerConter } = useContentData(
   //   'schema.businessOwnerFormSchema'
@@ -107,7 +109,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         if (isMock) {
           setCurrentStep(activeStep + 1);
         }
-        console.log('@@error');
+        setError(true);
       }
     }
   };
