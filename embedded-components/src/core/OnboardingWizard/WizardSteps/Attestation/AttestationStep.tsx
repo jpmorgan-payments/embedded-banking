@@ -8,7 +8,6 @@ import {
   useSmbdoGetAllDocumentDetails,
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
-
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import {
   Checkbox,
