@@ -13,13 +13,14 @@ const fieldMap: Record<OnboardingWizardFormField, string> = {
 
 export function translateApiErrorsToFormErrors(
   errors: ApiErrorReasonV2[],
-  index: number
+  partyIndex: number
 ) {
   return errors.map((error) => {
     const fieldMapKeys = Object.keys(fieldMap) as Array<keyof typeof fieldMap>;
     const matchedKey = fieldMapKeys.find(
       (key) =>
-        fieldMap[key].replace(/\{index\}/g, `${index}`) === (error.field ?? '')
+        fieldMap[key].replace(/\{index\}/g, `${partyIndex}`) ===
+        (error.field ?? '')
     );
     return { field: matchedKey, message: error.message, path: error.field };
   });
