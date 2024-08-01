@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { addons } from '@storybook/preview-api';
 import { Preview } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { initialize, mswLoader } from 'msw-storybook-addon';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 
 import { EBComponentsProvider } from '../src/core/EBComponentsProvider';
@@ -9,6 +10,11 @@ import { EBComponentsProvider } from '../src/core/EBComponentsProvider';
 import '../src/index.css';
 
 const channel = addons.getChannel();
+
+// Initialize MSW
+initialize({
+  onUnhandledRequest: 'bypass',
+});
 
 function ColorSchemeWrapper({
   children,
@@ -60,5 +66,7 @@ export const decorators = [
 const preview: Preview = {
   // The default value of the theme arg for all stories
   args: { isMockBaseUrl: true, isMock: true },
+  // Provide the MSW addon loader globally
+  loaders: [mswLoader],
 };
 export default preview;

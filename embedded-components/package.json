@@ -73,6 +73,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+    "@storybook/addon-a11y": "^8.2.7",
     "@storybook/addon-essentials": "^8.2.6",
     "@storybook/addon-interactions": "^8.2.6",
     "@storybook/addon-links": "^8.2.6",
@@ -103,6 +104,7 @@
     "eslint-plugin-tailwindcss": "^3.17.4",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^24.1.1",
+    "msw-storybook-addon": "^2.0.3",
     "orval": "^6.31.0",
     "postcss": "^8.4.40",
     "postcss-preset-mantine": "1.17.0",
@@ -143,5 +145,10 @@
     "url": "https://github.com/jpmorgan-payments/embedded-banking.git",
     "directory": "embedded-components"
   },
-  "homepage": "https://github.com/jpmorgan-payments/embedded-banking/blob/main/embedded-components/README.md"
+  "homepage": "https://github.com/jpmorgan-payments/embedded-banking/blob/main/embedded-components/README.md",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }
