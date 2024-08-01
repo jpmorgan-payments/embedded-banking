@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import {
   useSmbdoPostParties,
+  useSmbdoUpdateClient,
   useSmbdoUpdateParty,
 } from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { fromFormToIndParty } from '../utils/fromFormToApi';
@@ -31,7 +32,7 @@ import { RenderForms } from '../WizardSteps/utils/RenderForms';
 // } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
 type DecisionMakerModalProps = {
-  owner?: any;
+  data?: any;
   onOpenChange: any;
   title: string;
   parentPartyId?: string;
@@ -40,7 +41,7 @@ type DecisionMakerModalProps = {
 };
 
 const DecisionMakerModal = ({
-  owner,
+  data,
   onOpenChange,
   title,
   parentPartyId,
@@ -51,13 +52,15 @@ const DecisionMakerModal = ({
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );
-  const { onboardingForm } = useOnboardingForm();
-  const { mutateAsync: updateParty, isPending: updatePartyisPending } =
-    useSmbdoUpdateParty();
-  const { mutateAsync: createParty, isPending: createPartyisPending } =
-    useSmbdoPostParties();
-  const defaultInitialValues = owner?.firstName ? owner : {};
+  const { clientId } = useRootConfig();
+  const { mutateAsync: updateParty, isPending: createPartyisPending } =
+    useSmbdoUpdateClient();
+
+  // TODO: Lets imrove this dafault value assignment
+  const defaultInitialValues = data?.firstName ? data : {};
   // : createPersonalDetailsSchema().cast({});
+  console.log('@@defau', defaultInitialValues);
+  defaultInitialValues.individualEmail = data?.email;
 
   const form = useForm<any>({
     defaultValues: defaultInitialValues,
@@ -72,10 +75,16 @@ const DecisionMakerModal = ({
 
       if (partyId) {
         const res = await updateParty({
-          id: partyId,
+          id: clientId ?? '',
           data: {
-            email: form.getValues().individualEmail,
-            individualDetails: data,
+            addParties: [
+              {
+                id: partyId,
+                partyType: 'INDIVIDUAL',
+                email: form.getValues().individualEmail,
+                individualDetails: data,
+              },
+            ],
           },
         });
 
@@ -83,13 +92,18 @@ const DecisionMakerModal = ({
           onOpenChange(res?.id);
         }
       } else {
-        const res = await createParty({
+        const res = await updateParty({
+          id: clientId ?? '',
           data: {
-            partyType: 'INDIVIDUAL',
-            email: form.getValues().individualEmail,
-            parentPartyId,
-            individualDetails: data,
-            roles: type === 'owner' ? ['BENEFICIAL_OWNER'] : ['DECISION_MAKER'],
+            addParties: [
+              {
+                partyType: 'INDIVIDUAL',
+                email: form.getValues().individualEmail,
+                individualDetails: data,
+                roles:
+                  type === 'owner' ? ['BENEFICIAL_OWNER'] : ['DECISION_MAKER'],
+              },
+            ],
           },
         });
 
@@ -100,15 +114,22 @@ const DecisionMakerModal = ({
     }
   };
 
-  const handleRemoveOwner = useCallback(() => {
-    if (owner) {
-      // const newOnboardingForm = removeOtherOwner(onboardingForm, owner);
-      // setOnboardingForm(newOnboardingForm);
-      onOpenChange(false);
-    } else {
-      //TODO handle error
-    }
-  }, [onboardingForm]);
+  const handleRemoveOwner = async () => {
+    // const res = await updateParty({
+    //   id: clientId ?? '',
+    //   data: {
+    //     addParties: [
+    //       {
+    //         id: partyId,
+    //         // status: 'INACTIVE',
+    //       },
+    //     ],
+    //   },
+    // });
+    // if (res?.id) {
+    //   onOpenChange(res?.id);
+    // }
+  };
 
   return (
     <DialogContent>
@@ -131,13 +152,13 @@ const DecisionMakerModal = ({
                 // onClick={() => {
                 //   onOpenChange();
                 // }}
-                disabled={createPartyisPending || updatePartyisPending}
+                disabled={createPartyisPending}
               >
                 cancel
               </Button>
             </DialogClose>
             <div className="eb-flex eb-justify-end">
-              {owner ? (
+              {data ? (
                 <Button
                   onClick={handleRemoveOwner}
                   type="button"
@@ -149,11 +170,8 @@ const DecisionMakerModal = ({
               ) : (
                 <></>
               )}
-              <Button
-                type="submit"
-                disabled={createPartyisPending || updatePartyisPending}
-              >
-                {owner ? 'Update' : 'Save'}
+              <Button type="submit" disabled={createPartyisPending}>
+                {data ? 'Update' : 'Save'}
               </Button>
             </div>
           </DialogFooter>

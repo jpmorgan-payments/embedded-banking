@@ -102,7 +102,7 @@ const BusinessCard = ({
                       </Button>
                     </DialogTrigger>
                     <DecisionMakerModal
-                      owner={individual}
+                      data={individual}
                       title={
                         type === 'owner'
                           ? 'Enter business owner details'

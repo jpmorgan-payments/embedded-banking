@@ -27,20 +27,23 @@ export const OnboardingWizardSchema = ({ title }: any) => {
     currentFormSchema,
   } = useStepper();
   const { onboardingForm, setOnboardingForm } = useOnboardingForm();
-  const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
+
+  // TODO: Temporary comment for IP 
+  // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
   const { clientId } = useRootConfig();
   const { error: isError } = useError();
 
-  useEffect(() => {
-    //TODO: Do something if ipFetchStatus, fails, or stalls
-  }, [ipFetchStatus]);
+   // TODO: Temporary comment for IP 
+  // useEffect(() => {
+  //   //TODO: Do something if ipFetchStatus, fails, or stalls
+  // }, [ipFetchStatus]);
 
-  //TODO: Turn all the below effects, and Memoes into a hook
-  useEffect(() => {
-    if (ipAddress) {
-      setOnboardingForm({ ...onboardingForm, ip: ipAddress });
-    }
-  }, [ipAddress]);
+  // //TODO: Turn all the below effects, and Memoes into a hook
+  // useEffect(() => {
+  //   if (ipAddress) {
+  //     setOnboardingForm({ ...onboardingForm, ip: ipAddress });
+  //   }
+  // }, [ipAddress]);
 
   // Building steps
   useEffect(() => {
