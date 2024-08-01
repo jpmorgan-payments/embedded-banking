@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 // import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';

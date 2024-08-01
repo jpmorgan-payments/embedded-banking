@@ -21,7 +21,9 @@ const OnboardingWizard = ({
   ...props
 }: OnboardingWizardInitProps) => {
   return (
-    <RootConfigProvider clientOptions={{ clientId, onPostClientsVerfication, ...props }}>
+    <RootConfigProvider
+      clientOptions={{ clientId, onPostClientsVerfication, ...props }}
+    >
       <StepperProvider>
         <OnboardingFormProvider>
           <ErrorProvider>

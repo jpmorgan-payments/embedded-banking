@@ -28,12 +28,12 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   } = useStepper();
   // const { onboardingForm, setOnboardingForm } = useOnboardingForm();
 
-  // TODO: Temporary comment for IP 
+  // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
   const { clientId } = useRootConfig();
   const { error: isError } = useError();
 
-   // TODO: Temporary comment for IP 
+  // TODO: Temporary comment for IP
   // useEffect(() => {
   //   //TODO: Do something if ipFetchStatus, fails, or stalls
   // }, [ipFetchStatus]);
