@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
@@ -23,30 +22,20 @@ const OnboardingWizardWithProvider = ({
   setClientId?: (s: string) => void;
   clientId?: string;
 }) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        retry: false,
-      },
-    },
-  });
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <EBComponentsProvider
-          apiBaseUrl={apiBaseUrl}
-          headers={headers}
-          theme={theme}
-        >
-          <OnboardingWizard
-            title={title}
-            onRegistration={onRegistration}
-            setClientId={setClientId}
-            clientId={clientId}
-          />
-        </EBComponentsProvider>
-      </QueryClientProvider>
+      <EBComponentsProvider
+        apiBaseUrl={apiBaseUrl}
+        headers={headers}
+        theme={theme}
+      >
+        <OnboardingWizard
+          title={title}
+          onRegistration={onRegistration}
+          setClientId={setClientId}
+          clientId={clientId}
+        />
+      </EBComponentsProvider>
     </>
   );
 };
