@@ -47,14 +47,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
 
   return (
     <>
-      <Grid className={`eb-grid-flow-row eb-gap-4 eb-pt-4`}>
+      <Grid className="eb-grid-flow-row eb-gap-4 eb-pt-4">
         <Stack>
           <FormField
             control={form.control}
             name="businessDescription"
             render={({ field }) => (
               <FormItem>
-                <Stack className={`eb-grid-flow-row eb-gap-4 eb-pt-4`}>
+                <Stack className="eb-grid-flow-row eb-gap-4 eb-pt-4">
                   <FormLabel asterisk>
                     {getContentToken(`businessDescription.label`)}
                   </FormLabel>
