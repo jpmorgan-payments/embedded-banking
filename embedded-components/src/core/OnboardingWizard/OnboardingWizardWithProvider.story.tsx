@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
@@ -71,5 +72,30 @@ export const NoThemeWithPDPAPIs: Story = {
   args: {
     theme: {},
     apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
+  },
+  play: async ({ canvasElement }) => {
+    // https://storybook.js.org/docs/writing-stories/play-function
+
+    const canvas = within(canvasElement);
+    // 👇 Simulate interactions with the component
+    await userEvent.type(
+      await canvas.findByLabelText('Name of Your Business', {
+        selector: 'input',
+      }),
+      'Sample Business',
+      {
+        delay: 10,
+      }
+    );
+
+    await userEvent.type(
+      await canvas.findByLabelText('Business Email', {
+        selector: 'input',
+      }),
+      'example-email@email.com',
+      {
+        delay: 10,
+      }
+    );
   },
 };
