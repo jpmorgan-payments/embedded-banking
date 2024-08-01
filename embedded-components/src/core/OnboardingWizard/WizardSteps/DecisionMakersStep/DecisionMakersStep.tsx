@@ -14,7 +14,7 @@ import { Button, Stack } from '@/components/ui';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
-import { DecisionMakerModal } from '../../Modals/DecisionMakerModal';
+import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
@@ -140,7 +140,7 @@ const DecisionMakersStep = () => {
               >
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </Button>
-              <DecisionMakerModal
+              <IndividualOrgIndModal
                 onOpenChange={(id: string) => {
                   setOpen((s) => !s);
                   if (id) {

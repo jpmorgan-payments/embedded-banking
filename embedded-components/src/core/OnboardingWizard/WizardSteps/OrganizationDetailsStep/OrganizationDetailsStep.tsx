@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoUpdateParty } from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 // import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
@@ -10,6 +10,7 @@ import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { useError } from '../../context/error.context';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { fromFormToOrgParty } from '../../utils/fromFormToApi';
 import { useGetDataByClientId } from '../hooks';
@@ -22,15 +23,17 @@ import { updateFormValues } from '../utils/updateFormValues';
 const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
-  const { isMock } = useRootConfig();
+  const { isMock, clientId } = useRootConfig();
   const { data } = useGetDataByClientId('client');
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
-  const { mutateAsync: updateParty, isPending: updatePartyisPending } =
-    useSmbdoUpdateParty();
+
+  const { mutateAsync: updateController, isPending: createPartyisPending } =
+    useSmbdoUpdateClient();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
+  const { setError } = useError();
 
   const orgData = getOrg(clientDataForm);
 
@@ -47,32 +50,24 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const onSubmit = useCallback(async () => {
     const dataParty = fromFormToOrgParty(form.getValues());
     try {
-      if (!clientDataForm) {
-        // await createController({
-        //   id: clientId ?? '',
-        //   data: {
-        //     addParties: [
-        //       {
-        //         partyType: 'INDIVIDUAL',
-        //         email: individualEmail,
-        //         individualDetails: dataParty,
-        //         roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
-        //       },
-        //     ],
-        //   },
-        // });
-      } else {
-        await updateParty({
-          id: orgData.id ?? '',
-          data: {
-            email: orgData.email,
-            organizationDetails: dataParty,
-          },
-        });
-      }
+      await updateController({
+        id: clientId ?? '',
+        data: {
+          addParties: [
+            {
+              id: orgData?.id ?? '',
+              partyType: 'ORGANIZATION',
+              email: orgData.email,
+              organizationDetails: dataParty,
+            },
+          ],
+        },
+      });
 
       setCurrentStep(activeStep + 1);
-    } catch (error) {
+    } catch (error: any) {
+      setError(true);
+
       if (isMock) {
         setCurrentStep(activeStep + 1);
       }
@@ -105,7 +100,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={updatePartyisPending}
+          disabled={createPartyisPending}
         />
       </form>
     </Stack>

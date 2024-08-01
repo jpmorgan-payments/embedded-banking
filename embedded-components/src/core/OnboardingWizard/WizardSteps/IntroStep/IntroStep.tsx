@@ -20,7 +20,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
   const {
     jurisdictions,
     entityType,
-    onRegistration,
+    onGetClientsConfirmation,
     isMock,
     mockData,
     setClientId,
@@ -101,7 +101,10 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
         products: ['EMBEDDED_PAYMENTS'],
       },
     }).then(async (clientResponse) => {
-      onRegistration?.({ clientId: clientResponse?.id, clientResponse });
+      onGetClientsConfirmation?.({
+        clientId: clientResponse?.id,
+        clientResponse,
+      });
       setClientId(clientResponse.id);
       setPartyId(clientResponse.partyId);
       setCurrentStep(activeStep + 1);

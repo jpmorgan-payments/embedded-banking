@@ -7,7 +7,7 @@ import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui';
 
 // eslint-disable-next-line
-import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
+import { IndividualOrgIndModal } from '../Modals/IndividualOrgIndModal';
 
 // import { PersonalDetailsValues } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
@@ -101,8 +101,8 @@ const BusinessCard = ({
                         View/Edit Details
                       </Button>
                     </DialogTrigger>
-                    <DecisionMakerModal
-                      owner={individual}
+                    <IndividualOrgIndModal
+                      data={individual}
                       title={
                         type === 'owner'
                           ? 'Enter business owner details'
