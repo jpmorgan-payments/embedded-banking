@@ -31,7 +31,7 @@ import { RenderForms } from '../WizardSteps/utils/RenderForms';
 //   PersonalDetailsValues,
 // } from '../../PersonalDetailsStep/PersonalDetailsStep.schema';
 
-type DecisionMakerModalProps = {
+type IndividualOrgIndModalProps = {
   data?: any;
   onOpenChange: any;
   title: string;
@@ -40,14 +40,14 @@ type DecisionMakerModalProps = {
   type: 'owner' | 'decision';
 };
 
-const DecisionMakerModal = ({
+const IndividualOrgIndModal = ({
   data,
   onOpenChange,
   title,
   parentPartyId,
   partyId,
   type,
-}: DecisionMakerModalProps) => {
+}: IndividualOrgIndModalProps) => {
   // const { getContentToken } = useContentData('schema.businessOwnerFormSchema');
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
@@ -181,4 +181,4 @@ const DecisionMakerModal = ({
   );
 };
 
-export { DecisionMakerModal };
+export { IndividualOrgIndModal };
