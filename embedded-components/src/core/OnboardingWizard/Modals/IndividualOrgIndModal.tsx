@@ -1,12 +1,7 @@
-import { useCallback } from 'react';
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import {
-  useSmbdoPostParties,
-  useSmbdoUpdateClient,
-  useSmbdoUpdateParty,
-} from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 import { Button } from '@/components/ui/button';
 import {
   DialogClose,
@@ -44,7 +39,6 @@ const IndividualOrgIndModal = ({
   data,
   onOpenChange,
   title,
-  parentPartyId,
   partyId,
   type,
 }: IndividualOrgIndModalProps) => {
@@ -71,7 +65,7 @@ const IndividualOrgIndModal = ({
     const errors = form?.formState?.errors;
 
     if (!Object.values(errors).length) {
-      const data = fromFormToIndParty(form.getValues());
+      const dataInd = fromFormToIndParty(form.getValues());
 
       if (partyId) {
         const res = await updateParty({
@@ -82,7 +76,7 @@ const IndividualOrgIndModal = ({
                 id: partyId,
                 partyType: 'INDIVIDUAL',
                 email: form.getValues().individualEmail,
-                individualDetails: data,
+                individualDetails: dataInd,
               },
             ],
           },
@@ -99,7 +93,7 @@ const IndividualOrgIndModal = ({
               {
                 partyType: 'INDIVIDUAL',
                 email: form.getValues().individualEmail,
-                individualDetails: data,
+                individualDetails: dataInd,
                 roles:
                   type === 'owner' ? ['BENEFICIAL_OWNER'] : ['DECISION_MAKER'],
               },

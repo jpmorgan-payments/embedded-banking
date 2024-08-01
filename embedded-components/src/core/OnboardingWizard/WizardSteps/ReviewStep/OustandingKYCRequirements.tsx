@@ -16,7 +16,7 @@ const MissingPartyFields = ({ partyId }: { partyId: string }) => {
   }
 
   return (
-    <div key={partyId} className="mt-2">
+    <div key={partyId} className="eb-mt-2">
       <h4 className="eb-font-semibold">
         Missing fields for Party ID: {partyId}
       </h4>

@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   useSmbdoUpdateClient,
-  useSmbdoUpdateParty,
 } from '@/api/generated/embedded-banking';
 // import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';

@@ -8,9 +8,9 @@ import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useError } from './context/error.context';
-import { useOnboardingForm } from './context/form.context';
+// import { useOnboardingForm } from './context/form.context';
 import { FormProvider } from './context/formProvider.contex';
-import { useIPAddress } from './hooks/getIPAddress';
+// import { useIPAddress } from './hooks/getIPAddress';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
@@ -26,7 +26,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
     CurrentStep,
     currentFormSchema,
   } = useStepper();
-  const { onboardingForm, setOnboardingForm } = useOnboardingForm();
+  // const { onboardingForm, setOnboardingForm } = useOnboardingForm();
 
   // TODO: Temporary comment for IP 
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
