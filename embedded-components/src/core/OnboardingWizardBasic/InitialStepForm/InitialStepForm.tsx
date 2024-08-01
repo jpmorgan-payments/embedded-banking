@@ -50,7 +50,11 @@ export const InitialStepForm = () => {
 
           apiFormErrors.forEach((formError) => {
             if (formError.field === undefined) {
-              form.setError('root.unhandled', { message: formError.message });
+              form.setError('root.unhandled', {
+                message: `${
+                  form.formState.errors.root?.unhandled?.message ?? ''
+                }\n${formError.path}: ${formError.message}`,
+              });
             } else {
               form.setError(formError.field, {
                 message: `Server Error: ${formError.message}`,
@@ -80,6 +84,9 @@ export const InitialStepForm = () => {
       },
     });
   };
+
+  const unhandledServerErrors =
+    form.formState.errors.root?.unhandled?.message?.split('\n');
 
   return (
     <Form {...form}>
@@ -114,6 +121,18 @@ export const InitialStepForm = () => {
                 ? 'There was an issue with the submitted data. Please fix any errors.'
                 : 'An unexpected error occurred. Please try again later.'}
             </AlertDescription>
+            {unhandledServerErrors && (
+              <>
+                <AlertDescription className="eb-mt-2 eb-font-semibold">
+                  Unhandled errors:
+                </AlertDescription>
+                {unhandledServerErrors.map((error) => (
+                  <AlertDescription key={error} className="eb-text-red-600">
+                    {error}
+                  </AlertDescription>
+                ))}
+              </>
+            )}
           </Alert>
         )}
         <FormActions />
