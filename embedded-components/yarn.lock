@@ -2767,6 +2767,7 @@ __metadata:
     "@radix-ui/react-separator": "npm:^1.1.0"
     "@radix-ui/react-slot": "npm:^1.1.0"
     "@radix-ui/react-switch": "npm:^1.1.0"
+    "@storybook/addon-a11y": "npm:^8.2.7"
     "@storybook/addon-essentials": "npm:^8.2.6"
     "@storybook/addon-interactions": "npm:^8.2.6"
     "@storybook/addon-links": "npm:^8.2.6"
@@ -2810,6 +2811,7 @@ __metadata:
     libphonenumber-js: "npm:^1.11.5"
     lucide-react: "npm:^0.418.0"
     msw: "npm:^2.3.4"
+    msw-storybook-addon: "npm:^2.0.3"
     orval: "npm:^6.31.0"
     postcss: "npm:^8.4.40"
     postcss-preset-mantine: "npm:1.17.0"
@@ -4474,6 +4476,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-a11y@npm:^8.2.7":
+  version: 8.2.7
+  resolution: "@storybook/addon-a11y@npm:8.2.7"
+  dependencies:
+    "@storybook/addon-highlight": "npm:8.2.7"
+    axe-core: "npm:^4.2.0"
+  peerDependencies:
+    storybook: ^8.2.7
+  checksum: 10c0/eba5cba2b029d215e6bb71677fbc426573e626eb226e969ddb8ed1fc3dd299c5acdd247f5cb66a5601c424c9b4ec614087c23c39ceeb79c538ba77a5c29cc9dc
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:8.2.6":
   version: 8.2.6
   resolution: "@storybook/addon-actions@npm:8.2.6"
@@ -4566,6 +4580,17 @@ __metadata:
   peerDependencies:
     storybook: ^8.2.6
   checksum: 10c0/1093477970a152a84159e74a90b93a46abeb1fd043c109780ad058bb5bf04e2a64080106c2b41568da12f1e3a76b9bcbb967630ea1eb40e49357a53044fdde23
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-highlight@npm:8.2.7":
+  version: 8.2.7
+  resolution: "@storybook/addon-highlight@npm:8.2.7"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+  peerDependencies:
+    storybook: ^8.2.7
+  checksum: 10c0/1b2c9c52243a3ce3089c318598c0cf4414308bbf6a48252732dfdbc762255e5e446189dbd100c8130f58a6564e4c748e3ddac3c45b90ceef2e4907d0cb149aa6
   languageName: node
   linkType: hard
 
@@ -6531,7 +6556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.9.1":
+"axe-core@npm:^4.2.0, axe-core@npm:^4.9.1":
   version: 4.10.0
   resolution: "axe-core@npm:4.10.0"
   checksum: 10c0/732c171d48caaace5e784895c4dacb8ca6155e9d98045138ebe3952f78457dd05b92c57d05b41ce2a570aff87dbd0471e8398d2c0f6ebe79617b746c8f658998
@@ -9799,7 +9824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-node-process@npm:^1.2.0":
+"is-node-process@npm:^1.0.1, is-node-process@npm:^1.2.0":
   version: 1.2.0
   resolution: "is-node-process@npm:1.2.0"
   checksum: 10c0/5b24fda6776d00e42431d7bcd86bce81cb0b6cabeb944142fe7b077a54ada2e155066ad06dbe790abdb397884bdc3151e04a9707b8cd185099efbc79780573ed
@@ -10989,6 +11014,17 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: 10c0/d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
+  languageName: node
+  linkType: hard
+
+"msw-storybook-addon@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "msw-storybook-addon@npm:2.0.3"
+  dependencies:
+    is-node-process: "npm:^1.0.1"
+  peerDependencies:
+    msw: ^2.0.0
+  checksum: 10c0/9598a2d96e0afb9b6f1f2f16f26110e4820b49f426ae4d08a12561d18a9d4267a2a56c09c86a6e83cccc1e2eb40d9d2a2f3664556a23a57f776951bdfee3c6a3
   languageName: node
   linkType: hard
 
