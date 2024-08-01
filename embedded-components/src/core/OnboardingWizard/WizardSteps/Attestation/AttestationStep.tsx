@@ -42,6 +42,7 @@ const AttestationStep = () => {
     mutate: postVerifaction,
     isError,
     data,
+    isPending,
   }: any = useSmbdoPostClientVerifications();
 
   // const { isMock } = useRootConfig();
@@ -234,7 +235,7 @@ const AttestationStep = () => {
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
-        disabled={!TAC || !EDC || !check}
+        disabled={!TAC || !EDC || !check || isPending}
         onSubmit={() => {
           onSubmit();
         }}
