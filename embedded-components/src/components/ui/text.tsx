@@ -15,7 +15,7 @@ const textVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: 'sm',
     },
   }
 );

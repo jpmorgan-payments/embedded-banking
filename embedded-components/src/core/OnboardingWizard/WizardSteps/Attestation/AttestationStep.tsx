@@ -6,10 +6,9 @@ import { useFormContext } from 'react-hook-form';
 import {
   useSmbdoDownloadDocument,
   useSmbdoGetAllDocumentDetails,
-  // useSmbdoGetDocumentDetail,
-  // useSmbdoGetDocumentRequest,
-  // useSmbdoPostClientVerifications,
+  useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
+import { Form } from '@/components/ui/form';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import {
   Checkbox,
@@ -19,7 +18,6 @@ import {
   FormLabel,
   FormMessage,
   Group,
-  Separator,
   Stack,
   Text,
   Title,
@@ -39,6 +37,12 @@ const AttestationStep = () => {
   const form = useFormContext();
   const [TAC, setTAC] = useState(false);
   const [EDC, setEDC] = useState(false);
+  const [check, setCheck] = useState(false);
+  const {
+    mutate: postVerifaction,
+    isError,
+    data,
+  }: any = useSmbdoPostClientVerifications();
 
   // const { isMock } = useRootConfig();
   const { clientId } = useRootConfig();
@@ -104,9 +108,20 @@ const AttestationStep = () => {
 
   // const [pdfLoaded, setPdfLoaded] = useState(false);
 
+  // Update form scema for questions after load
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     updateSchema(yupObject);
+  //   }
+  // }, [isSuccess]);
+
   const onSubmit = () => {
     console.log('@@onSubmit');
+    const res = postVerifaction({ id: clientId ?? '' });
+    console.log('@@res', res);
   };
+
+  console.log('@@isError', isError, data);
 
   // const organizationType =
   //   clientDataForm?.onganizationDetails?.orgDetails?.organizationType;
@@ -118,6 +133,8 @@ const AttestationStep = () => {
       <Title as="h2">{getContentToken(`title`)}</Title>
       <Text>{getContentToken(`text`)}</Text>
 
+      {isError && <>{JSON.stringify(data?.context[0]?.message)}</>}
+      {isError && <>ERROR</>}
       {/* <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}
@@ -133,98 +150,98 @@ const AttestationStep = () => {
 
       {/* <Separator /> */}
 
-      <>
-        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-          <Stack className="eb-mt-10">
-            <FormField
-              control={form.control}
-              name="attestedAuthorized"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={() => {}}
-                      disabled={!TAC || !EDC}
-                    />
-                  </FormControl>
-                  <FormLabel className="eb-p-3">
-                    By checking the box, I acknowledge and agree to the
-                    following:
-                  </FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </Stack>
+      {/* <Form {...form}>
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}> */}
+      <Stack className="eb-mt-10">
+        <FormField
+          control={form.control}
+          name="attestedAuthorized"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={() => {
+                    setCheck(true);
+                  }}
+                  disabled={!TAC || !EDC}
+                />
+              </FormControl>
+              <FormLabel className="eb-p-3">
+                By checking the box, I acknowledge and agree to the following:
+              </FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </Stack>
 
-          <Separator />
-
-          <Stack className="eb-mt-4 eb-pl-6">
-            <ul className="eb-list-outside eb-list-[square] eb-space-y-6">
-              <li>
-                <Text>
-                  The Embedded Payment Account may only be used to receive funds
-                  through [the Platform] pursuant to [my Commerce Terms with the
-                  Platform] and I am appointing [the Platform] as my agent for
-                  the Account.
-                </Text>
-              </li>
-              <li>
-                <Text>
-                  The data I am providing is true, accurate, current and
-                  complete to the best of my knowledge.
-                </Text>
-              </li>
-              <li>
+      <Stack className="eb-mt-4 eb-pl-6">
+        <ul className="eb-list-outside eb-list-[square] eb-space-y-2">
+          <li>
+            <Text>
+              The Embedded Payment Account may only be used to receive funds
+              through [the Platform] pursuant to [my Commerce Terms with the
+              Platform] and I am appointing [the Platform] as my agent for the
+              Account.
+            </Text>
+          </li>
+          <li>
+            <Text>
+              The data I am providing is true, accurate, current and complete to
+              the best of my knowledge.
+            </Text>
+          </li>
+          <li>
+            <Group>
+              I have read and agree to the &nbsp;
+              <a
+                className={`eb-underline eb-decoration-primary eb-underline-offset-4 ${TAC && 'eb-decoration-transparent'}`}
+                href={doc ?? '/assets/docs/disclosure.pdf'}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  setTAC(true);
+                }}
+              >
                 <Group>
-                  I have read and agree to the &nbsp;
-                  <a
-                    className="eb-underline eb-decoration-primary eb-underline-offset-4"
-                    href={doc ?? '/assets/docs/disclosure.pdf'}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => {
-                      setTAC(true);
-                    }}
-                  >
-                    <Group>
-                      J.P. Morgan Embedded Payment Terms & Conditions,
-                      <IconExternalLink size={12} />
-                    </Group>
-                  </a>
-                  &nbsp;
-                  <a
-                    className="eb-underline eb-decoration-primary eb-underline-offset-4"
-                    href={doc ?? '/assets/docs/disclosure.pdf'}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => {
-                      setEDC(true);
-                    }}
-                  >
-                    <Group>
-                      the E-Sign Disclosure and Consent,
-                      <IconExternalLink size={12} />
-                    </Group>
-                  </a>
-                  and the certifications directly above.
+                  J.P. Morgan Embedded Payment Terms & Conditions,
+                  <IconExternalLink size={12} />
                 </Group>
-              </li>
-            </ul>
-          </Stack>
-          <Text>{form.getValues().error}</Text>
-        </form>
-      </>
+              </a>
+              &nbsp;
+              <a
+                className={`eb-underline eb-decoration-primary eb-underline-offset-4 ${EDC && 'eb-decoration-transparent'}`}
+                href={doc ?? '/assets/docs/disclosure.pdf'}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  setEDC(true);
+                }}
+              >
+                <Group>
+                  the E-Sign Disclosure and Consent,
+                  <IconExternalLink size={12} />
+                </Group>
+              </a>
+              and the certifications directly above.
+            </Group>
+          </li>
+        </ul>
+      </Stack>
+      <Text>{form.getValues().error}</Text>
+
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
-        disabled={!TAC || !EDC}
-        // onSubmit={() => {
-        //   // setActiveStep(activeStep + 1);
-        // }}
+        disabled={!TAC || !EDC || !check}
+        onSubmit={() => {
+          onSubmit();
+        }}
         lastStep
       />
+      {/* </form>
+      </Form> */}
     </section>
   );
 };
