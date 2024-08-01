@@ -48,7 +48,7 @@ const ReviewStep = () => {
                 className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 sm:eb-justify-between"
               >
                 <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
-                <dd className="sm:eb-w-2/3  sm:eb-pl-4">
+                <dd className="sm:eb-w-2/3 sm:eb-pl-4">
                   {typeof value === 'boolean'
                     ? value.toString()
                     : Array.isArray(value)
@@ -83,23 +83,32 @@ const ReviewStep = () => {
           )}
         </div>
 
-        <h2 className="eb-mb-4 eb-text-xl eb-font-bold">Question Responses</h2>
-        {clientData?.questionResponses?.map((questionResponse) => (
-          <div key={questionResponse.questionId} className="eb-mb-4 eb-p-4">
-            <dl className="eb-ml-2 eb-space-y-2">
-              <dt className="eb-w-1/3 sm:eb-mb-0">
-                {
-                  questionsDetails?.questions?.find(
-                    (q) => q.id === questionResponse.questionId
-                  )?.description
-                }
-              </dt>
-              <dd className="sm:eb-w-2/3  sm:eb-pl-4">
-                {questionResponse?.values?.join(', ')}
-              </dd>
-            </dl>
-          </div>
-        ))}
+        {!!clientData?.questionResponses?.length && (
+          <>
+            <h2 className="eb-mb-4 eb-text-xl eb-font-bold">
+              Question Responses
+            </h2>
+            {clientData?.questionResponses?.map((questionResponse) => (
+              <div
+                key={questionResponse.questionId}
+                className="eb-mb-4 eb-border-b eb-border-dotted eb-border-gray-300 eb-p-4"
+              >
+                <dl className="eb-ml-2 eb-space-y-2">
+                  <dt className="eb-w-1/3 sm:eb-mb-0">
+                    {
+                      questionsDetails?.questions?.find(
+                        (q) => q.id === questionResponse.questionId
+                      )?.description
+                    }
+                  </dt>
+                  <dd className="sm:eb-w-2/3sm:eb-pl-4">
+                    <b>Response:</b> {questionResponse?.values?.join(', ')}
+                  </dd>
+                </dl>
+              </div>
+            ))}
+          </>
+        )}
 
         <NavigationButtons
           setActiveStep={setCurrentStep}

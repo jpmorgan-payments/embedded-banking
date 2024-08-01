@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertCircle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 import { useSmbdoGetParty } from '@/api/generated/embedded-banking';
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
@@ -39,9 +39,9 @@ const OutstandingKYCRequirements = ({
   const outstanding = clientData?.outstanding;
 
   return (
-    <Alert variant="destructive" color="orange" className="eb-max-w-2xl">
-      <AlertCircle className="eb-h-4 eb-w-4" />
-      <AlertTitle className="eb-mt-2">Outstanding KYC Requirements</AlertTitle>
+    <Alert variant="destructive" className="eb-max-w-2xl eb-outline-none">
+      <AlertTriangle className="eb-outline-orange eb-h-4 eb-w-4" />
+      <AlertTitle>Outstanding KYC Requirements</AlertTitle>
       <AlertDescription>
         <p>Please complete the following before initiating KYC:</p>
 
