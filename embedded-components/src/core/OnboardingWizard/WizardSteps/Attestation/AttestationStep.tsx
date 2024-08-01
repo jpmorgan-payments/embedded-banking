@@ -220,9 +220,9 @@ const AttestationStep = () => {
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
         disabled={!TAC || !EDC}
-        onSubmit={() => {
-          // setActiveStep(activeStep + 1);
-        }}
+        // onSubmit={() => {
+        //   // setActiveStep(activeStep + 1);
+        // }}
         lastStep
       />
     </section>
