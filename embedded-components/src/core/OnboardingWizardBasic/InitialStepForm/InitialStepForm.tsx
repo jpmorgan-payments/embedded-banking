@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { ErrorType } from '@/api/axios-instance';
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
-import { ApiErrorReasonV2 } from '@/api/generated/embedded-banking.schemas';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   Form,
   FormControl,
@@ -18,10 +18,8 @@ import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormActions } from '../FormActions/FormActions';
-
-const InitialFormSchema = z.object({
-  organizationName: z.string().min(1, 'Organization name is required'),
-});
+import { translateApiErrorsToFormErrors } from '../utils';
+import { InitialFormSchema } from './InitialStepForm.schema';
 
 export const InitialStepForm = () => {
   const { nextStep } = useStepper();
@@ -30,6 +28,7 @@ export const InitialStepForm = () => {
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
+      organizationType: 'ORGANIZATION',
     },
   });
 
@@ -40,10 +39,25 @@ export const InitialStepForm = () => {
   const { mutate: postClient, status: postClientStatus } = useSmbdoPostClients({
     mutation: {
       onError: (error) => {
-        form.setError('organizationName', {
-          type: 'custom',
-          message: 'this is a test',
+        form.setError('root.serverError', {
+          message: error.response?.data?.title ?? 'Server Error',
+          type: `${error.response?.data?.httpStatus ?? error.status}`,
         });
+
+        if (error.response?.data?.context) {
+          const { context } = error.response.data;
+          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+
+          apiFormErrors.forEach((formError) => {
+            if (formError.field === undefined) {
+              form.setError('root.unhandled', { message: formError.message });
+            } else {
+              form.setError(formError.field, {
+                message: `Server Error: ${formError.message}`,
+              });
+            }
+          });
+        }
       },
     },
   });
@@ -83,12 +97,25 @@ export const InitialStepForm = () => {
                 paperwork.
               </FormDescription>
               <FormControl>
-                <Input {...field} required />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {form.formState.errors.root?.serverError && (
+          <Alert variant="destructive">
+            <AlertCircle className="eb-h-4 eb-w-4" />
+            <AlertTitle>
+              {form.formState.errors.root?.serverError?.message}
+            </AlertTitle>
+            <AlertDescription>
+              {form.formState.errors.root?.serverError?.type === '400'
+                ? 'There was an issue with the submitted data. Please fix any errors.'
+                : 'An unexpected error occurred. Please try again later.'}
+            </AlertDescription>
+          </Alert>
+        )}
         <FormActions />
       </form>
     </Form>
