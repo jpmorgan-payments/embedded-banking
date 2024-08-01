@@ -126,7 +126,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                 )}
               >
                 <CardContent>
-                  <Box className="eb-flex eb-items-center  eb-space-x-4 eb-rounded-md eb-border eb-p-5">
+                  <Box className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
                     <FormProvider>
                       {CurrentStep && (
                         <CurrentStep

@@ -47,7 +47,7 @@ const EntityTypeForm = ({ form }: any) => {
                   defaultValue={field.value}
                   className="eb-flex eb-flex-col eb-space-y-1"
                 >
-                  <FormItem className="eb-flex eb-flex-col  eb-space-x-3 eb-space-y-0">
+                  <FormItem className="eb-flex eb-flex-col eb-space-x-3 eb-space-y-0">
                     <Box className="eb-flex">
                       <RadioGroupItem value="Corporation" />
 
@@ -66,7 +66,7 @@ const EntityTypeForm = ({ form }: any) => {
                     </FormDescription>
                   </FormItem>
 
-                  <FormItem className="eb-flex eb-flex-col  eb-space-x-3 eb-space-y-0">
+                  <FormItem className="eb-flex eb-flex-col eb-space-x-3 eb-space-y-0">
                     <Box className="eb-flex">
                       <RadioGroupItem value="Limited Liability Company" />
 
@@ -84,7 +84,7 @@ const EntityTypeForm = ({ form }: any) => {
                       {getContentToken(`radioValueLLCDesc`)}
                     </FormDescription>
                   </FormItem>
-                  <FormItem className="eb-flex eb-flex-col  eb-space-x-3 eb-space-y-0">
+                  <FormItem className="eb-flex eb-flex-col eb-space-x-3 eb-space-y-0">
                     <Box className="eb-flex">
                       <RadioGroupItem value="Limited Partnership" />
 
@@ -102,7 +102,7 @@ const EntityTypeForm = ({ form }: any) => {
                       {getContentToken(`radioValueLPDesc`)}
                     </FormDescription>
                   </FormItem>
-                  <FormItem className="eb-flex eb-flex-col  eb-space-x-3 eb-space-y-0">
+                  <FormItem className="eb-flex eb-flex-col eb-space-x-3 eb-space-y-0">
                     <Box className="eb-flex">
                       <RadioGroupItem value="Sole Proprietorship" />
 

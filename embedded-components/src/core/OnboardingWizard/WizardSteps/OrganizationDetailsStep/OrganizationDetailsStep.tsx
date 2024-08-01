@@ -80,7 +80,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [activeStep]);
 
   return (
-    <Stack className="eb-w-full ">
+    <Stack className="eb-w-full">
       <Title as="h2" className="eb-mb-4">
         Tell us about your organization
       </Title>

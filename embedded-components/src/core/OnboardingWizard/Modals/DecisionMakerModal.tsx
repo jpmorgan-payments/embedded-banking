@@ -126,7 +126,7 @@ const DecisionMakerModal = ({
             }}
           />
           <DialogFooter className="eb-pt-4">
-            <DialogClose asChild className="eb-mr-auto ">
+            <DialogClose asChild className="eb-mr-auto">
               <Button
                 // onClick={() => {
                 //   onOpenChange();
@@ -136,7 +136,7 @@ const DecisionMakerModal = ({
                 cancel
               </Button>
             </DialogClose>
-            <div className=" eb-flex eb-justify-end">
+            <div className="eb-flex eb-justify-end">
               {owner ? (
                 <Button
                   onClick={handleRemoveOwner}

@@ -91,7 +91,7 @@ const EditReviewStep = () => {
             onEdit={onEditBusiness}
           />
         )}
-        <Title as="h5" className="eb-my-6 eb-uppercase ">
+        <Title as="h5" className="eb-my-6 eb-uppercase">
           Management & Ownership
         </Title>
         <Stack className="eb-gap-4">

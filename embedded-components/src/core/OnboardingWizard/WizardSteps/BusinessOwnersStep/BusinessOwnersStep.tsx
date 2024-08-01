@@ -87,7 +87,7 @@ const BusinessOwnersStep = () => {
             Listed business owners
           </Title>
 
-          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
+          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
             {Object.keys(reviewData?.individualDetails)
               .filter((indID) => {
                 return reviewData.individualDetails[indID].roles.includes(
@@ -97,7 +97,7 @@ const BusinessOwnersStep = () => {
               .map((contollerID: any) => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
@@ -120,7 +120,7 @@ const BusinessOwnersStep = () => {
                 const controller = reviewData.individualDetails[contollerID];
 
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}

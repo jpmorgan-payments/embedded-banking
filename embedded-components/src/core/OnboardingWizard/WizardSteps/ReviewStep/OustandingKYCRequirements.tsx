@@ -1,12 +1,9 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
+
 import { useSmbdoGetParty } from '@/api/generated/embedded-banking';
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
-
-
-
 
 const MissingPartyFields = ({ partyId }: { partyId: string }) => {
   const { data: party } = useSmbdoGetParty(partyId);
@@ -43,8 +40,8 @@ const OutstandingKYCRequirements = ({
 
   return (
     <Alert variant="destructive" className="eb-max-w-2xl eb-outline-none">
-      <AlertTriangle className="eb-h-4 eb-w-4 eb-outline-orange" />
-      <AlertTitle >Outstanding KYC Requirements</AlertTitle>
+      <AlertTriangle className="eb-outline-orange eb-h-4 eb-w-4" />
+      <AlertTitle>Outstanding KYC Requirements</AlertTitle>
       <AlertDescription>
         <p>Please complete the following before initiating KYC:</p>
 

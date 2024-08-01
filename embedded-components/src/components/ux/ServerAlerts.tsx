@@ -26,7 +26,7 @@ const ServerAlertMessage = ({ title }: any) => {
           setError(false);
         }}
       >
-        <X className=" eb-h-4 eb-w-4" />
+        <X className="eb-h-4 eb-w-4" />
       </Box>
     </Alert>
   );
