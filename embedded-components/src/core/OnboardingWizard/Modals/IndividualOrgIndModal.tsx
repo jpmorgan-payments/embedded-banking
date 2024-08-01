@@ -34,7 +34,7 @@ import { RenderForms } from '../WizardSteps/utils/RenderForms';
 type IndividualOrgIndModalProps = {
   data?: any;
   onOpenChange: any;
-  title: string;
+  title?: string;
   parentPartyId?: string;
   partyId?: string;
   type: 'owner' | 'decision';
