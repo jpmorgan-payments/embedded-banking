@@ -10,19 +10,38 @@ import { StepperProvider } from './Stepper/Stepper';
 export interface OnboardingWizardInitProps extends RootConfig {
   isMock?: boolean;
   title?: string;
-  // clientId?: string;
-  // onResigtration: ({ clientId }: { clientId: string }) => void;
+  clientId?: string;
+  onPostClientsVerification: ({
+    clientId,
+    clientResponse,
+  }: {
+    clientId: string;
+    clientResponse?: any;
+  }) => void;
+  onGetClientsConfirmation: ({
+    clientId,
+    clientResponse,
+  }: {
+    clientId: string;
+    clientResponse?: any;
+  }) => void;
 }
 
 //TODO: props types needs to have
 const OnboardingWizard = ({
   clientId,
   onPostClientsVerification,
+  onGetClientsConfirmation,
   ...props
 }: OnboardingWizardInitProps) => {
   return (
     <RootConfigProvider
-      clientOptions={{ clientId, onPostClientsVerification, ...props }}
+      clientOptions={{
+        clientId,
+        onPostClientsVerification,
+        onGetClientsConfirmation,
+        ...props,
+      }}
     >
       <StepperProvider>
         <OnboardingFormProvider>
