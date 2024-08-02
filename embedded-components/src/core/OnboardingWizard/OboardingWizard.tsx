@@ -1,9 +1,11 @@
-import { RootConfig, RootConfigProvider } from '../EBComponentsProvider/RootConfigProvider';
+import {
+  RootConfig,
+  RootConfigProvider,
+} from '../EBComponentsProvider/RootConfigProvider';
 import { ErrorProvider } from './context/error.context';
 import { OnboardingFormProvider } from './context/form.context';
 import { OnboardingWizardSchema } from './OnboardingWizardSchema';
 import { StepperProvider } from './Stepper/Stepper';
-
 
 export interface OnboardingWizardInitProps extends RootConfig {
   isMock?: boolean;

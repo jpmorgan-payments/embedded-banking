@@ -1,15 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
-
-
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
-
-
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OboardingWizard';
-
 
 const OnboardingWizardWithProvider = ({
   apiBaseUrl,
