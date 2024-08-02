@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
+import {
+  useSmbdoGetClient,
+  useSmbdoPostClients,
+} from '@/api/generated/embedded-banking';
 import { CreateClientRequest } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
@@ -19,19 +23,39 @@ import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormActions } from '../FormActions/FormActions';
+import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { generateRequestBody, translateApiErrorsToFormErrors } from '../utils';
 import { InitialFormSchema } from './InitialStepForm.schema';
 
 export const InitialStepForm = () => {
   const { nextStep } = useStepper();
+  const { clientId } = useOnboardingContext();
 
-  const form = useForm<z.input<typeof InitialFormSchema>>({
+  const { data: clientData, status: clientGetStatus } = useSmbdoGetClient(
+    clientId ?? '',
+    {
+      query: {
+        enabled: !!clientId,
+      },
+    }
+  );
+
+  const form = useForm<z.infer<typeof InitialFormSchema>>({
+    mode: 'onChange',
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
-      organizationType: undefined,
+      organizationType: 'C_CORPORATION',
+      countryOfFormation: '',
     },
   });
+
+  useEffect(() => {
+    if (clientGetStatus === 'success' && clientData) {
+      console.log(clientData);
+      // form.reset(clientData)
+    }
+  }, [clientGetStatus, JSON.stringify(clientData)]);
 
   const { mutate: postClient } = useSmbdoPostClients({
     mutation: {
@@ -74,9 +98,9 @@ export const InitialStepForm = () => {
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = form.handleSubmit((values) => {
     const requestBody = generateRequestBody(
-      form.getValues(),
+      values,
       {
         products: ['EMBEDDED_PAYMENTS'],
         parties: [
@@ -92,14 +116,14 @@ export const InitialStepForm = () => {
     postClient({
       data: requestBody,
     });
-  };
+  });
 
   const unhandledServerErrors =
     form.formState.errors.root?.unhandled?.message?.split('\n');
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="eb-space-y-6">
+      <form onSubmit={onSubmit} className="eb-space-y-6">
         <FormField
           control={form.control}
           name="organizationName"
@@ -122,10 +146,39 @@ export const InitialStepForm = () => {
 
         <FormField
           control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>Organization email</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="organizationType"
           render={({ field }) => (
             <FormItem>
               <FormLabel asterisk>Organization type</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="countryOfFormation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>Country of formation</FormLabel>
+              <FormDescription>Country code in alpha-2 format</FormDescription>
               <FormControl>
                 <Input {...field} />
               </FormControl>

@@ -9,7 +9,7 @@ import {
 import { InitialFormSchema } from './InitialStepForm/InitialStepForm.schema';
 
 // TODO: add more form schemas here
-type OnboardingWizardFormValues = z.output<typeof InitialFormSchema>;
+type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema>;
 type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
 
 // Source of truth for mapping form fields to API fields
@@ -17,6 +17,8 @@ type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
 const fieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   organizationName: 'parties[{index}].organizationDetails.organizationName',
   organizationType: 'parties[{index}].organizationDetails.organizationType',
+  countryOfFormation: 'parties[{index}].organizationDetails.countryOfFormation',
+  email: 'parties[{index}].email',
 };
 
 export function translateApiErrorsToFormErrors(
@@ -64,6 +66,9 @@ export function generateRequestBody(
     keyof OnboardingWizardFormValues
   >;
   formValueKeys.forEach((key) => {
+    if (!fieldMap[key]) {
+      throw new Error(`${key} is not mapped in fieldMap`);
+    }
     const path = fieldMap[key].replace(/\{index\}/g, partyIndex.toString());
     const value = formValues[key];
 

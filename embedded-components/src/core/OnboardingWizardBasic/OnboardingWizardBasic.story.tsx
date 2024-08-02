@@ -9,6 +9,7 @@ export default {
 
 export const Default: StoryObj<typeof OnboardingWizardBasic> = {
   args: {
+    // @ts-ignore
     isMockBaseUrl: false,
   },
 };
