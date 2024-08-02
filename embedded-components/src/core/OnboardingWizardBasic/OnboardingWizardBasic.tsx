@@ -40,7 +40,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
         </CardHeader>
         <CardContent>
           <div className="eb-flex eb-w-full eb-flex-col eb-gap-4">
-            {clientGetStatus === 'pending' ? (
+            {!!clientId && clientGetStatus === 'pending' ? (
               <div className="eb-flex eb-h-32 eb-items-center eb-justify-center">
                 <Loader2Icon
                   className="eb-mr-2 eb-animate-spin eb-stroke-primary"
@@ -48,7 +48,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 />
                 <Text className="eb-text-lg">Retrieving client data...</Text>
               </div>
-            ) : clientGetStatus === 'error' ? (
+            ) : !!clientId && clientGetStatus === 'error' ? (
               <Alert variant="destructive">
                 <AlertCircle className="eb-h-4 eb-w-4" />
                 <AlertTitle>
