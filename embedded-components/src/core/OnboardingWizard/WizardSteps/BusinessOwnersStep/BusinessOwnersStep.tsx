@@ -15,7 +15,7 @@ import { Button, Stack } from '@/components/ui';
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
 // eslint-disable-next-line
-import { DecisionMakerModal } from '../../Modals/DecisionMakerModal';
+import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
@@ -25,7 +25,7 @@ import { useGetDataByClientId } from '../hooks';
 // TODO: neeed to make sure that we actuall update or remove
 const BusinessOwnersStep = () => {
   const [open, setOpen] = useState(false);
-  const [additionalDecisionMakers, setAdditionalDecisionMakers] =
+  const [additionalBusinessOwners, setAdditionalBusinessOwners] =
     useState(false);
 
   const { activeStep, setCurrentStep } = useStepper();
@@ -37,8 +37,8 @@ const BusinessOwnersStep = () => {
   }, [data]);
 
   const handleToggleButton = (val: string) => {
-    if (val === 'No') setAdditionalDecisionMakers(false);
-    if (val === 'Yes') setAdditionalDecisionMakers(true);
+    if (val === 'No') setAdditionalBusinessOwners(false);
+    if (val === 'Yes') setAdditionalBusinessOwners(true);
   };
 
   const onSubmit = async () => {
@@ -51,7 +51,7 @@ const BusinessOwnersStep = () => {
 
       <form noValidate>
         <FormField
-          name="additionalDecisionMakers"
+          name="additionalBusinessOwners"
           render={() => (
             <FormItem>
               <FormLabel asterisk>
@@ -81,13 +81,13 @@ const BusinessOwnersStep = () => {
         />
       </form>
 
-      {additionalDecisionMakers && reviewData?.individualDetails && (
+      {additionalBusinessOwners && reviewData?.individualDetails && (
         <>
           <Title as="h4" className="eb-my-5">
             Listed business owners
           </Title>
 
-          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
+          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
             {Object.keys(reviewData?.individualDetails)
               .filter((indID) => {
                 return reviewData.individualDetails[indID].roles.includes(
@@ -97,7 +97,7 @@ const BusinessOwnersStep = () => {
               .map((contollerID: any) => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
@@ -120,7 +120,7 @@ const BusinessOwnersStep = () => {
                 const controller = reviewData.individualDetails[contollerID];
 
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}
@@ -138,7 +138,7 @@ const BusinessOwnersStep = () => {
                   Click to add a business owner
                 </Button>
               </DialogTrigger>
-              <DecisionMakerModal
+              <IndividualOrgIndModal
                 onOpenChange={(id: string) => {
                   setOpen((s) => !s);
                   if (id) {

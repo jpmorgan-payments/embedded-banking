@@ -52,7 +52,7 @@ const PersonalDetailsForm = ({ form }: PersonalDetailsFormProps) => {
 
   return (
     <>
-      <div className="eb-grid eb-grid-flow-row  eb-grid-cols-3 eb-gap-6 eb-pt-4">
+      <div className="eb-grid eb-grid-flow-row eb-grid-cols-3 eb-gap-6 eb-pt-4">
         <FormField
           control={form.control}
           name="firstName"

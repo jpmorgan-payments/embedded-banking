@@ -14,7 +14,8 @@ import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context'
 import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
 import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
 import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
-import { IndividualDetailsModal } from '../../Modals/IndividualDetailsModal';
+// eslint-disable-next-line
+import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
@@ -91,7 +92,7 @@ const EditReviewStep = () => {
             onEdit={onEditBusiness}
           />
         )}
-        <Title as="h5" className="eb-my-6 eb-uppercase ">
+        <Title as="h5" className="eb-my-6 eb-uppercase">
           Management & Ownership
         </Title>
         <Stack className="eb-gap-4">
@@ -129,14 +130,15 @@ const EditReviewStep = () => {
 
         <Dialog open={editIndividual} onOpenChange={onEditIndividual}>
           {indData && (
-            <IndividualDetailsModal
-              formData={indData}
-              onCancel={(id: string) => {
+            <IndividualOrgIndModal
+              data={indData}
+              onOpenChange={(id: string) => {
                 onEditIndividual(false);
                 if (id) {
                   refetch();
                 }
               }}
+              type="owner"
             />
           )}
         </Dialog>
@@ -150,15 +152,15 @@ const EditReviewStep = () => {
           >
             <DialogTrigger>Click to add a decision maker</DialogTrigger>
           </Button>
-          <IndividualDetailsModal
-            onCancel={(id: string) => {
+          <IndividualOrgIndModal
+            onOpenChange={(id: string) => {
               setOpen(false);
               if (id) {
                 refetch();
               }
             }}
+            type="decision"
             parentPartyId={reviewData?.partyId}
-            create
           />
         </Dialog>
 

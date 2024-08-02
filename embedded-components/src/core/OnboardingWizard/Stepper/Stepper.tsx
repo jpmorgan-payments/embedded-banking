@@ -128,7 +128,9 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
           }),
         ],
         'title'
-      ).filter((item) => item);
+      ).filter((item) => {
+        return item && stepNames.includes(item.title);
+      });
     };
 
     const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;

@@ -87,6 +87,7 @@ const businessSchema = {
       fieldType: 'textarea',
       labelToken: 'Business Description',
       placeHolder: 'Descipe your business',
+      required: true,
     },
     {
       name: 'website',

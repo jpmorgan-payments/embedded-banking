@@ -10,7 +10,7 @@ const getOrg = (orgDetailsData: any): any => {
   const orgDetails = orgDetailsData?.organizationDetails;
   return {
     ...orgDetails,
-    email: orgDetailsData.organizationDetails.email,
+    email: orgDetailsData?.organizationDetails?.email,
   };
 };
 export { getOrgDetails, getOrg };

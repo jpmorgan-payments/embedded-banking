@@ -11,18 +11,25 @@ export interface RootConfig {
   entityType?: string;
   products?: string[];
   mockSteps?: any;
-  onRegistration: ({ clientId, clientResponse }: onRegistrationProp) => void;
   isMockResponse?: boolean;
   isMock?: boolean;
   mockData?: any;
   mockQuestions?: any;
   setClientId?: any;
   setPartyId?: any;
+  onPostClientsVerfication: ({
+    clientId,
+    clientResponse,
+  }: onRegistrationProp) => void;
+  onGetClientsConfirmation: ({
+    clientId,
+    clientResponse,
+  }: onRegistrationProp) => void;
 }
 
 export const defaultRootConfig = {
   clientId: undefined,
-  onRegistration: undefined,
+  onPostClientsVerfication: undefined,
   jurisdictions: undefined,
   products: undefined,
   entityType: undefined,

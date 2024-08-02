@@ -4,19 +4,20 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box, Button, Text } from '@/components/ui';
+import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
-import { useOnboardingForm } from './context/form.context';
+import { useError } from './context/error.context';
+// import { useOnboardingForm } from './context/form.context';
 import { FormProvider } from './context/formProvider.contex';
-import { useIPAddress } from './hooks/getIPAddress';
-import { businessDetailsMock, controllerMock } from './mocks/reviewStep.mock';
+// import { useIPAddress } from './hooks/getIPAddress';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
 import { useContentData } from './utils/useContentData';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 
-export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
+export const OnboardingWizardSchema = ({ title }: any) => {
   const {
     activeStep,
     stepsList,
@@ -25,41 +26,24 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
     CurrentStep,
     currentFormSchema,
   } = useStepper();
-  const { onboardingForm, setOnboardingForm } = useOnboardingForm();
-  const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
+  // const { onboardingForm, setOnboardingForm } = useOnboardingForm();
+
+  // TODO: Temporary comment for IP
+  // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
   const { clientId } = useRootConfig();
+  const { error: isError } = useError();
 
-  useEffect(() => {
-    //TODO: Do something if ipFetchStatus, fails, or stalls
-  }, [ipFetchStatus]);
+  // TODO: Temporary comment for IP
+  // useEffect(() => {
+  //   //TODO: Do something if ipFetchStatus, fails, or stalls
+  // }, [ipFetchStatus]);
 
-  // TODO: Update the mock intel
-  useEffect(() => {
-    if (props?.isMock) {
-      setOnboardingForm({
-        businessDetails: businessDetailsMock,
-        controller: controllerMock,
-        id: clientId,
-        legalStructure: undefined,
-        decisionMakers: undefined,
-        outstandingItems: {
-          attestationDocumentIds: Array(1),
-          documentRequestIds: Array(0),
-          partyIds: Array(0),
-          partyRoles: Array(0),
-          questionIds: Array(3),
-        },
-        owner: controllerMock,
-      });
-    }
-  }, [props?.isMock]);
-
-  //TODO: Turn all the below effects, and Memoes into a hook
-  useEffect(() => {
-    if (ipAddress) {
-      setOnboardingForm({ ...onboardingForm, ip: ipAddress });
-    }
-  }, [ipAddress]);
+  // //TODO: Turn all the below effects, and Memoes into a hook
+  // useEffect(() => {
+  //   if (ipAddress) {
+  //     setOnboardingForm({ ...onboardingForm, ip: ipAddress });
+  //   }
+  // }, [ipAddress]);
 
   // Building steps
   useEffect(() => {
@@ -125,7 +109,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
                   key={stepsList?.length}
                 ></StepperHeader>
               )}
-
+              {isError && <ServerAlertMessage />}
               <ErrorBoundary
                 onReset={reset}
                 fallbackRender={({ resetErrorBoundary, error }) => (
@@ -145,7 +129,7 @@ export const OnboardingWizardSchema = ({ title, schema, ...props }: any) => {
                 )}
               >
                 <CardContent>
-                  <Box className="eb-flex eb-items-center  eb-space-x-4 eb-rounded-md eb-border eb-p-5">
+                  <Box className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
                     <FormProvider>
                       {CurrentStep && (
                         <CurrentStep

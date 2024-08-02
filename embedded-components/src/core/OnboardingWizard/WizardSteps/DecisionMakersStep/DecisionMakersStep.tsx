@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
-import _ from 'lodash';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Dialog } from '@/components/ui/dialog';
 import {
   FormControl,
@@ -13,29 +11,22 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
-import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
-import { useOnboardingForm } from '../../context/form.context';
+import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
-import { formToAPIBody } from '../../utils/apiUtilsParsers';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
-
-// TODO: Modal on adding descion maker
-// import { DecisionMakerModal } from './DecisionMakerModal/DecisionMakerModal';
 
 // TODO: neeed to add arguments for mock testing
 const DecisionMakersStep = () => {
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =
     useState(false);
-  const { setOnboardingForm, onboardingForm } = useOnboardingForm();
 
-  const { onRegistration } = useRootConfig();
   const { activeStep, setCurrentStep } = useStepper();
   const { data, refetch } = useGetDataByClientId('client');
 
@@ -43,37 +34,13 @@ const DecisionMakersStep = () => {
     return data && fromApiToForm(data);
   }, [data]);
 
-  const { mutateAsync: postClient, isPending } = useSmbdoPostClients();
-
   const handleToggleButton = (val: string) => {
     if (val === 'No') setAdditionalDecisionMakers(false);
     if (val === 'Yes') setAdditionalDecisionMakers(true);
   };
 
   const onSubmit = async () => {
-    const apiForm = formToAPIBody(onboardingForm);
-
-    //TODO: should we load next api call everytime we go next?
-    try {
-      const res = await postClient({ data: apiForm });
-
-      // TODO: do we need clone here?
-      const newOnboardingForm = _.cloneDeep(onboardingForm);
-      newOnboardingForm.id = res.id;
-      newOnboardingForm.outstandingItems = res.outstanding;
-
-      if (onRegistration) {
-        onRegistration({ clientId: res.id });
-      }
-
-      setOnboardingForm({
-        ...newOnboardingForm,
-        attestations: res.outstanding.attestationDocumentIds || [],
-      });
-      setCurrentStep(activeStep + 1);
-    } catch (error) {
-      console.log(error);
-    }
+    setCurrentStep(activeStep + 1);
   };
 
   return (
@@ -120,7 +87,7 @@ const DecisionMakersStep = () => {
             Listed business decision makers
           </Title>
 
-          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3 ">
+          <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
             {Object.keys(reviewData?.individualDetails)
               .filter((indID) => {
                 return reviewData.individualDetails[indID].roles.includes(
@@ -130,7 +97,7 @@ const DecisionMakersStep = () => {
               .map((contollerID: any) => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
@@ -152,7 +119,7 @@ const DecisionMakersStep = () => {
               .map((contollerID: any) => {
                 const controller = reviewData.individualDetails[contollerID];
                 return (
-                  <div key={contollerID} className=" eb-grid-cols-subgrid">
+                  <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}
@@ -173,7 +140,17 @@ const DecisionMakersStep = () => {
               >
                 <DialogTrigger>Click to add a decision maker</DialogTrigger>
               </Button>
-              {/* <DecisionMakerModal onOpenChange={setOpen} /> */}
+              <IndividualOrgIndModal
+                onOpenChange={(id: string) => {
+                  setOpen((s) => !s);
+                  if (id) {
+                    refetch();
+                  }
+                }}
+                title="Enter decision maker details"
+                parentPartyId={data.partyId}
+                type="decision"
+              />
             </Dialog>
           </div>
         </>
@@ -181,7 +158,6 @@ const DecisionMakersStep = () => {
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
-        disabled={isPending}
         onSubmit={onSubmit}
       />
     </Stack>

@@ -47,14 +47,14 @@ export const BusinessCommonForm: any = ({ form }: any) => {
 
   return (
     <>
-      <Grid className={`eb-grid-flow-row eb-gap-4 eb-pt-4 `}>
+      <Grid className="eb-grid-flow-row eb-gap-4 eb-pt-4">
         <Stack>
           <FormField
             control={form.control}
             name="businessDescription"
             render={({ field }) => (
               <FormItem>
-                <Stack className={`eb-grid-flow-row eb-gap-4 eb-pt-4 `}>
+                <Stack className="eb-grid-flow-row eb-gap-4 eb-pt-4">
                   <FormLabel asterisk>
                     {getContentToken(`businessDescription.label`)}
                   </FormLabel>
@@ -76,7 +76,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             )}
           />
 
-          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4  eb-pt-4">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4 eb-pt-4">
             <FormField
               control={form.control}
               name="businessEmail"
@@ -115,7 +115,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
           </Grid>
-          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4 ">
+          <Grid className="eb-mb-5 eb-grid-flow-row eb-grid-cols-2 eb-gap-4">
             <FormField
               control={form.control}
               name="website"
@@ -144,7 +144,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               )}
             />
 
-            <Group className="eb-mt-8 eb-flex eb-flex-row eb-flex-wrap  eb-content-center eb-gap-2">
+            <Group className="eb-mt-8 eb-flex eb-flex-row eb-flex-wrap eb-content-center eb-gap-2">
               <Text className="eb-mx-3 eb-font-bold">
                 {getContentToken(`text.or`)}
               </Text>
@@ -178,7 +178,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
               />
             </Group>
           </Grid>
-          <Grid className=" eb-grid-flow-row eb-grid-cols-2 eb-gap-4  ">
+          <Grid className="eb-grid-flow-row eb-grid-cols-2 eb-gap-4">
             <FormField
               control={form.control}
               name="countryOfFormation"
@@ -254,7 +254,7 @@ export const BusinessCommonForm: any = ({ form }: any) => {
             <Title as="h2" className="eb-my-5">
               {getContentToken(`addressSectionTitle`)}
             </Title>
-            <Group className="eb-flex eb-flex-row eb-flex-wrap eb-content-center  eb-gap-2">
+            <Group className="eb-flex eb-flex-row eb-flex-wrap eb-content-center eb-gap-2">
               <FormField
                 control={form.control}
                 name="businessAddressSameAsController"
