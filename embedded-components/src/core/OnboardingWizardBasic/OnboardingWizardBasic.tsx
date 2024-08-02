@@ -17,9 +17,14 @@ export const OnboardingWizardBasic = () => {
       <CardContent>
         <div className="eb-flex eb-w-full eb-flex-col eb-gap-4">
           <Stepper variant="circle" initialStep={0} steps={steps}>
-            {steps.map((stepProps, index) => (
-              <Step key={index} {...stepProps} />
-            ))}
+            {steps.map((stepProps, index) => {
+              const { children, ...rest } = stepProps;
+              return (
+                <Step key={index} {...rest}>
+                  <div className="eb-px-1">{children}</div>
+                </Step>
+              );
+            })}
           </Stepper>
         </div>
       </CardContent>

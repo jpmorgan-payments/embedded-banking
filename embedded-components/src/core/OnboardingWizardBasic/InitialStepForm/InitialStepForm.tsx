@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
+import { CreateClientRequest } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   Form,
@@ -18,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormActions } from '../FormActions/FormActions';
-import { translateApiErrorsToFormErrors } from '../utils';
+import { generateRequestBody, translateApiErrorsToFormErrors } from '../utils';
 import { InitialFormSchema } from './InitialStepForm.schema';
 
 export const InitialStepForm = () => {
@@ -28,17 +29,17 @@ export const InitialStepForm = () => {
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
-      organizationType: 'ORGANIZATION',
+      organizationType: '',
     },
   });
 
-  // const onSubmit = () => {
-  //   nextStep();
-  // };
-
-  const { mutate: postClient, status: postClientStatus } = useSmbdoPostClients({
+  const { mutate: postClient } = useSmbdoPostClients({
     mutation: {
-      onError: (error) => {
+      onSuccess: () => {
+        nextStep();
+        // TODO: add success toast
+      },
+      onError: (error, { data }) => {
         form.setError('root.serverError', {
           message: error.response?.data?.title ?? 'Server Error',
           type: `${error.response?.data?.httpStatus ?? error.status}`,
@@ -46,7 +47,14 @@ export const InitialStepForm = () => {
 
         if (error.response?.data?.context) {
           const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          // determine partyindex from request
+          const partyIndex = data.parties?.findIndex(
+            (party) => party.partyType === 'ORGANIZATION'
+          );
+          const apiFormErrors = translateApiErrorsToFormErrors(
+            context,
+            partyIndex ?? 0
+          );
 
           apiFormErrors.forEach((formError) => {
             if (formError.field === undefined) {
@@ -67,21 +75,22 @@ export const InitialStepForm = () => {
   });
 
   const onSubmit = () => {
-    const { organizationName } = form.getValues();
-
-    postClient({
-      data: {
+    const requestBody = generateRequestBody(
+      form.getValues(),
+      {
+        products: ['EMBEDDED_PAYMENTS'],
         parties: [
           {
             partyType: 'ORGANIZATION',
             roles: ['CLIENT'],
-            organizationDetails: {
-              organizationName,
-            },
           },
         ],
-        products: ['EMBEDDED_PAYMENTS'],
       },
+      0
+    ) as CreateClientRequest;
+
+    postClient({
+      data: requestBody,
     });
   };
 
@@ -110,6 +119,21 @@ export const InitialStepForm = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="organizationType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>Organization type</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {form.formState.errors.root?.serverError && (
           <Alert variant="destructive">
             <AlertCircle className="eb-h-4 eb-w-4" />
