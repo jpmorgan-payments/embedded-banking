@@ -1,23 +1,23 @@
-# Embedded Banking Components
+# Embedded UI Components
 
-## 🚧 Draft Version Notice
+## 🚧 Pre-release Version Notice
 
-**This guide is currently in draft form and under active development. The content and structure may change significantly until version 1.x.x is released. Please consider this document as a work in progress.**
+**Embedded UI Components and this guide is currently in draft form and under active development. Components are not ready for production use and may change significantly until version 1.x.x is released. Please consider this document as a work in progress.**
 
 ## Overview
 
-Embedded Banking Components offer a seamless way to integrate sophisticated UI components into your existing applications, providing a plug-and-play solution for Embedded Banking features. These components implement complex API capabilities for client onboarding and account linking, simplifying the integration process for developers.
+Embedded UI Components offer a seamless way to integrate sophisticated UI components into your existing applications, providing a plug-and-play solution for Embedded Finance features. These components implement complex API capabilities for client onboarding and account linking, simplifying the integration process for developers.
 
 
 ## Important Usage Notes
 
-**All Embedded Banking Components must be wrapped within the `EBComponentsProvider`.** The `EBComponentsProvider` is specifically designed for these components and is not applicable to any other client components in your application.
+**All Embedded UI Components must be wrapped within the `EBComponentsProvider`.** The `EBComponentsProvider` is specifically designed for these components and is not applicable to any other client components in your application.
 
 ## Setup and Configuration
 
 ### EBComponentsProvider
 
-The `EBComponentsProvider` is a crucial wrapper component that must be placed at the top level of your Embedded Banking Components implementation. It handles authentication, applies theming, and provides necessary context to all child Embedded Banking Components.
+The `EBComponentsProvider` is a crucial wrapper component that must be placed at the top level of your Embedded UI Components implementation. It handles authentication, applies theming, and provides necessary context to all child Embedded UI Components.
 It is usign @tanstack/react-query for handling API calls and authentication as well as Orval generated types for the API requests and responses.
 
 #### Key Props:
@@ -30,7 +30,7 @@ It is usign @tanstack/react-query for handling API calls and authentication as w
 ```jsx
 import { EBComponentsProvider } from '@jpmorgan-payments/embedded-banking-components';
 
-const EmbeddedBankingSection = () => {
+const EmbeddedFinanceSection = () => {
   return (
     <EBComponentsProvider 
       apiBaseUrl="https://your-api-base-url.com"
@@ -45,7 +45,7 @@ const EmbeddedBankingSection = () => {
         'Custom-Header': 'value'
       }}
     >
-      {/* Your Embedded Banking Components go here */}
+      {/* Your Embedded UI Components go here */}
     </EBComponentsProvider>
   );
 };
@@ -95,6 +95,8 @@ const OnboardingSection = () => {
 };
 ```
 
+OnboardingWizard could also accept products and jurisdictions as optional props to customize the onboarding process. Please refer to the OnboardingWizardProps interface in the codebase for more details.
+
 ### 2. LinkedAccountWidget
 
 The `LinkedAccountWidget` component facilitates the process of adding a client's linked account, as described in the [Add Linked Account API documentation](https://developer.payments.jpmorgan.com/docs/embedded-banking-solutions/embedded-payments/how-to/add-linked-account).
@@ -116,6 +118,8 @@ const LinkedAccountSection = () => {
   );
 };
 ```
+
+Please refer to the LinkedAccountProps interface in the codebase for more details.
 
 ## Theming
 
