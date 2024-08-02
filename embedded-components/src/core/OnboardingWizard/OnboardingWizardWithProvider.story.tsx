@@ -97,5 +97,27 @@ export const NoThemeWithPDPAPIs: Story = {
         delay: 10,
       }
     );
+
+    await userEvent.click(
+      await canvas.findByRole('combobox', {
+        name: 'Organization Type',
+      }),
+      {
+        delay: 100,
+      }
+    );
+
+    await userEvent.click(await canvas.findByText('Sole Proprietorship'), {
+      pointerEventsCheck: 0,
+    });
+  },
+};
+
+export const NoThemeWithDevSmbdoAPIs: Story = {
+  name: 'No theme with DEV SMBDO APIs',
+  ...Primary.args,
+  args: {
+    theme: {},
+    apiBaseUrl: 'https://t3mpo-api-gateway-service-dev.jpmchase.net',
   },
 };
