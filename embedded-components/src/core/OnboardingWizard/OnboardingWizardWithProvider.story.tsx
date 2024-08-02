@@ -11,7 +11,8 @@ const OnboardingWizardWithProvider = ({
   headers,
   title,
   theme,
-  onRegistration,
+  onGetClientsConfirmation,
+  onPostClientsVerfication,
   setClientId,
   clientId,
 }: {
@@ -19,7 +20,21 @@ const OnboardingWizardWithProvider = ({
   headers: Record<string, string>;
   title: string;
   theme: Record<string, unknown>;
-  onRegistration: ({ clientId, clientResponse }: onRegistrationProp) => void;
+  onGetClientsConfirmation: ({
+    clientId,
+    clientResponse,
+  }: {
+    clientId: string;
+    clientResponse?: any;
+  }) => void;
+  onPostClientsVerfication: ({
+    clientId,
+    clientResponse,
+  }: {
+    clientId: string;
+    clientResponse?: any;
+  }) => void;
+
   setClientId?: (s: string) => void;
   clientId?: string;
 }) => {
@@ -32,7 +47,8 @@ const OnboardingWizardWithProvider = ({
       >
         <OnboardingWizard
           title={title}
-          onRegistration={onRegistration}
+          onGetClientsConfirmation={onGetClientsConfirmation}
+          onPostClientsVerfication={onPostClientsVerfication}
           setClientId={setClientId}
           clientId={clientId}
         />
@@ -60,7 +76,10 @@ export const Primary: Story = {
         borderRadius: '15px',
       },
     },
-    onRegistration: ({ clientId }: onRegistrationProp) => {
+    onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+    onPostClientsVerfication: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
   },
