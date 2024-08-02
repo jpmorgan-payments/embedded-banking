@@ -9,7 +9,7 @@ import {
 import { InitialFormSchema } from './InitialStepForm/InitialStepForm.schema';
 
 // TODO: add more form schemas here
-type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema>;
+type OnboardingWizardFormValues = z.output<typeof InitialFormSchema>;
 type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
 
 // Source of truth for mapping form fields to API fields

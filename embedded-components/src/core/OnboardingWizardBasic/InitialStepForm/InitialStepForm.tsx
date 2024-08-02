@@ -25,11 +25,11 @@ import { InitialFormSchema } from './InitialStepForm.schema';
 export const InitialStepForm = () => {
   const { nextStep } = useStepper();
 
-  const form = useForm<z.infer<typeof InitialFormSchema>>({
+  const form = useForm<z.input<typeof InitialFormSchema>>({
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
-      organizationType: '',
+      organizationType: undefined,
     },
   });
 
