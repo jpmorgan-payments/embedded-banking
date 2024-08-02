@@ -17,7 +17,7 @@ export interface RootConfig {
   mockQuestions?: any;
   setClientId?: any;
   setPartyId?: any;
-  onPostClientsVerfication: ({
+  onPostClientsVerification: ({
     clientId,
     clientResponse,
   }: onRegistrationProp) => void;
@@ -29,7 +29,7 @@ export interface RootConfig {
 
 export const defaultRootConfig = {
   clientId: undefined,
-  onPostClientsVerfication: undefined,
+  onPostClientsVerification: undefined,
   jurisdictions: undefined,
   products: undefined,
   entityType: undefined,

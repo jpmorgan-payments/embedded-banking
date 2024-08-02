@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 // eslint-disable-next-line
 import { useStepper } from '../Stepper/Stepper';
@@ -45,9 +46,23 @@ const OrgTypeFormField = ({
   placeholderToken,
 }: any) => {
   const { removeSteps, buildStepper } = useStepper();
+  const { clientId } = useRootConfig();
+
   useEffect(() => {
     if (form.getValues('organizationType') === 'SOLE_PROPRIETORSHIP') {
       removeSteps(['Decision Makers', 'Business Owners']);
+    } else if (clientId) {
+      const steps = [
+        'Individual',
+        'Organization',
+        'Business Owners',
+        'Decision Makers',
+        'Questions',
+        'Review',
+        'Attestation',
+      ];
+      buildStepper(steps);
+      // buildStepper(['Business Owners', 'Decision Makers']);
     } else {
       buildStepper();
     }

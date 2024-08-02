@@ -116,12 +116,8 @@ const AttestationStep = () => {
   // }, [isSuccess]);
 
   const onSubmit = () => {
-    console.log('@@onSubmit');
-    const res = postVerifaction({ id: clientId ?? '' });
-    console.log('@@res', res);
+    postVerifaction({ id: clientId ?? '' });
   };
-
-  console.log('@@isError', isError, data);
 
   // const organizationType =
   //   clientDataForm?.onganizationDetails?.orgDetails?.organizationType;

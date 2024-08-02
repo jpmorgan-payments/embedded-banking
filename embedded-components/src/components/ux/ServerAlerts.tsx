@@ -7,10 +7,11 @@ import { Alert, Box } from '../ui';
 import { AlertDescription, AlertTitle } from '../ui/alert';
 
 const ServerAlertMessage = ({ title }: any) => {
-  const { setError } = useError();
+  const { setError, error } = useError();
   const { getContentToken: getContent } = useContentData(
     `features.OnboardingWizard`
   );
+
   return (
     <Alert
       variant="destructive"
@@ -20,6 +21,11 @@ const ServerAlertMessage = ({ title }: any) => {
       <AlertCircle className="eb-h-4 eb-w-4" />
       <AlertTitle>{title || getContent(`alertMessageTitle`)}</AlertTitle>
       <AlertDescription>{getContent(`alertMessageText`)}</AlertDescription>
+
+      <AlertDescription className="eb-mt-4">
+        {error?.response.data.context[0]?.message ?? error?.statusText}
+      </AlertDescription>
+
       <Box
         className="eb-absolute eb-right-2 eb-top-2 eb-cursor-pointer"
         onClick={() => {

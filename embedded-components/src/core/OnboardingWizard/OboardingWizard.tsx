@@ -17,12 +17,12 @@ export interface OnboardingWizardInitProps extends RootConfig {
 //TODO: props types needs to have
 const OnboardingWizard = ({
   clientId,
-  onPostClientsVerfication,
+  onPostClientsVerification,
   ...props
 }: OnboardingWizardInitProps) => {
   return (
     <RootConfigProvider
-      clientOptions={{ clientId, onPostClientsVerfication, ...props }}
+      clientOptions={{ clientId, onPostClientsVerification, ...props }}
     >
       <StepperProvider>
         <OnboardingFormProvider>
