@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Loader2Icon } from 'lucide-react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
@@ -10,8 +9,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Step, Stepper } from '@/components/ui/stepper';
-import { Text } from '@/components/ui/text';
 
+import { FormLoadingState } from './FormLoadingState/FormLoadingState';
 import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
@@ -57,13 +56,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
           )}
           {!!clientId &&
             (clientGetStatus === 'pending' ? (
-              <div className="eb-flex eb-h-32 eb-items-center eb-justify-center">
-                <Loader2Icon
-                  className="eb-mr-2 eb-animate-spin eb-stroke-primary"
-                  size={32}
-                />
-                <Text className="eb-text-lg">Retrieving client data...</Text>
-              </div>
+              <FormLoadingState message="Fetching client data..." />
             ) : clientGetStatus === 'error' ? (
               <ServerErrorAlert
                 error={clientGetError}

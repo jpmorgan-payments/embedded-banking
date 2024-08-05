@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormActions } from '../FormActions/FormActions';
+import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import {
@@ -48,7 +49,7 @@ export const OrganizationStepForm = () => {
   });
 
   // Fetch client data
-  const { data: clientData, status: clientGetStatus } = useSmbdoGetClient(
+  const { data: clientData, status: getClientStatus } = useSmbdoGetClient(
     clientId ?? ''
   );
 
@@ -59,28 +60,31 @@ export const OrganizationStepForm = () => {
 
   // Populate form with client data
   useEffect(() => {
-    if (clientGetStatus === 'success' && clientData) {
+    if (getClientStatus === 'success' && clientData) {
       const formValues = convertClientResponseToFormValues(clientData, partyId);
       form.reset(formValues);
     }
-  }, [clientData, clientGetStatus, form, partyId]);
+  }, [clientData, getClientStatus, form, partyId]);
 
-  const { mutate: updateClient, error: updateClientError } =
-    useSmbdoUpdateClient({
-      mutation: {
-        onSuccess: () => {
-          nextStep();
-          toast.success("Client's organization details updated successfully");
-        },
-        onError: (error) => {
-          if (error.response?.data?.context) {
-            const { context } = error.response.data;
-            const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
-            setApiFormErrors(form, apiFormErrors);
-          }
-        },
+  const {
+    mutate: updateClient,
+    error: updateClientError,
+    status: updateClientStatus,
+  } = useSmbdoUpdateClient({
+    mutation: {
+      onSuccess: () => {
+        nextStep();
+        toast.success("Client's organization details updated successfully");
       },
-    });
+      onError: (error) => {
+        if (error.response?.data?.context) {
+          const { context } = error.response.data;
+          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          setApiFormErrors(form, apiFormErrors);
+        }
+      },
+    },
+  });
 
   const onSubmit = form.handleSubmit((values) => {
     if (clientId && partyId) {
@@ -98,6 +102,10 @@ export const OrganizationStepForm = () => {
       });
     }
   });
+
+  if (updateClientStatus === 'pending') {
+    return <FormLoadingState message="Submitting..." />;
+  }
 
   return (
     <Form {...form}>
@@ -157,6 +165,20 @@ export const OrganizationStepForm = () => {
             <FormItem>
               <FormLabel asterisk>Country of formation</FormLabel>
               <FormDescription>Country code in alpha-2 format</FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="yearOfFormation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel asterisk>Year of formation</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

@@ -18,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
+import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import {
   generateRequestBody,
@@ -40,7 +41,11 @@ export const InitialForm = () => {
     },
   });
 
-  const { mutate: postClient, error: postClientError } = useSmbdoPostClients({
+  const {
+    mutate: postClient,
+    error: postClientError,
+    status: postClientStatus,
+  } = useSmbdoPostClients({
     mutation: {
       onSuccess: (response) => {
         nextStep();
@@ -74,6 +79,10 @@ export const InitialForm = () => {
       data: requestBody,
     });
   });
+
+  if (postClientStatus === 'pending') {
+    return <FormLoadingState message="Creating client..." />;
+  }
 
   return (
     <Form {...form}>
