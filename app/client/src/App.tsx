@@ -24,6 +24,8 @@ import {
   Login,
   SecureContent,
 } from 'features/Authentication';
+import { EmbeddedComponentsPage } from 'pages/EmbeddedComponentsPage';
+import { OnboardingNextPage } from 'pages/OnboardingNextPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -63,11 +65,19 @@ const App = () => {
                 </Route>
                 <Route path="overview" element={<OverviewPage />} />
                 <Route path="onboarding" element={<OnboardingPage />} />
+                <Route
+                  path="onboarding-next"
+                  element={<OnboardingNextPage />}
+                />
                 <Route path="accounts" element={<AccountsPage />} />
                 <Route path="recipients" element={<RecipientsPage />} />
                 <Route path="transactions" element={<TransactionsPage />} />
                 <Route path="debit-cards" element={<DebitCardsPage />} />
                 <Route path="cases" element={<CasesPage />} />
+                <Route
+                  path="embedded-components"
+                  element={<EmbeddedComponentsPage />}
+                />
                 <Route path="/" element={<Navigate replace to="/overview" />} />
               </Routes>
             </Layout>
