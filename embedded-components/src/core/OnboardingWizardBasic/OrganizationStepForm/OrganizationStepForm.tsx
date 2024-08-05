@@ -1,12 +1,15 @@
+import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
-import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import {
+  useSmbdoGetClient,
+  useSmbdoUpdateClient,
+} from '@/api/generated/embedded-banking';
+import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -19,21 +22,25 @@ import {
 import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
+import { FormActions } from '../FormActions/FormActions';
+import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import {
+  convertClientResponseToFormValues,
   generateRequestBody,
   setApiFormErrors,
   translateApiErrorsToFormErrors,
 } from '../utils/formUtils';
-import { InitialFormSchema } from './InitialStepForm.schema';
+import { OrganizationStepFormSchema } from './OrganizationStepForm.schema';
 
-export const InitialStepForm = () => {
+export const OrganizationStepForm = () => {
   const { nextStep } = useStepper();
+  const { clientId } = useOnboardingContext();
 
   // Create a form with empty default values
-  const form = useForm<z.infer<typeof InitialFormSchema>>({
+  const form = useForm<z.infer<typeof OrganizationStepFormSchema>>({
     mode: 'onChange',
-    resolver: zodResolver(InitialFormSchema),
+    resolver: zodResolver(OrganizationStepFormSchema),
     defaultValues: {
       organizationName: '',
       organizationType: 'C_CORPORATION',
@@ -41,36 +48,56 @@ export const InitialStepForm = () => {
     },
   });
 
-  const { mutate: postClient, error: postClientError } = useSmbdoPostClients({
-    mutation: {
-      onSuccess: () => {
-        nextStep();
-        // TODO: add success toast
+  // Fetch client data
+  const { data: clientData, status: clientGetStatus } = useSmbdoGetClient(
+    clientId ?? ''
+  );
+
+  // Get organization's partyId
+  const partyId = clientData?.parties?.find(
+    (party) => party.partyType === 'ORGANIZATION'
+  )?.id;
+
+  // Populate form with client data
+  useEffect(() => {
+    if (clientGetStatus === 'success' && clientData) {
+      const formValues = convertClientResponseToFormValues(clientData, partyId);
+      form.reset(formValues);
+    }
+  }, [clientData, clientGetStatus, form, partyId]);
+
+  const { mutate: updateClient, error: updateClientError } =
+    useSmbdoUpdateClient({
+      mutation: {
+        onSuccess: () => {
+          nextStep();
+          // TODO: add success toast
+        },
+        onError: (error) => {
+          if (error.response?.data?.context) {
+            const { context } = error.response.data;
+            const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+            setApiFormErrors(form, apiFormErrors);
+          }
+        },
       },
-      onError: (error) => {
-        if (error.response?.data?.context) {
-          const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
-          setApiFormErrors(form, apiFormErrors);
-        }
-      },
-    },
-  });
+    });
 
   const onSubmit = form.handleSubmit((values) => {
-    const requestBody = generateRequestBody(values, 0, {
-      products: ['EMBEDDED_PAYMENTS'],
-      parties: [
-        {
-          partyType: 'ORGANIZATION',
-          roles: ['CLIENT'],
-        },
-      ],
-    }) as CreateClientRequestSmbdo;
+    if (clientId && partyId) {
+      const requestBody = generateRequestBody(values, 0, {
+        addParties: [
+          {
+            id: partyId,
+          },
+        ],
+      }) as UpdateClientRequestSmbdo;
 
-    postClient({
-      data: requestBody,
-    });
+      updateClient({
+        id: clientId,
+        data: requestBody,
+      });
+    }
   });
 
   const unhandledServerErrors =
@@ -142,9 +169,9 @@ export const InitialStepForm = () => {
           )}
         />
 
-        {postClientError && (
+        {updateClientError && (
           <ServerErrorAlert
-            error={postClientError}
+            error={updateClientError}
             customErrorMessage={{
               '400':
                 'There was an issue with the submitted data. Please fix any errors.',
@@ -164,9 +191,7 @@ export const InitialStepForm = () => {
           </Alert>
         )}
 
-        <div className="eb-flex eb-w-full eb-justify-end eb-gap-4">
-          <Button>Submit</Button>
-        </div>
+        <FormActions />
       </form>
     </Form>
   );

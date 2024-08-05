@@ -1,17 +1,24 @@
 import { FC } from 'react';
-import { AlertCircle, Loader2Icon, RefreshCwIcon } from 'lucide-react';
+import { Loader2Icon } from 'lucide-react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Step, Stepper } from '@/components/ui/stepper';
-import { Button, Text } from '@/components/ui';
+import { Text } from '@/components/ui/text';
 
 import { InitialStepForm } from './InitialStepForm/InitialStepForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
+import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
+import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
 
 const steps = [
-  { label: 'Initial step', children: <InitialStepForm /> },
+  { label: 'Organization details', children: <OrganizationStepForm /> },
   { label: 'Individual details', children: <div>WIP</div> },
 ];
 
@@ -38,9 +45,18 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
         <CardHeader>
           <CardTitle>Onboarding</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="eb-flex eb-w-full eb-flex-col eb-gap-4">
-            {!!clientId && clientGetStatus === 'pending' ? (
+        <CardContent className="eb-flex eb-w-full eb-flex-col eb-gap-4">
+          {!clientId && (
+            <>
+              <CardDescription>
+                It looks like you don&apos;t have a client ID yet. Fill out the
+                below to get started!
+              </CardDescription>
+              <InitialStepForm />
+            </>
+          )}
+          {!!clientId &&
+            (clientGetStatus === 'pending' ? (
               <div className="eb-flex eb-h-32 eb-items-center eb-justify-center">
                 <Loader2Icon
                   className="eb-mr-2 eb-animate-spin eb-stroke-primary"
@@ -48,23 +64,16 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 />
                 <Text className="eb-text-lg">Retrieving client data...</Text>
               </div>
-            ) : !!clientId && clientGetStatus === 'error' ? (
-              <Alert variant="destructive">
-                <AlertCircle className="eb-h-4 eb-w-4" />
-                <AlertTitle>
-                  {clientGetError?.response?.data?.title ??
-                    clientGetError?.message}
-                </AlertTitle>
-                <AlertDescription>
-                  An unexpected error occurred. Please try again later.
-                </AlertDescription>
-                <AlertDescription className="eb-mt-2">
-                  <Button size="sm" onClick={() => refetchClient()}>
-                    <RefreshCwIcon className="eb-mr-1 eb-h-4 eb-w-4" />
-                    Try again
-                  </Button>
-                </AlertDescription>
-              </Alert>
+            ) : clientGetStatus === 'error' ? (
+              <ServerErrorAlert
+                error={clientGetError}
+                tryAgainAction={refetchClient}
+                customErrorMessage={{
+                  default: 'An error occurred while fetching client data.',
+                  '404':
+                    'Client not found. Please contact support or try again later.',
+                }}
+              />
             ) : (
               <Stepper variant="circle" initialStep={0} steps={steps}>
                 {steps.map((stepProps, index) => {
@@ -76,8 +85,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                   );
                 })}
               </Stepper>
-            )}
-          </div>
+            ))}
         </CardContent>
       </Card>
     </OnboardingContextProvider>
