@@ -107,7 +107,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
       });
       setClientId(clientResponse.id);
       setPartyId(clientResponse.partyId);
-      setCurrentStep(activeStep + 1);
+      setCurrentStep(activeStep);
     });
   };
 

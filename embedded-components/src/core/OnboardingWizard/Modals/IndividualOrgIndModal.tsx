@@ -53,7 +53,7 @@ const IndividualOrgIndModal = ({
   // TODO: Lets imrove this dafault value assignment
   const defaultInitialValues = data?.firstName ? data : {};
   // : createPersonalDetailsSchema().cast({});
-  console.log('@@defau', defaultInitialValues);
+
   defaultInitialValues.individualEmail = data?.email;
 
   const form = useForm<any>({

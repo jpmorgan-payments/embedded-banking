@@ -11,7 +11,7 @@ export interface OnboardingWizardInitProps extends RootConfig {
   isMock?: boolean;
   title?: string;
   clientId?: string;
-  onPostClientsVerfication: ({
+  onPostClientsVerification: ({
     clientId,
     clientResponse,
   }: {
@@ -30,7 +30,7 @@ export interface OnboardingWizardInitProps extends RootConfig {
 //TODO: props types needs to have
 const OnboardingWizard = ({
   clientId,
-  onPostClientsVerfication,
+  onPostClientsVerification,
   onGetClientsConfirmation,
   ...props
 }: OnboardingWizardInitProps) => {
@@ -38,7 +38,7 @@ const OnboardingWizard = ({
     <RootConfigProvider
       clientOptions={{
         clientId,
-        onPostClientsVerfication,
+        onPostClientsVerification,
         onGetClientsConfirmation,
         ...props,
       }}
