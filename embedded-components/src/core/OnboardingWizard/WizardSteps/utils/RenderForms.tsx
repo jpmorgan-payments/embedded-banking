@@ -18,6 +18,7 @@ import { SsnFormField } from '../../formFields/SsnFormField';
 import { TextareaFormField } from '../../formFields/TextareaFormField';
 import { UsStatesFormField } from '../../formFields/UsStatesFormField';
 import { WebsiteFromField } from '../../formFields/WebsiteFormField';
+import { YesNoFromField } from '../../formFields/YesNoFromField';
 
 export interface FormScham extends SelectFormFieldProps {
   fieldType:
@@ -35,7 +36,9 @@ export interface FormScham extends SelectFormFieldProps {
     | 'industryType'
     | 'orgType'
     | 'address'
-    | 'jobTitle';
+    | 'jobTitle'
+    //---------
+    | 'yesNo';
 }
 
 const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
@@ -229,7 +232,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               return (
                 <Box className="eb-col-span-3" key={name}>
                   <TextareaFormField
-                    key={name}
                     {...{
                       name,
                       labelToken: getContentToken(labelToken) ?? labelToken,
@@ -247,7 +249,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               return (
                 <Box className="eb-col-span-3" key={name}>
                   <WebsiteFromField
-                    key={name}
                     {...{
                       name,
                       labelToken: getContentToken(labelToken) ?? labelToken,
@@ -265,7 +266,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               return (
                 <Box className="eb-col-span-3" key={name}>
                   <IndustryFormField
-                    key={name}
                     {...{
                       name,
                       labelToken: getContentToken(labelToken) ?? labelToken,
@@ -283,7 +283,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               return (
                 <Box className="eb-col-span-3" key={name}>
                   <AddressFormFields
-                    key={name}
                     {...{
                       name,
                       labelToken: getContentToken(labelToken) ?? labelToken,
@@ -296,6 +295,22 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     }}
                   />
                 </Box>
+              );
+            case 'yesNo':
+              return (
+                <YesNoFromField
+                  key={name}
+                  {...{
+                    name,
+                    labelToken: getContentToken(labelToken) ?? labelToken,
+                    placeholderToken:
+                      getContentToken(placeholderToken) || placeholderToken,
+                    required,
+                    form,
+                    defaultValue,
+                    type,
+                  }}
+                />
               );
 
             default:

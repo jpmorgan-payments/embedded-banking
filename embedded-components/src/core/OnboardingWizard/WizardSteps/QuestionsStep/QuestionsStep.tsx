@@ -9,9 +9,7 @@ import {
 } from '@/api/generated/embedded-banking.schemas';
 import { Grid, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
-import { QuestionForm } from '@/core/OnboardingWizard/Forms/QuestionForm/QuestionForm';
 
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
@@ -20,18 +18,21 @@ import { makeQuestionsAPIBody } from '../../utils/apiUtilsParsers';
 import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 import { useGetQuestions } from '../hooks/useGetQuestions';
-import { q } from './q';
+import { RenderForms } from '../utils/RenderForms';
 
-const QuestionsStep = ({ questionsIds, children }: any) => {
+const QuestionsStep = ({ children }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { data } = useGetDataByClientId('client');
-  const { onboardingForm } = useOnboardingForm();
   const { clientId } = useRootConfig();
 
-  const questionList = data?.outstanding?.questionIds || questionsIds;
-  const { data: questionsList, isSuccess } = useGetQuestions(questionList);
+  const questionList =
+    (data?.outstanding?.questionIds?.length &&
+      data?.outstanding?.questionIds) ||
+    (data?.questionResponses?.length &&
+      data?.questionResponses?.map((response: any) => response.questionId));
+  const { data: questionsData, isSuccess } = useGetQuestions(questionList);
 
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
@@ -55,8 +56,8 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
       .required(getContentToken(`schemaAnswerQuestion`) as string);
     // .required(getContentToken('stringSchemaError') as string);
 
-    switch (format) {
-      case 'LIST':
+    switch (format?.toLowerCase()) {
+      case 'list':
         if (parentId) {
           return yup.array().when(parentId, {
             is: true,
@@ -64,7 +65,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
           });
         }
         return listSchema;
-      case 'BOLEAN':
+      case 'boolean':
         // if (parentId) {
         //   return yup.boolean().when(parentId, {
         //     is: true,
@@ -72,7 +73,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
         //   });
         // }
         return booleanSchema;
-      case 'INTEGER':
+      case 'integer':
         if (parentId) {
           return yup.number().when(parentId, {
             is: true,
@@ -80,8 +81,8 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
           });
         }
         return integerSchema;
-      case 'SINGLE':
-      case 'STRING':
+      case 'single':
+      case 'string':
       default:
         if (parentId) {
           //   return yup.string().when(parentId, (val, schema) => {
@@ -102,7 +103,7 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
   };
 
   const yupObject = yup.object().shape(
-    ((questionsList || q) as QuestionListResponse)?.questions?.reduce(
+    (questionsData as QuestionListResponse)?.questions?.reduce(
       (a: any, v: any) => {
         if (!v?.id) return a;
         return {
@@ -124,12 +125,20 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    if (data?.questionResponses?.length) {
+      data?.questionResponses.forEach((question: any) => {
+        form.setValue(question.questionId, question.values);
+      });
+    }
+  }, [data?.questionResponses?.length]);
+
   const onSubmit = useCallback(async () => {
     const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
 
     try {
       await submitQuestions({
-        id: (onboardingForm?.id || clientId) ?? '',
+        id: clientId ?? '',
         data: postBody,
       });
 
@@ -139,19 +148,43 @@ const QuestionsStep = ({ questionsIds, children }: any) => {
     }
   }, [activeStep]);
 
+  const fieldType = (type: string | undefined) => {
+    switch (type?.toLowerCase()) {
+      case 'boolean':
+        return 'yesNo';
+      case 'integer':
+        return 'input';
+      case 'string':
+        return 'textarea';
+      default:
+        return 'textarea';
+    }
+  };
+
+  const questionSchame =
+    questionsData &&
+    questionsData?.questions?.map((question: SchemasQuestionResponse) => {
+      return {
+        name: question.id,
+        labelToken: question?.content?.[0].label,
+        fieldType: fieldType(question?.responseSchema?.items?.type),
+      };
+    });
+
   return (
     <Stack>
       <Title as="h3"> {getContentToken(`title`)}</Title>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
-          {((questionsList || q) as QuestionListResponse)?.questions?.map(
-            (question: SchemasQuestionResponse) => (
-              <QuestionForm
-                key={question?.id}
-                question={question}
-                form={form}
-              />
-            )
+          {!!questionSchame?.length && (
+            <RenderForms
+              {...{
+                formSchema: questionSchame,
+                form,
+                getContentToken,
+                className: `eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4 `,
+              }}
+            />
           )}
         </Grid>
         {children}

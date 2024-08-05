@@ -23,7 +23,7 @@ const ServerAlertMessage = ({ title }: any) => {
       <AlertDescription>{getContent(`alertMessageText`)}</AlertDescription>
 
       <AlertDescription className="eb-mt-4">
-        {error?.response.data.context[0]?.message ?? error?.statusText}
+        {error?.response?.data?.context?.[0]?.message ?? error?.statusText}
       </AlertDescription>
 
       <Box
