@@ -46,7 +46,10 @@ export const InitialStepForm = () => {
     mutation: {
       onSuccess: (response) => {
         nextStep();
-        toast.success(`Client created successfully with ID: ${response.id}`);
+        toast.success(
+          `Client created successfully with ID: ${response.id}`,
+          {}
+        );
       },
       onError: (error) => {
         if (error.response?.data?.context) {
@@ -143,15 +146,7 @@ export const InitialStepForm = () => {
           )}
         />
 
-        {postClientError && (
-          <ServerErrorAlert
-            error={postClientError}
-            customErrorMessage={{
-              '400':
-                'There was an issue with the submitted data. Please fix any errors.',
-            }}
-          />
-        )}
+        <ServerErrorAlert error={postClientError} />
 
         {unhandledServerErrors && (
           <Alert variant="destructive">

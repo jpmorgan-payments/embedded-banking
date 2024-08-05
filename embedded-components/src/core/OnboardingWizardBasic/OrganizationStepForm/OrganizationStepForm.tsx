@@ -170,15 +170,7 @@ export const OrganizationStepForm = () => {
           )}
         />
 
-        {updateClientError && (
-          <ServerErrorAlert
-            error={updateClientError}
-            customErrorMessage={{
-              '400':
-                'There was an issue with the submitted data. Please fix any errors.',
-            }}
-          />
-        )}
+        <ServerErrorAlert error={updateClientError} />
 
         {unhandledServerErrors && (
           <Alert variant="destructive">
