@@ -15,6 +15,35 @@ Advantages of the stepper wizard layout:
 - Better mobile experience: Each step can be optimized for mobile viewing.
 - Easier error management: Errors can be addressed at each step before proceeding.
 
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+autonumber
+    participant P as Client Platform
+    participant J as Digital Onboarding APIs
+    P->>+J: Initiate onboarding: POST /clients with minimal data
+    J-->>P: 201 Response with clientId and outstanding attestation documents, document requests and questions
+    loop until outstanding object has only attestationDocumentIds
+        P->>+J: GET /clients/{id} to get the latest outstanding object
+        P->>+J: GET /documents/{id} and GET GET /documents/{id}/file from (3) outstanding/attestationDocumentIds
+        P->>+J: GET /document-requests/{id} from (3) outstanding/documentRequestIds
+        P->>+J: GET /questions?id={id} from (3) outstanding/questionIds
+        alt Creating/Updating Parties separately
+            P->>J: POST /parties, POST /parties/{id} with additional info
+            P->>J: POST /clients/{id} with addParties and questionResponses sections
+        else Updating client inline
+            P->>J: POST /clients/{id} with addParties and questionResponses sections
+        end
+    
+    end
+    P->>J: POST /clients/{id} with addAttestations section
+    P->>J: POST /clients/{id}/verifications initiate due diligence and verification checks to complete onboarding
+    loop
+        P->>J: Check onboarding status using GET /clients/{id}
+    end
+```
+
 ## Setup
 
 1. Set up a new React project (Create React App or Next.js).
