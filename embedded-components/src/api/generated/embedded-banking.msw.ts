@@ -7378,9 +7378,7 @@ export const getGetAllClientsMockHandler = (
   return http.get('*/ef/v1/clients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAllClientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAllClientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7397,9 +7395,7 @@ export const getPostClientsMockHandler = (
   return http.post('*/ef/v1/clients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getPostClientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getPostClientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7416,9 +7412,7 @@ export const getGetClientDetailsMockHandler = (
   return http.get('*/ef/v1/clients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetClientDetailsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetClientDetailsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7435,9 +7429,7 @@ export const getUpdateClientsMockHandler = (
   return http.post('*/ef/v1/clients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUpdateClientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUpdateClientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7492,9 +7484,7 @@ export const getDocumentsDetailsMockHandler = (
   return http.get('*/ef/v1/documents', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getDocumentsDetailsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getDocumentsDetailsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7511,9 +7501,7 @@ export const getGetDocumentDetailsMockHandler = (
   return http.get('*/ef/v1/documents/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetDocumentDetailsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetDocumentDetailsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7528,9 +7516,7 @@ export const getDownloadDocumentMockHandler = (overrideResponse?: string) => {
   return http.get('*/ef/v1/documents/:id/file', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getDownloadDocumentResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getDownloadDocumentResponseMock()),
       {
         status: 200,
         headers: {
@@ -7547,9 +7533,7 @@ export const getListTransactionsV2MockHandler = (
   return http.get('*/ef/v2/transactions', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getListTransactionsV2ResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getListTransactionsV2ResponseMock()),
       {
         status: 200,
         headers: {
@@ -7566,9 +7550,7 @@ export const getCreateTransactionV2MockHandler = (
   return http.post('*/ef/v2/transactions', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreateTransactionV2ResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreateTransactionV2ResponseMock()),
       {
         status: 200,
         headers: {
@@ -7585,9 +7567,7 @@ export const getGetTransactionV2MockHandler = (
   return http.get('*/ef/v2/transactions/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetTransactionV2ResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetTransactionV2ResponseMock()),
       {
         status: 200,
         headers: {
@@ -7604,9 +7584,7 @@ export const getCreateTransactionMockHandler = (
   return http.post('*/ef/v1/transactions', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreateTransactionResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreateTransactionResponseMock()),
       {
         status: 200,
         headers: {
@@ -7623,9 +7601,7 @@ export const getListTransactionsMockHandler = (
   return http.get('*/ef/v1/transactions', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getListTransactionsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getListTransactionsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7642,9 +7618,7 @@ export const getGetTransactionMockHandler = (
   return http.get('*/ef/v1/transactions/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetTransactionResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetTransactionResponseMock()),
       {
         status: 200,
         headers: {
@@ -7661,9 +7635,7 @@ export const getSmbdoListClientsMockHandler = (
   return http.get('*/ef/do/v1/clients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoListClientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoListClientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7680,9 +7652,7 @@ export const getSmbdoPostClientsMockHandler = (
   return http.post('*/ef/do/v1/clients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoPostClientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoPostClientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7699,9 +7669,7 @@ export const getSmbdoGetClientMockHandler = (
   return http.get('*/ef/do/v1/clients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoGetClientResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoGetClientResponseMock()),
       {
         status: 200,
         headers: {
@@ -7718,9 +7686,7 @@ export const getSmbdoUpdateClientMockHandler = (
   return http.post('*/ef/do/v1/clients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoUpdateClientResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoUpdateClientResponseMock()),
       {
         status: 200,
         headers: {
@@ -7749,9 +7715,7 @@ export const getSmbdoListPartiesMockHandler = (
   return http.get('*/ef/do/v1/parties', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoListPartiesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoListPartiesResponseMock()),
       {
         status: 200,
         headers: {
@@ -7768,9 +7732,7 @@ export const getSmbdoPostPartiesMockHandler = (
   return http.post('*/ef/do/v1/parties', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoPostPartiesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoPostPartiesResponseMock()),
       {
         status: 200,
         headers: {
@@ -7787,9 +7749,7 @@ export const getSmbdoGetPartyMockHandler = (
   return http.get('*/ef/do/v1/parties/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoGetPartyResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoGetPartyResponseMock()),
       {
         status: 200,
         headers: {
@@ -7806,9 +7766,7 @@ export const getSmbdoUpdatePartyMockHandler = (
   return http.post('*/ef/do/v1/parties/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoUpdatePartyResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoUpdatePartyResponseMock()),
       {
         status: 200,
         headers: {
@@ -7825,9 +7783,7 @@ export const getSmbdoListQuestionsMockHandler = (
   return http.get('*/ef/do/v1/questions', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoListQuestionsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoListQuestionsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7844,9 +7800,7 @@ export const getSmbdoGetQuestionMockHandler = (
   return http.get('*/ef/do/v1/questions/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSmbdoGetQuestionResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSmbdoGetQuestionResponseMock()),
       {
         status: 200,
         headers: {
@@ -7958,9 +7912,7 @@ export const getGetBalanceHoldsMockHandler = (
   return http.get('*/ef/v1/balance-holds', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetBalanceHoldsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetBalanceHoldsResponseMock()),
       {
         status: 200,
         headers: {
@@ -7996,9 +7948,7 @@ export const getGetBalanceHolds1MockHandler = (
   return http.get('*/ef/v2/balance-holds', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetBalanceHolds1ResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetBalanceHolds1ResponseMock()),
       {
         status: 200,
         headers: {
@@ -8034,9 +7984,7 @@ export const getCreatePaymentIntentMockHandler = (
   return http.post('*/ef/v1/payment-intents', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreatePaymentIntentResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreatePaymentIntentResponseMock()),
       {
         status: 200,
         headers: {
@@ -8053,9 +8001,7 @@ export const getListPaymentIntentsMockHandler = (
   return http.get('*/ef/v1/payment-intents', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getListPaymentIntentsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getListPaymentIntentsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8072,9 +8018,7 @@ export const getGetPaymentIntentMockHandler = (
   return http.get('*/ef/v1/payment-intents/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetPaymentIntentResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetPaymentIntentResponseMock()),
       {
         status: 200,
         headers: {
@@ -8091,9 +8035,7 @@ export const getUpdatePaymentIntentMockHandler = (
   return http.post('*/ef/v1/payment-intents/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUpdatePaymentIntentResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUpdatePaymentIntentResponseMock()),
       {
         status: 200,
         headers: {
@@ -8129,9 +8071,7 @@ export const getGetDebitCardsMockHandler = (
   return http.get('*/ef/v1/debit-cards', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetDebitCardsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetDebitCardsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8148,9 +8088,7 @@ export const getCreateDebitCardMockHandler = (
   return http.post('*/ef/v1/debit-cards', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreateDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreateDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8167,9 +8105,7 @@ export const getGetDebitCardMockHandler = (
   return http.get('*/ef/v1/debit-cards/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8186,9 +8122,7 @@ export const getUpdateCardMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUpdateCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUpdateCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8205,9 +8139,7 @@ export const getLockDebitCardMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/lock', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getLockDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getLockDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8224,9 +8156,7 @@ export const getUnlockDebitCardMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/unlock', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUnlockDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUnlockDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8243,9 +8173,7 @@ export const getCancelDebitCardMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/cancel', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCancelDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCancelDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8262,9 +8190,7 @@ export const getReplaceDebitCardMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/replace', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getReplaceDebitCardResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getReplaceDebitCardResponseMock()),
       {
         status: 200,
         headers: {
@@ -8281,9 +8207,7 @@ export const getSetDebitCardPinMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/set-pin', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSetDebitCardPinResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSetDebitCardPinResponseMock()),
       {
         status: 200,
         headers: {
@@ -8300,9 +8224,7 @@ export const getSetDebitCardLimitMockHandler = (
   return http.post('*/ef/v1/debit-cards/:id/set-limit', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSetDebitCardLimitResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSetDebitCardLimitResponseMock()),
       {
         status: 200,
         headers: {
@@ -8319,9 +8241,7 @@ export const getGetAllRecipientsMockHandler = (
   return http.get('*/ef/v1/recipients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAllRecipientsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAllRecipientsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8336,9 +8256,7 @@ export const getCreateRecipientMockHandler = (overrideResponse?: Recipient) => {
   return http.post('*/ef/v1/recipients', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreateRecipientResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreateRecipientResponseMock()),
       {
         status: 200,
         headers: {
@@ -8353,9 +8271,7 @@ export const getGetRecipientMockHandler = (overrideResponse?: Recipient) => {
   return http.get('*/ef/v1/recipients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRecipientResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRecipientResponseMock()),
       {
         status: 200,
         headers: {
@@ -8370,9 +8286,7 @@ export const getAmendRecipientMockHandler = (overrideResponse?: Recipient) => {
   return http.post('*/ef/v1/recipients/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getAmendRecipientResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getAmendRecipientResponseMock()),
       {
         status: 200,
         headers: {
@@ -8406,9 +8320,7 @@ export const getGetFaqMockHandler = (overrideResponse?: FAQResponse) => {
   return http.get('*/ef/v1/faqs', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetFaqResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetFaqResponseMock()),
       {
         status: 200,
         headers: {
@@ -8425,9 +8337,7 @@ export const getListWebhooksMockHandler = (
   return http.get('*/ef/v1/webhooks', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getListWebhooksResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getListWebhooksResponseMock()),
       {
         status: 200,
         headers: {
@@ -8444,9 +8354,7 @@ export const getCreateWebhookMockHandler = (
   return http.post('*/ef/v1/webhooks', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getCreateWebhookResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getCreateWebhookResponseMock()),
       {
         status: 200,
         headers: {
@@ -8463,9 +8371,7 @@ export const getGetWebhookMockHandler = (
   return http.get('*/ef/v1/webhooks/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetWebhookResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetWebhookResponseMock()),
       {
         status: 200,
         headers: {
@@ -8482,9 +8388,7 @@ export const getUpdateWebhookMockHandler = (
   return http.post('*/ef/v1/webhooks/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUpdateWebhookResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUpdateWebhookResponseMock()),
       {
         status: 200,
         headers: {
@@ -8501,9 +8405,7 @@ export const getGetAllCountriesMockHandler = (
   return http.get('*/ef/v1/countries', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAllCountriesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAllCountriesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8539,9 +8441,7 @@ export const getGetLegalStructuresMockHandler = (
   return http.get('*/ef/v1/legal-structures', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetLegalStructuresResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetLegalStructuresResponseMock()),
       {
         status: 200,
         headers: {
@@ -8558,9 +8458,7 @@ export const getGetDocumentTypesMockHandler = (
   return http.get('*/ef/v1/document-types', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetDocumentTypesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetDocumentTypesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8577,9 +8475,7 @@ export const getGetIdTypesMockHandler = (
   return http.get('*/ef/v1/id-types', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetIdTypesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetIdTypesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8615,9 +8511,7 @@ export const getGetRefProductsMockHandler = (
   return http.get('*/ef/v1/products', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefProductsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefProductsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8634,9 +8528,7 @@ export const getGetRefBusinessTypesMockHandler = (
   return http.get('*/ef/v1/business-types', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefBusinessTypesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefBusinessTypesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8653,9 +8545,7 @@ export const getGetRefJobTitlesMockHandler = (
   return http.get('*/ef/v1/job-titles', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefJobTitlesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefJobTitlesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8672,9 +8562,7 @@ export const getGetRefPartyRolesMockHandler = (
   return http.get('*/ef/v1/party-roles', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefPartyRolesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefPartyRolesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8691,9 +8579,7 @@ export const getGetRefAddressTypesMockHandler = (
   return http.get('*/ef/v1/address-types', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefAddressTypesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefAddressTypesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8729,9 +8615,7 @@ export const getGetRefPartyTypesMockHandler = (
   return http.get('*/ef/v1/party-types', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetRefPartyTypesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetRefPartyTypesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8746,9 +8630,7 @@ export const getGetStatementMockHandler = (overrideResponse?: string) => {
   return http.get('*/ef/v1/statements/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetStatementResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetStatementResponseMock()),
       {
         status: 200,
         headers: {
@@ -8765,9 +8647,7 @@ export const getSearchStatementsMockHandler = (
   return http.get('*/ef/v1/statements/search', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getSearchStatementsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getSearchStatementsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8784,9 +8664,7 @@ export const getGetAllUsersMockHandler = (
   return http.get('*/ef/v1/users', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAllUsersResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAllUsersResponseMock()),
       {
         status: 200,
         headers: {
@@ -8803,9 +8681,7 @@ export const getPostUsersMockHandler = (
   return http.post('*/ef/v1/users', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getPostUsersResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getPostUsersResponseMock()),
       {
         status: 200,
         headers: {
@@ -8822,9 +8698,7 @@ export const getGetUserDetailsMockHandler = (
   return http.get('*/ef/v1/users/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetUserDetailsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetUserDetailsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8841,9 +8715,7 @@ export const getUpdateUserByIdMockHandler = (
   return http.post('*/ef/v1/users/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getUpdateUserByIdResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getUpdateUserByIdResponseMock()),
       {
         status: 200,
         headers: {
@@ -8860,9 +8732,7 @@ export const getGetAllRolesMockHandler = (
   return http.get('*/ef/v1/roles', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAllRolesResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAllRolesResponseMock()),
       {
         status: 200,
         headers: {
@@ -8879,9 +8749,7 @@ export const getGetAccountsMockHandler = (
   return http.get('*/ef/v1/accounts', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAccountsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAccountsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8898,9 +8766,7 @@ export const getPostAccountsMockHandler = (
   return http.post('*/ef/v1/accounts', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getPostAccountsResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getPostAccountsResponseMock()),
       {
         status: 200,
         headers: {
@@ -8917,9 +8783,7 @@ export const getGetAccountMockHandler = (
   return http.get('*/ef/v1/accounts/:id', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAccountResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAccountResponseMock()),
       {
         status: 200,
         headers: {
@@ -8936,9 +8800,7 @@ export const getGetAccountBalanceMockHandler = (
   return http.get('*/ef/v1/accounts/:id/balances', async () => {
     await delay(1000);
     return new HttpResponse(
-      JSON.stringify(
-        overrideResponse || getGetAccountBalanceResponseMock()
-      ),
+      JSON.stringify(overrideResponse || getGetAccountBalanceResponseMock()),
       {
         status: 200,
         headers: {
