@@ -7,8 +7,8 @@ import {
 } from 'react';
 
 export type Error = {
-  error: boolean;
-  setError: Dispatch<SetStateAction<boolean>>;
+  error: any;
+  setError: Dispatch<SetStateAction<any>>;
 };
 const ErrorContext = createContext({} as Error);
 

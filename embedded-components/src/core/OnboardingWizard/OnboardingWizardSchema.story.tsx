@@ -45,7 +45,7 @@ export const Default: Story = {
     isMockResponse: false,
     products: [],
 
-    onPostClientsVerfication: ({ clientId }: onRegistrationProp) => {
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
@@ -110,7 +110,7 @@ export const OnboardingWithClientIDWithoutQuestions: Story = {
     jurisdictions: ['US', 'Canada'],
     clientId: '3000000316',
     products: [],
-    onPostClientsVerfication: ({ clientId }: onRegistrationProp) => {
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
@@ -151,7 +151,7 @@ export const OnboardingWithClientIDWithQuestions: Story = {
     jurisdictions: ['US', 'Canada'],
     clientId: '3000000316',
     products: [],
-    onPostClientsVerfication: ({ clientId }: onRegistrationProp) => {
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
@@ -187,7 +187,7 @@ export const OnboardingWithClientIDWithAttestation: Story = {
     jurisdictions: ['US', 'Canada'],
     clientId: '3000000350',
     products: [],
-    onPostClientsVerfication: ({ clientId }: onRegistrationProp) => {
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {

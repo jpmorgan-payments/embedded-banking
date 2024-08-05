@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -14,10 +14,14 @@ import { FormProvider } from './context/formProvider.contex';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
+import { fromApiToForm } from './utils/fromApiToForm';
 import { useContentData } from './utils/useContentData';
+import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
+import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
 
 export const OnboardingWizardSchema = ({ title }: any) => {
+  const { clientId } = useRootConfig();
   const {
     activeStep,
     stepsList,
@@ -30,7 +34,12 @@ export const OnboardingWizardSchema = ({ title }: any) => {
 
   // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
-  const { clientId } = useRootConfig();
+
+  const { data } = useGetDataByClientId('client');
+  const clientDataForm = useMemo(() => {
+    return data && fromApiToForm(data);
+  }, [data]);
+
   const { error: isError } = useError();
 
   // TODO: Temporary comment for IP
@@ -45,40 +54,29 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   //   }
   // }, [ipAddress]);
 
-  // Building steps
   useEffect(() => {
-    if (clientId) {
-      const steps = [
-        'Individual',
-        'Organization',
-        'Business Owners',
-        'Decision Makers',
-        'Questions',
-        'Review',
-        'Attestation',
-      ];
-      buildStepper(steps);
-    } else {
-      buildStepper();
-    }
+    buildStepper();
+  }, []);
 
-    if (!CurrentStep) {
+  useEffect(() => {
+    if (clientId && clientDataForm) {
+      const orgDetails = getOrgDetails(clientDataForm);
       const steps = [
         'Individual',
         'Organization',
-        'Business Owners',
-        'Decision Makers',
+        ...[
+          orgDetails?.organizationType !== 'SOLE_PROPRIETORSHIP'
+            ? ['Business Owners', 'Decision Makers']
+            : [],
+        ],
         'Questions',
         'Review',
         'Attestation',
-      ];
-      if (clientId) {
-        buildStepper(steps);
-      } else {
-        buildStepper();
-      }
+      ].flat();
+
+      buildStepper(steps);
     }
-  }, [clientId, CurrentStep]);
+  }, [clientId, clientDataForm]);
 
   const { getContentToken } = useContentData(
     `schema.${CurrentStep?.contentData ?? ''}`
@@ -101,7 +99,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                 <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
               </CardHeader>
 
-              {!!stepsList?.length && (
+              {!!stepsList?.length && (activeStep !== 0 || clientId) && (
                 <StepperHeader
                   activeStep={activeStep}
                   setCurrentStep={setCurrentStep}

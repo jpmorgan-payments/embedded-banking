@@ -133,18 +133,13 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       });
     };
 
-    const currentSchemaTemp = stepsListSchemaTemp()[activeStep]?.formSchema;
     const CurrentStepTemp = stepsListSchemaTemp()?.[activeStep];
+    const currentSchemaTemp = CurrentStepTemp?.formSchema;
 
     setStepState((state) => {
-      const newArr = uniqBy(
-        [...state.stepsList, ...stepsListSchemaTemp()],
-        'title'
-      );
-
       return {
         ...state,
-        stepsList: sortByRefferenceArray(stepNames, newArr),
+        stepsList: sortByRefferenceArray(stepNames, stepsListSchemaTemp()),
         currentFormSchema: currentSchemaTemp,
         CurrentStep: CurrentStepTemp,
       };
@@ -163,6 +158,19 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       };
     });
   };
+
+  // const addSteps = (nameList: string[]) => {
+  //   setStepState((state) => {
+  //     return {
+  //       ...state,
+  //       stepsList: [
+  //         ...stepsList.filter((step: any) => {
+  //           return nameList.includes(step.title);
+  //         }),
+  //       ],
+  //     };
+  //   });
+  // };
 
   useEffect(() => {
     if (activeStep > 0) {
