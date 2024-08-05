@@ -12,7 +12,7 @@ import {
 import { Step, Stepper } from '@/components/ui/stepper';
 import { Text } from '@/components/ui/text';
 
-import { InitialStepForm } from './InitialStepForm/InitialStepForm';
+import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
@@ -52,7 +52,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 It looks like you don&apos;t have a client ID yet. Fill out the
                 below to get started!
               </CardDescription>
-              <InitialStepForm />
+              <InitialForm />
             </>
           )}
           {!!clientId &&

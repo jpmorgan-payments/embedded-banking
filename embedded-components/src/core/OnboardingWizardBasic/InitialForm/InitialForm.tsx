@@ -24,9 +24,9 @@ import {
   setApiFormErrors,
   translateApiErrorsToFormErrors,
 } from '../utils/formUtils';
-import { InitialFormSchema } from './InitialStepForm.schema';
+import { InitialFormSchema } from './InitialForm.schema';
 
-export const InitialStepForm = () => {
+export const InitialForm = () => {
   const { nextStep } = useStepper();
 
   // Create a form with empty default values

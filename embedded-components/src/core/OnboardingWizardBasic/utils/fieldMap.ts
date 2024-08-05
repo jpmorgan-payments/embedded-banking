@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { InitialFormSchema } from '../InitialStepForm/InitialStepForm.schema';
+import { InitialFormSchema } from '../InitialForm/InitialForm.schema';
 import { OrganizationStepFormSchema } from '../OrganizationStepForm/OrganizationStepForm.schema';
 
 // TODO: add more form schemas here
