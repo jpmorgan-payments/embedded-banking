@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const InitialFormSchema = z.object({
-  organizationName: z.string().min(1, 'Required'),
+  organizationName: z.string().min(0, 'Required'),
   organizationType: z.enum([
     'LIMITED_LIABILITY_COMPANY',
     'C_CORPORATION',

@@ -1,4 +1,5 @@
 import { UseFormReturn } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import {
   ApiErrorReasonV2,
@@ -41,19 +42,28 @@ export function setApiFormErrors(
   form: UseFormReturn<any>,
   apiFormErrors: FormError[]
 ) {
+  let unhandledErrorString = '';
+  let focused = false;
   apiFormErrors.forEach((formError) => {
     if (formError.field === undefined) {
-      form.setError('root.unhandled', {
-        message: `${
-          form.formState.errors.root?.unhandled?.message ?? ''
-        }\n${formError.path}: ${formError.message}`,
-      });
+      unhandledErrorString += `\n${formError.path}: ${formError.message}`;
     } else {
       form.setError(formError.field, {
         message: `Server Error: ${formError.message}`,
       });
+      if (!focused) {
+        form.setFocus(formError.field);
+        focused = true;
+      }
     }
   });
+  if (import.meta.env.DEV && unhandledErrorString !== '') {
+    toast.error(`[DEV] Unhandled Server Errors`, {
+      description: unhandledErrorString,
+      duration: Infinity,
+      closeButton: true,
+    });
+  }
 }
 
 function setValueByPath(obj: any, path: string, value: any) {

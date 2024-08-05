@@ -1,12 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -77,9 +75,6 @@ export const InitialStepForm = () => {
     });
   });
 
-  const unhandledServerErrors =
-    form.formState.errors.root?.unhandled?.message?.split('\n');
-
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="eb-space-y-6">
@@ -147,18 +142,6 @@ export const InitialStepForm = () => {
         />
 
         <ServerErrorAlert error={postClientError} />
-
-        {unhandledServerErrors && (
-          <Alert variant="destructive">
-            <AlertCircle className="eb-h-4 eb-w-4" />
-            <AlertTitle>Unhandled errors</AlertTitle>
-            {unhandledServerErrors.map((error) => (
-              <AlertDescription key={error} className="eb-text-red-600">
-                {error}
-              </AlertDescription>
-            ))}
-          </Alert>
-        )}
 
         <div className="eb-flex eb-w-full eb-justify-end eb-gap-4">
           <Button>Submit</Button>
