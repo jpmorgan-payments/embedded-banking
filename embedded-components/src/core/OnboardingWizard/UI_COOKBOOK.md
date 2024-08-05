@@ -21,7 +21,7 @@ Advantages of the stepper wizard layout:
 sequenceDiagram
 autonumber
     participant P as Client Platform
-    participant J as J.P.Morgan Embedded Payments
+    participant J as Digital Onboarding APIs
     P->>+J: Initiate onboarding: POST /clients with minimal data
     J-->>P: 201 Response with clientId and outstanding attestation documents, document requests and questions
     loop until outstanding object has only attestationDocumentIds
