@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import {
@@ -71,7 +72,7 @@ export const OrganizationStepForm = () => {
       mutation: {
         onSuccess: () => {
           nextStep();
-          // TODO: add success toast
+          toast.success("Client's organization details updated successfully");
         },
         onError: (error) => {
           if (error.response?.data?.context) {

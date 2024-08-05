@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AXIOS_INSTANCE } from '@/api/axios-instance';
+import { Toaster } from '@/components/ui/sonner';
 
 import { EBConfig } from './config.types';
 import { convertThemeToCssString } from './convert-theme-to-css-variables';
@@ -89,7 +90,10 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
         }}
       />
 
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <Toaster richColors expand />
+      </QueryClientProvider>
     </>
   );
 };

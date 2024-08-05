@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
@@ -43,9 +44,9 @@ export const InitialStepForm = () => {
 
   const { mutate: postClient, error: postClientError } = useSmbdoPostClients({
     mutation: {
-      onSuccess: () => {
+      onSuccess: (response) => {
         nextStep();
-        // TODO: add success toast
+        toast.success(`Client created successfully with ID: ${response.id}`);
       },
       onError: (error) => {
         if (error.response?.data?.context) {
