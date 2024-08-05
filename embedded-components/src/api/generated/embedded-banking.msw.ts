@@ -7379,7 +7379,7 @@ export const getGetAllClientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAllClientsResponseMock()
+        overrideResponse || getGetAllClientsResponseMock()
       ),
       {
         status: 200,
@@ -7398,7 +7398,7 @@ export const getPostClientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getPostClientsResponseMock()
+        overrideResponse || getPostClientsResponseMock()
       ),
       {
         status: 200,
@@ -7417,7 +7417,7 @@ export const getGetClientDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetClientDetailsResponseMock()
+        overrideResponse || getGetClientDetailsResponseMock()
       ),
       {
         status: 200,
@@ -7436,7 +7436,7 @@ export const getUpdateClientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getUpdateClientsResponseMock()
+        overrideResponse || getUpdateClientsResponseMock()
       ),
       {
         status: 200,
@@ -7455,9 +7455,7 @@ export const getGetClientVerificationMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetClientVerificationResponseMock()
+        overrideResponse || getGetClientVerificationResponseMock()
       ),
       {
         status: 200,
@@ -7476,9 +7474,7 @@ export const getAddClientVerificationMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getAddClientVerificationResponseMock()
+        overrideResponse || getAddClientVerificationResponseMock()
       ),
       {
         status: 200,
@@ -7497,7 +7493,7 @@ export const getDocumentsDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getDocumentsDetailsResponseMock()
+        overrideResponse || getDocumentsDetailsResponseMock()
       ),
       {
         status: 200,
@@ -7516,9 +7512,7 @@ export const getGetDocumentDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetDocumentDetailsResponseMock()
+        overrideResponse || getGetDocumentDetailsResponseMock()
       ),
       {
         status: 200,
@@ -7535,7 +7529,7 @@ export const getDownloadDocumentMockHandler = (overrideResponse?: string) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getDownloadDocumentResponseMock()
+        overrideResponse || getDownloadDocumentResponseMock()
       ),
       {
         status: 200,
@@ -7554,9 +7548,7 @@ export const getListTransactionsV2MockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getListTransactionsV2ResponseMock()
+        overrideResponse || getListTransactionsV2ResponseMock()
       ),
       {
         status: 200,
@@ -7575,9 +7567,7 @@ export const getCreateTransactionV2MockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getCreateTransactionV2ResponseMock()
+        overrideResponse || getCreateTransactionV2ResponseMock()
       ),
       {
         status: 200,
@@ -7596,7 +7586,7 @@ export const getGetTransactionV2MockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetTransactionV2ResponseMock()
+        overrideResponse || getGetTransactionV2ResponseMock()
       ),
       {
         status: 200,
@@ -7615,7 +7605,7 @@ export const getCreateTransactionMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getCreateTransactionResponseMock()
+        overrideResponse || getCreateTransactionResponseMock()
       ),
       {
         status: 200,
@@ -7634,7 +7624,7 @@ export const getListTransactionsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getListTransactionsResponseMock()
+        overrideResponse || getListTransactionsResponseMock()
       ),
       {
         status: 200,
@@ -7653,7 +7643,7 @@ export const getGetTransactionMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetTransactionResponseMock()
+        overrideResponse || getGetTransactionResponseMock()
       ),
       {
         status: 200,
@@ -7672,7 +7662,7 @@ export const getSmbdoListClientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoListClientsResponseMock()
+        overrideResponse || getSmbdoListClientsResponseMock()
       ),
       {
         status: 200,
@@ -7691,7 +7681,7 @@ export const getSmbdoPostClientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoPostClientsResponseMock()
+        overrideResponse || getSmbdoPostClientsResponseMock()
       ),
       {
         status: 200,
@@ -7710,7 +7700,7 @@ export const getSmbdoGetClientMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoGetClientResponseMock()
+        overrideResponse || getSmbdoGetClientResponseMock()
       ),
       {
         status: 200,
@@ -7729,7 +7719,7 @@ export const getSmbdoUpdateClientMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoUpdateClientResponseMock()
+        overrideResponse || getSmbdoUpdateClientResponseMock()
       ),
       {
         status: 200,
@@ -7760,7 +7750,7 @@ export const getSmbdoListPartiesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoListPartiesResponseMock()
+        overrideResponse || getSmbdoListPartiesResponseMock()
       ),
       {
         status: 200,
@@ -7779,7 +7769,7 @@ export const getSmbdoPostPartiesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoPostPartiesResponseMock()
+        overrideResponse || getSmbdoPostPartiesResponseMock()
       ),
       {
         status: 200,
@@ -7798,7 +7788,7 @@ export const getSmbdoGetPartyMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoGetPartyResponseMock()
+        overrideResponse || getSmbdoGetPartyResponseMock()
       ),
       {
         status: 200,
@@ -7817,7 +7807,7 @@ export const getSmbdoUpdatePartyMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoUpdatePartyResponseMock()
+        overrideResponse || getSmbdoUpdatePartyResponseMock()
       ),
       {
         status: 200,
@@ -7836,9 +7826,7 @@ export const getSmbdoListQuestionsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoListQuestionsResponseMock()
+        overrideResponse || getSmbdoListQuestionsResponseMock()
       ),
       {
         status: 200,
@@ -7857,7 +7845,7 @@ export const getSmbdoGetQuestionMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSmbdoGetQuestionResponseMock()
+        overrideResponse || getSmbdoGetQuestionResponseMock()
       ),
       {
         status: 200,
@@ -7876,9 +7864,7 @@ export const getSmbdoListDocumentRequestsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoListDocumentRequestsResponseMock()
+        overrideResponse || getSmbdoListDocumentRequestsResponseMock()
       ),
       {
         status: 200,
@@ -7897,9 +7883,7 @@ export const getSmbdoGetDocumentRequestMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoGetDocumentRequestResponseMock()
+        overrideResponse || getSmbdoGetDocumentRequestResponseMock()
       ),
       {
         status: 200,
@@ -7918,9 +7902,7 @@ export const getSmbdoGetAllDocumentDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoGetAllDocumentDetailsResponseMock()
+        overrideResponse || getSmbdoGetAllDocumentDetailsResponseMock()
       ),
       {
         status: 200,
@@ -7939,9 +7921,7 @@ export const getSmbdoGetDocumentDetailMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoGetDocumentDetailResponseMock()
+        overrideResponse || getSmbdoGetDocumentDetailResponseMock()
       ),
       {
         status: 200,
@@ -7960,9 +7940,7 @@ export const getSmbdoDownloadDocumentMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getSmbdoDownloadDocumentResponseMock()
+        overrideResponse || getSmbdoDownloadDocumentResponseMock()
       ),
       {
         status: 200,
@@ -7981,7 +7959,7 @@ export const getGetBalanceHoldsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetBalanceHoldsResponseMock()
+        overrideResponse || getGetBalanceHoldsResponseMock()
       ),
       {
         status: 200,
@@ -8000,9 +7978,7 @@ export const getGetBalanceHoldsDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetBalanceHoldsDetailsResponseMock()
+        overrideResponse || getGetBalanceHoldsDetailsResponseMock()
       ),
       {
         status: 200,
@@ -8021,7 +7997,7 @@ export const getGetBalanceHolds1MockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetBalanceHolds1ResponseMock()
+        overrideResponse || getGetBalanceHolds1ResponseMock()
       ),
       {
         status: 200,
@@ -8040,9 +8016,7 @@ export const getGetBalanceHoldsDetails1MockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetBalanceHoldsDetails1ResponseMock()
+        overrideResponse || getGetBalanceHoldsDetails1ResponseMock()
       ),
       {
         status: 200,
@@ -8061,9 +8035,7 @@ export const getCreatePaymentIntentMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getCreatePaymentIntentResponseMock()
+        overrideResponse || getCreatePaymentIntentResponseMock()
       ),
       {
         status: 200,
@@ -8082,9 +8054,7 @@ export const getListPaymentIntentsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getListPaymentIntentsResponseMock()
+        overrideResponse || getListPaymentIntentsResponseMock()
       ),
       {
         status: 200,
@@ -8103,7 +8073,7 @@ export const getGetPaymentIntentMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetPaymentIntentResponseMock()
+        overrideResponse || getGetPaymentIntentResponseMock()
       ),
       {
         status: 200,
@@ -8122,9 +8092,7 @@ export const getUpdatePaymentIntentMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getUpdatePaymentIntentResponseMock()
+        overrideResponse || getUpdatePaymentIntentResponseMock()
       ),
       {
         status: 200,
@@ -8143,9 +8111,7 @@ export const getGetBillingClientDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetBillingClientDetailsResponseMock()
+        overrideResponse || getGetBillingClientDetailsResponseMock()
       ),
       {
         status: 200,
@@ -8164,7 +8130,7 @@ export const getGetDebitCardsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetDebitCardsResponseMock()
+        overrideResponse || getGetDebitCardsResponseMock()
       ),
       {
         status: 200,
@@ -8183,7 +8149,7 @@ export const getCreateDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getCreateDebitCardResponseMock()
+        overrideResponse || getCreateDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8202,7 +8168,7 @@ export const getGetDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetDebitCardResponseMock()
+        overrideResponse || getGetDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8221,7 +8187,7 @@ export const getUpdateCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getUpdateCardResponseMock()
+        overrideResponse || getUpdateCardResponseMock()
       ),
       {
         status: 200,
@@ -8240,7 +8206,7 @@ export const getLockDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getLockDebitCardResponseMock()
+        overrideResponse || getLockDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8259,7 +8225,7 @@ export const getUnlockDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getUnlockDebitCardResponseMock()
+        overrideResponse || getUnlockDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8278,7 +8244,7 @@ export const getCancelDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getCancelDebitCardResponseMock()
+        overrideResponse || getCancelDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8297,7 +8263,7 @@ export const getReplaceDebitCardMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getReplaceDebitCardResponseMock()
+        overrideResponse || getReplaceDebitCardResponseMock()
       ),
       {
         status: 200,
@@ -8316,7 +8282,7 @@ export const getSetDebitCardPinMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSetDebitCardPinResponseMock()
+        overrideResponse || getSetDebitCardPinResponseMock()
       ),
       {
         status: 200,
@@ -8335,7 +8301,7 @@ export const getSetDebitCardLimitMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSetDebitCardLimitResponseMock()
+        overrideResponse || getSetDebitCardLimitResponseMock()
       ),
       {
         status: 200,
@@ -8354,7 +8320,7 @@ export const getGetAllRecipientsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAllRecipientsResponseMock()
+        overrideResponse || getGetAllRecipientsResponseMock()
       ),
       {
         status: 200,
@@ -8371,7 +8337,7 @@ export const getCreateRecipientMockHandler = (overrideResponse?: Recipient) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getCreateRecipientResponseMock()
+        overrideResponse || getCreateRecipientResponseMock()
       ),
       {
         status: 200,
@@ -8388,7 +8354,7 @@ export const getGetRecipientMockHandler = (overrideResponse?: Recipient) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetRecipientResponseMock()
+        overrideResponse || getGetRecipientResponseMock()
       ),
       {
         status: 200,
@@ -8405,7 +8371,7 @@ export const getAmendRecipientMockHandler = (overrideResponse?: Recipient) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getAmendRecipientResponseMock()
+        overrideResponse || getAmendRecipientResponseMock()
       ),
       {
         status: 200,
@@ -8424,9 +8390,7 @@ export const getRecipientsVerificationMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getRecipientsVerificationResponseMock()
+        overrideResponse || getRecipientsVerificationResponseMock()
       ),
       {
         status: 200,
@@ -8443,7 +8407,7 @@ export const getGetFaqMockHandler = (overrideResponse?: FAQResponse) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetFaqResponseMock()
+        overrideResponse || getGetFaqResponseMock()
       ),
       {
         status: 200,
@@ -8462,7 +8426,7 @@ export const getListWebhooksMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getListWebhooksResponseMock()
+        overrideResponse || getListWebhooksResponseMock()
       ),
       {
         status: 200,
@@ -8481,7 +8445,7 @@ export const getCreateWebhookMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getCreateWebhookResponseMock()
+        overrideResponse || getCreateWebhookResponseMock()
       ),
       {
         status: 200,
@@ -8500,7 +8464,7 @@ export const getGetWebhookMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetWebhookResponseMock()
+        overrideResponse || getGetWebhookResponseMock()
       ),
       {
         status: 200,
@@ -8519,7 +8483,7 @@ export const getUpdateWebhookMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getUpdateWebhookResponseMock()
+        overrideResponse || getUpdateWebhookResponseMock()
       ),
       {
         status: 200,
@@ -8538,7 +8502,7 @@ export const getGetAllCountriesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAllCountriesResponseMock()
+        overrideResponse || getGetAllCountriesResponseMock()
       ),
       {
         status: 200,
@@ -8557,9 +8521,7 @@ export const getGetCountrySubdivisionMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetCountrySubdivisionResponseMock()
+        overrideResponse || getGetCountrySubdivisionResponseMock()
       ),
       {
         status: 200,
@@ -8578,9 +8540,7 @@ export const getGetLegalStructuresMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetLegalStructuresResponseMock()
+        overrideResponse || getGetLegalStructuresResponseMock()
       ),
       {
         status: 200,
@@ -8599,7 +8559,7 @@ export const getGetDocumentTypesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetDocumentTypesResponseMock()
+        overrideResponse || getGetDocumentTypesResponseMock()
       ),
       {
         status: 200,
@@ -8618,7 +8578,7 @@ export const getGetIdTypesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetIdTypesResponseMock()
+        overrideResponse || getGetIdTypesResponseMock()
       ),
       {
         status: 200,
@@ -8637,9 +8597,7 @@ export const getGetClientIndustryCategoriesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetClientIndustryCategoriesResponseMock()
+        overrideResponse || getGetClientIndustryCategoriesResponseMock()
       ),
       {
         status: 200,
@@ -8658,7 +8616,7 @@ export const getGetRefProductsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetRefProductsResponseMock()
+        overrideResponse || getGetRefProductsResponseMock()
       ),
       {
         status: 200,
@@ -8677,9 +8635,7 @@ export const getGetRefBusinessTypesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetRefBusinessTypesResponseMock()
+        overrideResponse || getGetRefBusinessTypesResponseMock()
       ),
       {
         status: 200,
@@ -8698,7 +8654,7 @@ export const getGetRefJobTitlesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetRefJobTitlesResponseMock()
+        overrideResponse || getGetRefJobTitlesResponseMock()
       ),
       {
         status: 200,
@@ -8717,7 +8673,7 @@ export const getGetRefPartyRolesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetRefPartyRolesResponseMock()
+        overrideResponse || getGetRefPartyRolesResponseMock()
       ),
       {
         status: 200,
@@ -8736,9 +8692,7 @@ export const getGetRefAddressTypesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetRefAddressTypesResponseMock()
+        overrideResponse || getGetRefAddressTypesResponseMock()
       ),
       {
         status: 200,
@@ -8757,9 +8711,7 @@ export const getGetRefNatureOfOwnershipsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse
-          ? overrideResponse
-          : getGetRefNatureOfOwnershipsResponseMock()
+        overrideResponse || getGetRefNatureOfOwnershipsResponseMock()
       ),
       {
         status: 200,
@@ -8778,7 +8730,7 @@ export const getGetRefPartyTypesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetRefPartyTypesResponseMock()
+        overrideResponse || getGetRefPartyTypesResponseMock()
       ),
       {
         status: 200,
@@ -8795,7 +8747,7 @@ export const getGetStatementMockHandler = (overrideResponse?: string) => {
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetStatementResponseMock()
+        overrideResponse || getGetStatementResponseMock()
       ),
       {
         status: 200,
@@ -8814,7 +8766,7 @@ export const getSearchStatementsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getSearchStatementsResponseMock()
+        overrideResponse || getSearchStatementsResponseMock()
       ),
       {
         status: 200,
@@ -8833,7 +8785,7 @@ export const getGetAllUsersMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAllUsersResponseMock()
+        overrideResponse || getGetAllUsersResponseMock()
       ),
       {
         status: 200,
@@ -8852,7 +8804,7 @@ export const getPostUsersMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getPostUsersResponseMock()
+        overrideResponse || getPostUsersResponseMock()
       ),
       {
         status: 200,
@@ -8871,7 +8823,7 @@ export const getGetUserDetailsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetUserDetailsResponseMock()
+        overrideResponse || getGetUserDetailsResponseMock()
       ),
       {
         status: 200,
@@ -8890,7 +8842,7 @@ export const getUpdateUserByIdMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getUpdateUserByIdResponseMock()
+        overrideResponse || getUpdateUserByIdResponseMock()
       ),
       {
         status: 200,
@@ -8909,7 +8861,7 @@ export const getGetAllRolesMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAllRolesResponseMock()
+        overrideResponse || getGetAllRolesResponseMock()
       ),
       {
         status: 200,
@@ -8928,7 +8880,7 @@ export const getGetAccountsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAccountsResponseMock()
+        overrideResponse || getGetAccountsResponseMock()
       ),
       {
         status: 200,
@@ -8947,7 +8899,7 @@ export const getPostAccountsMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getPostAccountsResponseMock()
+        overrideResponse || getPostAccountsResponseMock()
       ),
       {
         status: 200,
@@ -8966,7 +8918,7 @@ export const getGetAccountMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAccountResponseMock()
+        overrideResponse || getGetAccountResponseMock()
       ),
       {
         status: 200,
@@ -8985,7 +8937,7 @@ export const getGetAccountBalanceMockHandler = (
     await delay(1000);
     return new HttpResponse(
       JSON.stringify(
-        overrideResponse ? overrideResponse : getGetAccountBalanceResponseMock()
+        overrideResponse || getGetAccountBalanceResponseMock()
       ),
       {
         status: 200,
