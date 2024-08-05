@@ -3518,8 +3518,6 @@ export const TaskType = {
   CANCEL_PAYMENT_INTENT: 'CANCEL_PAYMENT_INTENT',
 } as const;
 
-export type AvsConfigResponse = any;
-
 export type AvsConfigRequestAllOf = { [key: string]: any };
 
 export type AvsConfigRequest = AvsConfigRequestAllOf;
