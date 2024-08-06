@@ -187,7 +187,7 @@ const QuestionsStep = ({ children }: any) => {
     <Stack>
       <Title as="h3"> {getContentToken(`title`)}</Title>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-        <Grid className={`eb-gap-4 eb-pt-4`}>
+        <Grid className="eb-gap-4 eb-pt-4">
           {!!questionSchame?.length && (
             <RenderForms
               {...{
