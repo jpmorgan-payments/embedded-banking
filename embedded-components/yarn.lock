@@ -2814,6 +2814,7 @@ __metadata:
     lucide-react: "npm:^0.418.0"
     msw: "npm:^2.3.4"
     msw-storybook-addon: "npm:^2.0.3"
+    next-themes: "npm:^0.3.0"
     orval: "npm:^6.31.0"
     postcss: "npm:^8.4.40"
     postcss-preset-mantine: "npm:1.17.0"
@@ -2830,6 +2831,7 @@ __metadata:
     react-number-format: "npm:^5.4.0"
     replace: "npm:^1.2.2"
     rimraf: "npm:^6.0.1"
+    sonner: "npm:^1.5.0"
     storybook: "npm:^8.2.6"
     storybook-dark-mode: "npm:^4.0.2"
     tabler-icons-react: "npm:^1.56.0"
@@ -11117,6 +11119,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-themes@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "next-themes@npm:0.3.0"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+    react-dom: ^16.8 || ^17 || ^18
+  checksum: 10c0/72bd670ad6b9f547dc18cece340dfd1ac41e3e7b37eb321d4767db90bfa2c239f937011cd0efe35ca0081f1ea260051bc0868808ef39b0fbff2ddefd7146cec6
+  languageName: node
+  linkType: hard
+
 "nimma@npm:0.2.2":
   version: 0.2.2
   resolution: "nimma@npm:0.2.2"
@@ -13375,6 +13387,16 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10c0/ac77b515c260473cc7c4452f09b20939e22510ce3ae48385c516d1d5784374d5cc75be3cb18ff66cc985a7f4f2ef8fef84e984c5ec70aad58355ed59241f40a8
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "sonner@npm:1.5.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 10c0/9561b5861bede7f874cc442e447a68c8bfa6e4eadad603bc04e38db35a8b8108741f595a12c9856742062bae230ffedf73122015940491f482c5aa9e68ee85e0
   languageName: node
   linkType: hard
 

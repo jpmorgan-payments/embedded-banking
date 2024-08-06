@@ -6,7 +6,7 @@ import {
   UpdateClientRequestSmbdoAddPartiesItem,
 } from '@/api/generated/embedded-banking.schemas';
 
-import { InitialFormSchema } from './InitialStepForm/InitialStepForm.schema';
+import { InitialFormSchema } from './InitialForm/InitialForm.schema';
 
 // TODO: add more form schemas here
 type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema>;
