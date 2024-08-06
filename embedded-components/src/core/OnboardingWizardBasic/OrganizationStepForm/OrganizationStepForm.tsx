@@ -82,7 +82,11 @@ export const OrganizationStepForm = () => {
       onError: (error) => {
         if (error.response?.data?.context) {
           const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          const apiFormErrors = translateApiErrorsToFormErrors(
+            context,
+            0,
+            'addParties'
+          );
           setApiFormErrors(form, apiFormErrors);
         }
       },
@@ -91,7 +95,7 @@ export const OrganizationStepForm = () => {
 
   const onSubmit = form.handleSubmit((values) => {
     if (clientId && partyId) {
-      const requestBody = generateRequestBody(values, 0, {
+      const requestBody = generateRequestBody(values, 0, 'addParties', {
         addParties: [
           {
             id: partyId,

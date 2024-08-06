@@ -8,28 +8,30 @@ import {
   UpdateClientRequestSmbdo,
 } from '@/api/generated/embedded-banking.schemas';
 
-import { fieldMap, OnboardingWizardFormValues } from './fieldMap';
+import { OnboardingWizardFormValues, partyFieldMap } from './fieldMap';
 
 type FormError = {
-  field?: keyof typeof fieldMap;
+  field?: keyof typeof partyFieldMap;
   message: string;
   path?: string;
 };
 
 export function translateApiErrorsToFormErrors(
   errors: ApiErrorReasonV2[],
-  partyIndex: number
+  partyIndex: number,
+  arrayName: 'parties' | 'addParties'
 ): FormError[] {
-  const fieldMapKeys = Object.keys(fieldMap) as Array<keyof typeof fieldMap>;
+  const fieldMapKeys = Object.keys(partyFieldMap) as Array<
+    keyof typeof partyFieldMap
+  >;
   return errors.map((error) => {
     const matchedKey = fieldMapKeys.find(
       (key) =>
-        fieldMap[key].replace(/\{index\}/g, partyIndex.toString()) ===
-        (error.field ?? '')
+        `${arrayName}.${partyIndex}.${partyFieldMap[key]}` === error.field
     );
-    if (!matchedKey && error.field && error.field in fieldMap) {
+    if (!matchedKey && error.field && error.field in partyFieldMap) {
       return {
-        field: error.field as keyof typeof fieldMap,
+        field: error.field as keyof typeof partyFieldMap,
         message: error.message,
         path: error.field,
       };
@@ -67,7 +69,7 @@ export function setApiFormErrors(
 }
 
 function setValueByPath(obj: any, path: string, value: any) {
-  const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.');
+  const keys = path.split('.');
   keys.reduce((acc, key, index) => {
     if (index === keys.length - 1) {
       acc[key] = value;
@@ -82,16 +84,17 @@ function setValueByPath(obj: any, path: string, value: any) {
 export function generateRequestBody(
   formValues: Partial<OnboardingWizardFormValues>,
   partyIndex: number,
+  arrayName: 'parties' | 'addParties',
   obj: Partial<CreateClientRequestSmbdo> | Partial<UpdateClientRequestSmbdo>
 ) {
   const formValueKeys = Object.keys(formValues) as Array<
     keyof OnboardingWizardFormValues
   >;
   formValueKeys.forEach((key) => {
-    if (!fieldMap[key]) {
+    if (!partyFieldMap[key]) {
       throw new Error(`${key} is not mapped in fieldMap`);
     }
-    const path = fieldMap[key].replace(/\{index\}/g, partyIndex.toString());
+    const path = `${arrayName}.${partyIndex}.${partyFieldMap[key]}`;
     const value = formValues[key];
 
     setValueByPath(obj, path, value);
@@ -100,13 +103,8 @@ export function generateRequestBody(
   return obj;
 }
 
-export function getValueByPath(
-  obj: any,
-  pathTemplate: string,
-  index: number
-): any {
-  const path = pathTemplate.replace('{index}', index.toString());
-  const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.');
+export function getValueByPath(obj: any, pathTemplate: string): any {
+  const keys = pathTemplate.replace(/\[(\w+)\]/g, '.$1').split('.');
   return keys.reduce(
     (acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined),
     obj
@@ -120,10 +118,12 @@ export function convertClientResponseToFormValues(
 ): Partial<OnboardingWizardFormValues> {
   const formValues: Record<string, any> = {};
 
-  Object.entries(fieldMap).forEach(([fieldName, path]) => {
+  Object.entries(partyFieldMap).forEach(([fieldName, path]) => {
     const partyIndex =
       response.parties?.findIndex((party) => party.id === partyId) ?? -1;
-    const value = getValueByPath(response, path, partyIndex);
+
+    const pathTemplate = `parties.${partyIndex}.${path}`;
+    const value = getValueByPath(response, pathTemplate);
     if (value !== undefined) {
       formValues[fieldName] = value;
     } else {

@@ -63,7 +63,11 @@ export const InitialForm = () => {
       onError: (error) => {
         if (error.response?.data?.context) {
           const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          const apiFormErrors = translateApiErrorsToFormErrors(
+            context,
+            0,
+            'parties'
+          );
           setApiFormErrors(form, apiFormErrors);
         }
       },
@@ -71,7 +75,7 @@ export const InitialForm = () => {
   });
 
   const onSubmit = form.handleSubmit((values) => {
-    const requestBody = generateRequestBody(values, 0, {
+    const requestBody = generateRequestBody(values, 0, 'parties', {
       products: ['EMBEDDED_PAYMENTS'],
       parties: [
         {
