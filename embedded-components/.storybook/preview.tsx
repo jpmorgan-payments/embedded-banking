@@ -19,9 +19,11 @@ initialize({
 function ColorSchemeWrapper({
   children,
   baseUrl,
+  api_gateway_client_id,
 }: {
   children: React.ReactNode;
   baseUrl: string;
+  api_gateway_client_id: string;
 }) {
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
   const handleColorScheme = (value: boolean) =>
@@ -39,7 +41,7 @@ function ColorSchemeWrapper({
         colorScheme: colorScheme,
       }}
       headers={{
-        api_gateway_client_id: 'OBTSTSTCL1',
+        api_gateway_client_id,
       }}
     >
       <ReactQueryDevtools />
@@ -50,22 +52,22 @@ function ColorSchemeWrapper({
 
 export const decorators = [
   (renderStory: any, { parameters, allArgs, ...props }: any) => {
-    // TODO: we can use global Params
-    const url = allArgs?.isMockBaseUrl
-      ? 'https://api-mock.payments.jpmorgan.com/tsapi'
-      : // : '/ef';
-        //TODO: this is also needs to be changed if new API is used
-        '';
-
     return (
-      <ColorSchemeWrapper baseUrl={url}>{renderStory()}</ColorSchemeWrapper>
+      <ColorSchemeWrapper baseUrl={allArgs.apiBaseUrl} {...allArgs}>
+        {renderStory()}
+      </ColorSchemeWrapper>
     );
   },
 ];
 
 const preview: Preview = {
   // The default value of the theme arg for all stories
-  args: { isMockBaseUrl: true, isMock: true },
+  args: {
+    isMockBaseUrl: true,
+    isMock: true,
+    apiBaseUrl: '',
+    api_gateway_client_id: '',
+  },
   // Provide the MSW addon loader globally
   loaders: [mswLoader],
 };

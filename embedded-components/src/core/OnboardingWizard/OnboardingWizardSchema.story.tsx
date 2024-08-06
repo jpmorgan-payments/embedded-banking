@@ -48,6 +48,7 @@ export const Default: Story = {
     onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
+
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
@@ -58,6 +59,8 @@ export const Default: Story = {
 
     mockData: stepReviewMockWithQuestions,
     mockQuestions: questionListMock,
+    isMock: false,
+    clientId: '',
   },
 };
 

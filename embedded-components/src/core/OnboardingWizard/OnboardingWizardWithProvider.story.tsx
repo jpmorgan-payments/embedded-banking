@@ -90,7 +90,7 @@ export const NoThemeWithPDPAPIs: Story = {
   ...Primary.args,
   args: {
     theme: {},
-    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
+    apiBaseUrl: '',
   },
   play: async ({ canvasElement }) => {
     // https://storybook.js.org/docs/writing-stories/play-function
@@ -137,6 +137,6 @@ export const NoThemeWithDevSmbdoAPIs: Story = {
   ...Primary.args,
   args: {
     theme: {},
-    apiBaseUrl: 'https://t3mpo-api-gateway-service-dev.jpmchase.net',
+    apiBaseUrl: '',
   },
 };

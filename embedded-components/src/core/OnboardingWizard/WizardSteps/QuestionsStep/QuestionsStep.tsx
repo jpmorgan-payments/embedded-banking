@@ -32,7 +32,19 @@ const QuestionsStep = ({ children }: any) => {
       data?.outstanding?.questionIds) ||
     (data?.questionResponses?.length &&
       data?.questionResponses?.map((response: any) => response.questionId));
-  const { data: questionsData, isSuccess } = useGetQuestions(questionList);
+  const tesmpQ = [
+    '30005',
+    '30026',
+    '30027',
+    '30069',
+    '30070',
+    '30071',
+    '30072',
+    '30073',
+  ];
+  const { data: questionsData, isSuccess } = useGetQuestions(
+    tesmpQ || questionList
+  );
 
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
@@ -175,7 +187,7 @@ const QuestionsStep = ({ children }: any) => {
     <Stack>
       <Title as="h3"> {getContentToken(`title`)}</Title>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-        <Grid className={`eb-gap-4 eb-pt-4 ${'eb-grid-flow-row'} `}>
+        <Grid className={`eb-gap-4 eb-pt-4`}>
           {!!questionSchame?.length && (
             <RenderForms
               {...{
