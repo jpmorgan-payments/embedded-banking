@@ -2,6 +2,11 @@ import { FC } from 'react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
+  ApiErrorV2,
+  ClientResponse,
+  ClientVerificationsInformationResponse,
+} from '@/api/generated/embedded-banking.schemas';
+import {
   Card,
   CardContent,
   CardDescription,
@@ -23,29 +28,40 @@ const steps = [
 
 type OnboardingWizardBasicProps = {
   clientId?: string;
+  title?: string;
+  setClientId?: (clientId: string) => void;
+  onPostClientResponse?: (
+    response?: ClientResponse,
+    error?: ApiErrorV2
+  ) => void;
+  onPostClientVerificationsResponse?: (
+    response?: ClientVerificationsInformationResponse,
+    error?: ApiErrorV2
+  ) => void;
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
-  clientId,
+  title = 'Client Onboarding',
+  ...props
 }) => {
   const {
     status: clientGetStatus,
     error: clientGetError,
     refetch: refetchClient,
-  } = useSmbdoGetClient(clientId ?? '', {
+  } = useSmbdoGetClient(props.clientId ?? '', {
     query: {
-      enabled: !!clientId,
+      enabled: !!props.clientId,
     },
   });
 
   return (
-    <OnboardingContextProvider clientId={clientId}>
+    <OnboardingContextProvider {...props}>
       <Card className="eb-component">
         <CardHeader>
-          <CardTitle>Onboarding</CardTitle>
+          <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent className="eb-flex eb-w-full eb-flex-col eb-gap-4">
-          {!clientId && (
+          {!props.clientId && (
             <>
               <CardDescription>
                 It looks like you don&apos;t have a client ID yet. Fill out the
@@ -54,7 +70,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
               <InitialForm />
             </>
           )}
-          {!!clientId &&
+          {!!props.clientId &&
             (clientGetStatus === 'pending' ? (
               <FormLoadingState message="Fetching client data..." />
             ) : clientGetStatus === 'error' ? (
