@@ -61,9 +61,6 @@ export const Default: Story = {
     mockQuestions: questionListMock,
     isMock: false,
     clientId: '',
-    isMockBaseUrl: false,
-    apiBaseUrl: "https://eb-hosted-app-demo.apps.dev.na-9z.gap.jpmchase.net/api/dev",
-    api_gateway_client_id: "OBTSTSTCL1"
   },
 };
 
