@@ -35,7 +35,7 @@ autonumber
         else Updating client inline
             P->>J: POST /clients/{id} with addParties and questionResponses sections
         end
-    
+
     end
     P->>J: POST /clients/{id} with addAttestations section
     P->>J: POST /clients/{id}/verifications initiate due diligence and verification checks to complete onboarding
@@ -92,6 +92,7 @@ const { mutate: updateClient } = useUpdateClient();
 All update parties operations could be done inline useUpdateClient() hook with different attributes for different actions
 
 - create a new party - omit the id or parentPartyId
+
 ```json
 {
     "addParties": [{
@@ -101,6 +102,7 @@ All update parties operations could be done inline useUpdateClient() hook with d
 ```
 
 - update an existing party
+
 ```json
 {
     "addParties": [{
@@ -111,6 +113,7 @@ All update parties operations could be done inline useUpdateClient() hook with d
 ```
 
 - create a new related party
+
 ```json
 {
     "addParties": [{
@@ -121,6 +124,7 @@ All update parties operations could be done inline useUpdateClient() hook with d
 ```
 
 - remove a party
+
 ```json
 {
     "addParties": [{
@@ -128,6 +132,159 @@ All update parties operations could be done inline useUpdateClient() hook with d
         "status": "INACTIVE"
         ...
     }]
+}
+```
+
+### Create utils to map API data to form data and vice versa
+
+For instance, you can create a mapping of form field names to API request body. The below example shows how you can accomplish this with typescript and inferred types from combined form schemas.
+
+```tsx
+// TODO: add more form schemas here
+export type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema> &
+  z.infer<typeof OrganizationStepFormSchema>;
+export type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
+
+// Source of truth for mapping form fields to API fields
+// Used for handling server errors and creating request bodies
+export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
+  organizationName: 'organizationDetails.organizationName',
+  organizationType: 'organizationDetails.organizationType',
+  countryOfFormation: 'organizationDetails.countryOfFormation',
+  email: 'email',
+  yearOfFormation: 'organizationDetails.yearOfFormation',
+};
+```
+
+Using the above mapping, here is how you can generate a request body from form data.
+
+```tsx
+function setValueByPath(obj: any, path: string, value: any) {
+  const keys = path.split('.');
+  keys.reduce((acc, key, index) => {
+    if (index === keys.length - 1) {
+      acc[key] = value;
+    } else {
+      acc[key] = acc[key] || (key.match(/^\d+$/) ? [] : {});
+    }
+    return acc[key];
+  }, obj);
+}
+
+// Modify the request body with the form values at the specified partyIndex
+export function generateRequestBody(
+  formValues: Partial<OnboardingWizardFormValues>,
+  partyIndex: number,
+  arrayName: 'parties' | 'addParties',
+  obj: Partial<CreateClientRequestSmbdo> | Partial<UpdateClientRequestSmbdo>
+) {
+  const formValueKeys = Object.keys(formValues) as Array<
+    keyof OnboardingWizardFormValues
+  >;
+  formValueKeys.forEach((key) => {
+    if (!partyFieldMap[key]) {
+      throw new Error(`${key} is not mapped in fieldMap`);
+    }
+    const path = `${arrayName}.${partyIndex}.${partyFieldMap[key]}`;
+    const value = formValues[key];
+
+    setValueByPath(obj, path, value);
+  });
+
+  return obj;
+}
+```
+
+Since the API request body and the response body are very similar, this mapping can be used bi-directionally. Here is an example of how to convert response data to form data, which you can use to pre-fill form fields.
+
+```tsx
+export function getValueByPath(obj: any, pathTemplate: string): any {
+  const keys = pathTemplate.replace(/\[(\w+)\]/g, '.$1').split('.');
+  return keys.reduce(
+    (acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined),
+    obj
+  );
+}
+
+// Convert data of party (with the specified partyId) to form values
+export function convertClientResponseToFormValues(
+  response: ClientResponse,
+  partyId?: string
+): Partial<OnboardingWizardFormValues> {
+  const formValues: Record<string, any> = {};
+
+  Object.entries(partyFieldMap).forEach(([fieldName, path]) => {
+    const partyIndex =
+      response.parties?.findIndex((party) => party.id === partyId) ?? -1;
+
+    const pathTemplate = `parties.${partyIndex}.${path}`;
+    const value = getValueByPath(response, pathTemplate);
+    if (value !== undefined) {
+      formValues[fieldName] = value;
+    }
+  });
+
+  return formValues;
+}
+```
+
+The above mapping can have even more uses. You can use it to map errors from the API to specific form fields.
+
+```tsx
+export function translateApiErrorsToFormErrors(
+  errors: ApiErrorReasonV2[],
+  partyIndex: number,
+  arrayName: 'parties' | 'addParties'
+): FormError[] {
+  const fieldMapKeys = Object.keys(partyFieldMap) as Array<
+    keyof typeof partyFieldMap
+  >;
+  return errors.map((error) => {
+    const matchedKey = fieldMapKeys.find(
+      (key) =>
+        `${arrayName}.${partyIndex}.${partyFieldMap[key]}` === error.field
+    );
+    if (!matchedKey && error.field && error.field in partyFieldMap) {
+      return {
+        field: error.field as keyof typeof partyFieldMap,
+        message: error.message,
+        path: error.field,
+      };
+    }
+    return { field: matchedKey, message: error.message, path: error.field };
+  });
+}
+```
+
+You can then attach this error to the specific form field. Here is an example built for `react-hook-form`:
+
+```tsx
+export function setApiFormErrors(
+  form: UseFormReturn<any>,
+  apiFormErrors: FormError[]
+) {
+  let unhandledErrorString = '';
+  let focused = false;
+  apiFormErrors.forEach((formError) => {
+    if (formError.field === undefined) {
+      unhandledErrorString += `\n${formError.path}: ${formError.message}`;
+    } else {
+      form.setError(formError.field, {
+        message: `Server Error: ${formError.message}`,
+      });
+      if (!focused) {
+        form.setFocus(formError.field);
+        focused = true;
+      }
+    }
+  });
+  if (import.meta.env.DEV && unhandledErrorString !== '') {
+    toast.error(`[DEV] Unhandled Server Errors`, {
+      description: unhandledErrorString,
+      duration: Infinity,
+      closeButton: true,
+    });
+  }
 }
 ```
 

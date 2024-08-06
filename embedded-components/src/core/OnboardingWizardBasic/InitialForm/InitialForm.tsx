@@ -19,6 +19,7 @@ import { Input } from '@/components/ui/input';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
+import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import {
   generateRequestBody,
@@ -29,6 +30,7 @@ import { InitialFormSchema } from './InitialForm.schema';
 
 export const InitialForm = () => {
   const { nextStep } = useStepper();
+  const { onPostClientResponse, setClientId } = useOnboardingContext();
 
   // Create a form with empty default values
   const form = useForm<z.infer<typeof InitialFormSchema>>({
@@ -47,17 +49,25 @@ export const InitialForm = () => {
     status: postClientStatus,
   } = useSmbdoPostClients({
     mutation: {
+      onSettled: (data, error) => {
+        onPostClientResponse?.(data, error?.response?.data);
+      },
       onSuccess: (response) => {
-        nextStep();
+        setClientId?.(response.id);
         toast.success(
           `Client created successfully with ID: ${response.id}`,
           {}
         );
+        nextStep();
       },
       onError: (error) => {
         if (error.response?.data?.context) {
           const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          const apiFormErrors = translateApiErrorsToFormErrors(
+            context,
+            0,
+            'parties'
+          );
           setApiFormErrors(form, apiFormErrors);
         }
       },
@@ -65,7 +75,7 @@ export const InitialForm = () => {
   });
 
   const onSubmit = form.handleSubmit((values) => {
-    const requestBody = generateRequestBody(values, 0, {
+    const requestBody = generateRequestBody(values, 0, 'parties', {
       products: ['EMBEDDED_PAYMENTS'],
       parties: [
         {
