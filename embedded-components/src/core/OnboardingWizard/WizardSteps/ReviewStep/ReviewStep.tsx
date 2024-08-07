@@ -12,6 +12,16 @@ import { reviewSchema } from '../StepsSchema';
 import OutstandingKYCRequirements from './OustandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
 
+const isOutstandingEmpty = (outstanding: { [x: string]: string | any[] }) => {
+  if (!outstanding || typeof outstanding !== 'object') {
+    return false;
+  }
+
+  return Object.keys(outstanding).every(
+    (key) => Array.isArray(outstanding[key]) && outstanding[key].length === 0
+  );
+};
+
 const ReviewStep = () => {
   // const { getContentToken } = useContentData('steps.ReviewStep');
 
@@ -67,7 +77,9 @@ const ReviewStep = () => {
             {clientData?.status}
           </Title>
         </Group>
-        <OutstandingKYCRequirements clientData={clientData} />
+        {!isOutstandingEmpty(clientData?.outstanding) && (
+          <OutstandingKYCRequirements clientData={clientData} />
+        )}
         <div className="eb-w-xl eb-px-4">
           {clientData?.parties?.map((party: any) =>
             party.partyType === 'ORGANIZATION'

@@ -1,4 +1,4 @@
-import { PartyResponse } from '../generated-api-models';
+import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
 
 export const partyWithMissingfields: PartyResponse = {
   access: [],
