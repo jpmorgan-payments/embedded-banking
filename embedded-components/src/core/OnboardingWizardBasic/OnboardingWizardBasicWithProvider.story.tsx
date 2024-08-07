@@ -1,3 +1,4 @@
+/* eslint-disable import/no-useless-path-segments */
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
