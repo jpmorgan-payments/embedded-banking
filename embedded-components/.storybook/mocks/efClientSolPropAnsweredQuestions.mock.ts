@@ -101,7 +101,7 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
   outstanding: {
     attestationDocumentIds: [],
     documentRequestIds: [],
-    partyIds: ['2000000112'],
+    partyIds: [],
     partyRoles: [],
     questionIds: [],
   },
