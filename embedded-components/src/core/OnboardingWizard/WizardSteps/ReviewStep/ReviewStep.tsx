@@ -27,7 +27,7 @@ const ReviewStep = () => {
 
   const { setCurrentStep, activeStep } = useStepper();
 
-  const { data: clientData, isPending }: any = useGetDataByClientId('client');
+  const { data: clientData, isPending }: any = useGetDataByClientId();
 
   const { data: questionsDetails } = useSmbdoListQuestions({
     questionIds: clientData?.questionResponses

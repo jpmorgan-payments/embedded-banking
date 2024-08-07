@@ -24,7 +24,7 @@ const QuestionsStep = ({ children }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
-  const { data } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId();
   const { clientId } = useRootConfig();
 
   const questionList =

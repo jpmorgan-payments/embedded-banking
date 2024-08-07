@@ -24,7 +24,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { isMock, clientId } = useRootConfig();
-  const { data } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);

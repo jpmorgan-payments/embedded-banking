@@ -35,7 +35,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   //   'schema.businessOwnerFormSchema'
   // );
 
-  const { data } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId();
 
   const { mutateAsync: updateController, isPending: createPartyisPending } =
     useSmbdoUpdateClient();
