@@ -203,15 +203,12 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               );
             case 'separator':
               return (
-                <Box
-                  className="eb-col-span-3"
-                  key={getContentToken(labelToken) ?? labelToken}
-                >
+                <>
                   <Title as="h3" className="eb-mb-4">
                     {getContentToken(labelToken) ?? labelToken}
                   </Title>
                   <Separator></Separator>
-                </Box>
+                </>
               );
 
             case 'ein':

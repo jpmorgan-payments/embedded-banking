@@ -42,9 +42,32 @@ const QuestionsStep = ({ children }: any) => {
     '30072',
     '30073',
   ];
-  const { data: questionsData, isSuccess } = useGetQuestions(
+  const {
+    data: questionsData,
+    isSuccess,
+  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
     tesmpQ || questionList
   );
+
+  const findSubQuestions = questionsData?.questions
+    ?.filter((q) => q?.subQuestions?.length)
+    ?.map((question) => {
+      return (
+        question?.subQuestions?.length &&
+        question.subQuestions
+          .filter((subQ) => !!subQ?.questionIds?.length)
+          .map((q) => q?.questionIds)
+      );
+    })
+    .flat(2);
+
+  const {
+    data: subQuestionsData,
+    isSuccess: isSucessSub,
+  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
+    (findSubQuestions || ['']) as string[]
+  );
+  console.log('@@findQ', findSubQuestions, subQuestionsData);
 
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
@@ -180,8 +203,10 @@ const QuestionsStep = ({ children }: any) => {
         name: question.id,
         labelToken: question?.content?.[0].label,
         fieldType: fieldType(question?.responseSchema?.items?.type),
+        hidden: !!question?.parentQuestionId,
       };
     });
+  console.log('@@hidden', questionSchame);
 
   return (
     <Stack>
