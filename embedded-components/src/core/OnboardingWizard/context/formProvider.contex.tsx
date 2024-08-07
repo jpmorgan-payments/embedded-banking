@@ -18,7 +18,10 @@ export const FormProvider = ({ children, initialSchema }: any) => {
 
   const form = useForm<FormData>({
     resolver: yupResolver(schema),
-    mode: 'onBlur',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    criteriaMode: 'all',
+    // shouldFocusError: true,
   });
 
   const updateSchema = (newSchema: any) => {
