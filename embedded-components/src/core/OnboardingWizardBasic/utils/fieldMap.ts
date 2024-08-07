@@ -1,10 +1,7 @@
 import { z } from 'zod';
 
-
-
 import { InitialFormSchema } from '../InitialForm/InitialForm.schema';
 import { OrganizationStepFormSchema } from '../OrganizationStepForm/OrganizationStepForm.schema';
-
 
 // TODO: add more form schemas here
 export type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema> &
@@ -34,5 +31,5 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   phone: 'phone',
   tradeOverInternet: 'organizationDetails.tradeOverInternet',
   website: 'organizationDetails.website',
-  secondaryMccList: 'organizationDetails.secondaryMccList'
+  secondaryMccList: 'organizationDetails.secondaryMccList',
 };
