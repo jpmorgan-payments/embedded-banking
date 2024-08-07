@@ -23,7 +23,11 @@ import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
-  { label: 'Individual details', children: <div>WIP</div> },
+  { label: 'Individual details', children: <div>Individual details</div> },
+  { label: 'Business Owners', children: <div>Business Owners</div> },
+  { label: 'Decision Makers', children: <div>Decision Makers</div> },
+  { label: 'Additional Questions', children: <div>Additional Questions</div> },
+  { label: 'Review and Attest', children: <div>Review and Attest</div> },
 ];
 
 type OnboardingWizardBasicProps = {
