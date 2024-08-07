@@ -20,6 +20,8 @@ export interface SelectFormFieldProps {
   optionsList: any[];
   defaultValue?: string;
   type?: string;
+  hidden?: boolean;
+  parent?: boolean;
 }
 const SelectFormField = ({
   name,

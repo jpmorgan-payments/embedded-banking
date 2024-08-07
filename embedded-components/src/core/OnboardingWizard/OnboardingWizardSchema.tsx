@@ -35,7 +35,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
 
-  const { data } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);

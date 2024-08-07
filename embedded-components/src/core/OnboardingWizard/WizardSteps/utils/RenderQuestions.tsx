@@ -1,14 +1,14 @@
 import { Box, Separator, Title } from '@/components/ui';
 
-import { AddressFormFields } from '../../formFields/AddressFormFields';
+// import { AddressFormFields } from '../../formFields/AddressFormFields';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
 import { EinFormField } from '../../formFields/EinFormField';
-import { IndustryFormField } from '../../formFields/IndustryFormField';
+// import { IndustryFormField } from '../../formFields/IndustryFormField';
 import { InputFormField } from '../../formFields/InputFormField';
 import { JobTitlesFormField } from '../../formFields/JobTitlesFormField';
 // eslint-disable-next-line
-import { OrgTypeFormField } from '../../formFields/OrgTypeFormField';
+// import { OrgTypeFormField } from '../../formFields/OrgTypeFormField';
 import { PhoneFormField } from '../../formFields/PhoneFormField';
 import {
   SelectFormField,
@@ -17,10 +17,10 @@ import {
 import { SsnFormField } from '../../formFields/SsnFormField';
 import { TextareaFormField } from '../../formFields/TextareaFormField';
 import { UsStatesFormField } from '../../formFields/UsStatesFormField';
-import { WebsiteFromField } from '../../formFields/WebsiteFormField';
+// import { WebsiteFromField } from '../../formFields/WebsiteFormField';
 import { YesNoFromField } from '../../formFields/YesNoFromField';
 
-export interface FormScham extends SelectFormFieldProps {
+export interface QuestionSchema extends SelectFormFieldProps {
   fieldType:
     | 'input'
     | 'select'
@@ -41,7 +41,12 @@ export interface FormScham extends SelectFormFieldProps {
     | 'yesNo';
 }
 
-const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
+const RenderQuestions = ({
+  formSchema,
+  getContentToken,
+  form,
+  className,
+}: any) => {
   return (
     <Box className={className}>
       {formSchema.map(
@@ -55,7 +60,8 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
           defaultValue,
           type,
           hidden,
-        }: FormScham) => {
+          parent,
+        }: QuestionSchema) => {
           switch (fieldType) {
             case 'input':
               return (
@@ -170,22 +176,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                 />
               );
 
-            case 'orgType':
-              return (
-                <OrgTypeFormField
-                  key={name}
-                  {...{
-                    name,
-                    labelToken: getContentToken(labelToken) ?? labelToken,
-                    placeholderToken:
-                      getContentToken(placeholderToken) ?? placeholderToken,
-                    required,
-                    form,
-                    defaultValue,
-                  }}
-                />
-              );
-
             case 'jobTitle':
               return (
                 <JobTitlesFormField
@@ -203,15 +193,12 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
               );
             case 'separator':
               return (
-                <Box
-                  className="eb-col-span-3"
-                  key={getContentToken(labelToken) ?? labelToken}
-                >
+                <>
                   <Title as="h3" className="eb-mb-4">
                     {getContentToken(labelToken) ?? labelToken}
                   </Title>
                   <Separator></Separator>
-                </Box>
+                </>
               );
 
             case 'ein':
@@ -233,7 +220,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
             case 'textarea':
               return (
                 <Box
-                  className={`eb-col-span-3 ${hidden && 'eb-collapse'}`}
+                  className={` ${!!parent && (form.getValues(parent) === 'false' || !form.getValues(parent)) ? 'eb-hidden' : 'eb-visible'}`}
                   key={name}
                 >
                   <TextareaFormField
@@ -250,57 +237,6 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                 </Box>
               );
 
-            case 'website':
-              return (
-                <Box className="eb-col-span-3" key={name}>
-                  <WebsiteFromField
-                    {...{
-                      name,
-                      labelToken: getContentToken(labelToken) ?? labelToken,
-                      placeholderToken:
-                        getContentToken(placeholderToken) || placeholderToken,
-                      required,
-                      form,
-                      defaultValue,
-                    }}
-                  />
-                </Box>
-              );
-
-            case 'industryType':
-              return (
-                <Box className="eb-col-span-3" key={name}>
-                  <IndustryFormField
-                    {...{
-                      name,
-                      labelToken: getContentToken(labelToken) ?? labelToken,
-                      placeholderToken:
-                        getContentToken(placeholderToken) || placeholderToken,
-                      required,
-                      form,
-                      defaultValue,
-                    }}
-                  />
-                </Box>
-              );
-
-            case 'address':
-              return (
-                <Box className="eb-col-span-3" key={name}>
-                  <AddressFormFields
-                    {...{
-                      name,
-                      labelToken: getContentToken(labelToken) ?? labelToken,
-                      placeholderToken:
-                        getContentToken(placeholderToken) || placeholderToken,
-                      required,
-                      form,
-                      defaultValue,
-                      type,
-                    }}
-                  />
-                </Box>
-              );
             case 'yesNo':
               return (
                 <YesNoFromField
@@ -328,4 +264,4 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
   );
 };
 
-export { RenderForms };
+export { RenderQuestions };

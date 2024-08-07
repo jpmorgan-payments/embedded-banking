@@ -18,13 +18,13 @@ import { makeQuestionsAPIBody } from '../../utils/apiUtilsParsers';
 import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 import { useGetQuestions } from '../hooks/useGetQuestions';
-import { RenderForms } from '../utils/RenderForms';
+import { RenderQuestions } from '../utils/RenderQuestions';
 
 const QuestionsStep = ({ children }: any) => {
   const { activeStep, setCurrentStep } = useStepper();
   const { updateSchema } = useFormSchema();
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
-  const { data } = useGetDataByClientId('client');
+  const { data } = useGetDataByClientId();
   const { clientId } = useRootConfig();
 
   const questionList =
@@ -32,22 +32,38 @@ const QuestionsStep = ({ children }: any) => {
       data?.outstanding?.questionIds) ||
     (data?.questionResponses?.length &&
       data?.questionResponses?.map((response: any) => response.questionId));
-  const tesmpQ = [
-    '30005',
-    '30026',
-    '30027',
-    '30069',
-    '30070',
-    '30071',
-    '30072',
-    '30073',
-  ];
-  const { data: questionsData, isSuccess } = useGetQuestions(
-    tesmpQ || questionList
+
+  const {
+    data: questionsData,
+    isSuccess,
+  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
+    questionList as string[]
   );
 
+  const findSubQuestions = questionsData?.questions
+    ?.filter((q) => q?.subQuestions?.length)
+    ?.map((question) => {
+      return (
+        question?.subQuestions?.length &&
+        question.subQuestions
+          .filter((subQ) => !!subQ?.questionIds?.length)
+          .map((q) => q?.questionIds)
+      );
+    })
+    .flat(2);
+
+  const {
+    data: subQuestionsData,
+    isSuccess: isSucessSub,
+  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
+    (findSubQuestions ?? ['']) as string[]
+  );
+  console.log('@@data', subQuestionsData, isSucessSub);
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
+
+  // THIS ENABLES UPDATE ON FORUM RENDER
+  form.watch();
 
   const getValidationByFormat = (format?: string, parentId?: string) => {
     const listSchema = yup
@@ -146,7 +162,10 @@ const QuestionsStep = ({ children }: any) => {
   }, [data?.questionResponses?.length]);
 
   const onSubmit = useCallback(async () => {
-    const postBody = makeQuestionsAPIBody(form.getValues(), questionList);
+    const postBody = makeQuestionsAPIBody(
+      form.getValues(),
+      questionList as string[]
+    );
 
     try {
       await submitQuestions({
@@ -180,6 +199,8 @@ const QuestionsStep = ({ children }: any) => {
         name: question.id,
         labelToken: question?.content?.[0].label,
         fieldType: fieldType(question?.responseSchema?.items?.type),
+        hidden: !!question?.parentQuestionId,
+        parent: question?.parentQuestionId,
       };
     });
 
@@ -187,14 +208,14 @@ const QuestionsStep = ({ children }: any) => {
     <Stack>
       <Title as="h3"> {getContentToken(`title`)}</Title>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
-        <Grid className="eb-gap-4 eb-pt-4">
+        <Grid className="eb-flex-col eb-gap-4 eb-pt-4">
           {!!questionSchame?.length && (
-            <RenderForms
+            <RenderQuestions
               {...{
                 formSchema: questionSchame,
                 form,
                 getContentToken,
-                className: `eb-space-y-2 eb-grid eb-grid-cols-3 eb-gap-4 `,
+                className: `eb-space-y-2 eb-grid eb-gap-4 `,
               }}
             />
           )}

@@ -1,10 +1,7 @@
 import { get } from 'lodash';
 
 import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
-import {
-  ClientResponse,
-  PartyResponse,
-} from '@/api/generated/embedded-banking.schemas';
+import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
 import { Group, Stack, Title } from '@/components/ui';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -30,15 +27,11 @@ const ReviewStep = () => {
 
   const { setCurrentStep, activeStep } = useStepper();
 
-  const {
-    data: clientData,
-    isPending,
-  }: { data: ClientResponse; isPending: boolean } =
-    useGetDataByClientId('client');
+  const { data: clientData, isPending }: any = useGetDataByClientId();
 
   const { data: questionsDetails } = useSmbdoListQuestions({
     questionIds: clientData?.questionResponses
-      ?.map((r) => r.questionId)
+      ?.map((r: any) => r.questionId)
       .join(','),
   });
 
@@ -88,7 +81,7 @@ const ReviewStep = () => {
           <OutstandingKYCRequirements clientData={clientData} />
         )}
         <div className="eb-w-xl eb-px-4">
-          {clientData?.parties?.map((party) =>
+          {clientData?.parties?.map((party: any) =>
             party.partyType === 'ORGANIZATION'
               ? renderParty(party, organizationFields)
               : renderParty(party, individualFields)
@@ -100,7 +93,7 @@ const ReviewStep = () => {
             <h2 className="eb-mb-4 eb-text-xl eb-font-bold">
               Question Responses
             </h2>
-            {clientData?.questionResponses?.map((questionResponse) => (
+            {clientData?.questionResponses?.map((questionResponse: any) => (
               <div
                 key={questionResponse.questionId}
                 className="eb-mb-4 eb-border-b eb-border-dotted eb-border-gray-300 eb-p-4"

@@ -215,6 +215,16 @@ export const NoThemeWithMocksLLC: Story = {
         http.get('/ef/do/v1/clients/0030000130', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
+        http.get('/ef/do/v1/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
+        }),
       ],
     },
   },

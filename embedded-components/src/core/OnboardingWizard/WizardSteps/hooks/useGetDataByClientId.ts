@@ -5,28 +5,13 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useError } from '../../context/error.context';
 
-const useGetDataByClientId = (screeName: 'review' | 'client' = 'review') => {
+const useGetDataByClientId = () => {
   const { setError } = useError();
-  const { clientId, mockSteps, isMockResponse, setPartyId, mockData, isMock } =
-    useRootConfig();
+  const { clientId, setPartyId } = useRootConfig();
 
-  const { data, refetch, isPending, isError, error } = isMockResponse
-    ? {
-        data: mockSteps[screeName],
-        refetch: () => null,
-        isPending: false,
-        isError: false,
-        error: false,
-      }
-    : isMock
-      ? {
-          data: mockData,
-          refetch: () => null,
-          isPending: false,
-          isError: false,
-          error: false,
-        }
-      : useSmbdoGetClient(clientId as string);
+  const { data, refetch, isPending, isError, error } = useSmbdoGetClient(
+    clientId as string
+  );
 
   useEffect(() => {
     if (isError) {
@@ -37,7 +22,7 @@ const useGetDataByClientId = (screeName: 'review' | 'client' = 'review') => {
   //TODO: Make sure there is no collision of this partyId
   setPartyId(data?.partyId);
 
-  return { data, refetch, isPending, isError };
+  return { data, refetch, isPending, isError, error };
 };
 
 export { useGetDataByClientId };

@@ -28,7 +28,7 @@ const DecisionMakersStep = () => {
     useState(false);
 
   const { activeStep, setCurrentStep } = useStepper();
-  const { data, refetch } = useGetDataByClientId('client');
+  const { data, refetch } = useGetDataByClientId();
 
   const reviewData = useMemo(() => {
     return data && fromApiToForm(data);
@@ -148,7 +148,7 @@ const DecisionMakersStep = () => {
                   }
                 }}
                 title="Enter decision maker details"
-                parentPartyId={data.partyId}
+                parentPartyId={data?.partyId}
                 type="decision"
               />
             </Dialog>
