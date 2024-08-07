@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { questionListMock } from './mocks/questionList.mock';
