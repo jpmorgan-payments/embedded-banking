@@ -73,15 +73,6 @@ export const SolPropWithMockedQuestions: Story = {
     products: ['EP'],
     isMockResponse: false,
   },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/ef/do/v1/questions', () => {
-          return HttpResponse.json(questionListMock);
-        }),
-      ],
-    },
-  },
 };
 
 export const OnboardingWithClientIDWithoutQuestions: Story = {
