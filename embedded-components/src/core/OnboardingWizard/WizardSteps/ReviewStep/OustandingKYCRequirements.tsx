@@ -1,7 +1,10 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
 
-import { useSmbdoGetParty } from '@/api/generated/embedded-banking';
+import {
+  useSmbdoGetParty,
+  useSmbdoListQuestions,
+} from '@/api/generated/embedded-banking';
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -38,6 +41,10 @@ const OutstandingKYCRequirements = ({
 }) => {
   const outstanding = clientData?.outstanding;
 
+  const { data: questionsDetails } = useSmbdoListQuestions({
+    questionIds: clientData?.outstanding?.questionIds?.join(','),
+  });
+
   return (
     <Alert variant="destructive" className="eb-max-w-2xl eb-outline-none">
       <AlertTriangle className="eb-outline-orange eb-h-4 eb-w-4" />
@@ -72,7 +79,13 @@ const OutstandingKYCRequirements = ({
             <h4 className="eb-font-semibold">Unanswered Questions</h4>
             <ul className="eb-list-inside eb-list-disc">
               {outstanding.questionIds.map((id) => (
-                <li key={id}>Question ID: {id}</li>
+                <li key={id}>
+                  Question ({id}):{' '}
+                  {
+                    questionsDetails?.questions?.find((q) => q.id === id)
+                      ?.description
+                  }
+                </li>
               ))}
             </ul>
           </div>

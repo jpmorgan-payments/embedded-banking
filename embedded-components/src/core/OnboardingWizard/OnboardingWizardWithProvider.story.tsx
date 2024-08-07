@@ -7,6 +7,7 @@ import { efClientCorpMock } from '../../../.storybook/mocks/efClientCorp.mock';
 import { efClientQuestionsMock } from '../../../.storybook/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '../../../.storybook/mocks/efClientSolProp.mock';
 import { efClientSolPropAnsweredQuestions } from '../../../.storybook/mocks/efClientSolPropAnsweredQuestions.mock';
+import { partyWithMissingfields } from '../../../.storybook/mocks/efPartyWithMissingFields.mock';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OboardingWizard';
 
@@ -167,7 +168,7 @@ export const NoThemeWithUATSMBDOAPIs: Story = {
 
 export const NoThemeWithMocksSoleProp: Story = {
   ...Primary,
-  name: 'No theme with mocked Sole Prop client with unanswered questions',
+  name: 'No theme with mocked Sole Prop client with unanswered questions and missing party attributes',
   args: { ...Primary.args, clientId: '0030000132' },
   parameters: {
     msw: {
@@ -176,6 +177,9 @@ export const NoThemeWithMocksSoleProp: Story = {
         ...Primary?.parameters?.msw?.handlers,
         http.get('/ef/do/v1/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
+        }),
+        http.get('/ef/do/v1/parties/2000000112', () => {
+          return HttpResponse.json(partyWithMissingfields);
         }),
       ],
     },
