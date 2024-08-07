@@ -10,10 +10,10 @@ export type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
 
 // Source of truth for mapping form fields to API fields
 // Used for handling server errors and creating request bodies
-export const fieldMap: Record<OnboardingWizardFormFieldNames, string> = {
-  organizationName: 'parties[{index}].organizationDetails.organizationName',
-  organizationType: 'parties[{index}].organizationDetails.organizationType',
-  countryOfFormation: 'parties[{index}].organizationDetails.countryOfFormation',
-  email: 'parties[{index}].email',
-  yearOfFormation: 'parties[{index}].organizationDetails.yearOfFormation',
+export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
+  organizationName: 'organizationDetails.organizationName',
+  organizationType: 'organizationDetails.organizationType',
+  countryOfFormation: 'organizationDetails.countryOfFormation',
+  email: 'email',
+  yearOfFormation: 'organizationDetails.yearOfFormation',
 };

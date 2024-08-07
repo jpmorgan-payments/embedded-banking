@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
 
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { questionListMock } from './mocks/questionList.mock';
@@ -72,15 +71,6 @@ export const SolPropWithMockedQuestions: Story = {
     clientId: '3000000316',
     products: ['EP'],
     isMockResponse: false,
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/ef/do/v1/questions', () => {
-          return HttpResponse.json(questionListMock);
-        }),
-      ],
-    },
   },
 };
 

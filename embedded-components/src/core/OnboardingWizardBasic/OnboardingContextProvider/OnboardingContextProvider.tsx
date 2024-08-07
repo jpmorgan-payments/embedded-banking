@@ -1,7 +1,22 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react';
 
+import {
+  ApiErrorV2,
+  ClientResponse,
+  ClientVerificationsInformationResponse,
+} from '@/api/generated/embedded-banking.schemas';
+
 type OnboardingContextType = {
   clientId?: string;
+  setClientId?: (clientId: string) => void;
+  onPostClientResponse?: (
+    response?: ClientResponse,
+    error?: ApiErrorV2
+  ) => void;
+  onPostClientVerificationsResponse?: (
+    response?: ClientVerificationsInformationResponse,
+    error?: ApiErrorV2
+  ) => void;
 };
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(

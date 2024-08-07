@@ -35,7 +35,7 @@ import { OrganizationStepFormSchema } from './OrganizationStepForm.schema';
 
 export const OrganizationStepForm = () => {
   const { nextStep } = useStepper();
-  const { clientId } = useOnboardingContext();
+  const { clientId, onPostClientResponse } = useOnboardingContext();
 
   // Create a form with empty default values
   const form = useForm<z.infer<typeof OrganizationStepFormSchema>>({
@@ -72,6 +72,9 @@ export const OrganizationStepForm = () => {
     status: updateClientStatus,
   } = useSmbdoUpdateClient({
     mutation: {
+      onSettled: (data, error) => {
+        onPostClientResponse?.(data, error?.response?.data);
+      },
       onSuccess: () => {
         nextStep();
         toast.success("Client's organization details updated successfully");
@@ -79,7 +82,11 @@ export const OrganizationStepForm = () => {
       onError: (error) => {
         if (error.response?.data?.context) {
           const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(context, 0);
+          const apiFormErrors = translateApiErrorsToFormErrors(
+            context,
+            0,
+            'addParties'
+          );
           setApiFormErrors(form, apiFormErrors);
         }
       },
@@ -88,7 +95,7 @@ export const OrganizationStepForm = () => {
 
   const onSubmit = form.handleSubmit((values) => {
     if (clientId && partyId) {
-      const requestBody = generateRequestBody(values, 0, {
+      const requestBody = generateRequestBody(values, 0, 'addParties', {
         addParties: [
           {
             id: partyId,
