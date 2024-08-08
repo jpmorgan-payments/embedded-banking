@@ -58,9 +58,6 @@ export const ReviewAndAttestStepForm = () => {
   const { mutateAsync: updateClient, error: updateClientError } =
     useSmbdoUpdateClient({
       mutation: {
-        onSettled: () => {
-          toast.success('Attestation details updated successfully');
-        },
         onSuccess: () => {
           toast.success('Attestation details updated successfully');
           nextStep();
@@ -75,9 +72,6 @@ export const ReviewAndAttestStepForm = () => {
   const { mutateAsync: initiateKYC, error: clientVerificationsError } =
     useSmbdoPostClientVerifications({
       mutation: {
-        onSettled: () => {
-          toast.success('KYC initiated successfully');
-        },
         onSuccess: () => {
           toast.success('KYC initiated successfully');
         },
@@ -106,7 +100,7 @@ export const ReviewAndAttestStepForm = () => {
     (document: keyof typeof termsDocumentsOpened) => () => {
       setTermsDocumentsOpened((prev) => ({ ...prev, [document]: true }));
       // Here you would typically open the document or navigate to it
-      toast.success(`${document} document opened`);
+      toast.info(`${document} document opened`);
       window.open('https://www.jpmorgan.com', '_blank')?.focus();
     };
 

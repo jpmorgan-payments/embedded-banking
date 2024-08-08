@@ -92,7 +92,7 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
 
       <QueryClientProvider client={queryClient}>
         {children}
-        <Toaster richColors expand />
+        <Toaster closeButton expand />
       </QueryClientProvider>
     </>
   );
