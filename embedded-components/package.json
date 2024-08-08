@@ -1,6 +1,6 @@
 {
   "name": "@jpmorgan-payments/embedded-banking-components",
-  "version": "0.5.22",
+  "version": "0.5.23",
   "license": "Apache-2.0",
   "type": "module",
   "description": "EB components",
