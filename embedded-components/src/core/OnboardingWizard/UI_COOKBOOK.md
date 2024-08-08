@@ -314,7 +314,7 @@ const { mutate: updateClient } = useUpdateClient();
 - Implement a summary view of added parties with edit/delete options.
 - Use consistent validation across all party forms.
 
-## Step 5: Due Diligence additional questions
+## Step 5: Due Diligence Additional Questions
 
 ### API Operations
 
@@ -332,12 +332,110 @@ const { data: questions } = useGetQuestions({
 const { mutate: updateClient } = useUpdateClient();
 ```
 
+### Question Rendering Logic
+
+1. **Fetch Questions**: Retrieve both outstanding and previously answered questions.
+2. **Sort Questions**: Order questions based on their dependencies (parent/child relationships).
+3. **Render Questions**: Dynamically render each question based on its type and visibility conditions.
+
+### Parent/Child Question Logic
+
+Implement a visibility checker function:
+
+```typescript
+const isQuestionVisible = (question: Question, formValues: FormValues) => {
+  if (!question.parentQuestionId) return true;
+
+  const parentQuestion = questions.find(
+    (q) => q.id === question.parentQuestionId
+  );
+  if (!parentQuestion) return false;
+
+  const parentResponse = formValues[parentQuestion.id];
+  const subQuestion = parentQuestion.subQuestions.find((sq) =>
+    sq.questionIds.includes(question.id)
+  );
+
+  return evaluateCondition(subQuestion.anyValuesMatch, parentResponse);
+};
+```
+
+### Question Field Format Derivation
+
+Determine the input type based on the question's `responseSchema`:
+
+| Response Schema               | Input Type    | Component               |
+| ----------------------------- | ------------- | ----------------------- |
+| BOOLEAN                       | Radio buttons | `<RadioGroup>`          |
+| STRING with enum              | Dropdown      | `<Select>`              |
+| STRING without enum           | Text input    | `<Input>`               |
+| INTEGER                       | Number input  | `<Input type="number">` |
+| DATE                          | Date picker   | Custom date picker      |
+| ARRAY with multiple selection | Checkboxes    | `<Checkbox>` group      |
+
+### Question Rendering Flow
+
+```mermaid
+graph TD
+    A[Fetch Questions] --> B[Sort Questions]
+    B --> C[Iterate Through Questions]
+    C --> D{Is Question Visible?}
+    D -- Yes --> E[Determine Input Type]
+    E --> F[Render Question]
+    F --> C
+    D -- No --> C
+```
+
 ### UX Best Practices
 
-- Dynamically render questions based on the API response.
-- Use appropriate input types based on question format (e.g., radio buttons for boolean questions).
-- Implement conditional rendering for follow-up questions.
-- Provide clear instructions for each question.
+1. **Dynamic Rendering**: Render questions based on visibility conditions.
+2. **Appropriate Input Types**: Use suitable input components for each question type.
+3. **Conditional Logic**: Implement show/hide logic for child questions.
+4. **Clear Instructions**: Provide concise instructions for each question.
+5. **Validation**: Implement real-time validation based on `responseSchema`.
+6. **Error Handling**: Display clear error messages for invalid inputs.
+7. **Progress Indicator**: Show progress through the questionnaire.
+
+### Handling Complex Question Types
+
+For questions with complex response schemas (e.g., nested objects or arrays), consider creating custom components:
+
+1. **Address Input**: Create a reusable address input component for questions requiring address details.
+2. **Multi-select with "Other"**: Implement a checkbox group with an additional text input for "Other" options.
+3. **Dependent Dropdowns**: For questions where one selection affects the options in another, implement cascading dropdowns.
+
+### Implementation Example
+
+```tsx
+const renderQuestion = (question: Question, index: number) => {
+  if (!isQuestionVisible(question, form.getValues())) return null;
+
+  const fieldName = `questionResponses.${index}.values`;
+  const inputType = deriveInputType(question.responseSchema);
+
+  return (
+    <FormField
+      key={question.id}
+      control={form.control}
+      name={fieldName}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{question.description}</FormLabel>
+          <FormControl>
+            {renderInputByType(inputType, field, question)}
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+
+const renderQuestions = () => {
+  if (!questions) return null;
+  return questions.map((question, index) => renderQuestion(question, index));
+};
+```
 
 ## Step 6: Review and Attestation
 

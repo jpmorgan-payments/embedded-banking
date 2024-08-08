@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -10,7 +10,6 @@ import {
   useSmbdoUpdateClient,
 } from '@/api/generated/embedded-banking';
 import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
-import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -59,21 +58,43 @@ export const AdditionalQuestionsStepForm = () => {
 
   // Fetch client data to get outstanding question IDs
   const { data: clientData } = useSmbdoGetClient(clientId ?? '');
-  const outstandingQuestionIds = clientData?.outstanding?.questionIds ?? [];
 
-  // Fetch questions using the outstanding question IDs
+  // Get outstanding question IDs and existing question responses
+  const outstandingQuestionIds = clientData?.outstanding?.questionIds ?? [];
+  const existingQuestionResponses = clientData?.questionResponses ?? [];
+
+  // Merge outstanding and existing question IDs
+  const allQuestionIds = useMemo(() => {
+    const existingIds = existingQuestionResponses.map(
+      (response) => response.questionId
+    );
+    return [...new Set([...outstandingQuestionIds, ...existingIds])];
+  }, [outstandingQuestionIds, existingQuestionResponses]);
+
+  // Fetch all questions
   const { data: questionsData } = useSmbdoListQuestions({
-    questionIds: outstandingQuestionIds?.join(','),
+    questionIds: allQuestionIds.join(','),
   });
+
+  // Prepare default values for the form
+  const defaultValues = useMemo(
+    () => ({
+      questionResponses: allQuestionIds.map((id) => {
+        const existingResponse = existingQuestionResponses.find(
+          (response) => response.questionId === id
+        );
+        return {
+          questionId: id,
+          values: existingResponse ? existingResponse.values : [],
+        };
+      }),
+    }),
+    [allQuestionIds, existingQuestionResponses]
+  );
 
   const form = useForm<AdditionalQuestionsFormValues>({
     resolver: zodResolver(AdditionalQuestionsFormSchema),
-    defaultValues: {
-      questionResponses: outstandingQuestionIds.map((id) => ({
-        questionId: id,
-        values: [],
-      })),
-    },
+    defaultValues,
   });
 
   const {
@@ -109,8 +130,6 @@ export const AdditionalQuestionsStepForm = () => {
     }
   };
 
-  console.log('@@form', form.formState.errors);
-
   const renderQuestionInput = (question: any, index: number) => {
     const fieldName = `questionResponses.${index}.values` as const;
     const itemType = question.responseSchema.items?.type;
@@ -123,18 +142,15 @@ export const AdditionalQuestionsStepForm = () => {
           control={form.control}
           name={fieldName}
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem>
               <FormLabel>{question.description}</FormLabel>
-              <Calendar
-                mode="single"
-                selected={field.value[0] ? new Date(field.value[0]) : undefined}
-                onSelect={(date) =>
-                  field.onChange([date ? date.toISOString().split('T')[0] : ''])
-                }
-                disabled={(date) =>
-                  date > new Date() || date < new Date('1900-01-01')
-                }
-              />
+              <FormControl>
+                <Input
+                  {...field}
+                  type="date"
+                  onChange={(e) => field.onChange([e.target.value])}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -273,8 +289,6 @@ export const AdditionalQuestionsStepForm = () => {
     }
   };
 
-  // ... (continued from Part 1)
-
   const isQuestionVisible = (question: any) => {
     if (!question.parentQuestionId) return true;
 
@@ -286,6 +300,7 @@ export const AdditionalQuestionsStepForm = () => {
     const parentResponse = form
       .watch(`questionResponses`)
       .find((r) => r.questionId === parentQuestion.id);
+
     if (!parentResponse) return false;
 
     const parentValue = parentResponse.values[0];
@@ -296,8 +311,13 @@ export const AdditionalQuestionsStepForm = () => {
     if (subQuestion?.anyValuesMatch === 'true') {
       return parentValue === 'true';
     }
+
+    if (typeof subQuestion?.anyValuesMatch === 'string') {
+      return subQuestion.anyValuesMatch === parentValue;
+    }
+
     if (Array.isArray(subQuestion?.anyValuesMatch)) {
-      return subQuestion.anyValuesMatch.includes(parentValue);
+      return (subQuestion.anyValuesMatch as string[]).includes(parentValue);
     }
 
     return false;
