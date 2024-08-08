@@ -122,7 +122,7 @@ const BusinessOwnersStep: Step = ({ form }) => {
         Provide information for any business owners
       </Title>
       <Radio.Group
-        label="Does anyone own 25% or more of the business?"
+        label="Does any individual own 25% or more of the company?"
         mb="md"
         {...form.getInputProps('ownersExist')}
       >
