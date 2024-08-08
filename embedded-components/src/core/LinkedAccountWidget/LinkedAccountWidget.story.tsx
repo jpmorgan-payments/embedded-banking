@@ -2,10 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
-import { onRegistrationProp } from '@/core/EBComponentsProvider/RootConfigProvider';
 
-import { efClientQuestionsMock } from '../../../.storybook/mocks/efClientQuestions.mock';
-import { efClientSolProp } from '../../../.storybook/mocks/efClientSolProp.mock';
 import {
   linkedAccountListMock,
   linkedAccountRejectedMock,

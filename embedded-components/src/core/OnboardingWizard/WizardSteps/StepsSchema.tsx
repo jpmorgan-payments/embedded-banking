@@ -93,7 +93,6 @@ const businessSchema = {
       name: 'website',
       fieldType: 'website',
       labelToken: 'businessWebsite.label',
-      required: true,
     },
     {
       name: 'websiteAvailable',
