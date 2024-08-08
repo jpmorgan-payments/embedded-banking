@@ -17,12 +17,14 @@ export interface SelectFormFieldProps {
   labelToken: string;
   placeholderToken: string;
   required: boolean;
+  disabled: boolean;
   optionsList: any[];
   defaultValue?: string;
   type?: string;
   hidden?: boolean;
   parent?: boolean;
 }
+
 const SelectFormField = ({
   name,
   form,

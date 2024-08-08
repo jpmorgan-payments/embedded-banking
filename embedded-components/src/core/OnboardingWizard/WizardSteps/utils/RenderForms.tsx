@@ -51,6 +51,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
           labelToken,
           placeholderToken,
           required,
+          disabled,
           optionsList,
           defaultValue,
           type,
@@ -67,6 +68,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     placeholderToken:
                       getContentToken(placeholderToken) ?? placeholderToken,
                     required,
+                    disabled,
                     form,
                     defaultValue,
                     className: `first:eb-mt-6 ${hidden && 'eb-collapse '}`,
@@ -83,6 +85,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     placeholderToken:
                       getContentToken(placeholderToken) || placeholderToken,
                     required,
+                    disabled,
                     form,
                     optionsList: optionsList || [],
                     defaultValue,
