@@ -1,10 +1,10 @@
 /* eslint-disable import/no-useless-path-segments */
+import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
+import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { delay, http, HttpResponse } from 'msw';
 
 import { OnboardingWizardBasicWithProvider } from './OnboardingWizardBasic.story';
-import { efClientQuestionsMock } from '.storybook/mocks/efClientQuestions.mock';
-import { efClientSolPropWithMoreData } from '.storybook/mocks/efClientSolPropWithMoreData.mock';
 
 const meta: Meta<typeof OnboardingWizardBasicWithProvider> = {
   title: 'Onboarding Wizard Basic / API States',

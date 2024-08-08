@@ -1,6 +1,6 @@
 import { List, Text, Anchor, rem, ThemeIcon } from '@mantine/core';
 import { Panel } from 'components';
-import {IconCircleCheck} from "@tabler/icons";
+import { IconCircleCheck } from '@tabler/icons';
 
 export const OverviewSection = () => {
   return (
@@ -20,8 +20,12 @@ import {
         library that allows users to easily integrate J.P. Morgan banking APIs
         into their own websites with pre packaged components. It leverages the
         official{' '}
-        <Anchor target="_blank" underline href="https://eb-api-portal.apps.dev.na-1z.gap.jpmchase.net/eb-external#tag/Transactions/operation/listTransactionsV2">
-          Embedded banking API
+        <Anchor
+          target="_blank"
+          underline
+          href="https://developer.payments.jpmorgan.com/api/embedded-banking-solutions/embedded-payments/embedded-payments#/"
+        >
+          Embedded Payments API
         </Anchor>{' '}
         and takes the guesswork out of integration for developers.
       </Text>

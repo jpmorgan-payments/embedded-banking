@@ -1,4 +1,4 @@
-import { ClientResponse } from '../../src/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '../api/generated/embedded-banking.schemas';
 
 export const efClientCorpAnsweredQuestions: ClientResponse = {
   id: '0030000130',
@@ -74,7 +74,6 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         countryOfResidence: 'US',
         natureOfOwnership: 'Direct',
         jobTitle: 'CEO',
-        jobTitleDescription: null,
         soleOwner: true,
         birthDate: '1983-02-08',
         addresses: [
@@ -118,7 +117,6 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         countryOfResidence: 'US',
         natureOfOwnership: 'Direct',
         jobTitle: 'COO',
-        jobTitleDescription: null,
         soleOwner: true,
         birthDate: '1983-03-03',
         addresses: [
