@@ -1,4 +1,4 @@
-import { ClientResponse } from '../../src/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '../api/generated/embedded-banking.schemas';
 
 export const efClientCorpAnsweredQuestions: ClientResponse = {
   id: '0030000130',
