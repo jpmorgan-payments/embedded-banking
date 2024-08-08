@@ -36,3 +36,6 @@ client/build/
 app/mock-api-server/static
 app/mock-api-server/manifest.yml
 app/client/src/generated-api-models
+
+#VSCode extension
+.VSCodeCounter

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { IconCheck } from '@tabler/icons-react';
 import { get } from 'lodash';
 import { toast } from 'sonner';
 
@@ -11,8 +13,17 @@ import {
   PartyResponse,
   UpdateClientRequestSmbdo,
 } from '@/api/generated/embedded-banking.schemas';
+import { AlertDescription } from '@/components/ui/alert';
 import { useStepper } from '@/components/ui/stepper';
-import { Button, Group, Stack, Title } from '@/components/ui';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Group,
+  Label,
+  Stack,
+  Title,
+} from '@/components/ui';
 
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
@@ -38,6 +49,16 @@ const isOutstandingEmpty = (
 export const ReviewAndAttestStepForm = () => {
   const { nextStep, prevStep, isDisabledStep } = useStepper();
   const { clientId } = useOnboardingContext();
+
+  const [termsAgreed, setTermsAgreed] = useState({
+    useOfAccount: false,
+    dataAccuracy: false,
+    termsAndConditions: false,
+  });
+  const [termsDocumentsOpened, setTermsDocumentsOpened] = useState({
+    paymentTerms: false,
+    eSignDisclosure: false,
+  });
 
   // Fetch client data
   const { data: clientData } = useSmbdoGetClient(clientId ?? '');
@@ -80,6 +101,23 @@ export const ReviewAndAttestStepForm = () => {
       ?.map((r) => r.questionId)
       .join(','),
   });
+
+  const allTermsAgreed = Object.values(termsAgreed).every(Boolean);
+  const allDocumentsOpened = Object.values(termsDocumentsOpened).every(Boolean);
+  const canSubmit = allTermsAgreed && allDocumentsOpened;
+
+  const handleTermsChange =
+    (term: keyof typeof termsAgreed) => (checked: boolean) => {
+      setTermsAgreed((prev) => ({ ...prev, [term]: checked }));
+    };
+
+  const handleDocumentOpen =
+    (document: keyof typeof termsDocumentsOpened) => () => {
+      setTermsDocumentsOpened((prev) => ({ ...prev, [document]: true }));
+      // Here you would typically open the document or navigate to it
+      toast.success(`${document} document opened`);
+      window.open('https://www.jpmorgan.com', '_blank')?.focus();
+    };
 
   const onCompleteKYCHandler = async () => {
     if (clientId) {
@@ -140,13 +178,10 @@ export const ReviewAndAttestStepForm = () => {
   return (
     <>
       <Stack className="eb-w-full eb-text-sm">
-        <Title as="h2">Review</Title>
-        <Group className="eb-my-4">
-          <Title as="h5">STATUS: &nbsp;</Title>
-          <Title as="h5" className="eb-text-green-500">
-            {clientData?.status}
-          </Title>
-        </Group>
+        <Title as="h2" className="eb-mb-4">
+          Review
+        </Title>
+
         {!isOutstandingEmpty(clientData?.outstanding) && clientData && (
           <OutstandingKYCRequirements clientData={clientData} />
         )}
@@ -184,10 +219,110 @@ export const ReviewAndAttestStepForm = () => {
             ))}
           </>
         )}
+
+        <div className="eb-mt-8 eb-border-t eb-pt-4">
+          <Title as="h3" className="eb-mb-4">
+            Terms and Conditions
+          </Title>
+          <p className="eb-mb-4">
+            Please read the Deposit Agreement and review the Online Disclosure
+            for Caterease Banking by J.P. Morgan to complete the process.
+          </p>
+
+          <div className="eb-space-y-6">
+            <div className="eb-flex eb-items-center eb-space-x-2">
+              <Checkbox
+                id="useOfAccount"
+                checked={termsAgreed.useOfAccount}
+                onCheckedChange={handleTermsChange('useOfAccount')}
+                className="eb-mr-4"
+              />
+              <Label
+                htmlFor="useOfAccount"
+                className="eb-peer-disabled:eb-cursor-not-allowed eb-peer-disabled:eb-opacity-70 eb-text-sm eb-leading-none"
+              >
+                The Embedded Payment Account may only be used to receive funds
+                through [the Platform] pursuant to [my Commerce Terms with the
+                Platform] and I am appointing [the Platform] as my agent for the
+                Account.
+              </Label>
+            </div>
+
+            <div className="eb-flex eb-items-center eb-space-x-2">
+              <Checkbox
+                id="dataAccuracy"
+                checked={termsAgreed.dataAccuracy}
+                onCheckedChange={handleTermsChange('dataAccuracy')}
+                className="eb-mr-4"
+              />
+              <Label
+                htmlFor="dataAccuracy"
+                className="eb-peer-disabled:eb-cursor-not-allowed eb-peer-disabled:eb-opacity-70 eb-text-sm eb-leading-none"
+              >
+                The data I am providing is true, accurate, current and complete
+                to the best of my knowledge.
+              </Label>
+            </div>
+
+            <div className="eb-flex eb-items-center eb-space-x-2">
+              <Checkbox
+                id="termsAndConditions"
+                checked={termsAgreed.termsAndConditions}
+                onCheckedChange={handleTermsChange('termsAndConditions')}
+                disabled={
+                  !termsDocumentsOpened.paymentTerms ||
+                  !termsDocumentsOpened.eSignDisclosure
+                }
+                className="eb-mr-4"
+              />
+              <Label
+                htmlFor="termsAndConditions"
+                className="eb-peer-disabled:eb-cursor-not-allowed eb-peer-disabled:eb-opacity-70 eb-text-sm eb-leading-none"
+              >
+                I have read and agree to the
+                <Button
+                  onClick={handleDocumentOpen('paymentTerms')}
+                  className="eb-text-blue-600 eb-underline"
+                  variant="link"
+                >
+                  <span className="eb-flex eb-h-4 eb-w-4 eb-items-center eb-justify-center">
+                    {termsDocumentsOpened.paymentTerms ? (
+                      <IconCheck className="eb-h-4 eb-w-4" />
+                    ) : (
+                      <span className="eb-h-4" />
+                    )}
+                  </span>
+                  J.P. Morgan Embedded Payment Terms & Conditions
+                </Button>
+                <Button
+                  onClick={handleDocumentOpen('eSignDisclosure')}
+                  className="eb-text-blue-600 eb-underline"
+                  variant="link"
+                >
+                  <span className="eb-flex eb-h-4 eb-w-4 eb-items-center eb-justify-center">
+                    {termsDocumentsOpened.eSignDisclosure ? (
+                      <IconCheck className="eb-h-4 eb-w-4" />
+                    ) : (
+                      <span className="eb-h-4" />
+                    )}
+                  </span>
+                  the E-Sign Disclosure and Consent
+                </Button>
+                and the certifications directly above.
+                <p className="eb-text-sm eb-text-muted-foreground">
+                  Please opem the documents links to enable the terms and
+                  conditions checkbox.
+                </p>
+              </Label>
+            </div>
+          </div>
+        </div>
+
         <ServerErrorAlert
           error={updateClientError || clientVerificationsError}
         />
-        <div className="eb-flex eb-w-full eb-justify-end eb-gap-4">
+
+        <div className="eb-mt-8 eb-flex eb-w-full eb-justify-end eb-gap-4">
           <Button
             disabled={isDisabledStep}
             variant="secondary"
@@ -195,7 +330,18 @@ export const ReviewAndAttestStepForm = () => {
           >
             Previous
           </Button>
-          <Button onClick={onCompleteKYCHandler}>Next</Button>
+          <Button
+            onClick={onCompleteKYCHandler}
+            disabled={
+              !canSubmit || !isOutstandingEmpty(clientData?.outstanding)
+            }
+          >
+            {!canSubmit
+              ? 'Please agree to all terms and review all documents'
+              : !isOutstandingEmpty(clientData?.outstanding)
+                ? 'Please address all outstanding items'
+                : 'Submit'}
+          </Button>
         </div>
       </Stack>
     </>

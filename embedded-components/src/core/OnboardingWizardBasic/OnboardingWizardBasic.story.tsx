@@ -11,6 +11,7 @@ import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import { OnboardingWizardBasic } from './OnboardingWizardBasic';
 import { efClientQuestionsMock } from '.storybook/mocks/efClientQuestions.mock';
+import { efClientSolPropAnsweredQuestions } from '.storybook/mocks/efClientSolPropAnsweredQuestions.mock';
 import { efClientSolPropWithMoreData } from '.storybook/mocks/efClientSolPropWithMoreData.mock';
 
 export const OnboardingWizardBasicWithProvider = ({
@@ -170,6 +171,30 @@ export const ReviewAndAttest: Story = {
   args: {
     ...WithClientId.args,
     initialStep: 5,
+  },
+};
+
+export const ReviewAndAttestNoOustanding: Story = {
+  name: 'Review and Attest step with No outstanding',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 5,
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/ef/do/v1/clients/0030000130', () => {
+          return HttpResponse.json(efClientSolPropAnsweredQuestions);
+        }),
+        http.post('/ef/do/v1/clients/0030000130', () => {
+          return HttpResponse.json(efClientSolPropAnsweredQuestions);
+        }),
+        http.post('/ef/do/v1/clients/0030000130/verifications', () => {
+          return HttpResponse.json({});
+        }),
+      ],
+    },
   },
 };
 
