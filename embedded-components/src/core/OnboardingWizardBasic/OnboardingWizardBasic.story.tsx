@@ -11,9 +11,9 @@ import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import { OnboardingWizardBasic } from './OnboardingWizardBasic';
 import { efClientQuestionsMock } from '.storybook/mocks/efClientQuestions.mock';
-import { efClientSolProp } from '.storybook/mocks/efClientSolProp.mock';
+import { efClientSolPropWithMoreData } from '.storybook/mocks/efClientSolPropWithMoreData.mock';
 
-const OnboardingWizardBasicWithProvider = ({
+export const OnboardingWizardBasicWithProvider = ({
   apiBaseUrl,
   headers,
   title,
@@ -22,6 +22,8 @@ const OnboardingWizardBasicWithProvider = ({
   onPostClientVerificationsResponse,
   setClientId,
   clientId,
+  initialStep,
+  variant,
 }: {
   apiBaseUrl: string;
   headers: Record<string, string>;
@@ -34,6 +36,8 @@ const OnboardingWizardBasicWithProvider = ({
   ) => void;
   setClientId?: (s: string) => void;
   clientId?: string;
+  initialStep?: number;
+  variant?: 'circle' | 'line';
 }) => {
   return (
     <>
@@ -48,6 +52,8 @@ const OnboardingWizardBasicWithProvider = ({
           onPostClientVerificationsResponse={onPostClientVerificationsResponse}
           setClientId={setClientId}
           clientId={clientId}
+          initialStep={initialStep}
+          variant={variant}
         />
       </EBComponentsProvider>
     </>
@@ -55,7 +61,7 @@ const OnboardingWizardBasicWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardBasicWithProvider> = {
-  title: 'Onboarding Wizard Basic with EBComponentsProvider',
+  title: 'Onboarding Wizard Basic / Steps',
   component: OnboardingWizardBasicWithProvider,
 };
 export default meta;
@@ -63,7 +69,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardBasicWithProvider>;
 
 export const Primary: Story = {
-  name: 'Basic OnboardingWizard Basic with EBComponentsProvider',
+  name: 'Basic OnboardingWizard',
   args: {
     clientId: '',
     apiBaseUrl: '/',
@@ -92,11 +98,11 @@ export const Primary: Story = {
 };
 
 export const WithClientId: Story = {
-  name: 'Basic with clientId',
+  name: 'Organization step with clientId',
   ...Primary,
   args: {
     ...Primary.args,
-    clientId: '0030000132',
+    clientId: '0030000130',
   },
   parameters: {
     msw: {
@@ -111,10 +117,67 @@ export const WithClientId: Story = {
             ),
           });
         }),
-        http.get('/ef/do/v1/clients/0030000132', () => {
-          return HttpResponse.json(efClientSolProp);
+        http.get('/ef/do/v1/clients/0030000130', () => {
+          return HttpResponse.json(efClientSolPropWithMoreData);
+        }),
+        http.post('/ef/do/v1/clients/0030000130', () => {
+          return HttpResponse.json(efClientSolPropWithMoreData);
         }),
       ],
     },
+  },
+};
+
+export const initialStep: Story = {
+  name: 'Individual step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 1,
+  },
+};
+
+export const DecisionMakerStep: Story = {
+  name: 'Decision Maker step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 2,
+  },
+};
+
+export const BusinessOwner: Story = {
+  name: 'Business Owner step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 3,
+  },
+};
+
+export const AdditionalQuestions: Story = {
+  name: 'Additional Questions step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 4,
+  },
+};
+
+export const ReviewAndAttest: Story = {
+  name: 'Review and Attest step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 5,
+  },
+};
+
+export const LineStepper: Story = {
+  name: 'Line Stepper variant',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    variant: 'line',
   },
 };

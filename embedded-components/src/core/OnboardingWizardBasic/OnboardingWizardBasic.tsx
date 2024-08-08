@@ -15,19 +15,25 @@ import {
 } from '@/components/ui/card';
 import { Step, Stepper } from '@/components/ui/stepper';
 
+import { AdditionalQuestionsStepForm } from './AdditionalQuestionsStepForm/AdditionalQuestionsStepForm';
+import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
+import { ClientOnboardingStateView } from './ClientOnbordingStateView/ClientOnbordingStateView';
+import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
 import { FormLoadingState } from './FormLoadingState/FormLoadingState';
+import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
 import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
+import { ReviewAndAttestStepForm } from './ReviewAndAttestStepForm/ReviewAndAttestStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
-  { label: 'Individual details', children: <div>Individual details</div> },
-  { label: 'Business Owners', children: <div>Business Owners</div> },
-  { label: 'Decision Makers', children: <div>Decision Makers</div> },
-  { label: 'Additional Questions', children: <div>Additional Questions</div> },
-  { label: 'Review and Attest', children: <div>Review and Attest</div> },
+  { label: 'Individual details', children: <IndividualStepForm /> },
+  { label: 'Decision Makers', children: <DecisionMakerStepForm /> },
+  { label: 'Business Owners', children: <BusinessOwnerStepForm /> },
+  { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
+  { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
 ];
 
 type OnboardingWizardBasicProps = {
@@ -42,13 +48,18 @@ type OnboardingWizardBasicProps = {
     response?: ClientVerificationsInformationResponse,
     error?: ApiErrorV2
   ) => void;
+  initialStep?: number;
+  variant?: 'circle' | 'line';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   title = 'Client Onboarding',
+  initialStep = 0,
+  variant = 'circle',
   ...props
 }) => {
   const {
+    data: clientData,
     status: clientGetStatus,
     error: clientGetError,
     refetch: refetchClient,
@@ -87,8 +98,12 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                     'Client not found. Please contact support or try again later.',
                 }}
               />
-            ) : (
-              <Stepper variant="circle" initialStep={0} steps={steps}>
+            ) : clientData?.status === 'NEW' ? (
+              <Stepper
+                initialStep={initialStep}
+                steps={steps}
+                variant={variant}
+              >
                 {steps.map((stepProps, index) => {
                   const { children, ...rest } = stepProps;
                   return (
@@ -98,6 +113,8 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                   );
                 })}
               </Stepper>
+            ) : (
+              <ClientOnboardingStateView />
             ))}
         </CardContent>
       </Card>

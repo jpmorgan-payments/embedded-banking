@@ -11,6 +11,7 @@ import {
 } from '@/api/generated/embedded-banking';
 import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -125,6 +126,7 @@ export const OrganizationStepForm = () => {
   useEffect(() => {
     if (getClientStatus === 'success' && clientData) {
       const formValues = convertClientResponseToFormValues(clientData, partyId);
+      console.log('formValues', formValues);
       form.reset(formValues);
     }
   }, [clientData, getClientStatus, form, partyId]);
@@ -177,8 +179,6 @@ export const OrganizationStepForm = () => {
     return <FormLoadingState message="Submitting..." />;
   }
 
-  console.log(form.getValues(), form.formState.isValid, form.formState.errors);
-
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="eb-space-y-6">
@@ -189,6 +189,20 @@ export const OrganizationStepForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>Organization name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="dbaName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel asterisk>Doing Business As (DBA) Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -257,6 +271,115 @@ export const OrganizationStepForm = () => {
 
           <FormField
             control={form.control}
+            name="industryCategory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry Category</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="industryType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry Type</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Phone Information */}
+          <Card className="eb-mt-6">
+            <CardHeader>
+              <CardTitle className="eb-text-lg eb-font-medium">
+                Phone Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-3">
+              <FormField
+                control={form.control}
+                name="phone.phoneType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select phone type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="BUSINESS_PHONE">
+                          Business Phone
+                        </SelectItem>
+                        <SelectItem value="MOBILE_PHONE">
+                          Mobile Phone
+                        </SelectItem>
+                        <SelectItem value="ALTERNATE_PHONE">
+                          Alternate Phone
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone.countryCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Country Code</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="e.g. +1" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone.phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Enter phone number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
+          <FormField
+            control={form.control}
+            name="jurisdiction"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Jurisdiction</FormLabel>
+                <FormControl>
+                  <Input {...field} maxLength={2} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="countryOfFormation"
             render={({ field }) => (
               <FormItem>
@@ -288,10 +411,17 @@ export const OrganizationStepForm = () => {
             name="mcc"
             render={({ field }) => (
               <FormItem>
-                <FormLabel asterisk>Merchant Category Code (MCC)</FormLabel>
+                <FormLabel>Merchant Category Code (MCC)</FormLabel>
                 <FormControl>
-                  <Input {...field} maxLength={4} />
+                  <Input
+                    {...field}
+                    maxLength={4}
+                    placeholder="Enter 4-digit MCC (optional)"
+                  />
                 </FormControl>
+                <FormDescription>
+                  Leave empty or enter exactly 4 digits for the MCC.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -740,71 +870,7 @@ export const OrganizationStepForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="phone.countryCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Country Code</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="e.g. +1" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone.phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="industryCategory"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry Category</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="industryType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry Type</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="jurisdiction"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Jurisdiction</FormLabel>
-                <FormControl>
-                  <Input {...field} maxLength={2} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <FormField
             control={form.control}
             name="websiteAvailable"
