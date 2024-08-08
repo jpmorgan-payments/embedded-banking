@@ -13,17 +13,8 @@ import {
   PartyResponse,
   UpdateClientRequestSmbdo,
 } from '@/api/generated/embedded-banking.schemas';
-import { AlertDescription } from '@/components/ui/alert';
 import { useStepper } from '@/components/ui/stepper';
-import {
-  Alert,
-  Button,
-  Checkbox,
-  Group,
-  Label,
-  Stack,
-  Title,
-} from '@/components/ui';
+import { Button, Checkbox, Label, Stack, Title } from '@/components/ui';
 
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
