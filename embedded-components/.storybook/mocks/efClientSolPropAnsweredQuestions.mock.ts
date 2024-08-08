@@ -115,5 +115,5 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
       values: ['No'],
     },
   ],
-  status: 'APPROVED',
+  status: 'NEW',
 };
