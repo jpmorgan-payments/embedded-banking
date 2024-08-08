@@ -20,13 +20,11 @@ const addressSchemaIndividual = [
     name: 'addressLine2',
     fieldType: 'input',
     labelToken: 'Address Line Two',
-    required: true,
   },
   {
     name: 'addressLine3',
     fieldType: 'input',
     labelToken: 'Address Line Three',
-    required: true,
   },
   {
     name: 'city',
@@ -43,7 +41,7 @@ const addressSchemaIndividual = [
   {
     name: 'postalCode',
     fieldType: 'input',
-    labelToken: 'Postal Code',
+    labelToken: 'Zip Code',
     required: true,
   },
   {
@@ -93,7 +91,7 @@ const orgAddress = [
   {
     name: 'businessPostalCode',
     fieldType: 'input',
-    labelToken: 'Postal Code',
+    labelToken: 'Zip Code',
     required: true,
   },
 ];

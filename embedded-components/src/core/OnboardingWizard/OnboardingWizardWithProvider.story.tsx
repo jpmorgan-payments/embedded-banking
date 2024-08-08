@@ -116,47 +116,47 @@ export const NoThemeWithPDPAPIs: Story = {
     clientId: '123',
   },
   /*play: async ({ canvasElement }) => {
-      // https://storybook.js.org/docs/writing-stories/play-function
-  
-      const canvas = within(canvasElement);
-      // 👇 Simulate interactions with the component
-      await userEvent.type(
-        await canvas.findByLabelText('Name of Your Business', {
-          selector: 'input',
-        }),
-        'Sample Business',
-        {
-          delay: 10,
-        }
-      );
-  
-      await userEvent.type(
-        await canvas.findByLabelText('Business Email', {
-          selector: 'input',
-        }),
-        'example-email@email.com',
-        {
-          delay: 10,
-        }
-      );
-  
-      await userEvent.click(
-        await canvas.findByRole('combobox', {
-          name: 'Organization Type',
-        }),
-        {
-          delay: 100,
-        }
-      );
-  
-      await userEvent.click(await canvas.findByText('Sole Proprietorship'), {
-        pointerEventsCheck: 0,
-      });
-    },*/
+        // https://storybook.js.org/docs/writing-stories/play-function
+    
+        const canvas = within(canvasElement);
+        // 👇 Simulate interactions with the component
+        await userEvent.type(
+          await canvas.findByLabelText('Name of Your Business', {
+            selector: 'input',
+          }),
+          'Sample Business',
+          {
+            delay: 10,
+          }
+        );
+    
+        await userEvent.type(
+          await canvas.findByLabelText('Business Email', {
+            selector: 'input',
+          }),
+          'example-email@email.com',
+          {
+            delay: 10,
+          }
+        );
+    
+        await userEvent.click(
+          await canvas.findByRole('combobox', {
+            name: 'Organization Type',
+          }),
+          {
+            delay: 100,
+          }
+        );
+    
+        await userEvent.click(await canvas.findByText('Sole Proprietorship'), {
+          pointerEventsCheck: 0,
+        });
+      },*/
 };
 
 export const NoThemeWithUATSMBDOAPIs: Story = {
-  name: 'No theme with SMBDO UAT APIs',
+  name: 'No theme with SMBDO UAT APIs + No clientId',
   ...Primary,
   args: {
     ...Primary.args,

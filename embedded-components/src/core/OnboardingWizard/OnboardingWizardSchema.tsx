@@ -95,10 +95,11 @@ export const OnboardingWizardSchema = ({ title }: any) => {
         {({ reset }) => (
           <>
             <Card className="eb-component eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
-              <CardHeader>
-                <CardTitle>{title || 'Onboarding Wizards'}</CardTitle>
-              </CardHeader>
-
+              {title?.length > 0 && (
+                <CardHeader>
+                  <CardTitle>{title}</CardTitle>
+                </CardHeader>
+              )}
               {!!stepsList?.length && (activeStep !== 0 || clientId) && (
                 <StepperHeader
                   activeStep={activeStep}
