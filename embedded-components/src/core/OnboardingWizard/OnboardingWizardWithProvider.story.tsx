@@ -1,13 +1,13 @@
+import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
+import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
+import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
+import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
+import { partyWithMissingfields } from '@/mocks/efPartyWithMissingFields.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
-import { efClientCorpMock } from '../../../.storybook/mocks/efClientCorp.mock';
-import { efClientQuestionsMock } from '../../../.storybook/mocks/efClientQuestions.mock';
-import { efClientSolProp } from '../../../.storybook/mocks/efClientSolProp.mock';
-import { efClientSolPropAnsweredQuestions } from '../../../.storybook/mocks/efClientSolPropAnsweredQuestions.mock';
-import { partyWithMissingfields } from '../../../.storybook/mocks/efPartyWithMissingFields.mock';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OboardingWizard';
 
@@ -153,17 +153,6 @@ export const NoThemeWithPDPAPIs: Story = {
           pointerEventsCheck: 0,
         });
       },*/
-};
-
-export const NoThemeWithUATSMBDOAPIs: Story = {
-  name: 'No theme with SMBDO UAT APIs + No clientId',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    apiBaseUrl:
-      'https://eb-hosted-app-demo.apps.dev.na-9z.gap.jpmchase.net/api/uat/',
-    clientId: '',
-  },
 };
 
 export const NoThemeWithMocksSoleProp: Story = {

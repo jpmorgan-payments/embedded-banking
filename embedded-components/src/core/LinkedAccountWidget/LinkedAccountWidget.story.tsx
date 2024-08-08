@@ -1,12 +1,12 @@
+import {
+  linkedAccountListMock,
+  linkedAccountRejectedMock,
+} from '@/mocks/efLinkedAccounts.mock';
 import { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
-import {
-  linkedAccountListMock,
-  linkedAccountRejectedMock,
-} from '../../../.storybook/mocks/efLinkedAccounts.mock';
 import { LinkedAccountWidget } from './LinkedAccountWidget';
 
 const LinkedAccountsWithProvider = ({

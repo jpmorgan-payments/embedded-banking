@@ -1,4 +1,7 @@
 /* eslint-disable import/no-useless-path-segments */
+import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
+import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
+import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
@@ -10,9 +13,6 @@ import {
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import { OnboardingWizardBasic } from './OnboardingWizardBasic';
-import { efClientQuestionsMock } from '.storybook/mocks/efClientQuestions.mock';
-import { efClientSolPropAnsweredQuestions } from '.storybook/mocks/efClientSolPropAnsweredQuestions.mock';
-import { efClientSolPropWithMoreData } from '.storybook/mocks/efClientSolPropWithMoreData.mock';
 
 export const OnboardingWizardBasicWithProvider = ({
   apiBaseUrl,
