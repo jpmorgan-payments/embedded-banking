@@ -70,7 +70,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardBasicWithProvider>;
 
 export const Primary: Story = {
-  name: 'Basic OnboardingWizard',
+  name: 'Basic',
   args: {
     clientId: '',
     apiBaseUrl: '/',
