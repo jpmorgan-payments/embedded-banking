@@ -17,6 +17,7 @@ import { Step, Stepper } from '@/components/ui/stepper';
 
 import { AdditionalQuestionsStepForm } from './AdditionalQuestionsStepForm/AdditionalQuestionsStepForm';
 import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
+import { ClientOnboardingStateView } from './ClientOnbordingStateView/ClientOnbordingStateView';
 import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
 import { FormLoadingState } from './FormLoadingState/FormLoadingState';
 import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
@@ -25,7 +26,6 @@ import { OnboardingContextProvider } from './OnboardingContextProvider/Onboardin
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
 import { ReviewAndAttestStepForm } from './ReviewAndAttestStepForm/ReviewAndAttestStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
-import { ClientOnboardingStateView } from './ClientOnbordingStateView/ClientOnbordingStateView';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },

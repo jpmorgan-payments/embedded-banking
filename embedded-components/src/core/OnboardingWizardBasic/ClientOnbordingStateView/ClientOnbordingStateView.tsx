@@ -106,7 +106,7 @@ export const ClientOnboardingStateView = () => {
               {businessDetails?.organizationDetails?.organizationType || 'N/A'}
             </span>
           </div>
-          
+
           <div className="eb-mt-4 eb-text-sm eb-text-gray-500">
             {status === 'NEW' && (
               <p>

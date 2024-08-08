@@ -23,7 +23,7 @@ export const OnboardingWizardBasicWithProvider = ({
   setClientId,
   clientId,
   initialStep,
-  variant
+  variant,
 }: {
   apiBaseUrl: string;
   headers: Record<string, string>;
