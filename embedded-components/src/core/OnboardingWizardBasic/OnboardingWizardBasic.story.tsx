@@ -152,3 +152,12 @@ export const BusinessOwner: Story = {
   },
 };
 
+export const AdditionalQuestions: Story = {
+  name: 'Additional Questions step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 4,
+  },
+};
+

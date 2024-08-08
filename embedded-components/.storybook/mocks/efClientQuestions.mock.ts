@@ -58,7 +58,18 @@ export const efClientQuestionsMock = {
         type: 'ARRAY',
         minItems: 1,
         maxItems: 1,
-        items: { type: 'STRING' },
+        items: {
+          type: 'STRING',
+          enum: [
+            'Iran',
+            'North Korea',
+            'Cuba',
+            'Syria',
+            'Crimea',
+            'Donetsk',
+            'Luhansk Regions of Ukraine',
+          ],
+        },
       },
       subQuestions: [],
     },
@@ -77,7 +88,7 @@ export const efClientQuestionsMock = {
         type: 'ARRAY',
         minItems: 1,
         maxItems: 2,
-        items: { type: 'STRING' },
+        items: { type: 'STRING', enum: ['Licensed', 'Registered', 'None'] },
       },
       subQuestions: [
         {

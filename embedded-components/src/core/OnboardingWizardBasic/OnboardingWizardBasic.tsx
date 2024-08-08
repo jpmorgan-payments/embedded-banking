@@ -15,21 +15,22 @@ import {
 } from '@/components/ui/card';
 import { Step, Stepper } from '@/components/ui/stepper';
 
+import { AdditionalQuestionsStepForm } from './AdditionalQuestionsStepForm/AdditionalQuestionsStepForm';
+import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
+import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
 import { FormLoadingState } from './FormLoadingState/FormLoadingState';
+import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
 import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
-import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
-import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
-import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
   { label: 'Individual details', children: <IndividualStepForm /> },
   { label: 'Decision Makers', children: <DecisionMakerStepForm /> },
   { label: 'Business Owners', children: <BusinessOwnerStepForm /> },
-  { label: 'Additional Questions', children: <div>Additional Questions</div> },
+  { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
   { label: 'Review and Attest', children: <div>Review and Attest</div> },
 ];
 
