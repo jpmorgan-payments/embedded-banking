@@ -60,6 +60,7 @@ const businessSchema = {
       labelToken: 'Organization Type',
       placeholderToken: 'Select type',
       required: true,
+      disabled: true,
     },
     {
       name: 'countryOfFormation',
@@ -67,6 +68,7 @@ const businessSchema = {
       labelToken: 'Country Formation',
       placeholderToken: 'Select country',
       required: true,
+      disabled: true,
     },
     {
       name: 'yearOfFormation',

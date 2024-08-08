@@ -32,6 +32,7 @@ const SelectFormField = ({
   placeholderToken,
   required,
   optionsList,
+  disabled,
 }: any) => {
   return (
     <FormField

@@ -54,19 +54,17 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   //   }
   // }, [ipAddress]);
 
-  useEffect(() => {
-    buildStepper();
-  }, []);
-
+  // TODO: IMPROVE STEPPER, when logic dictates for more robust STEP
   useEffect(() => {
     if (clientId && clientDataForm) {
       const orgDetails = getOrgDetails(clientDataForm);
       const steps = [
         'Individual',
         'Organization',
+        //
         ...[
           orgDetails?.organizationType !== 'SOLE_PROPRIETORSHIP'
-            ? ['Business Owners', 'Decision Makers']
+            ? ['Business Owners']
             : [],
         ],
         'Questions',
@@ -75,6 +73,8 @@ export const OnboardingWizardSchema = ({ title }: any) => {
       ].flat();
 
       buildStepper(steps);
+    } else {
+      buildStepper();
     }
   }, [clientId, clientDataForm]);
 
