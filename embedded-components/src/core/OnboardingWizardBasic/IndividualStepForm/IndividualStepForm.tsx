@@ -102,7 +102,6 @@ export const IndividualStepForm = () => {
   useEffect(() => {
     if (getClientStatus === 'success' && clientData) {
       const formValues = convertClientResponseToFormValues(clientData, partyId);
-      console.log('formValues', formValues);
       form.reset(formValues);
     }
   }, [clientData, getClientStatus, form, partyId]);
@@ -405,7 +404,7 @@ export const IndividualStepForm = () => {
             />
           </CardContent>
         </Card>
-        
+
         {/* Addresses */}
         <Card className="eb-mt-6">
           <CardHeader>

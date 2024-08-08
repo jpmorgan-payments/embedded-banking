@@ -1,6 +1,6 @@
 /* eslint-disable import/no-useless-path-segments */
 import type { Meta, StoryObj } from '@storybook/react';
-import {  http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import {
   ApiErrorV2,
@@ -126,7 +126,7 @@ export const WithClientId: Story = {
 };
 
 export const initialStep: Story = {
-  name: 'Individual step',  
+  name: 'Individual step',
   ...WithClientId,
   args: {
     ...WithClientId.args,
@@ -160,4 +160,3 @@ export const AdditionalQuestions: Story = {
     initialStep: 4,
   },
 };
-
