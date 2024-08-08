@@ -215,7 +215,7 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'features.EntityTypeForm.radioLabelNo': `No`,
   'features.EntityTypeForm.radioILabel': `Do you identify as a provider, owner, and/or operator of private ATM(s) and/or third Party ATM(s) activity?`,
   'features.EntityTypeForm.radioIsBusLabel': `Are there any entities (or non-individuals) in your ownership hierarchy?`,
-  'features.EntityTypeForm.radioIsSigLabel': `Are there any individuals who own 25% or more of your company?`,
+  'features.EntityTypeForm.radioIsSigLabel': `Does any individual own 25% or more of the company?`,
   'features.EntityTypeForm.alertMessage': `(!) We cannot accept your application`,
   'features.EntityTypeForm.alertMessageText': `(!) We cannot onboard entities with business activity related to Cuba, Iran, Syria, North Korea or Crimea.`,
   'features.EntityTypeForm.alertMessageText1': `(!) We cannot onboard entities that identify as a business relating to ATM(s)`,

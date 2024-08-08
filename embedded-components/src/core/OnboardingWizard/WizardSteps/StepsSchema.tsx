@@ -69,6 +69,13 @@ const businessSchema = {
       required: true,
     },
     {
+      name: 'yearOfFormation',
+      fieldType: 'input',
+      labelToken: 'Year of Formation',
+      placeholderToken: 'YYYY',
+      required: true,
+    },
+    {
       name: 'ein',
       fieldType: 'ein',
       labelToken: 'solePropBusinessIdentification.option.ein',
@@ -102,21 +109,6 @@ const businessSchema = {
       name: 'businessPhone',
       fieldType: 'phone',
       labelToken: 'businessPhone.label',
-      required: true,
-    },
-
-    {
-      name: 'countryOfFormation',
-      fieldType: 'country',
-      labelToken: 'Country Formation',
-      placeholderToken: 'Select country',
-      required: true,
-    },
-    {
-      name: 'yearOfFormation',
-      fieldType: 'input',
-      labelToken: 'Year of Formation',
-      placeholderToken: 'YYYY',
       required: true,
     },
 
