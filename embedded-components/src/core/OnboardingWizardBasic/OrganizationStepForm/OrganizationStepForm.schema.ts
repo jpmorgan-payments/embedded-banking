@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+
+
+
+
 const phoneSchema = z.object({
   phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
   countryCode: z.string().regex(/^\+\d{1,3}$/, 'Invalid country code'),
@@ -42,7 +46,25 @@ const organizationIdSchema = z.object({
     .max(500, 'Issuer must be 500 characters or less'),
   expiryDate: z
     .string()
-    .datetime({ message: 'Invalid date format' })
+    .refine(
+      (val) => {
+        // Check if the string is in 'YYYY-MM-DD' format
+        return /^\d{4}-\d{2}-\d{2}$/.test(val);
+      },
+      {
+        message: "Expiry date must be in 'YYYY-MM-DD' format",
+      }
+    )
+    .refine(
+      (val) => {
+        // Check if the date is valid
+        const date = new Date(val);
+        return !Number.isNaN(date.getTime());
+      },
+      {
+        message: 'Invalid date',
+      }
+    )
     .optional(),
 });
 
@@ -83,7 +105,9 @@ export const OrganizationStepFormSchema = z.object({
     .max(5, 'Maximum 5 addresses allowed'),
   associatedCountries: z
     .array(associatedCountrySchema)
-    .max(100, 'Maximum 100 associated countries allowed'),
+    .max(100, 'Maximum 100 associated countries allowed')
+    .optional()
+    .default([]),
   dbaName: z
     .string()
     .max(100, 'DBA name must be 100 characters or less')
@@ -116,8 +140,15 @@ export const OrganizationStepFormSchema = z.object({
     .max(500, 'Website URL must be 500 characters or less')
     .optional(),
   websiteAvailable: z.boolean(),
-  mcc: z.string().regex(/^\d{4}$/, 'MCC must be exactly 4 digits'),
+  mcc: z
+    .string()
+    .refine((value) => value === '' || /^\d{4}$/.test(value), {
+      message: 'MCC must be empty or exactly 4 digits',
+    })
+    .optional(),
   secondaryMccList: z
     .array(secondaryMccSchema)
-    .max(50, 'Maximum 50 secondary MCCs allowed'),
+    .max(50, 'Maximum 50 secondary MCCs allowed')
+    .optional()
+    .default([]),
 });

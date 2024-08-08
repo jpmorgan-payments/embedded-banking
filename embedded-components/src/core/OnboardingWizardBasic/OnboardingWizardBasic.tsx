@@ -20,12 +20,15 @@ import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
+import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
+import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
+import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
-  { label: 'Individual details', children: <div>Individual details</div> },
-  { label: 'Business Owners', children: <div>Business Owners</div> },
-  { label: 'Decision Makers', children: <div>Decision Makers</div> },
+  { label: 'Individual details', children: <IndividualStepForm /> },
+  { label: 'Decision Makers', children: <DecisionMakerStepForm /> },
+  { label: 'Business Owners', children: <BusinessOwnerStepForm /> },
   { label: 'Additional Questions', children: <div>Additional Questions</div> },
   { label: 'Review and Attest', children: <div>Review and Attest</div> },
 ];
@@ -42,10 +45,12 @@ type OnboardingWizardBasicProps = {
     response?: ClientVerificationsInformationResponse,
     error?: ApiErrorV2
   ) => void;
+  initialStep?: number;
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   title = 'Client Onboarding',
+  initialStep = 0,
   ...props
 }) => {
   const {
@@ -88,7 +93,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 }}
               />
             ) : (
-              <Stepper variant="circle" initialStep={0} steps={steps}>
+              <Stepper variant="circle" initialStep={initialStep} steps={steps}>
                 {steps.map((stepProps, index) => {
                   const { children, ...rest } = stepProps;
                   return (

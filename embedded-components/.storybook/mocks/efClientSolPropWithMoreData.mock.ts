@@ -1,6 +1,6 @@
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 
-export const efClientSolProp: ClientResponse = {
+export const efClientSolPropWithMoreData: ClientResponse = {
   id: '0030000129',
   attestations: [
     {
@@ -78,7 +78,7 @@ export const efClientSolProp: ClientResponse = {
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
-      roles: ['CONTROLLER', 'BENEFICIAL_OWNER'],
+      roles: ['CONTROLLER', 'BENEFICIAL_OWNER', 'DECISION_MAKER'],
       individualDetails: {
         firstName: 'Monica',
         lastName: 'Gellar',
