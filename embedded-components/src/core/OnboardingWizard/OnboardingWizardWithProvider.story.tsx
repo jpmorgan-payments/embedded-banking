@@ -155,17 +155,6 @@ export const NoThemeWithPDPAPIs: Story = {
       },*/
 };
 
-export const NoThemeWithUATSMBDOAPIs: Story = {
-  name: 'No theme with SMBDO UAT APIs + No clientId',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    apiBaseUrl:
-      'https://eb-hosted-app-demo.apps.dev.na-9z.gap.jpmchase.net/api/uat/',
-    clientId: '',
-  },
-};
-
 export const NoThemeWithMocksSoleProp: Story = {
   ...Primary,
   name: 'No theme with mocked Sole Prop client with unanswered questions and missing party attributes',
