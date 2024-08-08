@@ -159,3 +159,24 @@ export const WithErrorOnGet = {
     },
   },
 };
+
+export const OnboardingInProgress = {
+  name: 'ClientStatus: PENDING',
+  ...Primary,
+  args: {
+    ...Primary.args,
+    clientId: '0030000130',
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/ef/do/v1/clients/0030000130', async () => {
+          return HttpResponse.json({
+            ...efClientSolPropWithMoreData,
+            status: 'PENDING',
+          });
+        }),
+      ],
+    },
+  },
+};

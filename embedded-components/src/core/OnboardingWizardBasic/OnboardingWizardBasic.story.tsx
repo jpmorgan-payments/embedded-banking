@@ -23,6 +23,7 @@ export const OnboardingWizardBasicWithProvider = ({
   setClientId,
   clientId,
   initialStep,
+  variant
 }: {
   apiBaseUrl: string;
   headers: Record<string, string>;
@@ -36,6 +37,7 @@ export const OnboardingWizardBasicWithProvider = ({
   setClientId?: (s: string) => void;
   clientId?: string;
   initialStep?: number;
+  variant?: 'circle' | 'line';
 }) => {
   return (
     <>
@@ -51,6 +53,7 @@ export const OnboardingWizardBasicWithProvider = ({
           setClientId={setClientId}
           clientId={clientId}
           initialStep={initialStep}
+          variant={variant}
         />
       </EBComponentsProvider>
     </>
@@ -158,5 +161,23 @@ export const AdditionalQuestions: Story = {
   args: {
     ...WithClientId.args,
     initialStep: 4,
+  },
+};
+
+export const ReviewAndAttest: Story = {
+  name: 'Review and Attest step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 5,
+  },
+};
+
+export const LineStepper: Story = {
+  name: 'Line Stepper variant',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    variant: 'line',
   },
 };

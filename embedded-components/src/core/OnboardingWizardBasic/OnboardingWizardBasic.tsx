@@ -23,7 +23,9 @@ import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
 import { InitialForm } from './InitialForm/InitialForm';
 import { OnboardingContextProvider } from './OnboardingContextProvider/OnboardingContextProvider';
 import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepForm';
+import { ReviewAndAttestStepForm } from './ReviewAndAttestStepForm/ReviewAndAttestStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
+import { ClientOnboardingStateView } from './ClientOnbordingStateView/ClientOnbordingStateView';
 
 const steps = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
@@ -31,7 +33,7 @@ const steps = [
   { label: 'Decision Makers', children: <DecisionMakerStepForm /> },
   { label: 'Business Owners', children: <BusinessOwnerStepForm /> },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
-  { label: 'Review and Attest', children: <div>Review and Attest</div> },
+  { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
 ];
 
 type OnboardingWizardBasicProps = {
@@ -47,14 +49,17 @@ type OnboardingWizardBasicProps = {
     error?: ApiErrorV2
   ) => void;
   initialStep?: number;
+  variant?: 'circle' | 'line';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   title = 'Client Onboarding',
   initialStep = 0,
+  variant = 'circle',
   ...props
 }) => {
   const {
+    data: clientData,
     status: clientGetStatus,
     error: clientGetError,
     refetch: refetchClient,
@@ -93,8 +98,12 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                     'Client not found. Please contact support or try again later.',
                 }}
               />
-            ) : (
-              <Stepper variant="circle" initialStep={initialStep} steps={steps}>
+            ) : clientData?.status === 'NEW' ? (
+              <Stepper
+                initialStep={initialStep}
+                steps={steps}
+                variant={variant}
+              >
                 {steps.map((stepProps, index) => {
                   const { children, ...rest } = stepProps;
                   return (
@@ -104,6 +113,8 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                   );
                 })}
               </Stepper>
+            ) : (
+              <ClientOnboardingStateView />
             ))}
         </CardContent>
       </Card>

@@ -132,5 +132,5 @@ export const efClientSolPropWithMoreData: ClientResponse = {
     ],
   },
   questionResponses: [],
-  status: 'APPROVED',
+  status: 'NEW',
 };
