@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import uniqBy from 'lodash/uniqBy';
 import { useFormContext } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -58,11 +59,16 @@ const QuestionsStep = ({ children }: any) => {
   }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
     (findSubQuestions ?? ['']) as string[]
   );
-  console.log('@@data', subQuestionsData, isSucessSub);
+  const fullQuesitonSet = uniqBy(
+    [questionsData?.questions, subQuestionsData?.questions].flat(),
+    'id'
+  ).filter(Boolean);
+
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
   const DATE_QUESTION_IDS = ['30071', '30073'];
   const COUNTRY_QUESTION_IDS = ['30072', '30070'];
+
   // THIS ENABLES UPDATE ON FORUM RENDER
   form.watch();
 
@@ -132,19 +138,16 @@ const QuestionsStep = ({ children }: any) => {
   };
 
   const yupObject = yup.object().shape(
-    (questionsData as QuestionListResponse)?.questions?.reduce(
-      (a: any, v: any) => {
-        if (!v?.id) return a;
-        return {
-          ...a,
-          [v.id]: getValidationByFormat(
-            v.responseSchema?.items?.type,
-            v?.parentQuestionId
-          ),
-        };
-      },
-      {}
-    )
+    fullQuesitonSet?.reduce((a: any, v: any) => {
+      if (!v?.id) return a;
+      return {
+        ...a,
+        [v.id]: getValidationByFormat(
+          v.responseSchema?.items?.type,
+          v?.parentQuestionId
+        ),
+      };
+    }, {})
   );
 
   // Update form scema for questions after load
@@ -157,7 +160,18 @@ const QuestionsStep = ({ children }: any) => {
   useEffect(() => {
     if (data?.questionResponses?.length) {
       data?.questionResponses.forEach((question: any) => {
-        form.setValue(question.questionId, question.values);
+        if (DATE_QUESTION_IDS.includes(question.questionId)) {
+          form.setValue(
+            question.questionId,
+            new Date(question?.values?.[0] || question?.values)
+          );
+          return;
+        }
+
+        form.setValue(
+          question.questionId,
+          question?.values?.[0] || question?.values
+        );
       });
     }
   }, [data?.questionResponses?.length]);
@@ -208,36 +222,34 @@ const QuestionsStep = ({ children }: any) => {
     }
   };
 
-  console.log('@@questionsData', questionsData);
+  const questionSchame = !!fullQuesitonSet?.length
+    ? fullQuesitonSet?.map((question: any | SchemasQuestionResponse) => {
+        return {
+          name: question?.id,
+          labelToken: question?.content?.[0].label,
+          fieldType: fieldType(
+            question?.responseSchema?.items?.type,
+            question?.responseSchema?.items,
 
-  const questionSchame =
-    questionsData &&
-    questionsData?.questions?.map((question: any | SchemasQuestionResponse) => {
-      return {
-        name: question.id,
-        labelToken: question?.content?.[0].label,
-        fieldType: fieldType(
-          question?.responseSchema?.items?.type,
-          question?.responseSchema?.items,
-
-          // TODO: Temporary
-          {
-            date: DATE_QUESTION_IDS.includes(question.id),
-            country: COUNTRY_QUESTION_IDS.includes(question.id),
-          }
-        ),
-        hidden: !!question?.parentQuestionId,
-        parentId: question?.parentQuestionId,
-        questions: questionsData?.questions,
-        optionsList:
-          question?.responseSchema?.items?.enum?.map((list: string) => {
-            return {
-              value: list,
-              label: list,
-            };
-          }) ?? [],
-      };
-    });
+            // TODO: Temporary
+            {
+              date: DATE_QUESTION_IDS.includes(question?.id),
+              country: COUNTRY_QUESTION_IDS.includes(question?.id),
+            }
+          ),
+          hidden: !!question?.parentQuestionId,
+          parentId: question?.parentQuestionId,
+          questions: questionsData?.questions,
+          optionsList:
+            question?.responseSchema?.items?.enum?.map((list: string) => {
+              return {
+                value: list,
+                label: list,
+              };
+            }) ?? [],
+        };
+      })
+    : [];
 
   return (
     <Stack>

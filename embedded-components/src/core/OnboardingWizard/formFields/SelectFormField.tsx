@@ -47,7 +47,7 @@ const SelectFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              defaultValue={form.getValues(name)}
+              defaultValue={field?.value}
               disabled={disabled}
             >
               <FormControl>

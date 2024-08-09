@@ -23,7 +23,8 @@ const YesNoFromField = ({ name, form, labelToken, required }: any) => {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field?.value?.[0]}
+                defaultValue={field?.value}
+                // defaultValue={field.value}
                 className="eb-flex eb-flex-row eb-space-y-1"
               >
                 <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">

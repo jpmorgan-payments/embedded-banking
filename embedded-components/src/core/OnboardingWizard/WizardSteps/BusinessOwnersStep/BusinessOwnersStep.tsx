@@ -55,7 +55,7 @@ const BusinessOwnersStep = () => {
           render={() => (
             <FormItem>
               <FormLabel asterisk>
-                Do you, the controller, own 25% or more of the business?
+                Does any individual own 25% or more of the company?
               </FormLabel>
 
               <FormControl>

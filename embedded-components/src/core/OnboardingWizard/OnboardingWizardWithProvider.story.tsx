@@ -95,6 +95,7 @@ export const Primary: Story = {
         http.get('/ef/do/v1/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
+
           return HttpResponse.json({
             metadata: efClientQuestionsMock.metadata,
             questions: efClientQuestionsMock?.questions.filter((q) =>

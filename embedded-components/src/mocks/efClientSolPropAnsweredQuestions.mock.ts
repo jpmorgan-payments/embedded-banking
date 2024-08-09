@@ -35,7 +35,7 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['901 Bedford Street', 'Apt 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -112,7 +112,27 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
     },
     {
       questionId: '30026',
-      values: ['No'],
+      values: ['false'],
+    },
+    {
+      questionId: '30069',
+      values: ['Licensed'],
+    },
+    {
+      questionId: '30070',
+      values: ['US'],
+    },
+    {
+      questionId: '30071',
+      values: ['09/10/1996'],
+    },
+    {
+      questionId: '30072',
+      values: ['US'],
+    },
+    {
+      questionId: '30073',
+      values: ['09/10/1996'],
     },
   ],
   status: 'NEW',
