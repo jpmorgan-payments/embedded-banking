@@ -169,6 +169,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     required,
                     form,
                     defaultValue,
+                    disabled,
                   }}
                 />
               );
@@ -185,6 +186,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     required,
                     form,
                     defaultValue,
+                    disabled,
                   }}
                 />
               );

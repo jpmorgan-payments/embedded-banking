@@ -22,7 +22,6 @@ export interface SelectFormFieldProps {
   defaultValue?: string;
   type?: string;
   hidden?: boolean;
-  parent?: boolean;
 }
 
 const SelectFormField = ({
@@ -32,6 +31,8 @@ const SelectFormField = ({
   placeholderToken,
   required,
   optionsList,
+  disabled,
+  className,
 }: any) => {
   return (
     <FormField
@@ -39,7 +40,7 @@ const SelectFormField = ({
       name={name}
       render={({ field }) => {
         return (
-          <FormItem className="">
+          <FormItem className={className}>
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
             <Select
               onValueChange={(value) => {
@@ -47,6 +48,7 @@ const SelectFormField = ({
                 // handleAccountTypeChange(value);
               }}
               defaultValue={form.getValues(name)}
+              disabled={disabled}
             >
               <FormControl>
                 <SelectTrigger>

@@ -113,7 +113,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
       'Individual',
       'Organization',
       'Business Owners',
-      'Decision Makers',
+      // 'Decision Makers',
       'Questions',
       'Review',
       'Attestation',

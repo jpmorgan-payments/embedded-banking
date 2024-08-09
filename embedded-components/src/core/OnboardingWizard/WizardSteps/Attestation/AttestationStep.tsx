@@ -8,6 +8,7 @@ import {
   useSmbdoGetAllDocumentDetails,
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
+import { useToast } from '@/components/ui/use-toast';
 // import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
 import {
   Checkbox,
@@ -33,20 +34,39 @@ import { useContentData } from '../../utils/useContentData';
 // import { PdfDisplay } from './PdfDisplay';
 
 const AttestationStep = () => {
+  const { toast } = useToast();
   const form = useFormContext();
   const [TAC, setTAC] = useState(false);
   const [EDC, setEDC] = useState(false);
   const [check, setCheck] = useState(false);
+
   const {
     mutate: postVerifaction,
     isError,
     data,
     isPending,
-  }: any = useSmbdoPostClientVerifications();
+  }: any = useSmbdoPostClientVerifications({
+    mutation: {
+      onSuccess: () => {
+        toast({
+          title: 'Oboarding Complete',
+          description: 'Attestion submmited. Thank you.',
+        });
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'ERROR',
+          description: 'Something went wrong. Please try again later.',
+        });
+      },
+    },
+  });
 
-  // const { isMock } = useRootConfig();
   const { clientId } = useRootConfig();
   const { setCurrentStep, activeStep } = useStepper();
+
+  // TODO: REmove the onboardingForm
   const { onboardingForm }: any = useOnboardingForm();
   const [doc, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
@@ -130,7 +150,7 @@ const AttestationStep = () => {
       <Text>{getContentToken(`text`)}</Text>
 
       {isError && <>{JSON.stringify(data?.context[0]?.message)}</>}
-      {isError && <>ERROR</>}
+
       {/* <PdfDisplay
         data-testid="pdf-display"
         // file={termsAndConditionsDoc}

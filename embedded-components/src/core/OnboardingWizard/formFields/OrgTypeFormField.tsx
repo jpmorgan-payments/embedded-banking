@@ -44,6 +44,7 @@ const OrgTypeFormField = ({
   required,
   labelToken,
   placeholderToken,
+  disabled,
 }: any) => {
   const { removeSteps, buildStepper } = useStepper();
   const { clientId } = useRootConfig();
@@ -56,7 +57,7 @@ const OrgTypeFormField = ({
         'Individual',
         'Organization',
         'Business Owners',
-        'Decision Makers',
+        // 'Decision Makers',
         'Questions',
         'Review',
         'Attestation',
@@ -82,6 +83,7 @@ const OrgTypeFormField = ({
                   field.onChange(value);
                 }}
                 value={field?.value}
+                disabled={disabled}
               >
                 <FormControl>
                   <SelectTrigger>

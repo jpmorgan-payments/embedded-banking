@@ -61,7 +61,8 @@ const QuestionsStep = ({ children }: any) => {
   console.log('@@data', subQuestionsData, isSucessSub);
   const { mutateAsync: submitQuestions } = useSmbdoUpdateClient();
   const form = useFormContext();
-
+  const DATE_QUESTION_IDS = ['30071', '30073'];
+  const COUNTRY_QUESTION_IDS = ['30072', '30070'];
   // THIS ENABLES UPDATE ON FORUM RENDER
   form.watch();
 
@@ -179,28 +180,62 @@ const QuestionsStep = ({ children }: any) => {
     }
   }, [activeStep]);
 
-  const fieldType = (type: string | undefined) => {
+  const fieldType = (
+    type: string | undefined,
+    item: any,
+    opt: { date: boolean; country: boolean }
+  ) => {
     switch (type?.toLowerCase()) {
+      case 'enum':
+        return 'select';
       case 'boolean':
         return 'yesNo';
       case 'integer':
         return 'input';
       case 'string':
+        if (opt.date) {
+          return 'calendar';
+        }
+        if (opt.country) {
+          return 'country';
+        }
+        if (item?.enum?.length) {
+          return `select`;
+        }
         return 'textarea';
       default:
         return 'textarea';
     }
   };
 
+  console.log('@@questionsData', questionsData);
+
   const questionSchame =
     questionsData &&
-    questionsData?.questions?.map((question: SchemasQuestionResponse) => {
+    questionsData?.questions?.map((question: any | SchemasQuestionResponse) => {
       return {
         name: question.id,
         labelToken: question?.content?.[0].label,
-        fieldType: fieldType(question?.responseSchema?.items?.type),
+        fieldType: fieldType(
+          question?.responseSchema?.items?.type,
+          question?.responseSchema?.items,
+
+          // TODO: Temporary
+          {
+            date: DATE_QUESTION_IDS.includes(question.id),
+            country: COUNTRY_QUESTION_IDS.includes(question.id),
+          }
+        ),
         hidden: !!question?.parentQuestionId,
-        parent: question?.parentQuestionId,
+        parentId: question?.parentQuestionId,
+        questions: questionsData?.questions,
+        optionsList:
+          question?.responseSchema?.items?.enum?.map((list: string) => {
+            return {
+              value: list,
+              label: list,
+            };
+          }) ?? [],
       };
     });
 

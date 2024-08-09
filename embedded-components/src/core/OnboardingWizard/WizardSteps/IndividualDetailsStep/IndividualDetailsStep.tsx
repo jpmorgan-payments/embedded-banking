@@ -22,7 +22,6 @@ import {
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
 
-//TODO: when updating we need to make sure when we come back the data is actual
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
   const { isMock, clientId } = useRootConfig();

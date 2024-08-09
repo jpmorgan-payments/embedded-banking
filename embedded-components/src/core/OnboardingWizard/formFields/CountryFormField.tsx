@@ -25,6 +25,7 @@ const CountryFormField = ({
   required,
   labelToken,
   placeholderToken,
+  disabled,
 }: any) => {
   return (
     <FormField
@@ -40,10 +41,13 @@ const CountryFormField = ({
                 // handleAccountTypeChange(value);
               }}
               value={field?.value}
+              disabled={disabled}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder={placeholderToken} />
+                  <SelectValue
+                    placeholder={placeholderToken || 'Select an option'}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
