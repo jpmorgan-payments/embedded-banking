@@ -45,7 +45,9 @@ const CountryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder={placeholderToken} />
+                  <SelectValue
+                    placeholder={placeholderToken || 'Select an option'}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>

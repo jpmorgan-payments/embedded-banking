@@ -1,5 +1,10 @@
+import {
+  SchemasQuestionResponse,
+  SchemasQuestionResponseSubQuestionsItem,
+} from '@/api/generated/embedded-banking.schemas';
 import { Box, Separator, Title } from '@/components/ui';
 
+import { CalendarFormField } from '../../formFields/CalendarFormField';
 // import { AddressFormFields } from '../../formFields/AddressFormFields';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
@@ -21,6 +26,8 @@ import { UsStatesFormField } from '../../formFields/UsStatesFormField';
 import { YesNoFromField } from '../../formFields/YesNoFromField';
 
 export interface QuestionSchema extends SelectFormFieldProps {
+  questions: SchemasQuestionResponse[];
+  parentId: string;
   fieldType:
     | 'input'
     | 'select'
@@ -38,6 +45,7 @@ export interface QuestionSchema extends SelectFormFieldProps {
     | 'address'
     | 'jobTitle'
     //---------
+    | 'calendar'
     | 'yesNo';
 }
 
@@ -59,9 +67,27 @@ const RenderQuestions = ({
           optionsList,
           defaultValue,
           type,
-          hidden,
-          parent,
+          parentId,
+          questions,
         }: QuestionSchema) => {
+          const parentQuestion: SchemasQuestionResponse | undefined =
+            questions?.find((q) => q.id === parentId);
+
+          const subParentQuestion:
+            | SchemasQuestionResponseSubQuestionsItem
+            | undefined = parentQuestion?.subQuestions?.find(
+            (subQ) => form.getValues(parentId) === subQ.anyValuesMatch
+          );
+
+          const hiddenElement =
+            !!parentId &&
+            (form.getValues(parentId) === 'false' ||
+              form.getValues(parentId) === 'None' ||
+              !subParentQuestion?.questionIds?.includes(name) ||
+              !form.getValues(parentId))
+              ? 'eb-hidden'
+              : 'eb-visible';
+
           switch (fieldType) {
             case 'input':
               return (
@@ -75,7 +101,7 @@ const RenderQuestions = ({
                     required,
                     form,
                     defaultValue,
-                    className: `first:eb-mt-6 ${hidden && 'eb-collapse '}`,
+                    className: `first:eb-mt-6 ${hiddenElement}`,
                   }}
                 />
               );
@@ -87,12 +113,14 @@ const RenderQuestions = ({
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
                     placeholderToken:
-                      getContentToken(placeholderToken) || placeholderToken,
+                      getContentToken(placeholderToken) ||
+                      placeholderToken ||
+                      'Select an option',
                     required,
                     form,
                     optionsList: optionsList || [],
                     defaultValue,
-                    className: `${hidden && 'eb-hidden'}`,
+                    className: `${hiddenElement}`,
                   }}
                 />
               );
@@ -110,6 +138,23 @@ const RenderQuestions = ({
                     defaultValue,
                   }}
                 />
+              );
+
+            case 'calendar':
+              return (
+                <Box className={`${hiddenElement}`} key={name}>
+                  <CalendarFormField
+                    {...{
+                      name,
+                      labelToken: getContentToken(labelToken) ?? labelToken,
+                      placeholderToken:
+                        getContentToken(placeholderToken) || placeholderToken,
+                      required,
+                      form,
+                      defaultValue,
+                    }}
+                  />
+                </Box>
               );
 
             case 'birthdate':
@@ -162,18 +207,20 @@ const RenderQuestions = ({
 
             case 'country':
               return (
-                <CountryFormField
-                  key={name}
-                  {...{
-                    name,
-                    labelToken: getContentToken(labelToken) ?? labelToken,
-                    placeholderToken:
-                      getContentToken(placeholderToken) ?? placeholderToken,
-                    required,
-                    form,
-                    defaultValue,
-                  }}
-                />
+                <Box className={`${hiddenElement}`} key={name}>
+                  <CountryFormField
+                    key={name}
+                    {...{
+                      name,
+                      labelToken: getContentToken(labelToken) ?? labelToken,
+                      placeholderToken:
+                        getContentToken(placeholderToken) ?? placeholderToken,
+                      required,
+                      form,
+                      defaultValue,
+                    }}
+                  />
+                </Box>
               );
 
             case 'jobTitle':
@@ -219,10 +266,7 @@ const RenderQuestions = ({
 
             case 'textarea':
               return (
-                <Box
-                  className={` ${!!parent && (form.getValues(parent) === 'false' || !form.getValues(parent)) ? 'eb-hidden' : 'eb-visible'}`}
-                  key={name}
-                >
+                <Box className={`${hiddenElement}`} key={name}>
                   <TextareaFormField
                     {...{
                       name,
@@ -250,7 +294,7 @@ const RenderQuestions = ({
                     form,
                     defaultValue,
                     type,
-                    className: `${hidden && 'eb-collapse'}`,
+                    className: `${hiddenElement}`,
                   }}
                 />
               );

@@ -3,6 +3,7 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Toaster } from '@/components/ui/toaster';
 import { Box, Button, Text } from '@/components/ui';
 import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 
@@ -95,11 +96,13 @@ export const OnboardingWizardSchema = ({ title }: any) => {
         {({ reset }) => (
           <>
             <Card className="eb-component eb-flex eb-flex-col eb-flex-wrap eb-overflow-clip">
+              <Toaster swipeDirection="right" />
               {title?.length > 0 && (
                 <CardHeader>
                   <CardTitle>{title}</CardTitle>
                 </CardHeader>
               )}
+
               {!!stepsList?.length && (activeStep !== 0 || clientId) && (
                 <StepperHeader
                   activeStep={activeStep}
@@ -108,6 +111,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                   key={stepsList?.length}
                 ></StepperHeader>
               )}
+
               {isError && <ServerAlertMessage />}
               <ErrorBoundary
                 onReset={reset}
