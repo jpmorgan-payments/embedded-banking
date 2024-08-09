@@ -1,7 +1,6 @@
 /* eslint-disable import/no-useless-path-segments */
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
-import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
