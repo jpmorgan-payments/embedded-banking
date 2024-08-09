@@ -68,7 +68,7 @@ const AttestationStep = () => {
 
   // TODO: REmove the onboardingForm
   const { onboardingForm }: any = useOnboardingForm();
-  const [doc, setDocs] = useState<any>(null);
+  const [, setDocs] = useState<any>(null);
   const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
     clientId: onboardingForm?.id || clientId,
   });
@@ -213,9 +213,7 @@ const AttestationStep = () => {
               I have read and agree to the &nbsp;
               <a
                 className={`eb-underline eb-decoration-primary eb-underline-offset-4 ${TAC && 'eb-decoration-transparent'}`}
-                href={
-                  'https://www.jpmorganchase.com/legal/terms-and-conditions'
-                }
+                href="https://www.jpmorganchase.com/legal/terms-and-conditions"
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {
@@ -230,9 +228,7 @@ const AttestationStep = () => {
               &nbsp;
               <a
                 className={`eb-underline eb-decoration-primary eb-underline-offset-4 ${EDC && 'eb-decoration-transparent'}`}
-                href={
-                  'https://www.jpmorganchase.com/legal/terms-and-conditions'
-                }
+                href="https://www.jpmorganchase.com/legal/terms-and-conditions"
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {

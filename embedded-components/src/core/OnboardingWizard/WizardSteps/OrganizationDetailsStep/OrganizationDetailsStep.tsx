@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';

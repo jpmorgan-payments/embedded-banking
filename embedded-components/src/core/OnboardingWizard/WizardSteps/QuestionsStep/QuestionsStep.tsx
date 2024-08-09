@@ -55,7 +55,7 @@ const QuestionsStep = ({ children }: any) => {
 
   const {
     data: subQuestionsData,
-    isSuccess: isSucessSub,
+    // isSuccess: isSucessSub,
   }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
     (findSubQuestions ?? ['']) as string[]
   );
@@ -222,7 +222,7 @@ const QuestionsStep = ({ children }: any) => {
     }
   };
 
-  const questionSchame = !!fullQuesitonSet?.length
+  const questionSchame = fullQuesitonSet?.length
     ? fullQuesitonSet?.map((question: any | SchemasQuestionResponse) => {
         return {
           name: question?.id,
