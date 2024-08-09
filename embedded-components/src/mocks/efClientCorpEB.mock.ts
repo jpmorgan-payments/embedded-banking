@@ -1,7 +1,7 @@
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 
-export const efClientCorpMock: ClientResponse = {
-  id: '0030000130',
+export const efClientCorpEBMock: ClientResponse = {
+  id: '0030000133',
   attestations: [
     {
       attesterFullName: 'Monica Gellar',
@@ -145,7 +145,7 @@ export const efClientCorpMock: ClientResponse = {
     },
   ],
   partyId: '2000000111',
-  products: ['EMBEDDED_PAYMENTS'],
+  products: ['EMBEDDED_BANKING'],
   outstanding: {
     attestationDocumentIds: [],
     documentRequestIds: [],

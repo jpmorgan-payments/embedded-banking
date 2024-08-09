@@ -13,6 +13,7 @@ import {
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import { OnboardingWizardBasic } from './OnboardingWizardBasic';
+import { efClientCorpEBMock } from '@/mocks/efClientCorpEB.mock';
 
 export const OnboardingWizardBasicWithProvider = ({
   apiBaseUrl,
@@ -70,7 +71,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardBasicWithProvider>;
 
 export const Primary: Story = {
-  name: 'Basic',
+  name: 'Intro without Client ID',
   args: {
     clientId: '',
     apiBaseUrl: '/',
@@ -103,7 +104,7 @@ export const WithClientId: Story = {
   ...Primary,
   args: {
     ...Primary.args,
-    clientId: '0030000130',
+    clientId: '0030000133',
   },
   parameters: {
     msw: {
@@ -118,11 +119,11 @@ export const WithClientId: Story = {
             ),
           });
         }),
-        http.get('/ef/do/v1/clients/0030000130', () => {
-          return HttpResponse.json(efClientSolPropWithMoreData);
+        http.get('/ef/do/v1/clients/0030000133', () => {
+          return HttpResponse.json(efClientCorpEBMock);
         }),
-        http.post('/ef/do/v1/clients/0030000130', () => {
-          return HttpResponse.json(efClientSolPropWithMoreData);
+        http.post('/ef/do/v1/clients/0030000133', () => {
+          return HttpResponse.json(efClientCorpEBMock);
         }),
       ],
     },
@@ -179,7 +180,7 @@ export const ReviewAndAttestNoOustanding: Story = {
   ...WithClientId,
   args: {
     ...WithClientId.args,
-    initialStep: 5,
+    initialStep: 6,
   },
   parameters: {
     msw: {
