@@ -71,7 +71,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     disabled,
                     form,
                     defaultValue,
-                    className: `first:eb-mt-8 ${hidden && 'eb-collapse '}`,
+                    className: `first:eb-mt-2 ${hidden && 'eb-collapse '}`,
                   }}
                 />
               );

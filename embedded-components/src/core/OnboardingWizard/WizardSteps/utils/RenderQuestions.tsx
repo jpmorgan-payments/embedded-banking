@@ -86,7 +86,7 @@ const RenderQuestions = ({
           const hiddenElement =
             !!parentId &&
             (form.getValues(parentId) === 'false' ||
-              form.getValues(parentId) === 'None' ||
+              !form.getValues(parentId) ||
               !subParentQuestion?.questionIds?.includes(name) ||
               (parentId && !form.getValues(parentId)))
               ? 'eb-hidden'

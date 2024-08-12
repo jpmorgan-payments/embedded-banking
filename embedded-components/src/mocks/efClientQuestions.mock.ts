@@ -178,5 +178,73 @@ export const efClientQuestionsMock = {
       },
       subQuestions: [],
     },
+    {
+      content: [
+        {
+          description: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
+          label: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
+          locale: 'en-US',
+        },
+      ],
+      defaultLocale: 'en-US',
+      description: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
+      id: '30088',
+      responseSchema: {
+        type: 'ARRAY',
+        minItems: 1,
+        maxItems: 1,
+        items: { type: 'BOOLEAN' },
+      },
+      subQuestions: [{ anyValuesMatch: 'true', questionIds: ['30089'] }],
+    },
+    {
+      content: [
+        {
+          description: `Do you primarily sell covered goods to the public?`,
+          label: `Do you primarily sell covered goods to the public?`,
+          locale: 'en-US',
+        },
+      ],
+      defaultLocale: 'en-US',
+      description: `Do you primarily sell covered goods to the public?`,
+      id: '30089',
+      parentQuestionId: '30088',
+      responseSchema: {
+        type: 'ARRAY',
+        minItems: 1,
+        maxItems: 1,
+        items: { type: 'BOOLEAN' },
+      },
+      subQuestions: [{ anyValuesMatch: 'true', questionIds: ['30090'] }],
+    },
+    {
+      content: [
+        {
+          description: `In the prior calendar year, did you purchase at 
+          least $50,000 in covered goods from sources other than U.S. dealers or 
+          other retailers?`,
+          label: `In the prior calendar year, did you purchase at 
+          least $50,000 in covered goods from sources other than U.S. dealers or 
+          other retailers?`,
+          locale: 'en-US',
+        },
+      ],
+      defaultLocale: 'en-US',
+      description: `In the prior calendar year, did you purchase at 
+      least $50,000 in covered goods from sources other than U.S. dealers or 
+      other retailers?`,
+      id: '30090',
+      parentQuestionId: '30089',
+      responseSchema: {
+        type: 'ARRAY',
+        minItems: 1,
+        maxItems: 1,
+        items: { type: 'BOOLEAN' },
+      },
+      subQuestions: [],
+    },
   ],
 };

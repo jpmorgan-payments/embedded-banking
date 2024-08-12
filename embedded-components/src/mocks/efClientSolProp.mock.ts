@@ -22,10 +22,12 @@ export const efClientSolProp: ClientResponse = {
       createdAt: '2023-10-31T00:20:09.401Z',
       organizationDetails: {
         organizationType: 'SOLE_PROPRIETORSHIP',
-        organizationName: 'Central Jewelry Store',
-        dbaName: 'CP Jewels',
-        organizationDescription:
-          'Central Jewelry offers a curated collection of exquisite, high-quality jewelry, including engagement rings, necklaces, earrings, and custom pieces, designed to add elegance and sophistication to any occasion. Visit us in New York or online at www.example.com for personalized service and timeless treasures.',
+        organizationName: "Monica's bakehous",
+        dbaName: '',
+        organizationDescription: `Artisan Bakery offering freshly baked 
+          cookies and pastries made with locally sourced 
+          ingredients, delivering a taste of home in every 
+          bite!`,
         industryCategory: 'Manufacturing',
         industryType: 'Retail Bakeries',
         countryOfFormation: 'US',
@@ -65,7 +67,8 @@ export const efClientSolProp: ClientResponse = {
           },
         ],
         jurisdiction: 'US',
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {

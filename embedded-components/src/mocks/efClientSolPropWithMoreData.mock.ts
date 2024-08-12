@@ -65,7 +65,8 @@ export const efClientSolPropWithMoreData: ClientResponse = {
           },
         ],
         jurisdiction: 'US',
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {

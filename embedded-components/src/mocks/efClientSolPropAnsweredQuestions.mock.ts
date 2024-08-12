@@ -54,7 +54,8 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
             value: '00-0000001',
           },
         ],
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {
