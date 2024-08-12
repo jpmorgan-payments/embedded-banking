@@ -39,7 +39,8 @@ const isOutstandingEmpty = (
 
 export const ReviewAndAttestStepForm = () => {
   const { nextStep, prevStep, isDisabledStep } = useStepper();
-  const { clientId } = useOnboardingContext();
+  const { clientId, onPostClientVerificationsResponse } =
+    useOnboardingContext();
 
   const [termsAgreed, setTermsAgreed] = useState({
     useOfAccount: false,
@@ -60,6 +61,10 @@ export const ReviewAndAttestStepForm = () => {
       mutation: {
         onSuccess: () => {
           toast.success('Attestation details updated successfully');
+          onPostClientVerificationsResponse?.(
+            clientData,
+            updateClientError?.response?.data
+          );
           nextStep();
         },
         onError: () => {
@@ -295,7 +300,7 @@ export const ReviewAndAttestStepForm = () => {
                 </Button>
                 and the certifications directly above.
                 <p className="eb-text-sm eb-text-muted-foreground">
-                  Please opem the documents links to enable the terms and
+                  Please open the documents links to enable the terms and
                   conditions checkbox.
                 </p>
               </Label>

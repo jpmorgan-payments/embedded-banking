@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
@@ -27,14 +27,34 @@ import { OrganizationStepForm } from './OrganizationStepForm/OrganizationStepFor
 import { ReviewAndAttestStepForm } from './ReviewAndAttestStepForm/ReviewAndAttestStepForm';
 import { ServerErrorAlert } from './ServerErrorAlert/ServerErrorAlert';
 
-const steps = [
+const stepsInitial = [
   { label: 'Organization details', children: <OrganizationStepForm /> },
   { label: 'Individual details', children: <IndividualStepForm /> },
-  { label: 'Decision Makers', children: <DecisionMakerStepForm /> },
-  { label: 'Business Owners', children: <BusinessOwnerStepForm /> },
+  {
+    label: 'Decision Makers',
+    children: <DecisionMakerStepForm />,
+    onlyVisibleFor: {
+      organizationType: ['LIMITED_LIABILITY_COMPANY'],
+      product: ['EMBEDDED_BANKING'],
+    },
+  },
+  {
+    label: 'Business Owners',
+    children: <BusinessOwnerStepForm />,
+    onlyVisibleFor: {
+      organizationType: ['LIMITED_LIABILITY_COMPANY'],
+      product: ['EMBEDDED_PAYMENTS', 'EMBEDDED_BANKING'],
+    },
+  },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
   { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
 ];
+
+interface StepProps {
+  label: string;
+  children: React.ReactNode;
+  onlyVisibleFor?: { product?: string[]; organizationType?: string[] };
+}
 
 type OnboardingWizardBasicProps = {
   clientId?: string;
@@ -68,6 +88,26 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
       enabled: !!props.clientId,
     },
   });
+
+  const [steps, setSteps] = useState<StepProps[]>([]);
+
+  useEffect(() => {
+    setSteps(
+      stepsInitial.filter(
+        (step) =>
+          !step.onlyVisibleFor ||
+          (step.onlyVisibleFor?.organizationType.some(
+            (orgType) =>
+              clientData?.parties?.find(
+                (party) => party.partyType === 'ORGANIZATION'
+              )?.organizationDetails?.organizationType === orgType
+          ) &&
+            step.onlyVisibleFor?.product.some((product) =>
+              clientData?.products.includes(product)
+            ))
+      )
+    );
+  }, [clientData]);
 
   return (
     <OnboardingContextProvider {...props}>
