@@ -763,7 +763,7 @@ export const OrganizationStepForm = () => {
                 control={form.control}
                 name={`associatedCountries.${index}.country`}
                 render={({ field }) => (
-                  <FormItem className="eb-flex-grow">
+                  <FormItem className="eb-grow">
                     <FormControl>
                       <Input
                         {...field}
@@ -807,7 +807,7 @@ export const OrganizationStepForm = () => {
                 control={form.control}
                 name={`secondaryMccList.${index}.mcc`}
                 render={({ field }) => (
-                  <FormItem className="eb-flex-grow">
+                  <FormItem className="eb-grow">
                     <FormControl>
                       <Input
                         {...field}
