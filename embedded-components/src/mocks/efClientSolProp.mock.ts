@@ -15,14 +15,14 @@ export const efClientSolProp: ClientResponse = {
       id: '2000000111',
       partyType: 'ORGANIZATION',
       externalId: 'TCU1234',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpbakes.com',
       roles: ['CLIENT'],
       profileStatus: 'NEW',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
       organizationDetails: {
         organizationType: 'SOLE_PROPRIETORSHIP',
-        organizationName: "Monica's bakehous",
+        organizationName: "Monica's bakehouse",
         dbaName: '',
         organizationDescription: `Artisan Bakery offering freshly baked 
           cookies and pastries made with locally sourced 
@@ -77,7 +77,7 @@ export const efClientSolProp: ClientResponse = {
       parentPartyId: '2000000111',
       parentExternalId: 'TCU1234',
       externalId: 'TCU12344',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpbakes.com',
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',

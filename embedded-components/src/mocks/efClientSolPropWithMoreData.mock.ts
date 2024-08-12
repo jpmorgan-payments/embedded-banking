@@ -15,17 +15,19 @@ export const efClientSolPropWithMoreData: ClientResponse = {
       id: '2000000111',
       partyType: 'ORGANIZATION',
       externalId: 'TCU1234',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpbakes.com',
       roles: ['CLIENT'],
       profileStatus: 'NEW',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
       organizationDetails: {
         organizationType: 'SOLE_PROPRIETORSHIP',
-        organizationName: 'Central Jewelry Store',
-        dbaName: 'CP Jewels',
-        organizationDescription:
-          'Central Jewelry offers a curated collection of exquisite, high-quality jewelry, including engagement rings, necklaces, earrings, and custom pieces, designed to add elegance and sophistication to any occasion. Visit us in New York or online at www.example.com for personalized service and timeless treasures.',
+        organizationName: "Monica's bakehouse",
+        dbaName: '',
+        organizationDescription: `Artisan Bakery offering freshly baked 
+        cookies and pastries made with locally sourced 
+        ingredients, delivering a taste of home in every 
+        bite!`,
         industryCategory: 'Manufacturing',
         industryType: 'Retail Bakeries',
         countryOfFormation: 'US',
@@ -75,7 +77,7 @@ export const efClientSolPropWithMoreData: ClientResponse = {
       parentPartyId: '2000000111',
       parentExternalId: 'TCU1234',
       externalId: 'TCU12344',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpbakes.com',
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
