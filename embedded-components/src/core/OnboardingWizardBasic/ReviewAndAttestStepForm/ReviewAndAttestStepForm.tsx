@@ -3,20 +3,23 @@ import { IconCheck } from '@tabler/icons-react';
 import { get } from 'lodash';
 import { toast } from 'sonner';
 
-
-
-import { useSmbdoGetClient, useSmbdoListQuestions, useSmbdoPostClientVerifications, useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
-import { ApiErrorV2, PartyResponse, UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import {
+  useSmbdoGetClient,
+  useSmbdoListQuestions,
+  useSmbdoPostClientVerifications,
+  useSmbdoUpdateClient,
+} from '@/api/generated/embedded-banking';
+import {
+  PartyResponse,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/embedded-banking.schemas';
 import { useStepper } from '@/components/ui/stepper';
 import { Button, Checkbox, Label, Stack, Title } from '@/components/ui';
-
-
 
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import OutstandingKYCRequirements from './OustandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
-
 
 interface ClientResponseOutstanding {
   [key: string]: any[];
@@ -58,7 +61,10 @@ export const ReviewAndAttestStepForm = () => {
       mutation: {
         onSuccess: () => {
           toast.success('Attestation details updated successfully');
-          onPostClientVerificationsResponse?.(clientData, updateClientError as ApiErrorV2);
+          onPostClientVerificationsResponse?.(
+            clientData,
+            updateClientError?.response?.data
+          );
           nextStep();
         },
         onError: () => {
@@ -294,7 +300,7 @@ export const ReviewAndAttestStepForm = () => {
                 </Button>
                 and the certifications directly above.
                 <p className="eb-text-sm eb-text-muted-foreground">
-                  Please opem the documents links to enable the terms and
+                  Please open the documents links to enable the terms and
                   conditions checkbox.
                 </p>
               </Label>
