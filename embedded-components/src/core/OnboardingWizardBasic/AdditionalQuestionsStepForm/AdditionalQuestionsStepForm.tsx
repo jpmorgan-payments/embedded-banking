@@ -40,42 +40,49 @@ import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 // Define question IDs that should use a datepicker
 const DATE_QUESTION_IDS = ['30071', '30073']; // Add more IDs as needed
 
-const createDynamicZodSchema = (questionsData: any[]) => {
+const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
   const schemaFields: Record<string, z.ZodTypeAny> = {};
 
   questionsData.forEach((question) => {
-    const itemType = question.responseSchema.items?.type;
-    const hasEnum = !!question.responseSchema.items?.enum;
+    const itemType = question?.responseSchema?.items?.type ?? 'string';
+    // @ts-expect-error
+    const itemEnum = question?.responseSchema?.items?.enum;
 
     let valueSchema;
 
-    if (DATE_QUESTION_IDS.includes(question.id)) {
+    if (question.id && DATE_QUESTION_IDS.includes(question.id)) {
       valueSchema = z
         .string()
         .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format');
-    } else {
+    } else if (itemType) {
       switch (itemType) {
-        case 'BOOLEAN':
+        case 'boolean':
           valueSchema = z.enum(['true', 'false']);
           break;
-        case 'STRING':
-          if (hasEnum) {
-            valueSchema = z.enum(question.responseSchema.items.enum);
+        case 'string':
+          if (itemEnum) {
+            valueSchema = z.enum(itemEnum);
           } else {
             valueSchema = z.string();
           }
           break;
-        case 'INTEGER':
+        case 'integer':
           valueSchema = z.string().regex(/^\d+$/, 'Must be a number');
           break;
         default:
           valueSchema = z.string();
       }
+    } else {
+      console.log('Unknown question type', question);
+      return;
     }
 
     // If the question allows multiple values, wrap it in an array
-    if (question.responseSchema.type === 'ARRAY') {
-      valueSchema = z.array(valueSchema).min(1).max(20);
+    if (question?.responseSchema?.type === 'array') {
+      valueSchema = z
+        .array(valueSchema)
+        .min(question?.responseSchema?.minItems ?? 1)
+        .max(question?.responseSchema?.minItems ?? 1);
     }
 
     schemaFields[`question_${question.id}`] = z.array(valueSchema);
@@ -175,25 +182,25 @@ export const AdditionalQuestionsStepForm = () => {
             control={form.control}
             name={fieldName}
             render={({ field }) => (
-              <FormItem className="space-y-3">
+              <FormItem className="eb-space-y-3">
                 <FormLabel>{question.description}</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={(value) => field.onChange([value])}
                     defaultValue={field?.value?.[0]}
-                    className="flex flex-col space-y-1"
+                    className="eb-flex eb-flex-col eb-space-y-1"
                   >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
                       <FormControl>
                         <RadioGroupItem value="true" />
                       </FormControl>
-                      <FormLabel className="font-normal">Yes</FormLabel>
+                      <FormLabel className="eb-font-normal">Yes</FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
                       <FormControl>
                         <RadioGroupItem value="false" />
                       </FormControl>
-                      <FormLabel className="font-normal">No</FormLabel>
+                      <FormLabel className="eb-font-normal">No</FormLabel>
                     </FormItem>
                   </RadioGroup>
                 </FormControl>
