@@ -1,7 +1,7 @@
 import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
 
-export const efClientCorpMock: ClientResponse = {
-  id: '0030000130',
+export const efClientCorpEBMock: ClientResponse = {
+  id: '0030000133',
   attestations: [
     {
       attesterFullName: 'Monica Gellar',
@@ -15,17 +15,17 @@ export const efClientCorpMock: ClientResponse = {
       id: '2000000111',
       partyType: 'ORGANIZATION',
       externalId: 'TCU1234',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpgetaways.com',
       roles: ['CLIENT'],
       profileStatus: 'NEW',
       status: 'ACTIVE',
       createdAt: '2024-06-21T18:12:21.005Z',
       organizationDetails: {
         organizationType: 'LIMITED_LIABILITY_COMPANY',
-        organizationName: 'Central Jewelry Store',
-        dbaName: 'CP Jewels',
+        organizationName: 'Central Park Getaways',
+        dbaName: 'CP Getaways',
         organizationDescription:
-          'Central Jewelry offers a curated collection of exquisite, high-quality jewelry, including engagement rings, necklaces, earrings, and custom pieces, designed to add elegance and sophistication to any occasion. Visit us in New York or online at www.example.com for personalized service and timeless treasures.',
+          'Relax, unwind and experience the comforting charm of our apartment while exploring New York',
         industryCategory: 'Retail Trade',
         industryType: 'Jewelry Retailers',
         countryOfFormation: 'US',
@@ -35,7 +35,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Suite 2'],
+            addressLines: ['90 Bedford Street', 'Apt 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -63,7 +63,7 @@ export const efClientCorpMock: ClientResponse = {
       parentPartyId: '2000000111',
       parentExternalId: 'TCU1234',
       externalId: 'TCU12344',
-      email: 'monica@cpjewel.com',
+      email: 'monica@cpgetaways.com',
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2024-06-21T18:12:21.005Z',
@@ -79,7 +79,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Suite 2'],
+            addressLines: ['90 Bedford Street', 'Apt 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -122,7 +122,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['2468 Real Ave', 'Suite 2', 'Suit 2E'],
+            addressLines: ['2468 Real Ave', 'Apt 2E', 'Suit 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -145,7 +145,7 @@ export const efClientCorpMock: ClientResponse = {
     },
   ],
   partyId: '2000000111',
-  products: ['EMBEDDED_PAYMENTS'],
+  products: ['EMBEDDED_BANKING'],
   outstanding: {
     attestationDocumentIds: [],
     documentRequestIds: [],

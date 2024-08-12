@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -9,7 +10,10 @@ import {
   useSmbdoListQuestions,
   useSmbdoUpdateClient,
 } from '@/api/generated/embedded-banking';
-import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import {
+  SchemasQuestionResponse,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/embedded-banking.schemas';
 import {
   Form,
   FormControl,
@@ -33,28 +37,56 @@ import { FormActions } from '../FormActions/FormActions';
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 
-// Define the schema for a single question response
-const QuestionResponseSchema = z.object({
-  questionId: z.string().max(10),
-  values: z.array(z.string()).min(1).max(20),
-});
-
-// Define the schema for the entire form
-const AdditionalQuestionsFormSchema = z.object({
-  questionResponses: z.array(QuestionResponseSchema),
-});
-
-type QuestionResponse = z.infer<typeof QuestionResponseSchema>;
-type AdditionalQuestionsFormValues = z.infer<
-  typeof AdditionalQuestionsFormSchema
->;
-
 // Define question IDs that should use a datepicker
 const DATE_QUESTION_IDS = ['30071', '30073']; // Add more IDs as needed
 
+const createDynamicZodSchema = (questionsData: any[]) => {
+  const schemaFields: Record<string, z.ZodTypeAny> = {};
+
+  questionsData.forEach((question) => {
+    const itemType = question.responseSchema.items?.type;
+    const hasEnum = !!question.responseSchema.items?.enum;
+
+    let valueSchema;
+
+    if (DATE_QUESTION_IDS.includes(question.id)) {
+      valueSchema = z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format');
+    } else {
+      switch (itemType) {
+        case 'BOOLEAN':
+          valueSchema = z.enum(['true', 'false']);
+          break;
+        case 'STRING':
+          if (hasEnum) {
+            valueSchema = z.enum(question.responseSchema.items.enum);
+          } else {
+            valueSchema = z.string();
+          }
+          break;
+        case 'INTEGER':
+          valueSchema = z.string().regex(/^\d+$/, 'Must be a number');
+          break;
+        default:
+          valueSchema = z.string();
+      }
+    }
+
+    // If the question allows multiple values, wrap it in an array
+    if (question.responseSchema.type === 'ARRAY') {
+      valueSchema = z.array(valueSchema).min(1).max(20);
+    }
+
+    schemaFields[`question_${question.id}`] = z.array(valueSchema);
+  });
+
+  return z.object(schemaFields);
+};
+
 export const AdditionalQuestionsStepForm = () => {
   const { nextStep } = useStepper();
-  const { clientId, onPostClientResponse } = useOnboardingContext();
+  const { clientId } = useOnboardingContext();
 
   // Fetch client data to get outstanding question IDs
   const { data: clientData } = useSmbdoGetClient(clientId ?? '');
@@ -92,20 +124,12 @@ export const AdditionalQuestionsStepForm = () => {
     [allQuestionIds, existingQuestionResponses]
   );
 
-  const form = useForm<AdditionalQuestionsFormValues>({
-    resolver: zodResolver(AdditionalQuestionsFormSchema),
-    defaultValues,
-  });
-
   const {
     mutate: updateClient,
     error: updateClientError,
     status: updateClientStatus,
   } = useSmbdoUpdateClient({
     mutation: {
-      onSettled: (data, error) => {
-        onPostClientResponse?.(data, error?.response?.data);
-      },
       onSuccess: () => {
         toast.success('Additional questions submitted successfully');
         nextStep();
@@ -115,20 +139,6 @@ export const AdditionalQuestionsStepForm = () => {
       },
     },
   });
-
-  const onSubmit = (values: AdditionalQuestionsFormValues) => {
-    if (clientId) {
-      const requestBody = {
-        questionResponses:
-          values.questionResponses as unknown as QuestionResponse[],
-      } as UpdateClientRequestSmbdo;
-
-      updateClient({
-        id: clientId,
-        data: requestBody,
-      });
-    }
-  };
 
   const renderQuestionInput = (question: any, index: number) => {
     const fieldName = `questionResponses.${index}.values` as const;
@@ -170,7 +180,7 @@ export const AdditionalQuestionsStepForm = () => {
                 <FormControl>
                   <RadioGroup
                     onValueChange={(value) => field.onChange([value])}
-                    defaultValue={field.value[0]}
+                    defaultValue={field?.value?.[0]}
                     className="flex flex-col space-y-1"
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0">
@@ -204,7 +214,7 @@ export const AdditionalQuestionsStepForm = () => {
                   <FormLabel>{question.description}</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange([value])}
-                    defaultValue={field.value[0]}
+                    defaultValue={field?.value?.[0]}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -289,6 +299,19 @@ export const AdditionalQuestionsStepForm = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const dynamicSchema = useMemo(() => {
+    const visibleQuestions: SchemasQuestionResponse[] =
+      questionsData?.questions ?? [];
+    if (!visibleQuestions) return z.object({});
+    return createDynamicZodSchema(visibleQuestions);
+  }, [questionsData]);
+
+  const form = useForm({
+    //resolver: zodResolver(dynamicSchema),
+    defaultValues,
+  });
+
   const isQuestionVisible = (question: any) => {
     if (!question.parentQuestionId) return true;
 
@@ -303,7 +326,7 @@ export const AdditionalQuestionsStepForm = () => {
 
     if (!parentResponse) return false;
 
-    const parentValue = parentResponse.values[0];
+    const parentValue = parentResponse?.values?.[0];
     const subQuestion = parentQuestion?.subQuestions?.find((sq: any) =>
       sq.questionIds.includes(question.id)
     );
@@ -317,10 +340,30 @@ export const AdditionalQuestionsStepForm = () => {
     }
 
     if (Array.isArray(subQuestion?.anyValuesMatch)) {
-      return (subQuestion.anyValuesMatch as string[]).includes(parentValue);
+      return (subQuestion.anyValuesMatch as string[]).includes(
+        parentValue ?? ''
+      );
     }
 
     return false;
+  };
+
+  const onSubmit = (values: any) => {
+    if (clientId) {
+      const questionResponses = Object.entries(values).map(([key, value]) => ({
+        questionId: key.replace('question_', ''),
+        values: Array.isArray(value) ? value : [value],
+      }));
+
+      const requestBody = {
+        questionResponses,
+      } as UpdateClientRequestSmbdo;
+
+      updateClient({
+        id: clientId,
+        data: requestBody,
+      });
+    }
   };
 
   const renderQuestions = () => {
