@@ -15,17 +15,17 @@ export const efClientCorpMock: ClientResponse = {
       id: '2000000111',
       partyType: 'ORGANIZATION',
       externalId: 'TCU1234',
-      email: 'monica@cpgetaways.com',
+      email: 'monica@cpjewel.com',
       roles: ['CLIENT'],
       profileStatus: 'NEW',
       status: 'ACTIVE',
       createdAt: '2024-06-21T18:12:21.005Z',
       organizationDetails: {
         organizationType: 'C_CORPORATION',
-        organizationName: 'Central Park Getaways',
-        dbaName: 'CP Getaways',
+        organizationName: 'Central Jewelry Store',
+        dbaName: 'CP Jewels',
         organizationDescription:
-          'Relax, unwind and experience the comforting charm of our apartment while exploring New York',
+          'Central Jewelry offers a curated collection of exquisite, high-quality jewelry, including engagement rings, necklaces, earrings, and custom pieces, designed to add elegance and sophistication to any occasion. Visit us in New York or online at www.example.com for personalized service and timeless treasures.',
         industryCategory: 'Retail Trade',
         industryType: 'Jewelry Retailers',
         countryOfFormation: 'US',
@@ -35,7 +35,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['90 Bedford Street', 'Suite 2'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -63,7 +63,7 @@ export const efClientCorpMock: ClientResponse = {
       parentPartyId: '2000000111',
       parentExternalId: 'TCU1234',
       externalId: 'TCU12344',
-      email: 'monica@cpgetaways.com',
+      email: 'monica@cpjewel.com',
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2024-06-21T18:12:21.005Z',
@@ -79,7 +79,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['90 Bedford Street', 'Suite 2'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -122,7 +122,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['2468 Real Ave', 'Apt 2E', 'Suit 2E'],
+            addressLines: ['2468 Real Ave', 'Suite 2', 'Suit 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',

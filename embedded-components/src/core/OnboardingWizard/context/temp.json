@@ -13,16 +13,16 @@
       "id": "2000000111",
       "partyType": "ORGANIZATION",
       "externalId": "TCU1234",
-      "email": "monica@cpgetaways.com",
+      "email": "monica@cpjewel.com",
       "roles": ["CLIENT"],
       "profileStatus": "APPROVED",
       "status": "ACTIVE",
       "createdAt": "2024-05-18T19:38:35.159Z",
       "organizationDetails": {
         "organizationType": "SOLE_PROPRIETORSHIP",
-        "organizationName": "Central Park Getaways",
-        "dbaName": "CP Getaways",
-        "organizationDescription": "Relax, unwind and experience the comforting charm of our apartment while exploring New York",
+        "organizationName": "Central Jewelry Store",
+        "dbaName": "CP Jewels",
+        "organizationDescription": "Central Jewelry offers a curated collection of exquisite, high-quality jewelry, including engagement rings, necklaces, earrings, and custom pieces, designed to add elegance and sophistication to any occasion. Visit us in New York or online at www.example.com for personalized service and timeless treasures.",
         "industryCategory": "Accommodation and Food Services",
         "industryType": "All Other Traveler Accommodation",
         "countryOfFormation": "US",
@@ -32,7 +32,7 @@
         "addresses": [
           {
             "addressType": "BUSINESS_ADDRESS",
-            "addressLines": ["90 Bedford Street", "Apt 2E"],
+            "addressLines": ["90 Bedford Street", "Suite 2"],
             "city": "New York",
             "state": "NY",
             "postalCode": "10014",
@@ -60,7 +60,7 @@
       "parentPartyId": "2000000111",
       "parentExternalId": "TCU1234",
       "externalId": "TCU12344",
-      "email": "monica@cpgetaways.com",
+      "email": "monica@cpjewel.com",
       "profileStatus": "APPROVED",
       "status": "ACTIVE",
       "createdAt": "2024-05-18T19:38:35.159Z",
@@ -76,7 +76,7 @@
         "addresses": [
           {
             "addressType": "RESIDENTIAL_ADDRESS",
-            "addressLines": ["90 Bedford Street", "Apt 2E"],
+            "addressLines": ["90 Bedford Street", "Suite 2"],
             "city": "New York",
             "state": "NY",
             "postalCode": "10014",

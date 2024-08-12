@@ -38,7 +38,7 @@ const businessSchema = {
     {
       name: 'organizationName',
       fieldType: 'input',
-      labelToken: 'businessName.label',
+      labelToken: 'Legal Business Name',
       required: true,
     },
     {
@@ -65,7 +65,7 @@ const businessSchema = {
     {
       name: 'countryOfFormation',
       fieldType: 'country',
-      labelToken: 'Country Formation',
+      labelToken: 'Country of Formation',
       placeholderToken: 'Select country',
       required: true,
       disabled: true,
@@ -152,21 +152,21 @@ const individualSchema = {
     {
       name: 'firstName',
       fieldType: 'input',
-      labelToken: 'inputFN',
-      placeHolder: 'inputFN',
+      labelToken: 'Legal First Name',
+      placeHolder: 'Fist Name',
       required: true,
     },
     {
       name: 'middleName',
       fieldType: 'input',
-      labelToken: 'inputMN',
-      placeHolder: 'inputMN',
+      labelToken: 'Legal Middle Name',
+      placeHolder: 'Last Name',
       required: false,
     },
     {
       name: 'lastName',
       fieldType: 'input',
-      labelToken: 'inputLN',
+      labelToken: 'Legal Last Name',
       placeholderToken: 'inputLN',
       required: true,
     },
