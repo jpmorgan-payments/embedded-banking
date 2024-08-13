@@ -56,18 +56,24 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
         .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format');
     } else if (itemType) {
       switch (itemType) {
-        case 'boolean':
+        // @ts-expect-error
+        case 'BOOLEAN':
           valueSchema = z.enum(['true', 'false']);
           break;
-        case 'string':
+        // @ts-expect-error
+        case 'STRING':
           if (itemEnum) {
             valueSchema = z.enum(itemEnum);
           } else {
-            valueSchema = z.string();
+            valueSchema = z.string().length(1, 'Required');
           }
           break;
-        case 'integer':
-          valueSchema = z.string().regex(/^\d+$/, 'Must be a number');
+        // @ts-expect-error
+        case 'INTEGER':
+          valueSchema = z
+            .string()
+            .length(1, 'Required')
+            .regex(/^\d+$/, 'Must be a number');
           break;
         default:
           valueSchema = z.string();
@@ -82,7 +88,7 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
       valueSchema = z
         .array(valueSchema)
         .min(question?.responseSchema?.minItems ?? 1)
-        .max(question?.responseSchema?.minItems ?? 1);
+        .max(question?.responseSchema?.maxItems ?? 1);
     }
 
     schemaFields[`question_${question.id}`] = z.array(valueSchema);
@@ -105,7 +111,7 @@ export const AdditionalQuestionsStepForm = () => {
   // Merge outstanding and existing question IDs
   const allQuestionIds = useMemo(() => {
     const existingIds = existingQuestionResponses.map(
-      (response) => response.questionId
+      (response) => response.questionId ?? 'undefined'
     );
     return [...new Set([...outstandingQuestionIds, ...existingIds])];
   }, [outstandingQuestionIds, existingQuestionResponses]);
@@ -115,19 +121,36 @@ export const AdditionalQuestionsStepForm = () => {
     questionIds: allQuestionIds.join(','),
   });
 
+  // const defaultValues = useMemo(
+  //   () => ({
+  //     questionResponses: allQuestionIds.map((id) => {
+  //       const existingResponse = existingQuestionResponses.find(
+  //         (response) => response.questionId === id
+  //       );
+  //       return {
+  //         questionId: id,
+  //         values: existingResponse ? existingResponse.values : [],
+  //       };
+  //     }),
+  //   }),
+  //   [allQuestionIds, existingQuestionResponses]
+  // );
+
   // Prepare default values for the form
   const defaultValues = useMemo(
-    () => ({
-      questionResponses: allQuestionIds.map((id) => {
-        const existingResponse = existingQuestionResponses.find(
-          (response) => response.questionId === id
-        );
-        return {
-          questionId: id,
-          values: existingResponse ? existingResponse.values : [],
-        };
-      }),
-    }),
+    () =>
+      allQuestionIds.reduce(
+        (acc, id) => {
+          const existingResponse = existingQuestionResponses?.find(
+            (response) => response.questionId === id
+          );
+          acc[`question_${id}`] = existingResponse
+            ? existingResponse.values
+            : [];
+          return acc;
+        },
+        {} as Record<string, any>
+      ),
     [allQuestionIds, existingQuestionResponses]
   );
 
@@ -147,13 +170,14 @@ export const AdditionalQuestionsStepForm = () => {
     },
   });
 
-  const renderQuestionInput = (question: any, index: number) => {
-    const fieldName = `questionResponses.${index}.values` as const;
-    const itemType = question.responseSchema.items?.type;
-    const hasEnum = !!question.responseSchema.items?.enum;
+  const renderQuestionInput = (question: SchemasQuestionResponse) => {
+    const fieldName = `question_${question.id ?? 'undefined'}`;
+    const itemType = question?.responseSchema?.items?.type ?? 'string';
+    // @ts-expect-error
+    const itemEnum = question?.responseSchema?.items?.enum;
 
     // Check if the question should use a datepicker
-    if (DATE_QUESTION_IDS.includes(question.id)) {
+    if (question.id && DATE_QUESTION_IDS.includes(question.id)) {
       return (
         <FormField
           control={form.control}
@@ -176,6 +200,7 @@ export const AdditionalQuestionsStepForm = () => {
     }
 
     switch (itemType) {
+      // @ts-expect-error
       case 'BOOLEAN':
         return (
           <FormField
@@ -210,8 +235,9 @@ export const AdditionalQuestionsStepForm = () => {
           />
         );
 
+      // @ts-expect-error
       case 'STRING':
-        if (hasEnum) {
+        if (itemEnum) {
           return (
             <FormField
               control={form.control}
@@ -229,13 +255,11 @@ export const AdditionalQuestionsStepForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {question.responseSchema.items.enum.map(
-                        (option: string) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        )
-                      )}
+                      {itemEnum.map((option: string) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -263,6 +287,7 @@ export const AdditionalQuestionsStepForm = () => {
           />
         );
 
+      // @ts-expect-error
       case 'INTEGER':
         return (
           <FormField
@@ -315,9 +340,12 @@ export const AdditionalQuestionsStepForm = () => {
   }, [questionsData]);
 
   const form = useForm({
-    //resolver: zodResolver(dynamicSchema),
+    mode: 'onBlur',
+    resolver: zodResolver(dynamicSchema),
     defaultValues,
   });
+
+  console.log(form.formState.errors);
 
   const isQuestionVisible = (question: any) => {
     if (!question.parentQuestionId) return true;
@@ -327,9 +355,7 @@ export const AdditionalQuestionsStepForm = () => {
     );
     if (!parentQuestion) return false;
 
-    const parentResponse = form
-      .watch(`questionResponses`)
-      .find((r) => r.questionId === parentQuestion.id);
+    const parentResponse = form.getValues(`question_${parentQuestion.id}`);
 
     if (!parentResponse) return false;
 
@@ -337,10 +363,6 @@ export const AdditionalQuestionsStepForm = () => {
     const subQuestion = parentQuestion?.subQuestions?.find((sq: any) =>
       sq.questionIds.includes(question.id)
     );
-
-    if (subQuestion?.anyValuesMatch === 'true') {
-      return parentValue === 'true';
-    }
 
     if (typeof subQuestion?.anyValuesMatch === 'string') {
       return subQuestion.anyValuesMatch === parentValue;
@@ -376,12 +398,12 @@ export const AdditionalQuestionsStepForm = () => {
   const renderQuestions = () => {
     if (!questionsData) return null;
 
-    return questionsData?.questions?.map((question, index) => {
+    return questionsData?.questions?.map((question) => {
       if (!isQuestionVisible(question)) return null;
 
       return (
         <div key={question.id} className="eb-mb-6">
-          {renderQuestionInput(question, index)}
+          {renderQuestionInput(question)}
         </div>
       );
     });
