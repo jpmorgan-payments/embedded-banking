@@ -41,7 +41,13 @@ export interface FormScham extends SelectFormFieldProps {
     | 'yesNo';
 }
 
-const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
+const RenderForms = ({
+  formSchema,
+  getContentToken,
+  form,
+  className,
+  onChange,
+}: any) => {
   return (
     <Box className={className}>
       {formSchema.map(
@@ -320,6 +326,7 @@ const RenderForms = ({ formSchema, getContentToken, form, className }: any) => {
                     defaultValue,
                     type,
                     className: `${hidden && 'eb-collapse'}`,
+                    onChange,
                   }}
                 />
               );

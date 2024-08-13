@@ -51,8 +51,12 @@ const fromApiToForm = (client: ClientResponse) => {
       orgDetails.industryType = orgD.industryType;
       orgDetails.countryOfFormation = orgD.countryOfFormation;
       orgDetails.yearOfFormation = orgD.yearOfFormation;
-      orgDetails.significantOwnership = orgD.significantOwnership;
-      orgDetails.entitiesInOwnership = orgD.entitiesInOwnership;
+      orgDetails.significantOwnership = orgD.significantOwnership
+        ? 'true'
+        : 'false';
+      orgDetails.entitiesInOwnership = orgD.entitiesInOwnership
+        ? 'true'
+        : 'false';
       orgDetails.phoneType = orgD?.phone?.phoneType || '';
       orgDetails.countryCode = orgD?.phone?.countryCode || '';
       orgDetails.businessPhone = orgD?.phone?.phoneNumber || '';

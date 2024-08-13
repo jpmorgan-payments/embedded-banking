@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
+import { useFormContext } from 'react-hook-form';
 
 import { Dialog } from '@/components/ui/dialog';
 import {
@@ -10,39 +11,71 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
-import { Button, Stack } from '@/components/ui';
+import { Box, Button, Stack } from '@/components/ui';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
+import { useFormSchema } from '../../context/formProvider.contex';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
+import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
+import { businessOwnersSchema } from '../StepsSchema';
+import { getOrg } from '../utils/getOrgDetails';
+import { RenderForms } from '../utils/RenderForms';
+import { updateFormValues } from '../utils/updateFormValues';
 
-// TODO: neeed to make sure that we actuall update or remove
-const BusinessOwnersStep = () => {
+const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
+  const form = useFormContext();
+  // THIS ENABLES UPDATE ON FORUM RENDER
+  form.watch();
+  const { getContentToken } = useContentData('steps.BusinessOwnersStep');
+  const { updateSchema } = useFormSchema();
   const [open, setOpen] = useState(false);
+
   const [additionalBusinessOwners, setAdditionalBusinessOwners] =
     useState(false);
-
   const { activeStep, setCurrentStep } = useStepper();
 
   const { data, refetch } = useGetDataByClientId();
 
-  const reviewData = useMemo(() => {
+  const businessOwnerForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
 
   const handleToggleButton = (val: string) => {
-    if (val === 'No') setAdditionalBusinessOwners(false);
-    if (val === 'Yes') setAdditionalBusinessOwners(true);
+    if (val === 'false') setAdditionalBusinessOwners(false);
+    if (val === 'true') setAdditionalBusinessOwners(true);
   };
 
+  const orgData = getOrg(businessOwnerForm);
+  useEffect(() => {
+    if (businessOwnerForm) {
+      // THIS ENABLES UPDATE ON FORUM RENDER
+      form.watch();
+      updateFormValues(orgData.orgDetails, form.setValue);
+      setAdditionalBusinessOwners(
+        orgData.orgDetails.significantOwnership === 'true' || false
+      );
+    }
+  }, [orgData?.orgDetails?.significantOwnership]);
+
+  useEffect(() => {
+    updateSchema(yupSchema);
+  }, [yupSchema]);
+
   const onSubmit = async () => {
-    setCurrentStep(activeStep + 1);
+    const valid = await form.trigger();
+
+    console.log('@@form>>', form.formState, form, valid, '::', yupSchema);
+    // if (valid) {
+    //   setCurrentStep(activeStep + 1);
+    // } else {
+    // }
   };
 
   return (
@@ -50,52 +83,37 @@ const BusinessOwnersStep = () => {
       <Title as="h3">Enter business owner details</Title>
 
       <form noValidate>
-        <FormField
-          name="additionalBusinessOwners"
-          render={() => (
-            <FormItem>
-              <FormLabel asterisk>
-                Does any individual own 25% or more of the company?
-              </FormLabel>
-
-              <FormControl>
-                <RadioGroup
-                  onValueChange={(value) => handleToggleButton(value)}
-                  defaultValue="No"
-                  className="eb-flex eb-flex-col eb-space-y-1"
-                >
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="Yes" />
-
-                    <FormLabel className="eb-font-normal">Yes</FormLabel>
-                  </FormItem>
-                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
-                    <RadioGroupItem value="No" />
-
-                    <FormLabel className="eb-font-normal">No</FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <Box className="eb-w-full">
+          <RenderForms
+            {...{
+              formSchema: formSchema.form,
+              getContentToken: getContentToken,
+              form,
+              className: `eb-flex eb-flex-col eb-space-y-1`,
+              onChange: (val: string, name: string) => {
+                handleToggleButton(val);
+              },
+            }}
+          />
+        </Box>
       </form>
 
-      {additionalBusinessOwners && reviewData?.individualDetails && (
+      {additionalBusinessOwners && businessOwnerForm?.individualDetails && (
         <>
           <Title as="h4" className="eb-my-5">
             Listed business owners
           </Title>
 
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
-            {Object.keys(reviewData?.individualDetails)
+            {Object.keys(businessOwnerForm?.individualDetails)
               .filter((indID) => {
-                return reviewData.individualDetails[indID].roles.includes(
-                  'CONTROLLER'
-                );
+                return businessOwnerForm.individualDetails[
+                  indID
+                ].roles.includes('CONTROLLER');
               })
               .map((contollerID: any) => {
-                const controller = reviewData.individualDetails[contollerID];
+                const controller =
+                  businessOwnerForm.individualDetails[contollerID];
                 return (
                   <div key={contollerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
@@ -110,14 +128,15 @@ const BusinessOwnersStep = () => {
                 );
               })}
 
-            {Object.keys(reviewData?.individualDetails)
+            {Object.keys(businessOwnerForm?.individualDetails)
               .filter((indID) => {
-                return reviewData.individualDetails[indID].roles.includes(
-                  'BENEFICIAL_OWNER'
-                );
+                return businessOwnerForm.individualDetails[
+                  indID
+                ].roles.includes('BENEFICIAL_OWNER');
               })
               .map((contollerID: any) => {
-                const controller = reviewData.individualDetails[contollerID];
+                const controller =
+                  businessOwnerForm.individualDetails[contollerID];
 
                 return (
                   <div key={contollerID} className="eb-grid-cols-subgrid">
@@ -153,6 +172,7 @@ const BusinessOwnersStep = () => {
           </div>
         </>
       )}
+
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
@@ -163,6 +183,6 @@ const BusinessOwnersStep = () => {
 };
 
 BusinessOwnersStep.title = 'Business Owners';
-BusinessOwnersStep.formSchema = null;
+BusinessOwnersStep.formSchema = businessOwnersSchema;
 
 export { BusinessOwnersStep };

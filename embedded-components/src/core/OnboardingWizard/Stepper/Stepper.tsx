@@ -107,6 +107,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
     });
   };
 
+  // TODO: make sure we grab the titles form StepsSchema
   const buildStepper = (
     stepNames: string[] = [
       'Intro',
