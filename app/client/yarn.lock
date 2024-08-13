@@ -589,8 +589,8 @@
 
 "@jpmorgan-payments/embedded-banking-components@^0.5.28":
   version "0.5.28"
-  resolved "https://artifacts-read.gkp.jpmchase.net/artifactory/api/npm/npm/@jpmorgan-payments/embedded-banking-components/-/embedded-banking-components-0.5.28.tgz#5f6f0ec9e92062a00418b1b13c59cede63fb7cc7"
-  integrity sha1-X28OyekgYqAEGLGxPFnO3mP7fMc=
+  resolved "https://registry.yarnpkg.com/@jpmorgan-payments/embedded-banking-components/-/embedded-banking-components-0.5.28.tgz#5f6f0ec9e92062a00418b1b13c59cede63fb7cc7"
+  integrity sha512-PBxkUJ72qkbX2WN+J0xSXW9X3LYXxcXVPew8hQRrqmKf1nMFCsuGq3sVTocTWnaeVF6sKXeGG9Ev4/Op6WppLw==
   dependencies:
     "@hookform/resolvers" "^3.6.0"
     "@mantine/form" "^7.5.2"
