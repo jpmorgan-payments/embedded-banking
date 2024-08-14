@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useStepper } from '@/components/ui/stepper';
-import { Separator } from '@/components/ui';
+import { Checkbox, Separator } from '@/components/ui';
 
 import { FormActions } from '../FormActions/FormActions';
 import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
@@ -90,8 +90,11 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
     if (question?.responseSchema?.type === 'ARRAY') {
       valueSchema = z
         .array(valueSchema)
-        .min(question?.responseSchema?.minItems ?? 1)
-        .max(question?.responseSchema?.maxItems ?? 1);
+        .min(question?.responseSchema?.minItems ?? 1, 'Required')
+        .max(
+          question?.responseSchema?.maxItems ?? 1,
+          `Cannot exceed ${question?.responseSchema?.maxItems} items`
+        );
     }
 
     schemaFields[`question_${question.id}`] = valueSchema;
@@ -123,21 +126,6 @@ export const AdditionalQuestionsStepForm = () => {
   const { data: questionsData } = useSmbdoListQuestions({
     questionIds: allQuestionIds.join(','),
   });
-
-  // const defaultValues = useMemo(
-  //   () => ({
-  //     questionResponses: allQuestionIds.map((id) => {
-  //       const existingResponse = existingQuestionResponses.find(
-  //         (response) => response.questionId === id
-  //       );
-  //       return {
-  //         questionId: id,
-  //         values: existingResponse ? existingResponse.values : [],
-  //       };
-  //     }),
-  //   }),
-  //   [allQuestionIds, existingQuestionResponses]
-  // );
 
   // Prepare default values for the form
   const defaultValues = useMemo(
@@ -241,6 +229,58 @@ export const AdditionalQuestionsStepForm = () => {
       // @ts-expect-error
       case 'STRING':
         if (itemEnum) {
+          if (
+            question?.responseSchema?.maxItems &&
+            question?.responseSchema?.maxItems > 0
+          ) {
+            return (
+              <FormField
+                control={form.control}
+                name={fieldName}
+                render={() => (
+                  <FormItem>
+                    <FormLabel>{question.description}</FormLabel>
+                    {itemEnum.map((option: string) => (
+                      <FormField
+                        key={option}
+                        control={form.control}
+                        name={fieldName}
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={option}
+                              className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(option)}
+                                  onCheckedChange={(checked) => {
+                                    const e = checked
+                                      ? field.onChange([...field.value, option])
+                                      : field.onChange(
+                                          field.value?.filter(
+                                            (value: string) => value !== option
+                                          )
+                                        );
+                                    console.log([...field.value, option]);
+                                    return e;
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="eb-font-normal">
+                                {option}
+                              </FormLabel>
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    ))}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+          }
           return (
             <FormField
               control={form.control}
@@ -360,19 +400,18 @@ export const AdditionalQuestionsStepForm = () => {
 
     if (!parentResponse) return false;
 
-    const parentValue = parentResponse?.[0];
     const subQuestion = parentQuestion?.subQuestions?.find((sq: any) =>
       sq.questionIds.includes(question.id)
     );
 
     if (typeof subQuestion?.anyValuesMatch === 'string') {
-      return subQuestion.anyValuesMatch === parentValue;
+      return parentResponse.includes(subQuestion.anyValuesMatch);
     }
 
     if (Array.isArray(subQuestion?.anyValuesMatch)) {
-      return (subQuestion.anyValuesMatch as string[]).includes(
-        parentValue ?? ''
-      );
+      return parentResponse.some((value: any) => {
+        return subQuestion?.anyValuesMatch?.includes(value);
+      });
     }
 
     return false;
