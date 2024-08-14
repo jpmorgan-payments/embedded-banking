@@ -32,8 +32,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useStepper } from '@/components/ui/stepper';
+import { Separator } from '@/components/ui';
 
 import { FormActions } from '../FormActions/FormActions';
+import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 
@@ -84,14 +86,15 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
     }
 
     // If the question allows multiple values, wrap it in an array
-    if (question?.responseSchema?.type === 'array') {
+    // @ts-expect-error
+    if (question?.responseSchema?.type === 'ARRAY') {
       valueSchema = z
         .array(valueSchema)
         .min(question?.responseSchema?.minItems ?? 1)
         .max(question?.responseSchema?.maxItems ?? 1);
     }
 
-    schemaFields[`question_${question.id}`] = z.array(valueSchema);
+    schemaFields[`question_${question.id}`] = valueSchema;
   });
 
   return z.object(schemaFields);
@@ -345,9 +348,7 @@ export const AdditionalQuestionsStepForm = () => {
     defaultValues,
   });
 
-  console.log(form.formState.errors);
-
-  const isQuestionVisible = (question: any) => {
+  const isQuestionVisible = (question: SchemasQuestionResponse) => {
     if (!question.parentQuestionId) return true;
 
     const parentQuestion = questionsData?.questions?.find(
@@ -359,7 +360,7 @@ export const AdditionalQuestionsStepForm = () => {
 
     if (!parentResponse) return false;
 
-    const parentValue = parentResponse?.values?.[0];
+    const parentValue = parentResponse?.[0];
     const subQuestion = parentQuestion?.subQuestions?.find((sq: any) =>
       sq.questionIds.includes(question.id)
     );
@@ -375,6 +376,10 @@ export const AdditionalQuestionsStepForm = () => {
     }
 
     return false;
+  };
+
+  const isQuestionParent = (question: SchemasQuestionResponse) => {
+    return !question.parentQuestionId;
   };
 
   const onSubmit = (values: any) => {
@@ -398,19 +403,22 @@ export const AdditionalQuestionsStepForm = () => {
   const renderQuestions = () => {
     if (!questionsData) return null;
 
-    return questionsData?.questions?.map((question) => {
+    return questionsData?.questions?.map((question, index) => {
       if (!isQuestionVisible(question)) return null;
 
       return (
-        <div key={question.id} className="eb-mb-6">
-          {renderQuestionInput(question)}
-        </div>
+        <>
+          {isQuestionParent(question) && index !== 0 && <Separator />}
+          <div key={question.id} className="eb-mb-6">
+            {renderQuestionInput(question)}
+          </div>
+        </>
       );
     });
   };
 
   if (updateClientStatus === 'pending') {
-    return <div>Submitting additional questions...</div>;
+    return <FormLoadingState message="Submitting additional questions..." />;
   }
 
   return (

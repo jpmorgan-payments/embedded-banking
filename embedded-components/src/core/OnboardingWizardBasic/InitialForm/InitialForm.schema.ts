@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const InitialFormSchema = z.object({
-  organizationName: z.string().min(0, 'Required'),
+  organizationName: z.string().min(1, 'Required'),
   organizationType: z.enum([
     'LIMITED_LIABILITY_COMPANY',
     'C_CORPORATION',
@@ -15,10 +15,4 @@ export const InitialFormSchema = z.object({
   ]),
   countryOfFormation: z.string().min(1, 'Required'),
   email: z.string().email(),
-  // yearOfFormation: z
-  //   .string()
-  //   .min(1, 'Required')
-  //   .min(2, 'Invalid year')
-  //   .max(4, 'Invalid year')
-  //   .regex(/^(19|20)[0-9]+/, 'Invalid year'),
 });
