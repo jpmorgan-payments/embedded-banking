@@ -396,7 +396,7 @@ export const AdditionalQuestionsStepForm = () => {
     );
     if (!parentQuestion) return false;
 
-    const parentResponse = form.getValues(`question_${parentQuestion.id}`);
+    const parentResponse = form.watch(`question_${parentQuestion.id}`);
 
     if (!parentResponse) return false;
 
