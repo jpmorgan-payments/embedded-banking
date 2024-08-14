@@ -62,7 +62,6 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
 
     if (valid) {
       setCurrentStep(activeStep + 1);
-    } else {
     }
   };
 
@@ -75,10 +74,10 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
           <RenderForms
             {...{
               formSchema: formSchema.form,
-              getContentToken: getContentToken,
+              getContentToken,
               form,
               className: `eb-flex eb-flex-col eb-space-y-1`,
-              onChange: (val: string, name: string) => {
+              onChange: (val: string) => {
                 handleToggleButton(val);
               },
             }}
