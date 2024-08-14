@@ -255,15 +255,13 @@ export const AdditionalQuestionsStepForm = () => {
                                 <Checkbox
                                   checked={field.value?.includes(option)}
                                   onCheckedChange={(checked) => {
-                                    const e = checked
+                                    return checked
                                       ? field.onChange([...field.value, option])
                                       : field.onChange(
                                           field.value?.filter(
                                             (value: string) => value !== option
                                           )
                                         );
-                                    console.log([...field.value, option]);
-                                    return e;
                                   }}
                                 />
                               </FormControl>
