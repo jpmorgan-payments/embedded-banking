@@ -34,7 +34,7 @@ export const InitialForm = () => {
 
   // Create a form with empty default values
   const form = useForm<z.infer<typeof InitialFormSchema>>({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
