@@ -25,7 +25,7 @@ const introSchema = {
     {
       name: 'countryOfFormation',
       fieldType: 'country',
-      labelToken: 'Country Formation',
+      labelToken: 'Country of Formation',
       placeholderToken: 'Select country',
       required: true,
     },
@@ -247,6 +247,19 @@ const questionsSchema = {
   display: true,
 };
 
+const businessOwnersSchema = {
+  stepName: 'Business Owners',
+  form: [
+    {
+      name: 'significantOwnership',
+      labelToken:
+        'Want to add any individual who own 25% or more of the company?',
+      fieldType: 'yesNo',
+      required: true,
+    },
+  ],
+};
+
 const decisionMaker = {
   stepName: 'Decision Makers',
   display: true,
@@ -263,6 +276,7 @@ const reviewSchema = {
 const stepsSchema = [
   introSchema,
   individualSchema,
+  businessOwnersSchema,
   questionsSchema,
   reviewSchema,
 ];
@@ -271,6 +285,7 @@ export {
   stepsSchema,
   introSchema,
   individualSchema,
+  businessOwnersSchema,
   decisionMaker,
   questionsSchema,
   reviewSchema,
