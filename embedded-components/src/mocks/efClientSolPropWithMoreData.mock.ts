@@ -35,7 +35,7 @@ export const efClientSolPropWithMoreData: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['90 Bedford Street', 'Suite 2'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -65,7 +65,8 @@ export const efClientSolPropWithMoreData: ClientResponse = {
           },
         ],
         jurisdiction: 'US',
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {

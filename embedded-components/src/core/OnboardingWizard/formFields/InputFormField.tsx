@@ -13,13 +13,14 @@ const InputFormField = ({
   labelToken,
   placeholderToken,
   required,
+  className,
 }: any) => {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           {labelToken && (
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
           )}

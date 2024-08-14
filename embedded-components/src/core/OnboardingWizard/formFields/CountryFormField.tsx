@@ -40,7 +40,10 @@ const CountryFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              value={field?.value}
+              // defaultValue={field.value}
+              value={field.value}
+              // value={ field?.value?.[0] || field.value}
+              // value={ field?.value?.[0] || field.value}
               disabled={disabled}
             >
               <FormControl>

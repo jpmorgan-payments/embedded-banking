@@ -35,7 +35,7 @@ export const efClientCorpMock: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['90 Bedford Street', 'Suite 2'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -54,7 +54,8 @@ export const efClientCorpMock: ClientResponse = {
             value: '43-5248961',
           },
         ],
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {
@@ -90,7 +91,7 @@ export const efClientCorpMock: ClientResponse = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '078-86-6616',
+            value: '001-01-0001',
           },
         ],
         phone: {
@@ -133,7 +134,7 @@ export const efClientCorpMock: ClientResponse = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '394-94-3213',
+            value: '001-01-0001',
           },
         ],
         phone: {

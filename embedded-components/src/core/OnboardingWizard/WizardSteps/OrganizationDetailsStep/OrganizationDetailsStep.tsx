@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
@@ -25,9 +25,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { isMock, clientId } = useRootConfig();
   const { data } = useGetDataByClientId();
-  const clientDataForm = useMemo(() => {
-    return data && fromApiToForm(data);
-  }, [data]);
+  const clientDataForm = data && fromApiToForm(data);
 
   const { mutateAsync: updateController, isPending: createPartyisPending } =
     useSmbdoUpdateClient();
@@ -39,9 +37,11 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   useEffect(() => {
     if (clientDataForm) {
-      updateFormValues(getOrgDetails(clientDataForm), form.setValue);
+      const orgDtail = getOrgDetails(clientDataForm);
+
+      updateFormValues(orgDtail, form.setValue);
     }
-  }, [clientDataForm]);
+  }, [clientDataForm?.id]);
 
   useEffect(() => {
     updateSchema(yupSchema);
@@ -49,6 +49,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   const onSubmit = useCallback(async () => {
     const dataParty = fromFormToOrgParty(form.getValues());
+
     try {
       await updateController({
         id: clientId ?? '',

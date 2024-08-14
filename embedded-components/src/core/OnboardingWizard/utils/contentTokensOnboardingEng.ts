@@ -337,7 +337,7 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   // START -  STEPS - BusinessOwnersStep
   'steps.BusinessOwnersStep.modalTitle': `Enter business owner details`,
   'steps.BusinessOwnersStep.title': `Enter business owner details`,
-  'steps.BusinessOwnersStep.radioLabel': `Do you, the controller, own 25% or more of the business?`,
+  'steps.BusinessOwnersStep.radioLabel': `Please add any body who owns 25% or more of the business.`,
   'steps.BusinessOwnersStep.radioDesc': `You are at at the maximum of four owners. Please remove an owner if you want to add the controller as an owner.`,
   'steps.BusinessOwnersStep.radioYes': `Yes`,
   'steps.BusinessOwnersStep.radioNo': `No`,

@@ -8,14 +8,20 @@ import {
   RadioGroupItem,
 } from '@/components/ui';
 
-const YesNoFromField = ({ name, form, labelToken, required }: any) => {
+const YesNoFromField = ({
+  name,
+  form,
+  labelToken,
+  required,
+  className,
+}: any) => {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => {
         return (
-          <FormItem>
+          <FormItem className={`${className}`}>
             <FormLabel className="eb-my-5" asterisk={required}>
               {labelToken}
             </FormLabel>
@@ -23,7 +29,8 @@ const YesNoFromField = ({ name, form, labelToken, required }: any) => {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field?.value?.[0]}
+                defaultValue={field?.value}
+                // defaultValue={field.value}
                 className="eb-flex eb-flex-row eb-space-y-1"
               >
                 <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">

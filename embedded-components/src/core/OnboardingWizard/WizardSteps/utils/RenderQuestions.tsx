@@ -75,16 +75,20 @@ const RenderQuestions = ({
 
           const subParentQuestion:
             | SchemasQuestionResponseSubQuestionsItem
-            | undefined = parentQuestion?.subQuestions?.find(
-            (subQ) => form.getValues(parentId) === subQ.anyValuesMatch
-          );
+            | undefined = parentQuestion?.subQuestions?.find((subQ) => {
+            return (
+              (Array.isArray(form.getValues(parentId))
+                ? form.getValues(parentId)?.[0] === subQ.anyValuesMatch
+                : form.getValues(parentId)) === subQ.anyValuesMatch
+            );
+          });
 
           const hiddenElement =
             !!parentId &&
             (form.getValues(parentId) === 'false' ||
-              form.getValues(parentId) === 'None' ||
+              !form.getValues(parentId) ||
               !subParentQuestion?.questionIds?.includes(name) ||
-              !form.getValues(parentId))
+              (parentId && !form.getValues(parentId)))
               ? 'eb-hidden'
               : 'eb-visible';
 

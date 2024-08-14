@@ -54,7 +54,8 @@ export const efClientCorpEBMock: ClientResponse = {
             value: '43-5248961',
           },
         ],
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {

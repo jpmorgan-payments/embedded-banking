@@ -35,7 +35,7 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         addresses: [
           {
             addressType: 'BUSINESS_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Apt 2E'],
+            addressLines: ['90 Bedford Street', 'Suite 2'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
@@ -54,7 +54,8 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
             value: '43-5248961',
           },
         ],
-        websiteAvailable: false,
+        websiteAvailable: true,
+        website: 'https://www.example.com',
       },
     },
     {
@@ -122,7 +123,7 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['2468 Real Ave', 'Apt 2E', 'Suit 2E'],
+            addressLines: ['2468 Real Ave', 'Apt 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',
