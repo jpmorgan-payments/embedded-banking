@@ -24,8 +24,6 @@ import { updateFormValues } from '../utils/updateFormValues';
 
 const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
-  // THIS ENABLES UPDATE ON FORUM RENDER
-  form.watch();
   const { getContentToken } = useContentData('steps.BusinessOwnersStep');
   const { updateSchema } = useFormSchema();
   const [open, setOpen] = useState(false);
@@ -48,8 +46,6 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
   const orgData = getOrg(businessOwnerForm);
   useEffect(() => {
     if (businessOwnerForm) {
-      // THIS ENABLES UPDATE ON FORUM RENDER
-      form.watch();
       updateFormValues(orgData.orgDetails, form.setValue);
       setAdditionalBusinessOwners(
         orgData.orgDetails.significantOwnership === 'true' || false
@@ -64,11 +60,10 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
   const onSubmit = async () => {
     const valid = await form.trigger();
 
-    console.log('@@form>>', form.formState, form, valid, '::', yupSchema);
-    // if (valid) {
-    //   setCurrentStep(activeStep + 1);
-    // } else {
-    // }
+    if (valid) {
+      setCurrentStep(activeStep + 1);
+    } else {
+    }
   };
 
   return (
@@ -123,9 +118,14 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
 
             {Object.keys(businessOwnerForm?.individualDetails)
               .filter((indID) => {
-                return businessOwnerForm.individualDetails[
-                  indID
-                ].roles.includes('BENEFICIAL_OWNER');
+                return (
+                  businessOwnerForm.individualDetails[indID].roles.includes(
+                    'BENEFICIAL_OWNER'
+                  ) &&
+                  !businessOwnerForm.individualDetails[indID].roles.includes(
+                    'CONTROLLER'
+                  )
+                );
               })
               .map((contollerID: any) => {
                 const controller =
