@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
+import { JSX } from 'react/jsx-runtime';
 
 import { Dialog } from '@/components/ui/dialog';
 import {
@@ -23,7 +24,11 @@ import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 
 // TODO: neeed to make sure that we actuall update or remove
-const BusinessOwnersStep = () => {
+const BusinessOwnersStep: {
+  (): JSX.Element;
+  title: any;
+  formSchema: any;
+} = () => {
   const [open, setOpen] = useState(false);
   const [additionalBusinessOwners, setAdditionalBusinessOwners] =
     useState(false);
@@ -55,7 +60,7 @@ const BusinessOwnersStep = () => {
           render={() => (
             <FormItem>
               <FormLabel asterisk>
-                Does any individual own 25% or more of the company?
+                Want to add any individual who own 25% or more of the company?
               </FormLabel>
 
               <FormControl>
