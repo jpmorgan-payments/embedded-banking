@@ -25,7 +25,7 @@ const introSchema = {
     {
       name: 'countryOfFormation',
       fieldType: 'country',
-      labelToken: 'Country Formation',
+      labelToken: 'Country of Formation',
       placeholderToken: 'Select country',
       required: true,
     },
@@ -252,7 +252,8 @@ const businessOwnersSchema = {
   form: [
     {
       name: 'significantOwnership',
-      labelToken: 'Want to add any individual who own 25% or more of the company?',
+      labelToken:
+        'Want to add any individual who own 25% or more of the company?',
       fieldType: 'yesNo',
       required: true,
     },

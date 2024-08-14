@@ -15,19 +15,17 @@ export const efClientSolProp: ClientResponse = {
       id: '2000000111',
       partyType: 'ORGANIZATION',
       externalId: 'TCU1234',
-      email: 'monica@cpbakes.com',
+      email: 'monica@cpgetaways.com',
       roles: ['CLIENT'],
       profileStatus: 'NEW',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
       organizationDetails: {
         organizationType: 'SOLE_PROPRIETORSHIP',
-        organizationName: "Monica's bakehouse",
-        dbaName: '',
-        organizationDescription: `Artisan Bakery offering freshly baked 
-          cookies and pastries made with locally sourced 
-          ingredients, delivering a taste of home in every 
-          bite!`,
+        organizationName: 'Central Park Getaways',
+        dbaName: 'CP Getaways',
+        organizationDescription:
+          'Relax, unwind and experience the comforting charm of our apartment while exploring New York',
         industryCategory: 'Manufacturing',
         industryType: 'Retail Bakeries',
         countryOfFormation: 'US',
@@ -77,7 +75,7 @@ export const efClientSolProp: ClientResponse = {
       parentPartyId: '2000000111',
       parentExternalId: 'TCU1234',
       externalId: 'TCU12344',
-      email: 'monica@cpbakes.com',
+      email: 'monica@cpgetaways.com',
       profileStatus: 'APPROVED',
       status: 'ACTIVE',
       createdAt: '2023-10-31T00:20:09.401Z',
@@ -99,7 +97,7 @@ export const efClientSolProp: ClientResponse = {
         addresses: [
           {
             addressType: 'RESIDENTIAL_ADDRESS',
-            addressLines: ['90 Bedford Street', 'Suite 2'],
+            addressLines: ['90 Bedford Street', 'Apt 2E'],
             city: 'New York',
             state: 'NY',
             postalCode: '10014',

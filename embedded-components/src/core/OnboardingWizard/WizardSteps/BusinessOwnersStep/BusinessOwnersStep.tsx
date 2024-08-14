@@ -3,13 +3,6 @@ import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useFormContext } from 'react-hook-form';
 
 import { Dialog } from '@/components/ui/dialog';
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@/components/ui/form';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Title } from '@/components/ui/title';
 import { Box, Button, Stack } from '@/components/ui';
 

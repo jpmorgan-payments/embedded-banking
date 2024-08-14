@@ -1,14 +1,19 @@
 import {
-  OnboardingWizardInit,
   EBComponentsProvider,
-  OnboardingWizardRoot,
+  OnboardingWizard,
 } from '@jpmorgan-payments/embedded-banking-components';
-import { Badge, Text } from '@mantine/core';
+import { Badge, Text, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { PageWrapper } from 'components';
 import { GITHUB_REPO } from 'data/constants';
-import { OnboardingWizard } from 'features/Onboarding';
 
 export const OnboardingNextPage = () => {
+  const form = useForm({
+    initialValues: {
+      clientId: '0030000132',
+    },
+  });
+
   return (
     <PageWrapper
       title="[Next] Onboarding"
@@ -28,16 +33,16 @@ export const OnboardingNextPage = () => {
           Embedded Banking profile and account is made ready.
         </Text>
       </div>
-      =
-      <EBComponentsProvider apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/ef/v2">
-        <OnboardingWizardRoot
-          isMock
-          // Remove client id, if you start from scratch
-          // clientId={clientId}
-          title="OnBoarding Wizard"
-          // clientId={'3000000216'}
-          onRegistration={({ clientId }) => {
-            console.log('@@clientID Registered', clientId);
+      <TextInput label="Client ID" {...form.getInputProps('clientId')} />
+      <EBComponentsProvider apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/">
+        <OnboardingWizard
+          title="[Next] Onboarding Wizard"
+          clientId={form.values.clientId}
+          onPostClientsVerification={({ clientId }) => {
+            console.log('@@clientId POST', clientId);
+          }}
+          onGetClientsConfirmation={({ clientId }) => {
+            console.log('@@clientId GET', clientId);
           }}
         />
       </EBComponentsProvider>

@@ -1,12 +1,8 @@
 export const organizationFields = [
-  { label: 'Organization Name', path: 'organizationDetails.organizationName' },
-  { label: 'Business Name', path: 'organizationDetails.dbaName' },
-  { label: 'External ID', path: 'externalId' },
-  { label: 'Email', path: 'email' },
-  { label: 'Profile Status', path: 'profileStatus' },
-  { label: 'Status', path: 'status' },
-  { label: 'Created At', path: 'createdAt' },
-  { label: 'Roles', path: 'roles' },
+  {
+    label: 'Legal Business Name',
+    path: 'organizationDetails.organizationName',
+  },
   { label: 'Organization Type', path: 'organizationDetails.organizationType' },
   { label: 'Industry Category', path: 'organizationDetails.industryCategory' },
   { label: 'Industry Type', path: 'organizationDetails.industryType' },
@@ -15,14 +11,21 @@ export const organizationFields = [
     path: 'organizationDetails.countryOfFormation',
   },
   { label: 'Year of Formation', path: 'organizationDetails.yearOfFormation' },
+  { label: 'Email', path: 'email' },
+  {
+    label: 'Addresses',
+    path: 'organizationDetails.addresses',
+    transformFunc: (d: any) =>
+      d?.map(
+        (address: any) =>
+          `${address?.addressType}: ${address?.addressLines?.join(' ')}, ${address?.city}, ${address?.state}, ${address?.country}, ${address?.postalCode}`
+      ),
+  },
 ];
 
 export const individualFields = [
-  { label: 'External ID', path: 'externalId' },
   { label: 'Email', path: 'email' },
-  { label: 'Profile Status', path: 'profileStatus' },
-  { label: 'Status', path: 'status' },
-  { label: 'Created At', path: 'createdAt' },
+
   { label: 'Roles', path: 'roles' },
   { label: 'First Name', path: 'individualDetails.firstName' },
   { label: 'Last Name', path: 'individualDetails.lastName' },
@@ -37,4 +40,13 @@ export const individualFields = [
     path: 'individualDetails.jobTitleDescription',
   },
   { label: 'Sole Owner', path: 'individualDetails.soleOwner' },
+  {
+    label: 'Addresses',
+    path: 'individualDetails.addresses',
+    transformFunc: (d: any) =>
+      d?.map(
+        (address: any) =>
+          `${address?.addressType}: ${address?.addressLines?.join(' ')}, ${address?.city}, ${address?.state}, ${address?.country}, ${address?.postalCode}`
+      ),
+  },
 ];
