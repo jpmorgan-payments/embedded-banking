@@ -16,7 +16,7 @@ export const partyWithMissingfields: PartyResponse = {
     addresses: [
       {
         addressType: 'RESIDENTIAL_ADDRESS',
-        addressLines: ['90 Bedford Street', 'Suite 2'],
+        addressLines: ['90 Bedford Street', 'Apt 2E'],
         city: 'New York',
         state: 'NY',
         postalCode: '10014',
