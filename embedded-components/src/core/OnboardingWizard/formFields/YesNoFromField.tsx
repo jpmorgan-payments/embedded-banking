@@ -31,7 +31,9 @@ const YesNoFromField = ({
               <RadioGroup
                 onValueChange={(val) => {
                   field.onChange(val, name);
-                  onChange(val, name);
+                  if (onChange) {
+                    onChange(val, name);
+                  }
                 }}
                 defaultValue={field?.value}
                 // defaultValue={field.value}

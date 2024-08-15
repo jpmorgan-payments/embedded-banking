@@ -108,6 +108,44 @@ export const Primary: Story = {
   },
 };
 
+export const NoClient: Story = {
+  name: 'Basic OnboardingWizard with EBComponentsProvider without ClientId',
+  args: {
+    apiBaseUrl: '/',
+    clientId: '',
+    title: 'Onboarding Wizard Simple',
+    theme: {
+      variables: {
+        primaryColor: 'red',
+        borderRadius: '15px',
+      },
+    },
+    onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/ef/do/v1/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
+        }),
+      ],
+    },
+  },
+};
+
 export const NoThemeWithPDPAPIs: Story = {
   name: 'No theme with PDP mocked APIs',
   ...Primary,

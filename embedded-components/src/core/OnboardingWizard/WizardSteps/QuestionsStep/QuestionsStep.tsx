@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 import {
   QuestionListResponse,
+  ResponseSchema,
+  ResponseSchemaItem,
   SchemasQuestionResponse,
 } from '@/api/generated/embedded-banking.schemas';
 import { Grid, Stack, Title } from '@/components/ui';
@@ -72,7 +74,11 @@ const QuestionsStep = ({ children }: any) => {
   // THIS ENABLES UPDATE ON FORUM RENDER
   form.watch();
 
-  const getValidationByFormat = (format?: string, parentId?: string) => {
+  const getValidationByFormat = (
+    qSchema: ResponseSchema,
+    format?: string,
+    parentId?: string
+  ) => {
     const listSchema = yup
       .array()
       .min(1, getContentToken('listSchemaError') as string);
@@ -133,6 +139,17 @@ const QuestionsStep = ({ children }: any) => {
             then: (s) => s.concat(stringSchema),
           });
         }
+        if (qSchema.maxItems && qSchema.maxItems > 1 && qSchema.minItems) {
+          return yup
+            .array()
+            .min(qSchema.minItems, getContentToken('listSchemaError') as string)
+            .max(
+              qSchema.maxItems,
+              // TODO: Get correct error message
+              `Only select ${qSchema.maxItems} options`
+            )
+            .required();
+        }
         return stringSchema;
     }
   };
@@ -140,9 +157,11 @@ const QuestionsStep = ({ children }: any) => {
   const yupObject = yup.object().shape(
     fullQuesitonSet?.reduce((a: any, v: any) => {
       if (!v?.id) return a;
+
       return {
         ...a,
         [v.id]: getValidationByFormat(
+          v.responseSchema,
           v.responseSchema?.items?.type,
           v?.parentQuestionId
         ),
@@ -194,11 +213,18 @@ const QuestionsStep = ({ children }: any) => {
     }
   }, [activeStep]);
 
+  //TODO: We need to update the type once this Response is resolved
+  interface EnumQ extends ResponseSchemaItem {
+    enum?: string[];
+  }
   const fieldType = (
-    type: string | undefined,
-    item: any,
+    questions: ResponseSchema,
     opt: { date: boolean; country: boolean }
   ) => {
+    // eslint-disable-next-line
+    const items: EnumQ | undefined = questions.items;
+    const type = items?.type;
+
     switch (type?.toLowerCase()) {
       case 'enum':
         return 'select';
@@ -207,13 +233,18 @@ const QuestionsStep = ({ children }: any) => {
       case 'integer':
         return 'input';
       case 'string':
+        if (questions?.maxItems && questions?.maxItems > 1) {
+          return `checklist`;
+        }
+
         if (opt.date) {
           return 'calendar';
         }
         if (opt.country) {
           return 'country';
         }
-        if (item?.enum?.length) {
+
+        if (items?.enum?.length) {
           return `select`;
         }
         return 'textarea';
@@ -228,8 +259,7 @@ const QuestionsStep = ({ children }: any) => {
           name: question?.id,
           labelToken: question?.content?.[0].label,
           fieldType: fieldType(
-            question?.responseSchema?.items?.type,
-            question?.responseSchema?.items,
+            question?.responseSchema,
 
             // TODO: Temporary
             {

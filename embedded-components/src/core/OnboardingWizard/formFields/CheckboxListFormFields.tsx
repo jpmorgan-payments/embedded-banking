@@ -25,33 +25,37 @@ const CheckBoxListFormFields = ({
           <FormItem>
             <FormLabel>{labelToken}</FormLabel>
             {optionsList &&
-              optionsList.map((option: string) => (
+              optionsList.map((option: { value: string; label: string }) => (
                 <FormField
-                  key={option}
+                  key={option.value}
                   control={form.control}
                   name={name}
                   render={({ field }) => {
                     return (
                       <FormItem
-                        key={option}
+                        key={option.value}
                         className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0"
                       >
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(option)}
+                            // checked={field.value?.includes(option.value)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...field.value, option])
+                                ? field.onChange(
+                                    [field?.value ?? null, option.value]
+                                      .filter((item) => item)
+                                      .flat(1)
+                                  )
                                 : field.onChange(
                                     field.value?.filter(
-                                      (value: string) => value !== option
+                                      (value: string) => value !== option.value
                                     )
                                   );
                             }}
                           />
                         </FormControl>
                         <FormLabel className="eb-font-normal">
-                          {option}
+                          {option.label}
                         </FormLabel>
                       </FormItem>
                     );

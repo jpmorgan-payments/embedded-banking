@@ -8,6 +8,7 @@ import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.cont
 import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { useError } from '../../context/error.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { introSchema } from '../StepsSchema';
@@ -17,6 +18,7 @@ import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
+  const { setError } = useError();
   const {
     jurisdictions,
     entityType,
@@ -74,7 +76,13 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
   }, [entityType, jurisdictions]);
 
   const { mutateAsync: postClient, status: postClientStatus } =
-    useSmbdoPostClients();
+    useSmbdoPostClients({
+      mutation: {
+        onError: (error) => {
+          setError(error);
+        },
+      },
+    });
 
   const onSubmit = async () => {
     const {
