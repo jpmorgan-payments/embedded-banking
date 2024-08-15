@@ -175,7 +175,7 @@ export const AdditionalQuestionsStepForm = () => {
           name={fieldName}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{question.description}</FormLabel>
+              <FormLabel asterisk>{question.description}</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -199,7 +199,7 @@ export const AdditionalQuestionsStepForm = () => {
             name={fieldName}
             render={({ field }) => (
               <FormItem className="eb-space-y-3">
-                <FormLabel>{question.description}</FormLabel>
+                <FormLabel asterisk>{question.description}</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={(value) => field.onChange([value])}
@@ -239,7 +239,7 @@ export const AdditionalQuestionsStepForm = () => {
                 name={fieldName}
                 render={() => (
                   <FormItem>
-                    <FormLabel>{question.description}</FormLabel>
+                    <FormLabel asterisk>{question.description}</FormLabel>
                     {itemEnum.map((option: string) => (
                       <FormField
                         key={option}
@@ -285,7 +285,7 @@ export const AdditionalQuestionsStepForm = () => {
               name={fieldName}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{question.description}</FormLabel>
+                  <FormLabel asterisk>{question.description}</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange([value])}
                     defaultValue={field?.value?.[0]}
@@ -315,7 +315,7 @@ export const AdditionalQuestionsStepForm = () => {
             name={fieldName}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{question.description}</FormLabel>
+                <FormLabel asterisk>{question.description}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -336,7 +336,7 @@ export const AdditionalQuestionsStepForm = () => {
             name={fieldName}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{question.description}</FormLabel>
+                <FormLabel asterisk>{question.description}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -357,7 +357,7 @@ export const AdditionalQuestionsStepForm = () => {
             name={fieldName}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{question.description}</FormLabel>
+                <FormLabel asterisk>{question.description}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
