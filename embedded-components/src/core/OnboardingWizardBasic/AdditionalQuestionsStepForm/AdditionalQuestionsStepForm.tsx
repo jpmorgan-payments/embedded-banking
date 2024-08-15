@@ -49,6 +49,7 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
     const itemType = question?.responseSchema?.items?.type ?? 'string';
     // @ts-expect-error
     const itemEnum = question?.responseSchema?.items?.enum;
+    const isOptional = !!question.parentQuestionId;
 
     let valueSchema;
 
@@ -88,19 +89,82 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
     // If the question allows multiple values, wrap it in an array
     // @ts-expect-error
     if (question?.responseSchema?.type === 'ARRAY') {
-      valueSchema = z
-        .array(valueSchema)
-        .min(question?.responseSchema?.minItems ?? 1, 'Required')
-        .max(
-          question?.responseSchema?.maxItems ?? 1,
-          `Cannot exceed ${question?.responseSchema?.maxItems} items`
-        );
+      valueSchema = z.array(valueSchema);
+
+      if (!isOptional) {
+        valueSchema = valueSchema
+          .min(question?.responseSchema?.minItems ?? 1, 'Required')
+          .max(
+            question?.responseSchema?.maxItems ?? 1,
+            `Cannot exceed ${question?.responseSchema?.maxItems} items`
+          );
+      }
     }
 
     schemaFields[`question_${question.id}`] = valueSchema;
   });
 
-  return z.object(schemaFields);
+  return z.object(schemaFields).superRefine((values, context) => {
+    questionsData.forEach((question) => {
+      if (question.parentQuestionId) {
+        const parentQuestionValue =
+          values?.[`question_${question.parentQuestionId}`];
+        const parentQuestion = questionsData.find(
+          (q) => q.id === question.parentQuestionId
+        );
+        if (parentQuestion?.subQuestions) {
+          const subQuestion = parentQuestion.subQuestions.find((sq) =>
+            sq.questionIds?.includes(question.id ?? '')
+          );
+          if (subQuestion) {
+            if (
+              (typeof subQuestion?.anyValuesMatch === 'string' &&
+                parentQuestionValue.includes(subQuestion.anyValuesMatch)) ||
+              (Array.isArray(subQuestion?.anyValuesMatch) &&
+                parentQuestionValue.some((value: any) =>
+                  subQuestion.anyValuesMatch?.includes(value)
+                ))
+            ) {
+              // @ts-expect-error
+              if (question?.responseSchema?.type === 'ARRAY') {
+                if (question?.responseSchema?.minItems) {
+                  if (
+                    !values?.[`question_${question.id}`] ||
+                    values?.[`question_${question.id}`].length <
+                      question?.responseSchema?.minItems
+                  ) {
+                    context.addIssue({
+                      code: z.ZodIssueCode.custom,
+                      message: 'Required',
+                      path: [`question_${question.id}`],
+                    });
+                  }
+                }
+                if (question?.responseSchema?.maxItems) {
+                  if (
+                    values?.[`question_${question.id}`].length >
+                    question?.responseSchema?.maxItems
+                  ) {
+                    context.addIssue({
+                      code: z.ZodIssueCode.custom,
+                      message: `Cannot exceed ${question?.responseSchema?.maxItems} items`,
+                      path: [`question_${question.id}`],
+                    });
+                  }
+                }
+              } else if (!values?.[`question_${question.id}`]) {
+                context.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'Required',
+                  path: [`question_${question.id}`],
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+  });
 };
 
 export const AdditionalQuestionsStepForm = () => {
@@ -398,8 +462,8 @@ export const AdditionalQuestionsStepForm = () => {
 
     if (!parentResponse) return false;
 
-    const subQuestion = parentQuestion?.subQuestions?.find((sq: any) =>
-      sq.questionIds.includes(question.id)
+    const subQuestion = parentQuestion?.subQuestions?.find((sq) =>
+      sq.questionIds?.includes(question.id ?? '')
     );
 
     if (typeof subQuestion?.anyValuesMatch === 'string') {
@@ -408,7 +472,7 @@ export const AdditionalQuestionsStepForm = () => {
 
     if (Array.isArray(subQuestion?.anyValuesMatch)) {
       return parentResponse.some((value: any) => {
-        return subQuestion?.anyValuesMatch?.includes(value);
+        return subQuestion.anyValuesMatch?.includes(value);
       });
     }
 
@@ -441,7 +505,9 @@ export const AdditionalQuestionsStepForm = () => {
     if (!questionsData) return null;
 
     return questionsData?.questions?.map((question, index) => {
-      if (!isQuestionVisible(question)) return null;
+      if (!isQuestionVisible(question)) {
+        return null;
+      }
 
       return (
         <>
