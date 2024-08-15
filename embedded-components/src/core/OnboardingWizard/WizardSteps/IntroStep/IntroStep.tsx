@@ -8,6 +8,7 @@ import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.cont
 import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
+import { useError } from '../../context/error.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { introSchema } from '../StepsSchema';
@@ -15,7 +16,6 @@ import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole'
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
-import { useError } from '../../context/error.context';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
   const { setError } = useError();

@@ -78,7 +78,6 @@ const RenderQuestions = ({
           const subParentQuestion:
             | SchemasQuestionResponseSubQuestionsItem[]
             | undefined = parentQuestion?.subQuestions?.filter((subQ) => {
-
             return Array.isArray(form.getValues(parentId))
               ? form.getValues(parentId).includes(subQ.anyValuesMatch)
               : form.getValues(parentId) === subQ.anyValuesMatch;
@@ -88,7 +87,10 @@ const RenderQuestions = ({
             !!parentId &&
             (form.getValues(parentId) === 'false' ||
               !form.getValues(parentId) ||
-              !subParentQuestion?.map(q =>q.questionIds).flat()?.includes(name) ||
+              !subParentQuestion
+                ?.map((q) => q.questionIds)
+                .flat()
+                ?.includes(name) ||
               (parentId && !form.getValues(parentId)))
               ? 'eb-hidden'
               : 'eb-visible';

@@ -221,7 +221,7 @@ const QuestionsStep = ({ children }: any) => {
     questions: ResponseSchema,
     opt: { date: boolean; country: boolean }
   ) => {
-   // eslint-disable-next-line
+    // eslint-disable-next-line
     const items: EnumQ | undefined = questions.items;
     const type = items?.type;
 
