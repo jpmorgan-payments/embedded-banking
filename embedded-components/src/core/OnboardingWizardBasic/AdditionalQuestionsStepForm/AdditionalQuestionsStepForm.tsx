@@ -67,14 +67,14 @@ const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
           if (itemEnum) {
             valueSchema = z.enum(itemEnum);
           } else {
-            valueSchema = z.string().length(1, 'Required');
+            valueSchema = z.string().min(1, 'Required');
           }
           break;
         // @ts-expect-error
         case 'INTEGER':
           valueSchema = z
             .string()
-            .length(1, 'Required')
+            .min(1, 'Required')
             .regex(/^\d+$/, 'Must be a number');
           break;
         default:
