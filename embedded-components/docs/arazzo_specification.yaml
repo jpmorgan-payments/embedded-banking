@@ -1,0 +1,131 @@
+arazzo: 1.0.0
+info:
+  title: Digital Onboarding Workflow
+  version: 0.0.1
+  description: Workflow for digital onboarding process
+
+sourceDescriptions:
+  - name: onboardingAPI
+    url: https://api.example.com/openapi.json
+    type: openapi
+
+workflows:
+  - workflowId: digitalOnboarding
+    summary: Complete digital onboarding process
+    description: This workflow guides through the steps of client onboarding, from initiation to verification
+    inputs:
+      type: object
+      properties:
+        clientInfo:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+    steps:
+      - stepId: initiateOnboarding
+        description: Initiate the onboarding process
+        operationId: initiateOnboarding
+        parameters:
+          - name: clientName
+            in: body
+            value: $inputs.clientInfo.name
+          - name: clientEmail
+            in: body
+            value: $inputs.clientInfo.email
+        successCriteria:
+          - condition: $statusCode == 201
+        outputs:
+          clientId: $response.body.clientId
+
+      - stepId: collectClientInfo
+        description: Collect detailed client information
+        operationId: updateClientInfo
+        parameters:
+          - name: clientId
+            in: path
+            value: $steps.initiateOnboarding.outputs.clientId
+        requestBody:
+          contentType: application/json
+          payload: $inputs.clientInfo
+        successCriteria:
+          - condition: $statusCode == 200
+
+      - stepId: collectPartyInfo
+        description: Collect information about parties (individual and organization)
+        operationId: updatePartyInfo
+        parameters:
+          - name: clientId
+            in: path
+            value: $steps.initiateOnboarding.outputs.clientId
+        requestBody:
+          contentType: application/json
+          payload: $inputs.partyInfo
+        successCriteria:
+          - condition: $statusCode == 200
+
+      - stepId: answerAdditionalQuestions
+        description: Answer additional due diligence questions
+        operationId: submitAdditionalQuestions
+        parameters:
+          - name: clientId
+            in: path
+            value: $steps.initiateOnboarding.outputs.clientId
+        requestBody:
+          contentType: application/json
+          payload: $inputs.additionalQuestions
+        successCriteria:
+          - condition: $statusCode == 200
+
+      - stepId: reviewAndAttest
+        description: Review all provided information and attest
+        operationId: submitAttestation
+        parameters:
+          - name: clientId
+            in: path
+            value: $steps.initiateOnboarding.outputs.clientId
+        requestBody:
+          contentType: application/json
+          payload:
+            attestation: true
+        successCriteria:
+          - condition: $statusCode == 200
+
+      - stepId: initiateVerification
+        description: Initiate KYC verification process
+        operationId: initiateKYC
+        parameters:
+          - name: clientId
+            in: path
+            value: $steps.initiateOnboarding.outputs.clientId
+        successCriteria:
+          - condition: $statusCode == 202
+        outputs:
+          verificationId: $response.body.verificationId
+
+    outputs:
+      clientId: $steps.initiateOnboarding.outputs.clientId
+      verificationId: $steps.initiateVerification.outputs.verificationId
+
+components:
+  parameters:
+    clientIdParam:
+      name: clientId
+      in: path
+      value: $steps.initiateOnboarding.outputs.clientId
+
+  successActions:
+    continueOnboarding:
+      name: continueToNextStep
+      type: goto
+      stepId: $currentStep + 1
+
+  failureActions:
+    retryStep:
+      name: retryCurrentStep
+      type: retry
+      retryAfter: 5
+      retryLimit: 3
+      criteria:
+        - condition: $statusCode >= 500
