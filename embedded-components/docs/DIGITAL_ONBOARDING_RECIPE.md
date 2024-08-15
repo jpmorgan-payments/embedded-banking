@@ -4,7 +4,21 @@ This document is a draft and is currently being updated. Information contained h
 
 # Digital Onboarding UI/UX Cookbook
 
-## Introduction
+## Background
+
+API calls rarely comes alone. It's far common for a business capability to require a series of steps, overwise known as workflow
+The Digital Onboarding APIs provide a powerful set of tools for managing digital processes. But how do you create a user-friendly and efficient digital onboarding experience specifically tailored to your business needs and getting to the value faster and with less effort? 
+
+There are multiple ways how API provider could help API consumer to develop a digital experience and get to value faster and with less effort:
+- Fully Hosted UI - API Provider/Creator of the Embedded Component is responsible for hosting the UI and the APIs and cover infrastructure and security risks. Ultimate component should be fully tested and certified for the production use.
+- Runtime client or server side UI injection - iframes, server side composition, or client side composition (module federation)
+- Embedded UI Components - build time UI injection - published as a npm package
+- Sophisticated detailed UI/UX Cookbook which provides human readable guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. This could include various flow diagrams, sequence diagrams, and other visual aids to help API consumers understand the process and how to implement it.
+- Machine readable specification like [Arazzo](https://spec.openapis.org/arazzo/latest.html) which provides a structured way to describe the digital onboarding process and the APIs it uses.
+
+Machine readable specification along with the cookbooks could be used with LLMs to quickly generate a skeleton/draft version of the digital experience. This can be done with any UI framework, library or other custom instruction set.
+
+## Cookbook Introduction
 
 This cookbook provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. There are multiple ways how complex forms can be implemented, but we recommend to use a stepper wizard layout. The wizard will guide the user through the onboarding process and provide feedback on the current step.
 Advantages of the stepper wizard layout:
@@ -52,7 +66,7 @@ autonumber
 
 ## Stepper Wizard Implementation
 
-Create a main component with a wizard / stepper and individual step components. Use React state or create a context to manage the active step and client ID as well as sycnhronize the form data with the server state.
+Create a main component with a wizard / stepper and individual step components. Use React state or create a context to manage the active step and client ID as well as synchronize the form data with the server state.
 
 ## Step 1: Intro
 
@@ -309,7 +323,7 @@ const { mutate: updateClient } = useUpdateClient();
 
 ### UX Best Practices
 
-- Will depend on the business type. For example, Sole Proprietorships will have a single owner, while Corporations or Partnerships could have multiple owners and additional decision makers. we recomment to ask a questions whether there are multiple owners or decision makers and then show the respective UI components.
+- Will depend on the business type. For example, Sole Proprietorships will have a single owner, while Corporations or Partnerships could have multiple owners and additional decision makers. we recommend to ask a questions whether there are multiple owners or decision makers and then show the respective UI components.
 - Allow adding multiple owners/decision makers dynamically.
 - Implement a summary view of added parties with edit/delete options.
 - Use consistent validation across all party forms.
