@@ -1,3 +1,7 @@
+⚠️ DRAFT - UNDER REVIEW ⚠️
+
+This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
+
 # Linked Accounts API Workflow Cookbook
 
 ## Introduction

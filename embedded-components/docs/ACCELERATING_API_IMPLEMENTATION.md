@@ -1,3 +1,7 @@
+⚠️ DRAFT - UNDER REVIEW ⚠️
+
+This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
+
 # Accelerating API Implementation: From Calls to Workflows
 
 In the world of APIs, individual calls rarely stand alone. More often, business capabilities require a series of steps - a workflow. The Digital Onboarding APIs, for instance, offer powerful tools for managing digital processes. But how can API providers help consumers create user-friendly, efficient experiences tailored to their specific business needs? Let's explore several techniques that can accelerate implementation and deliver value faster.
