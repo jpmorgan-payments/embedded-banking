@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 import {
   QuestionListResponse,
-  QuestionResponse,
   ResponseSchema,
   ResponseSchemaItem,
   SchemasQuestionResponse,
@@ -148,7 +147,8 @@ const QuestionsStep = ({ children }: any) => {
               qSchema.maxItems,
               // TODO: Get correct error message
               `Only select ${qSchema.maxItems} options`
-            ).required();
+            )
+            .required();
         }
         return stringSchema;
     }
@@ -218,10 +218,11 @@ const QuestionsStep = ({ children }: any) => {
     enum?: string[];
   }
   const fieldType = (
-    quesiton: ResponseSchema,
+    questions: ResponseSchema,
     opt: { date: boolean; country: boolean }
   ) => {
-    const items: EnumQ | undefined = quesiton.items;
+   // eslint-disable-next-line
+    const items: EnumQ | undefined = questions.items;
     const type = items?.type;
 
     switch (type?.toLowerCase()) {
@@ -232,9 +233,10 @@ const QuestionsStep = ({ children }: any) => {
       case 'integer':
         return 'input';
       case 'string':
-        if (quesiton?.maxItems && quesiton?.maxItems > 1) {
+        if (questions?.maxItems && questions?.maxItems > 1) {
           return `checklist`;
         }
+
         if (opt.date) {
           return 'calendar';
         }
@@ -253,7 +255,6 @@ const QuestionsStep = ({ children }: any) => {
 
   const questionSchame = fullQuesitonSet?.length
     ? fullQuesitonSet?.map((question: any | SchemasQuestionResponse) => {
-        
         return {
           name: question?.id,
           labelToken: question?.content?.[0].label,
