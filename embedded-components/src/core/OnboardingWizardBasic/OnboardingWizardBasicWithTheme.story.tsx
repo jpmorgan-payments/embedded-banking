@@ -1,13 +1,6 @@
 /* eslint-disable import/no-useless-path-segments */
 import type { Meta, StoryObj } from '@storybook/react';
 
-import {
-  ApiErrorV2,
-  ClientResponse,
-  ClientVerificationsInformationResponse,
-} from '@/api/generated/embedded-banking.schemas';
-import { EBComponentsProvider } from '@/core/EBComponentsProvider';
-
 import { OnboardingWizardBasicWithProvider } from './OnboardingWizardBasic.story';
 
 const meta: Meta<typeof OnboardingWizardBasicWithProvider> = {
