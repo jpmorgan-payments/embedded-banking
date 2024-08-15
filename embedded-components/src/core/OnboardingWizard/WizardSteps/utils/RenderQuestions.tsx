@@ -5,6 +5,7 @@ import {
 import { Box, Separator, Title } from '@/components/ui';
 
 import { CalendarFormField } from '../../formFields/CalendarFormField';
+import { CheckBoxListFormFields } from '../../formFields/CheckboxListFormFields';
 // import { AddressFormFields } from '../../formFields/AddressFormFields';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
@@ -46,6 +47,7 @@ export interface QuestionSchema extends SelectFormFieldProps {
     | 'jobTitle'
     //---------
     | 'calendar'
+    | 'checklist'
     | 'yesNo';
 }
 
@@ -74,20 +76,19 @@ const RenderQuestions = ({
             questions?.find((q) => q.id === parentId);
 
           const subParentQuestion:
-            | SchemasQuestionResponseSubQuestionsItem
-            | undefined = parentQuestion?.subQuestions?.find((subQ) => {
-            return (
-              (Array.isArray(form.getValues(parentId))
-                ? form.getValues(parentId)?.[0] === subQ.anyValuesMatch
-                : form.getValues(parentId)) === subQ.anyValuesMatch
-            );
+            | SchemasQuestionResponseSubQuestionsItem[]
+            | undefined = parentQuestion?.subQuestions?.filter((subQ) => {
+
+            return Array.isArray(form.getValues(parentId))
+              ? form.getValues(parentId).includes(subQ.anyValuesMatch)
+              : form.getValues(parentId) === subQ.anyValuesMatch;
           });
 
           const hiddenElement =
             !!parentId &&
             (form.getValues(parentId) === 'false' ||
               !form.getValues(parentId) ||
-              !subParentQuestion?.questionIds?.includes(name) ||
+              !subParentQuestion?.map(q =>q.questionIds).flat()?.includes(name) ||
               (parentId && !form.getValues(parentId)))
               ? 'eb-hidden'
               : 'eb-visible';
@@ -299,6 +300,25 @@ const RenderQuestions = ({
                     defaultValue,
                     type,
                     className: `${hiddenElement}`,
+                  }}
+                />
+              );
+
+            case 'checklist':
+              return (
+                <CheckBoxListFormFields
+                  key={name}
+                  {...{
+                    name,
+                    labelToken: getContentToken(labelToken) ?? labelToken,
+                    placeholderToken:
+                      getContentToken(placeholderToken) || placeholderToken,
+                    required,
+                    form,
+                    defaultValue,
+                    type,
+                    className: `${hiddenElement}`,
+                    optionsList: optionsList || [],
                   }}
                 />
               );
