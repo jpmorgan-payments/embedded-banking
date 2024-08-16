@@ -6,7 +6,7 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useError } from '../../context/error.context';
 
 const useGetDataByClientId = () => {
-  const { setError } = useError();
+  const { setError, setPending } = useError();
   const { clientId, setPartyId } = useRootConfig();
 
   const { data, refetch, isPending, isError, error } = useSmbdoGetClient(
@@ -17,7 +17,9 @@ const useGetDataByClientId = () => {
     if (isError) {
       setError(error);
     }
-  }, [isError]);
+
+    setPending(isPending);
+  }, [isError, isPending]);
 
   //TODO: Make sure there is no collision of this partyId
   setPartyId(data?.partyId);
