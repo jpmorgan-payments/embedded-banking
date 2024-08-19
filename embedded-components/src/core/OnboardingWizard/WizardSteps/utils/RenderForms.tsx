@@ -1,6 +1,7 @@
 import { Box, Separator, Title } from '@/components/ui';
 
 import { AddressFormFields } from '../../formFields/AddressFormFields';
+import { AdressTypeFormField } from '../../formFields/AddressTypeFormField';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
 import { EinFormField } from '../../formFields/EinFormField';
@@ -36,6 +37,7 @@ export interface FormScham extends SelectFormFieldProps {
     | 'industryType'
     | 'orgType'
     | 'address'
+    | 'addressType'
     | 'jobTitle'
     //---------
     | 'yesNo';
@@ -312,6 +314,23 @@ const RenderForms = ({
                   />
                 </Box>
               );
+
+            case 'addressType':
+              return (
+                <AdressTypeFormField
+                  {...{
+                    name,
+                    labelToken: getContentToken(labelToken) ?? labelToken,
+                    placeholderToken:
+                      getContentToken(placeholderToken) || placeholderToken,
+                    required,
+                    form,
+                    defaultValue,
+                    type,
+                  }}
+                />
+              );
+
             case 'yesNo':
               return (
                 <YesNoFromField

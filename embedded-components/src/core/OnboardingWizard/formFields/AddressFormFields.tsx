@@ -11,6 +11,21 @@ const addressSchemaIndividual = [
     fieldType: 'separator',
   },
   {
+    name: 'addressType',
+    fieldType: 'addressType',
+    labelToken: 'Address Type',
+    placeholderToken: 'Select Address',
+    required: true,
+    type: 'individual',
+  },
+  {
+    name: 'countryOfResidence',
+    fieldType: 'country',
+    labelToken: 'Country of Residence',
+    placeholderToken: 'Select country',
+    required: true,
+  },
+  {
     name: 'addressLine1',
     fieldType: 'input',
     labelToken: 'Address Line One',
@@ -44,19 +59,20 @@ const addressSchemaIndividual = [
     labelToken: 'Zip Code',
     required: true,
   },
-  {
-    name: 'countryOfResidence',
-    fieldType: 'country',
-    labelToken: 'Country of Residence',
-    placeholderToken: 'Select country',
-    required: true,
-  },
 ];
 
 const orgAddress = [
   {
     labelToken: 'What is your business address?',
     fieldType: 'separator',
+  },
+  {
+    name: 'addressType',
+    fieldType: 'addressType',
+    labelToken: 'Address Type',
+    placeholderToken: 'Select Address',
+    required: true,
+    type: 'organization',
   },
   {
     name: 'businessAddressLine1',
