@@ -49,7 +49,7 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
       entitiesInOwnership: form?.questionsAnswers?.entitiesInOwnership === 'no',
       addresses: [
         {
-          addressType: 'BUSINESS_ADDRESS',
+          addressType: business?.addressType,
           addressLines,
           city: business?.businessCity,
           state: business?.businessState,
