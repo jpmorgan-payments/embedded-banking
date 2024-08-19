@@ -2,11 +2,11 @@
 
 This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
 
-# Linked Accounts API Workflow Cookbook
+# Linked Accounts API Workflow Recipe
 
 ## Introduction
 
-This cookbook provides guidelines for implementing linked account functionality in a React-based web application using the Embedded Payments API. The process involves adding a client's external bank account and verifying it through microdeposits when necessary.
+This recipe provides guidelines for implementing linked account functionality in a React-based web application using the Embedded Payments API. The process involves adding a client's external bank account and verifying it through microdeposits when necessary.
 
 ## Sequence Diagram
 

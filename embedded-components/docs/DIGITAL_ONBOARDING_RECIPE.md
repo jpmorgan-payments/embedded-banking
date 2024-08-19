@@ -2,25 +2,24 @@
 
 This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
 
-# Digital Onboarding UI/UX Cookbook
+# Digital Onboarding UI/UX Recipe
 
-## Background
+## APIs Workflows Recipes Background
 
-API calls rarely comes alone. It's far common for a business capability to require a series of steps, overwise known as workflow
-The Digital Onboarding APIs provide a powerful set of tools for managing digital processes. But how do you create a user-friendly and efficient digital onboarding experience specifically tailored to your business needs and getting to the value faster and with less effort? 
+API calls rarely comes alone. It's far common for a business capability to require a series of steps, overwise known as workflow. But how do you create a user-friendly and efficient digital experience specifically tailored to your business needs and getting to the value faster and with less effort? 
 
-There are multiple ways how API provider could help API consumer to develop a digital experience and get to value faster and with less effort:
+There are multiple ways how API provider could help API consumer to develop a API workflows and get to value faster and with less efforts:
 - Fully Hosted UI - API Provider/Creator of the Embedded Component is responsible for hosting the UI and the APIs and cover infrastructure and security risks. Ultimate component should be fully tested and certified for the production use.
 - Runtime client or server side UI injection - iframes, server side composition, or client side composition (module federation)
 - Embedded UI Components - build time UI injection - published as a npm package
-- Sophisticated detailed UI/UX Cookbook which provides human readable guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. This could include various flow diagrams, sequence diagrams, and other visual aids to help API consumers understand the process and how to implement it.
+- Sophisticated detailed UI/UX Recipe which provides human readable guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. This could include various flow diagrams, sequence diagrams, and other visual aids to help API consumers understand the process and how to implement it.
 - Machine readable specification like [Arazzo](https://spec.openapis.org/arazzo/latest.html) which provides a structured way to describe the digital onboarding process and the APIs it uses.
 
-Machine readable specification along with the cookbooks could be used with LLMs to quickly generate a skeleton/draft version of the digital experience. This can be done with any UI framework, library or other custom instruction set.
+Machine readable specification along with the recipes could be used with LLMs to quickly generate a skeleton/draft version of the digital experience. This can be done with any UI framework, library or other custom instruction set.
 
-## Cookbook Introduction
+## Digital Onboarding Recipe Introduction
 
-This cookbook provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. There are multiple ways how complex forms can be implemented, but we recommend to use a stepper wizard layout. The wizard will guide the user through the onboarding process and provide feedback on the current step.
+This recipe provides guidelines for implementing a React-based web application that leverages the Digital Onboarding APIs. There are multiple ways how complex forms can be implemented, but we recommend to use a stepper wizard layout. The wizard will guide the user through the onboarding process and provide feedback on the current step.
 Advantages of the stepper wizard layout:
 
 - Clear progression: Users can easily see their progress through the form.
