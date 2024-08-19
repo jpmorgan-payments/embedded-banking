@@ -41,7 +41,7 @@ export const fromFormToOrgParty = (form: any) => {
     yearOfFormation: `${form?.yearOfFormation}`,
     addresses: [
       {
-        addressType: 'BUSINESS_ADDRESS',
+        addressType: form.addressType,
         addressLines: [addressLines],
         city: form.businessCity,
         state: form.businessState,
@@ -97,7 +97,7 @@ export const fromFormToIndParty = (form: any) => {
     addresses: [
       {
         //TODO: Address types have options: EGAL_ADDRESS, MAILING_ADDRESS, BUSINESS_ADDRESS, RESIDENTIAL_ADDRESS
-        addressType: 'BUSINESS_ADDRESS',
+        addressType: form.addressType,
         addressLines: [addressLines],
         city: form.city,
         state: form.state,

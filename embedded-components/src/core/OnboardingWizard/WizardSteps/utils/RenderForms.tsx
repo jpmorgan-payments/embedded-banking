@@ -327,6 +327,8 @@ const RenderForms = ({
                     form,
                     defaultValue,
                     type,
+                    // TODO: classes are incorrect
+                    className: 'eb-col-start-1 eb-col-end-2 eb-col-span-2',
                   }}
                 />
               );

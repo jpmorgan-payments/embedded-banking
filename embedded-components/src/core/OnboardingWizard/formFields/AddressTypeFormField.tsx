@@ -42,6 +42,7 @@ const AdressTypeFormField = ({
   placeholderToken,
   disabled,
   type,
+  className,
 }: any) => {
   const setAddress =
     type === 'individual' ? addressIndividualTypes : addressORganizationTypes;
@@ -52,7 +53,7 @@ const AdressTypeFormField = ({
       name={name}
       render={({ field }) => {
         return (
-          <FormItem className="">
+          <FormItem className={className}>
             <FormLabel asterisk={required}>{labelToken}</FormLabel>
             <Select
               onValueChange={(value) => {
