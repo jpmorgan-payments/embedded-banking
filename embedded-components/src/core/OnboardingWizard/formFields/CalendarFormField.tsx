@@ -31,8 +31,8 @@ export function CalendarFormField({ name, form, labelToken, className }: any) {
                 <Button
                   variant="outline"
                   className={cn(
-                    'w-[240px] pl-3 text-left font-normal',
-                    !field.value && 'text-muted-foreground'
+                    'eb-w-[240px] eb-pl-3 eb-text-left eb-font-normal',
+                    !field.value && 'eb-text-muted-foreground'
                   )}
                 >
                   {field.value ? (
@@ -40,7 +40,7 @@ export function CalendarFormField({ name, form, labelToken, className }: any) {
                   ) : (
                     <span>Pick a date</span>
                   )}
-                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  <CalendarIcon className="eb-ml-auto eb-h-4 eb-w-4 eb-opacity-50" />
                 </Button>
               </FormControl>
             </PopoverTrigger>

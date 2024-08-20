@@ -57,12 +57,14 @@ const fromApiToForm = (client: ClientResponse) => {
       orgDetails.entitiesInOwnership = orgD.entitiesInOwnership
         ? 'true'
         : 'false';
-      orgDetails.phoneType = orgD?.phone?.phoneType || '';
-      orgDetails.countryCode = orgD?.phone?.countryCode || '';
-      orgDetails.businessPhone = orgD?.phone?.phoneNumber || '';
+
       orgDetails.websiteNotAvailable = orgD.websiteAvailable;
       orgDetails.website = orgD?.website;
       orgDetails.businessEmail = party.email;
+      // PHONE
+      orgDetails.phoneType = orgD?.phone?.phoneType || '';
+      orgDetails.countryCode = orgD?.phone?.countryCode || '';
+      orgDetails.businessPhone = orgD?.phone?.phoneNumber || '';
 
       orgD?.addresses?.forEach((address: AddressDtoSmbdo) => {
         orgDetails.addressType = address.addressType;
@@ -110,8 +112,11 @@ const fromApiToForm = (client: ClientResponse) => {
       indDetails.jobTitle = indD.jobTitle;
       indDetails.jobTitleDescription = indD.jobTitleDescription;
       indDetails.soleOwner = indD.soleOwner;
-      indDetails.countryCode = indD?.phone?.countryCode || '';
+
+      // PHONE
       indDetails.phone = indD?.phone?.phoneNumber || '';
+      indDetails.phoneType = indD?.phone?.phoneType || '';
+      indDetails.countryCode = indD?.phone?.countryCode || '';
 
       indD?.addresses?.forEach((address: AddressDtoSmbdo) => {
         indDetails.addressType = address.addressType;

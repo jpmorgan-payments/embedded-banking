@@ -4,6 +4,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Group,
   Select,
   SelectContent,
   SelectItem,
@@ -29,12 +30,12 @@ const IndustryFormField = ({
       ?.industryTypes?.sort() ?? [];
 
   return (
-    <>
+    <Group className="eb-w-full eb-justify-between eb-gap-6">
       <FormField
         control={form.control}
         name="industryCategory"
         render={({ field }) => (
-          <FormItem className="eb-mt-5">
+          <FormItem className="eb-mt-5 eb-w-full">
             {/* TODO:// MISIng content Type */}
             <FormLabel>Industry Category</FormLabel>
             <Select
@@ -79,7 +80,7 @@ const IndustryFormField = ({
         control={form.control}
         name="industryType"
         render={({ field }) => (
-          <FormItem className="eb-mt-5">
+          <FormItem className="eb-mt-5 eb-w-full">
             <FormLabel>Industry Type</FormLabel>
             <Select
               onValueChange={(value) => {
@@ -114,7 +115,7 @@ const IndustryFormField = ({
           </FormItem>
         )}
       />
-    </>
+    </Group>
   );
 };
 

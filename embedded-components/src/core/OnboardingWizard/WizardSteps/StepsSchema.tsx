@@ -95,7 +95,7 @@ const businessSchema = {
       name: 'organizationDescription',
       fieldType: 'textarea',
       labelToken: 'Business Description',
-      placeHolder: 'Descipe your business',
+      placeHolder: 'Describe your business',
       required: true,
     },
     {
