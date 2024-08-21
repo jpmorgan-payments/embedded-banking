@@ -242,4 +242,4 @@ try {
 }
 ```
 
-By following these guidelines and best practices, you can create a user-friendly and efficient linked account management process that leverages the power of the Embedded Payments API while providing a smooth user experience.E
+By following these guidelines and best practices, you can create a user-friendly and efficient linked account management process that leverages the power of the Embedded Payments API while providing a smooth user experience.
