@@ -1,3 +1,4 @@
+import { PhoneSmbdoPhoneType } from '@/api/generated/embedded-banking.schemas';
 import {
   FormControl,
   FormField,
@@ -13,21 +14,37 @@ import {
 
 // import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
-const countryList = [
-  { value: 'US', label: 'US' },
-  { value: 'Canada', label: 'Canada' },
-  { value: 'UK', label: 'UK' },
+const addressIndividualTypes: {
+  value: PhoneSmbdoPhoneType;
+  label: string;
+}[] = [
+  { value: 'BUSINESS_PHONE', label: 'Business' },
+  { value: 'MOBILE_PHONE', label: 'Mobile' },
+  { value: 'ALTERNATE_PHONE', label: 'Alternative' },
 ];
 
-const CountryFormField = ({
+const addressORganizationTypes: {
+  value: PhoneSmbdoPhoneType;
+  label: string;
+}[] = [
+  { value: 'BUSINESS_PHONE', label: 'Business' },
+  { value: 'MOBILE_PHONE', label: 'Mobile' },
+  { value: 'ALTERNATE_PHONE', label: 'Alternative' },
+];
+
+const PhoneTypeFormField = ({
   form,
   name,
   required,
   labelToken,
   placeholderToken,
   disabled,
+  type,
   className,
 }: any) => {
+  const setAddress =
+    type === 'individual' ? addressIndividualTypes : addressORganizationTypes;
+
   return (
     <FormField
       control={form.control}
@@ -41,10 +58,7 @@ const CountryFormField = ({
                 field.onChange(value);
                 // handleAccountTypeChange(value);
               }}
-              // defaultValue={field.value}
               value={field.value}
-              // value={ field?.value?.[0] || field.value}
-              // value={ field?.value?.[0] || field.value}
               disabled={disabled}
             >
               <FormControl>
@@ -55,7 +69,7 @@ const CountryFormField = ({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {countryList.map(({ value, label }: any) => {
+                {setAddress.map(({ value, label }: any) => {
                   return (
                     <SelectItem key={value} value={value}>
                       {label}
@@ -72,4 +86,4 @@ const CountryFormField = ({
   );
 };
 
-export { CountryFormField };
+export { PhoneTypeFormField };

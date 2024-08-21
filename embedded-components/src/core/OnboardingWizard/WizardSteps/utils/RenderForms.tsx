@@ -178,6 +178,7 @@ const RenderForms = ({
                     form,
                     defaultValue,
                     disabled,
+                    className: ' eb-col-end-4',
                   }}
                 />
               );
@@ -328,7 +329,7 @@ const RenderForms = ({
                     defaultValue,
                     type,
                     // TODO: classes are incorrect
-                    className: 'eb-col-start-1 eb-col-end-2 eb-col-span-2',
+                    className: '',
                   }}
                 />
               );

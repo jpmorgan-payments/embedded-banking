@@ -11,8 +11,8 @@ import {
 import { Form } from '@/components/ui/form';
 import { Group, Separator } from '@/components/ui';
 
-import { BusinessCommonForm } from '../Forms/BusinessCommonForm/BusinessCommonForm';
-import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
+// import { BusinessCommonForm } from '../Forms/BusinessCommonForm/BusinessCommonForm';
+// import { BusinessForm } from '../Forms/BusinessDetailsForm/BusinessDetailsForm';
 // import {
 //   businessDetailsSchema,
 //   BusinessDetailsStepValues,
@@ -31,6 +31,7 @@ type BusinessDetailsModalProps = {
   onCancel: any;
 };
 
+// TODO: This component is subject to change, via RenderForms, for edit view page
 const BusinessDetailsModal = ({
   formData,
   onCancel,
@@ -101,9 +102,9 @@ const BusinessDetailsModal = ({
         <DialogTitle>Edit business details</DialogTitle>
         <Form {...form}>
           <form noValidate onSubmit={form.handleSubmit(onSave)}>
-            <BusinessForm form={form} />
+            {/* <BusinessForm form={form} /> */}
             <Separator />
-            <BusinessCommonForm form={form} />
+            {/* <BusinessCommonForm form={form} /> */}
             <Group className="eb-m-4 eb-justify-center">
               <Button
                 onClick={onCancel}
