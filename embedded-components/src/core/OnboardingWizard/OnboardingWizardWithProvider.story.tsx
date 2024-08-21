@@ -2,6 +2,7 @@ import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
 import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
+import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
 import { partyWithMissingfields } from '@/mocks/efPartyWithMissingFields.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
@@ -269,6 +270,9 @@ export const NoThemeWithMocksLLCAnsweredQuestions: Story = {
         ...Primary?.parameters?.msw?.handlers,
         http.get('/ef/do/v1/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
+        }),
+        http.get('/ef/do/v1/documents/abcd1c1d-6635-43ff-a8e5-b252926bddef', () => {
+          return HttpResponse.json(efDocumentClientDetail);
         }),
       ],
     },

@@ -4,6 +4,7 @@ import { IconExternalLink } from '@tabler/icons-react';
 import { useFormContext } from 'react-hook-form';
 
 import {
+  useGetDocumentDetails,
   useSmbdoDownloadDocument,
   useSmbdoGetAllDocumentDetails,
   useSmbdoPostClientVerifications,
@@ -30,6 +31,7 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useStepper } from '../../Stepper/useStepper';
 // import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
+import { useGetDataByClientId } from '../hooks';
 
 // import { PdfDisplay } from './PdfDisplay';
 
@@ -41,7 +43,7 @@ const AttestationStep = () => {
   const [check, setCheck] = useState(false);
 
   const {
-    mutate: postVerifaction,
+    mutate: postVerification,
     isError,
     data,
     isPending,
@@ -69,18 +71,22 @@ const AttestationStep = () => {
   // TODO: REmove the onboardingForm
   const { onboardingForm }: any = useOnboardingForm();
   const [, setDocs] = useState<any>(null);
-  const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
-    clientId: onboardingForm?.id || clientId,
-  });
-
+  const { data: clientData } = useGetDataByClientId();
+  // const { data: verifications }: any = useSmbdoGetAllDocumentDetails({
+  //   clientId: onboardingForm?.id || clientId,
+  // });
+  const { data: DocumentDetail } = useGetDocumentDetails(
+    clientData?.outstanding.attestationDocumentIds?.[0] ?? ''
+  );
   // const { data: clientData } = useSmbdoGetClient(
   //   (clientId || onboardingForm?.id) as string
   // );
+  console.log('@@verifications', clientData, DocumentDetail);
 
   // TODO: we need to list this?
-  const termsAndConditionsDocId = verifications?.documentDetails?.find(
-    (item: any) => item.documentType === 'TERMS_CONDITIONS'
-  )?.id;
+  // const termsAndConditionsDocId = verifications?.documentDetails?.find(
+  //   (item: any) => item.documentType === 'TERMS_CONDITIONS'
+  // )?.id;
   // const disclosureAndConsentDocId = verifications?.documentDetails?.find(
   //   (item: any) => item.documentType === 'DISCLOSURE_AND_CONSENT'
   // )?.documentId;
@@ -88,7 +94,7 @@ const AttestationStep = () => {
 
   // useEffect(() => {
   //   const fetch = async () => {
-  //     const verifications: any = await mutateAsync({ id: onboardingForm.id });
+  //     // const verifications: any = await mutateAsync({ id: onboardingForm.id });
 
   //     const termsAndConditionsDocId = verifications?.attestations?.find(
   //       (item: any) => item.documentType === 'TERMS_CONDITION'
@@ -107,20 +113,20 @@ const AttestationStep = () => {
   // }, []);
 
   const attestationID: string[] | undefined = onboardingForm?.attestations;
-  const { data: termsAndConditionsDoc }: any =
-    // TODO: We need to resolve the type undefined on attestionID
-    useSmbdoDownloadDocument(
-      (termsAndConditionsDocId || attestationID?.[0]) ?? ''
-    );
+  // const { data: termsAndConditionsDoc }: any =
+  //   // TODO: We need to resolve the type undefined on attestionID
+  //   useSmbdoDownloadDocument(
+  //     (termsAndConditionsDocId || attestationID?.[0]) ?? ''
+  //   );
 
-  useEffect(() => {
-    const newBlob = new Blob([termsAndConditionsDoc], {
-      type: 'application/pdf',
-    });
-    const urlBlob = URL.createObjectURL(newBlob);
+  // useEffect(() => {
+  //   const newBlob = new Blob([termsAndConditionsDoc], {
+  //     type: 'application/pdf',
+  //   });
+  //   const urlBlob = URL.createObjectURL(newBlob);
 
-    setDocs(urlBlob);
-  }, [termsAndConditionsDoc]);
+  //   setDocs(urlBlob);
+  // }, [termsAndConditionsDoc]);
 
   // const { data: disclosureAndConsentDoc } = useSmbdoDownloadDocument(
   //   disclosureAndConsentDocId
@@ -136,7 +142,7 @@ const AttestationStep = () => {
   // }, [isSuccess]);
 
   const onSubmit = () => {
-    postVerifaction({ id: clientId ?? '' });
+    postVerification({ id: clientId ?? '' });
   };
 
   // const organizationType =
@@ -168,29 +174,6 @@ const AttestationStep = () => {
 
       {/* <Form {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)}> */}
-      <Stack className="eb-mt-10">
-        <FormField
-          control={form.control}
-          name="attestedAuthorized"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={() => {
-                    setCheck(true);
-                  }}
-                  disabled={!TAC || !EDC}
-                />
-              </FormControl>
-              <FormLabel className="eb-p-3">
-                By checking the box, I acknowledge and agree to the following:
-              </FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </Stack>
 
       <Stack className="eb-mt-4 eb-pl-6">
         <ul className="eb-list-outside eb-list-[square] eb-space-y-2">
@@ -244,6 +227,29 @@ const AttestationStep = () => {
             </Group>
           </li>
         </ul>
+      </Stack>
+      <Stack className="eb-mt-10">
+        <FormField
+          control={form.control}
+          name="attestedAuthorized"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={() => {
+                    setCheck(true);
+                  }}
+                  disabled={!TAC || !EDC}
+                />
+              </FormControl>
+              <FormLabel className="eb-p-3">
+                By checking the box, I acknowledge and agree to the above:
+              </FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </Stack>
       <Text>{form.getValues().error}</Text>
 
