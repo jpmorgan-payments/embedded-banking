@@ -192,7 +192,9 @@ const VerifyMicrodepositsForm = ({ recipientId }) => {
   const onSubmit = (data) => {
     verifyMicrodeposits({
       id: recipientId,
-      amounts: [parseFloat(data.amount1), parseFloat(data.amount2)],
+      data: {
+        amounts: [parseFloat(data.amount1), parseFloat(data.amount2)],
+      }
     });
   };
 
