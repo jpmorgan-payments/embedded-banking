@@ -7,7 +7,7 @@ type NavigationButtonsProps = {
   disableNext?: boolean;
   disabled?: boolean;
   lastStep?: boolean;
-};
+} & React.PropsWithChildren;
 
 const NavigationButtons = ({
   activeStep,
@@ -15,7 +15,7 @@ const NavigationButtons = ({
   onSubmit,
   disableNext,
   disabled,
-  lastStep,
+  children,
 }: NavigationButtonsProps) => {
   return (
     <div className="eb-mt-20 eb-grid eb-grid-cols-2">
@@ -43,7 +43,7 @@ const NavigationButtons = ({
           }}
           disabled={disableNext || disabled}
         >
-          {lastStep ? 'Submit' : 'Next'}
+          {children ? children : 'Next'}
         </Button>
       </div>
     </div>
