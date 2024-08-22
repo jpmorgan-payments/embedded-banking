@@ -48,7 +48,7 @@ sequenceDiagram
 ### Hooks
 
 ```typescript
-const { mutate: addLinkedAccount } = useAddLinkedAccount();
+const { mutate: createRecipient } = useCreateRecipient();
 ```
 
 ### UX Best Practices
@@ -72,19 +72,36 @@ const AddLinkedAccountForm = () => {
     resolver: yupResolver(linkedAccountSchema),
   });
 
-  const { mutate: addLinkedAccount } = useAddLinkedAccount();
+  const { mutate: createRecipient } = useCreateRecipient();
 
   const onSubmit = (data) => {
-    addLinkedAccount({
-      clientId: currentClientId,
-      partyId: currentPartyId,
-      account: {
-        number: data.accountNumber,
-        type: data.accountType,
-        routingNumber: data.routingNumber,
-        // ... other fields
+    createRecipient({
+      data: {
+        type: 'LINKED_ACCOUNT',
+        partyDetails: {
+          type: data.accountType, // e.g. 'INDIVIDUAL' or 'ORGANIZATION'
+          ...(data.accountType === 'INDIVIDUAL'
+            ? {
+                firstName: data.firstName,
+                lastName: data.lastName,
+              }
+            : {
+                businessName: data.businessName,
+              }),
+        },
+        account: {
+          type: 'CHECKING', // Always 'CHECKING' for linked accounts
+          number: data.accountNumber,
+          routingInformation: [
+            {
+              routingCodeType: 'USABA',
+              routingNumber: data.routingNumber,
+              transactionType: 'ACH'
+            },
+          ],
+          countryCode: 'US',
+        },
       },
-      recipientType: 'LINKED_ACCOUNT',
     });
   };
 
@@ -106,7 +123,7 @@ const AddLinkedAccountForm = () => {
 ### Hooks
 
 ```typescript
-const { data: recipientStatus } = useGetRecipientStatus(recipientId);
+const { data: recipient } = useGetRecipient(recipientId);
 ```
 
 ### UX Best Practices
@@ -119,13 +136,13 @@ const { data: recipientStatus } = useGetRecipientStatus(recipientId);
 
 ```tsx
 const VerificationStatus = ({ recipientId }) => {
-  const { data: status } = useGetRecipientStatus(recipientId);
+  const { data: recipient } = useGetRecipient(recipientId);
 
-  if (status === 'ACTIVE') {
+  if (recipient.status === 'ACTIVE') {
     return <div>Your account has been verified and is ready to use.</div>;
   }
 
-  if (status === 'MICRODEPOSITS_INITIATED') {
+  if (recipient.status === 'MICRODEPOSITS_INITIATED') {
     return (
       <div>
         <p>We've initiated two small deposits to your account for verification.</p>
@@ -148,7 +165,7 @@ const VerificationStatus = ({ recipientId }) => {
 ### Hooks
 
 ```typescript
-const { mutate: verifyMicrodeposits } = useVerifyMicrodeposits();
+const { mutate: verifyMicrodeposits } = useRecipientsVerifications();
 ```
 
 ### UX Best Practices
@@ -170,12 +187,14 @@ const VerifyMicrodepositsForm = ({ recipientId }) => {
     resolver: yupResolver(microdepositsSchema),
   });
 
-  const { mutate: verifyMicrodeposits } = useVerifyMicrodeposits();
+  const { mutate: verifyMicrodeposits } = useRecipientsVerifications();
 
   const onSubmit = (data) => {
     verifyMicrodeposits({
-      recipientId,
-      amounts: [parseFloat(data.amount1), parseFloat(data.amount2)],
+      id: recipientId,
+      data: {
+        amounts: [parseFloat(data.amount1), parseFloat(data.amount2)],
+      }
     });
   };
 
