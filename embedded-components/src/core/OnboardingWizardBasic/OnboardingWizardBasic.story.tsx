@@ -131,7 +131,7 @@ export const NoThemeWithPDPAPIs: Story = {
     apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
     clientId: '123',
   },
-}
+};
 
 export const IndividualStep: Story = {
   name: 'Individual step',
