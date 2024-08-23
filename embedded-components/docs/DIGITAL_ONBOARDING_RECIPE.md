@@ -6,9 +6,10 @@ This document is a draft and is currently being updated. Information contained h
 
 ## APIs Workflows Recipes Background
 
-API calls rarely comes alone. It's far common for a business capability to require a series of steps, overwise known as workflow. But how do you create a user-friendly and efficient digital experience specifically tailored to your business needs and getting to the value faster and with less effort? 
+API calls rarely comes alone. It's far common for a business capability to require a series of steps, overwise known as workflow. But how do you create a user-friendly and efficient digital experience specifically tailored to your business needs and getting to the value faster and with less effort?
 
 There are multiple ways how API provider could help API consumer to develop a API workflows and get to value faster and with less efforts:
+
 - Fully Hosted UI - API Provider/Creator of the Embedded Component is responsible for hosting the UI and the APIs and cover infrastructure and security risks. Ultimate component should be fully tested and certified for the production use.
 - Runtime client or server side UI injection - iframes, server side composition, or client side composition (module federation)
 - Embedded UI Components - build time UI injection - published as a npm package
@@ -464,6 +465,47 @@ const { data: clientData } = useGetClient(clientId);
 const { mutate: updateClient } = useUpdateClient();
 ```
 
+---
+
+## Attestation
+
+- Use `GET /clients/:id` to fetch all client data for to find out the outstanding attestionDocumentIds.
+  -- A list of of documents that needs to be engaged with.
+- Use `GET /documents/${id}` to fetch a list of documents that are required for the client
+- Use `/documents/${id}/file` to download the document, the document is binary, and required to be converted to BLOB via intercept, or any logical way that return responseType = blob
+
+```typescript
+AXIOS_INSTANCE.interceptors.request.use(
+  (config: any) => {
+    if (config.url.includes('/file')) {
+      config.responseType = 'blob';
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+```
+
+```typescript
+const newBlob = new Blob([downloadDocument], {
+  type: 'application/pdf',
+});
+const urlBlob = URL.createObjectURL(newBlob);
+```
+
+### Hooks
+
+```typescript
+const { data: clientData } = useGetClient(clientId);
+const { mutate: updateClient } = useGetDocumentDetails(attestionDocumentId);
+const { data: downloadDocument } = useSmbdoDownloadDocument(
+  termsAndConditionsDocId
+);
+```
+
 ### UX Best Practices
 
 - Present a clear summary of all provided information.
@@ -484,6 +526,8 @@ const { mutate: updateClient } = useUpdateClient();
 ```typescript
 const { mutate: triggerVerification } = useTriggerVerification();
 const { data: clientData } = useGetClient(clientId);
+
+triggerVerification();
 ```
 
 ### UX Best Practices
