@@ -4,8 +4,8 @@ import { IconExternalLink } from '@tabler/icons-react';
 import { useFormContext } from 'react-hook-form';
 
 import {
-  useGetDocumentDetails,
   useSmbdoDownloadDocument,
+  useSmbdoGetDocumentDetail,
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
 import { useToast } from '@/components/ui/use-toast';
@@ -69,11 +69,10 @@ const AttestationStep = () => {
   const [doc, setDocs] = useState<any>(null);
   const { data: clientData } = useGetDataByClientId();
 
-  const { data: DocumentDetail } = useGetDocumentDetails(
+  const { data: DocumentDetail } = useSmbdoGetDocumentDetail(
     clientData?.outstanding.attestationDocumentIds?.[0] ?? ''
   );
 
-  // @ts-ignore
   const termsAndConditionsDocId = DocumentDetail?.documentDetails?.find(
     (item: any) => item.documentType === 'TERMS_CONDITIONS'
   )?.id;
