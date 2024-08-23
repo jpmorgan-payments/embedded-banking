@@ -2,12 +2,14 @@ import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
 import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
+import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
 import { partyWithMissingfields } from '@/mocks/efPartyWithMissingFields.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
+import termsPDF from '../../../public/asset/docs/placeholder.pdf';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OboardingWizard';
 
@@ -63,7 +65,7 @@ const OnboardingWizardWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardWithProvider> = {
-  title: 'Onboarding Wizard with EBComponentsProvider',
+  title: 'Onboarding Wizard / General',
   component: OnboardingWizardWithProvider,
 };
 export default meta;
@@ -71,7 +73,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardWithProvider>;
 
 export const Primary: Story = {
-  name: 'Basic OnboardingWizard with EBComponentsProvider',
+  name: 'Basic OnboardingWizard',
   args: {
     apiBaseUrl: '/',
     clientId: '0030000132',
@@ -92,6 +94,9 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
+        http.get('/ef/do/v1/clients/0030000132', () => {
+          return HttpResponse.json(efClientSolProp);
+        }),
         http.get('/ef/do/v1/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
@@ -103,13 +108,34 @@ export const Primary: Story = {
             ),
           });
         }),
+
+        http.get('/ef/v1/documents/:id', () => {
+          return HttpResponse.json(efDocumentClientDetail);
+        }),
+
+        http.get('/ef/do/v1/documents/:id/file', async () => {
+          const bufferBlob = await fetch(termsPDF).then((res) =>
+            res.arrayBuffer()
+          );
+
+          return HttpResponse.arrayBuffer(bufferBlob, {
+            headers: {
+              'Content-Type': 'applications/pdf',
+              'Content-Length': bufferBlob.byteLength.toString(),
+            },
+          });
+        }),
+
+        http.post('/ef/do/v1/clients/:id/verifications', () => {
+          return HttpResponse.json({ success: 'TRUE' });
+        }),
       ],
     },
   },
 };
 
 export const NoClient: Story = {
-  name: 'Basic OnboardingWizard with EBComponentsProvider without ClientId',
+  name: 'Basic OnboardingWizard without ClientId',
   args: {
     apiBaseUrl: '/',
     clientId: '',
@@ -130,6 +156,9 @@ export const NoClient: Story = {
   parameters: {
     msw: {
       handlers: [
+        http.get('/ef/do/v1/clients/0030000132', () => {
+          return HttpResponse.json(efClientSolProp);
+        }),
         http.get('/ef/do/v1/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
@@ -267,6 +296,7 @@ export const NoThemeWithMocksLLCAnsweredQuestions: Story = {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
+
         http.get('/ef/do/v1/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),

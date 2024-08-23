@@ -21,6 +21,7 @@ const IndustryFormField = ({
   // labelToken,
   // placeholderToken,
 }: any) => {
+  // TODO: Add a hook to fetch types as mock
   const industryTypes =
     industryCategories?.items
       ?.find?.(

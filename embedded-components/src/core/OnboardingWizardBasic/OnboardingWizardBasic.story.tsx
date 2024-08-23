@@ -194,9 +194,6 @@ export const ReviewAndAttestNoOustanding: Story = {
         http.post('/ef/do/v1/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
-        http.post('/ef/do/v1/clients/0030000130/verifications', () => {
-          return HttpResponse.json({});
-        }),
       ],
     },
   },
