@@ -54,8 +54,8 @@ export const Example1: Story = {
     title: 'Onboarding (Different font)',
     theme: {
       variables: {
-        primaryColor: 'magenta',
-        borderRadius: '30px',
+        primaryColor: 'teal',
+        borderRadius: '15px',
         fontFamily: 'Nunito sans',
       },
     },
