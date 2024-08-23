@@ -9,14 +9,12 @@ import {
   useSmbdoPostClientVerifications,
 } from '@/api/generated/embedded-banking';
 import { useToast } from '@/components/ui/use-toast';
-
 import { Checkbox, Group, Label, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import NavigationButtons from '../../Stepper/NavigationButtons';
 
+import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
-
 // import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
@@ -88,7 +86,6 @@ const AttestationStep = () => {
 
   useEffect(() => {
     if (disclosureAndConsentDoc) {
-     
       // @ts-ignore
       const newBlob = new Blob([disclosureAndConsentDoc], {
         type: 'application/pdf',
