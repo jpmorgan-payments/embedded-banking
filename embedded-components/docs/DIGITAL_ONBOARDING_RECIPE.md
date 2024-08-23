@@ -500,7 +500,7 @@ const urlBlob = URL.createObjectURL(newBlob);
 
 ```typescript
 const { data: clientData } = useGetClient(clientId);
-const { mutate: updateClient } = useGetDocumentDetails(attestionDocumentId);
+const { mutate: updateClient } = useSmbdoGetDocumentDetail(attestionDocumentId);
 const { data: downloadDocument } = useSmbdoDownloadDocument(
   termsAndConditionsDocId
 );
