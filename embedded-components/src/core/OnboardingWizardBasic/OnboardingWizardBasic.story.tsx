@@ -75,12 +75,6 @@ export const Primary: Story = {
     clientId: '',
     apiBaseUrl: '/',
     title: 'Onboarding Wizard Basic',
-    theme: {
-      variables: {
-        primaryColor: 'teal',
-        borderRadius: '15px',
-      },
-    },
     onPostClientResponse: (data, error) => {
       if (data) {
         console.log('@@POST client response data', data);
@@ -129,7 +123,17 @@ export const WithClientId: Story = {
   },
 };
 
-export const initialStep: Story = {
+export const NoThemeWithPDPAPIs: Story = {
+  name: 'No theme with PDP mocked APIs',
+  ...Primary,
+  args: {
+    ...Primary.args,
+    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
+    clientId: '123',
+  },
+};
+
+export const IndividualStep: Story = {
   name: 'Individual step',
   ...WithClientId,
   args: {
