@@ -43,7 +43,7 @@ const NavigationButtons = ({
           }}
           disabled={disableNext || disabled}
         >
-          {children ? children : 'Next'}
+          {children || 'Next'}
         </Button>
       </div>
     </div>
