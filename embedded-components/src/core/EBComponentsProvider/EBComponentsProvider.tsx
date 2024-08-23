@@ -15,15 +15,16 @@ const queryClient = new QueryClient();
 
 export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   children,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apiBaseUrl,
   headers = {},
   theme = {},
 }) => {
-  const [interceptor, setInterceptor] = useState(0);
-
-  // Used to track queries reset
   const [currentInterceptor, setCurrentInterceptor] = useState(0);
+
+  useEffect(() => {
+    AXIOS_INSTANCE.interceptors.request.clear();
+    setCurrentInterceptor(0);
+  }, []);
 
   useEffect(() => {
     AXIOS_INSTANCE.interceptors.request.use(
@@ -38,11 +39,11 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
         return Promise.reject(error);
       }
     );
-  }, []);
+  }, [AXIOS_INSTANCE]);
 
   useEffect(() => {
-    if (interceptor) {
-      AXIOS_INSTANCE.interceptors.request.eject(interceptor);
+    if (currentInterceptor) {
+      AXIOS_INSTANCE.interceptors.request.eject(currentInterceptor);
     }
     const ebInterceptor = AXIOS_INSTANCE.interceptors.request.use(
       (config: any) => {
@@ -57,18 +58,16 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
       }
     );
 
-    setInterceptor(ebInterceptor);
+    setCurrentInterceptor(ebInterceptor);
+
+    // return AXIOS_INSTANCE.interceptors.request.eject(ebInterceptor);
   }, [JSON.stringify(headers), apiBaseUrl]);
 
   useEffect(() => {
-    if (interceptor !== currentInterceptor) {
-      const resetQueries = async () => {
-        await queryClient.cancelQueries();
-        await queryClient.resetQueries();
-      };
-      resetQueries().then(() => setCurrentInterceptor(interceptor));
+    if (currentInterceptor) {
+      queryClient.resetQueries();
     }
-  }, [interceptor, currentInterceptor]);
+  }, [currentInterceptor, queryClient]);
 
   useEffect(() => {
     const root = window.document.documentElement;
