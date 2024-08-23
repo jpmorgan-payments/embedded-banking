@@ -117,7 +117,7 @@ export const efClientSolProp: ClientResponse = {
   partyId: '2000000111',
   products: ['EMBEDDED_PAYMENTS'],
   outstanding: {
-    attestationDocumentIds: [],
+    attestationDocumentIds: ['abcd1c1d-6635-43ff-a8e5-b252926bddef'],
     documentRequestIds: [],
     partyIds: ['2000000112'],
     partyRoles: [],
