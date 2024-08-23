@@ -20,7 +20,10 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   headers = {},
   theme = {},
 }) => {
-  const [interceptor, setInterceptor] = useState<number | undefined>();
+  const [interceptor, setInterceptor] = useState(0);
+
+  // Used to track queries reset
+  const [currentInterceptor, setCurrentInterceptor] = useState(0);
 
   useEffect(() => {
     AXIOS_INSTANCE.interceptors.request.use(
@@ -58,11 +61,14 @@ export const EBComponentsProvider: React.FC<EBComponentsProviderProps> = ({
   }, [JSON.stringify(headers), apiBaseUrl]);
 
   useEffect(() => {
-    const resetQueries = async () => {
-      await queryClient.resetQueries();
-    };
-    resetQueries();
-  }, [interceptor]);
+    if (interceptor !== currentInterceptor) {
+      const resetQueries = async () => {
+        await queryClient.cancelQueries();
+        await queryClient.resetQueries();
+      };
+      resetQueries().then(() => setCurrentInterceptor(interceptor));
+    }
+  }, [interceptor, currentInterceptor]);
 
   useEffect(() => {
     const root = window.document.documentElement;
