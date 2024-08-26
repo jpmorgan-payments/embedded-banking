@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { Separator } from '@radix-ui/react-select';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -10,7 +12,11 @@ import {
 import { ClientStatus } from '@/api/generated/embedded-banking.schemas';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Box, Title } from '@/components/ui';
 
+import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
+import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
+import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 
 const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
@@ -47,6 +53,10 @@ const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
 
 export const ClientStateStep = () => {
   const { data: clientData, isLoading } = useGetDataByClientId();
+
+  const clientDataForm = useMemo(() => {
+    return clientData && fromApiToForm(clientData);
+  }, [clientData]);
 
   if (isLoading) {
     return <div>Loading client information...</div>;
@@ -92,7 +102,10 @@ export const ClientStateStep = () => {
               Organization:
             </span>
             <span className="eb-text-sm eb-font-bold">
-              {businessDetails?.organizationDetails?.organizationName || 'N/A'}
+              {businessDetails?.organizationDetails?.organizationName?.replace(
+                /_/,
+                ' '
+              ) || 'N/A'}
             </span>
           </div>
           <div className="eb-flex eb-items-center eb-justify-between">
@@ -100,7 +113,10 @@ export const ClientStateStep = () => {
               Organization Type:
             </span>
             <span className="eb-text-sm eb-font-bold">
-              {businessDetails?.organizationDetails?.organizationType || 'N/A'}
+              {businessDetails?.organizationDetails?.organizationType?.replace(
+                /_/,
+                ' '
+              ) || 'N/A'}
             </span>
           </div>
 
@@ -131,6 +147,29 @@ export const ClientStateStep = () => {
             )}
           </div>
         </div>
+
+        <Box className="eb-space-y-4">
+          <CardReviewBusiness data={clientDataForm} type="organization" />
+        </Box>
+        <Separator />
+        <Title as="h5" className="eb-my-2 eb-uppercase">
+          Management Ownership
+        </Title>
+        <Box className="eb-grid-cols-3">
+          {Object.entries(clientDataForm.individualDetails).map(
+            ([key, val]: any) => {
+              console.log('@@val', val);
+
+              return (
+                <CardReviewIndividual
+                  data={val}
+                  type="organization"
+                  key={key}
+                />
+              );
+            }
+          )}
+        </Box>
       </CardContent>
     </Card>
   );
