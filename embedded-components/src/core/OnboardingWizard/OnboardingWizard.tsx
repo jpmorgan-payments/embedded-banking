@@ -27,7 +27,6 @@ export interface OnboardingWizardInitProps extends RootConfig {
   }) => void;
 }
 
-//TODO: props types needs to have
 const OnboardingWizard = ({
   clientId,
   onPostClientsVerification,

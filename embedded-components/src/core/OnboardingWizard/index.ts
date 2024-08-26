@@ -1,1 +1,1 @@
-export { OnboardingWizard } from './OboardingWizard';
+export { OnboardingWizard } from './OnboardingWizard';
