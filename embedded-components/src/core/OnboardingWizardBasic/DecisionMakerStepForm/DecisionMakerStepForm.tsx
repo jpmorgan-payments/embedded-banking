@@ -361,7 +361,7 @@ export const DecisionMakerStepForm = () => {
                 <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-3">
                   <FormField
                     control={form.control}
-                    name="individuaPhone.phoneType"
+                    name="individualPhone.phoneType"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Phone Type</FormLabel>
@@ -392,7 +392,7 @@ export const DecisionMakerStepForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="individuaPhone.countryCode"
+                    name="individualPhone.countryCode"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Country Code</FormLabel>
@@ -405,7 +405,7 @@ export const DecisionMakerStepForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="individuaPhone.phoneNumber"
+                    name="individualPhone.phoneNumber"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Phone Number</FormLabel>

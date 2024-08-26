@@ -68,7 +68,7 @@ export const IndividualStepFormSchema = z.object({
   individualIds: z.array(individualIdSchema).max(16),
   jobTitle: z.string(),
   jobTitleDescription: z.string().max(50).optional(),
-  individuaPhone: phoneSchema,
+  individualPhone: phoneSchema,
   natureOfOwnership: z.enum(['Direct', 'Indirect']).optional(),
   soleOwner: z.boolean().optional(),
 });
