@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
@@ -69,7 +69,7 @@ type OnboardingWizardBasicProps = {
     error?: ApiErrorV2
   ) => void;
   initialStep?: number;
-  variant?: 'circle' | 'line';
+  variant?: 'circle' | 'circle-alt' | 'line';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
