@@ -92,7 +92,10 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   const [steps, setSteps] = useState<StepProps[]>([]);
 
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
+    const handleBeforeUnload = (event: {
+      preventDefault: () => void;
+      returnValue: boolean;
+    }) => {
       event.preventDefault();
       // Included for legacy support, e.g. Chrome/Edge < 119
       event.returnValue = true;
