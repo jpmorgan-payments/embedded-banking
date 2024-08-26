@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
 import {
@@ -90,6 +90,20 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   });
 
   const [steps, setSteps] = useState<StepProps[]>([]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      // Included for legacy support, e.g. Chrome/Edge < 119
+      event.returnValue = true;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     setSteps(
