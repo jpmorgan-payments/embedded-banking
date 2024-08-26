@@ -1,0 +1,31 @@
+name: Monthly Data Collation
+
+# Schedule to run at 00:00 on the 1st day of each month
+on:
+  schedule:
+    - cron: "52 13 1 * *" # Runs at 13:52 on the 1st day of every month
+
+  # Allows the workflow to be triggered manually
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./metrics/monthly_scripts
+    steps:
+      # Step to checkout the repository
+      - uses: actions/checkout@v4
+        with:
+          ref: metrics
+
+      # Step to run the shell script
+      - name: Run shell script - Monthly Clones
+        run: |
+          chmod +x monthly_clones.sh
+          ./monthly_clones.sh $(date +'%Y-%m')
+      - name: Run shell script - Monthly Clones
+        run: |
+          chmod +x monthly_traffic.sh
+          ./monthly_traffic.sh $(date +'%Y-%m')
