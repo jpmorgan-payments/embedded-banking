@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
+import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
@@ -18,25 +18,22 @@ import {
   getIndividualByRole,
   getIndividualDetailsByRole,
 } from '../utils/getIndividualDetailsByRole';
+
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
 
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
-  const { isMock, clientId } = useRootConfig();
+  const { clientId } = useRootConfig();
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
   const { setError } = useError();
 
-  // const { getContentToken: ownerConter } = useContentData(
-  //   'schema.businessOwnerFormSchema'
-  // );
-
   const { data } = useGetDataByClientId();
 
-  const { mutateAsync: updateController, isPending: createPartyisPending } =
+  const { mutateAsync: updateController, isPending: createPartyIsPending } =
     useSmbdoUpdateClient();
 
   const clientDataForm = useMemo(() => {
@@ -47,6 +44,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
     clientDataForm,
     'CONTROLLER'
   )?.[0];
+
   const indControllerData = getIndividualByRole(
     clientDataForm,
     'CONTROLLER'
@@ -57,7 +55,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [yupSchema]);
 
   useEffect(() => {
-    if (clientDataForm && !isMock) {
+    if (clientDataForm) {
       if (indController) {
         updateFormValues(indController, form.setValue);
         form.setValue('individualEmail', indController.email);
@@ -105,9 +103,6 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
 
         setCurrentStep(activeStep + 1);
       } catch (error) {
-        if (isMock) {
-          setCurrentStep(activeStep + 1);
-        }
         setError(true);
       }
     }
@@ -138,7 +133,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={createPartyisPending}
+          disabled={createPartyIsPending}
         />
       </form>
     </Stack>

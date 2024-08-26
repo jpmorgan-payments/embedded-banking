@@ -10,7 +10,7 @@ import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useError } from './context/error.context';
-import { FormProvider } from './context/formProvider.contex';
+import { FormProvider } from './context/formProvider.context';
 // import { useIPAddress } from './hooks/getIPAddress';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';

@@ -158,8 +158,6 @@ export const ClientStateStep = () => {
         <Box className="eb-grid-cols-3">
           {Object.entries(clientDataForm.individualDetails).map(
             ([key, val]: any) => {
-              console.log('@@val', val);
-
               return (
                 <CardReviewIndividual
                   data={val}

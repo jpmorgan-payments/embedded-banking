@@ -6,15 +6,11 @@ import { Box, Separator, Title } from '@/components/ui';
 
 import { CalendarFormField } from '../../formFields/CalendarFormField';
 import { CheckBoxListFormFields } from '../../formFields/CheckboxListFormFields';
-// import { AddressFormFields } from '../../formFields/AddressFormFields';
 import { CountryFormField } from '../../formFields/CountryFormField';
 import { DobFormField } from '../../formFields/DobFormField';
 import { EinFormField } from '../../formFields/EinFormField';
-// import { IndustryFormField } from '../../formFields/IndustryFormField';
 import { InputFormField } from '../../formFields/InputFormField';
 import { JobTitlesFormField } from '../../formFields/JobTitlesFormField';
-// eslint-disable-next-line
-// import { OrgTypeFormField } from '../../formFields/OrgTypeFormField';
 import { PhoneFormField } from '../../formFields/PhoneFormField';
 import {
   SelectFormField,
@@ -23,7 +19,6 @@ import {
 import { SsnFormField } from '../../formFields/SsnFormField';
 import { TextareaFormField } from '../../formFields/TextareaFormField';
 import { UsStatesFormField } from '../../formFields/UsStatesFormField';
-// import { WebsiteFromField } from '../../formFields/WebsiteFormField';
 import { YesNoFromField } from '../../formFields/YesNoFromField';
 
 export interface QuestionSchema extends SelectFormFieldProps {

@@ -2,10 +2,9 @@ import { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
-// import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Separator, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
+import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/useStepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
@@ -27,7 +26,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { data } = useGetDataByClientId();
   const clientDataForm = data && fromApiToForm(data);
 
-  const { mutateAsync: updateController, isPending: createPartyisPending } =
+  const { mutateAsync: updateController, isPending: createPartyIsPending } =
     useSmbdoUpdateClient();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -37,9 +36,9 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   useEffect(() => {
     if (clientDataForm) {
-      const orgDtail = getOrgDetails(clientDataForm);
+      const orgDetail = getOrgDetails(clientDataForm);
 
-      updateFormValues(orgDtail, form.setValue);
+      updateFormValues(orgDetail, form.setValue);
     }
   }, [clientDataForm?.id]);
 
@@ -101,7 +100,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={createPartyisPending}
+          disabled={createPartyIsPending}
         />
       </form>
     </Stack>

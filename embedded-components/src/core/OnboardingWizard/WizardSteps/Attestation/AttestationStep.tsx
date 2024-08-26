@@ -15,7 +15,6 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
-// import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 
@@ -49,8 +48,8 @@ const AttestationStep = () => {
     mutation: {
       onSuccess: () => {
         toast({
-          title: 'Oboarding Complete',
-          description: 'Attestion submmited. Thank you.',
+          title: 'Onboarding Complete',
+          description: 'Attestation submitted. Thank you.',
         });
       },
       onError: () => {
