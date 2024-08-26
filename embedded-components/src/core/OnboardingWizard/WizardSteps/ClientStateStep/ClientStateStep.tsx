@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -11,7 +10,6 @@ import {
 import { ClientStatus } from '@/api/generated/embedded-banking.schemas';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useGetDataByClientId } from '../hooks';
 
@@ -48,7 +46,6 @@ const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
   };
 
 export const ClientStateStep = () => {
-  const { clientId } = useRootConfig();
   const { data: clientData, isLoading } = useGetDataByClientId();
 
   if (isLoading) {
