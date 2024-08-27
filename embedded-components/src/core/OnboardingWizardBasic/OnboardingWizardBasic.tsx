@@ -69,7 +69,7 @@ type OnboardingWizardBasicProps = {
     error?: ApiErrorV2
   ) => void;
   initialStep?: number;
-  variant?: 'circle' | 'line';
+  variant?: 'circle' | 'circle-alt' | 'line';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
@@ -90,6 +90,23 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   });
 
   const [steps, setSteps] = useState<StepProps[]>([]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: {
+      preventDefault: () => void;
+      returnValue: boolean;
+    }) => {
+      event.preventDefault();
+      // Included for legacy support, e.g. Chrome/Edge < 119
+      event.returnValue = true;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     setSteps(

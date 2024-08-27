@@ -46,5 +46,5 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   natureOfOwnership: 'individualDetails.natureOfOwnership',
   soleOwner: 'individualDetails.soleOwner',
   individualAddresses: 'individualDetails.addresses',
-  individuaPhone: 'individualDetails.phone',
+  individualPhone: 'individualDetails.phone',
 };
