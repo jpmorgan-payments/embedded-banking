@@ -27,7 +27,7 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   mcc: 'organizationDetails.mcc',
   addresses: 'organizationDetails.addresses',
   associatedCountries: 'organizationDetails.associatedCountries',
-  jurisdiction: 'organizationDetails.jurisdiction',
+  jurisdiction: 'jurisdiction',
   organizationIds: 'organizationDetails.organizationIds',
   phone: 'organizationDetails.phone',
   tradeOverInternet: 'organizationDetails.tradeOverInternet',

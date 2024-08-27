@@ -53,7 +53,10 @@ export const OrganizationStepForm = () => {
     resolver: zodResolver(OrganizationStepFormSchema),
     defaultValues: {
       organizationName: '',
-      organizationType: 'C_CORPORATION',
+      dbaName: '',
+      organizationDescription: '',
+      organizationType: undefined,
+      jurisdiction: '',
       countryOfFormation: '',
       addresses: [
         {
@@ -189,6 +192,11 @@ export const OrganizationStepForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>Organization name</FormLabel>
+                <FormDescription>
+                  The organization's legal name. It is the official name of the
+                  person or entity that owns a company. Must be the name used on
+                  the legal party's government forms and business paperwork.
+                </FormDescription>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -202,7 +210,9 @@ export const OrganizationStepForm = () => {
             name="dbaName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel asterisk>Doing Business As (DBA) Name</FormLabel>
+                <div className="eb-flex eb-w-full eb-items-center eb-space-x-2">
+                  <FormLabel>DBA (Doing Business As) name (optional)</FormLabel>
+                </div>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
