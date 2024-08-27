@@ -1,6 +1,5 @@
-import { server } from '@/msw/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { OnboardingContextProvider } from '../OnboardingContextProvider/OnboardingContextProvider';
@@ -42,7 +41,7 @@ describe('IndividualStepForm', () => {
     userEvent.click(screen.getByRole('button', { name: /next/i }));
 
     //TODO: Fix this test
-    
+
     /* await waitFor(() => {
       expect(mockOnboardingContext.onPostClientResponse).toHaveBeenCalled();
     }); */
