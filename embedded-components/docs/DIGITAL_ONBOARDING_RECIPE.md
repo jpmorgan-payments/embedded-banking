@@ -2,6 +2,53 @@
 
 This document is a draft and is currently being updated. Information contained herein may be incomplete or subject to change.
 
+<!-- toc 
+generated using `npx markdown-toc -i DIGITAL_ONBOARDING_RECIPE.md`
+-->
+
+- [Digital Onboarding UI/UX Recipe](#digital-onboarding-uiux-recipe)
+  * [APIs Workflows Recipes Background](#apis-workflows-recipes-background)
+  * [Digital Onboarding Recipe Introduction](#digital-onboarding-recipe-introduction)
+  * [Sequence Diagram](#sequence-diagram)
+  * [Setup](#setup)
+  * [Stepper Wizard Implementation](#stepper-wizard-implementation)
+  * [Step 1: Intro](#step-1-intro)
+    + [API Operations](#api-operations)
+    + [Hooks](#hooks)
+    + [UX Best Practices](#ux-best-practices)
+  * [Step 2: Individual and Business Details](#step-2-individual-and-business-details)
+    + [API Operations](#api-operations-1)
+    + [Hooks](#hooks-1)
+    + [Update Party specifics](#update-party-specifics)
+    + [Create utils to map API data to form data and vice versa](#create-utils-to-map-api-data-to-form-data-and-vice-versa)
+    + [UX Best Practices](#ux-best-practices-1)
+  * [Steps 3 & 4: Business Owners and Decision Makers](#steps-3--4-business-owners-and-decision-makers)
+    + [API Operations](#api-operations-2)
+    + [Hooks](#hooks-2)
+    + [UX Best Practices](#ux-best-practices-2)
+  * [Step 5: Due Diligence Additional Questions](#step-5-due-diligence-additional-questions)
+    + [API Operations](#api-operations-3)
+    + [Hooks](#hooks-3)
+    + [Question Rendering Logic](#question-rendering-logic)
+    + [Parent/Child Question Logic](#parentchild-question-logic)
+    + [Question Field Format Derivation](#question-field-format-derivation)
+    + [Question Rendering Flow](#question-rendering-flow)
+    + [UX Best Practices](#ux-best-practices-3)
+    + [Handling Complex Question Types](#handling-complex-question-types)
+    + [Implementation Example](#implementation-example)
+  * [Step 6: Review and Attestation](#step-6-review-and-attestation)
+    + [API Operations](#api-operations-4)
+    + [Hooks](#hooks-4)
+    + [UX Best Practices](#ux-best-practices-4)
+  * [Step 7: Trigger Verification](#step-7-trigger-verification)
+    + [API Operations](#api-operations-5)
+    + [Hooks](#hooks-5)
+    + [UX Best Practices](#ux-best-practices-5)
+  * [General UX Best Practices](#general-ux-best-practices)
+  * [API Error Handling](#api-error-handling)
+
+<!-- tocstop -->
+
 # Digital Onboarding UI/UX Recipe
 
 ## APIs Workflows Recipes Background
@@ -454,40 +501,10 @@ const renderQuestions = () => {
 ## Step 6: Review and Attestation
 
 ### API Operations
-
-- Use `GET /clients/:id` to fetch all client data for review.
-- Use `POST /clients/:id` to submit attestations.
-
-### Hooks
-
-```typescript
-const { data: clientData } = useGetClient(clientId);
-const { mutate: updateClient } = useUpdateClient();
-```
-
----
-
-## Attestation
-
-- Use `GET /clients/:id` to fetch all client data for to find out the outstanding attestionDocumentIds.
-  -- A list of of documents that needs to be engaged with.
-- Use `GET /documents/${id}` to fetch a list of documents that are required for the client
-- Use `/documents/${id}/file` to download the document, the document is binary, and required to be converted to BLOB via intercept, or any logical way that return responseType = blob
-
-```typescript
-AXIOS_INSTANCE.interceptors.request.use(
-  (config: any) => {
-    if (config.url.includes('/file')) {
-      config.responseType = 'blob';
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-```
+1. Use the `GET /clients/:id` API to render core attributes of the parties (reference `embedded-components\src\core\OnboardingWizardBasic\ReviewAndAttestStepForm\partyFields.ts`) and retrieve the `attestationDocumentIds` from the `outstanding` block.
+2. Using the IDs obtained from step #1, make a request to `GET /documents/${id}` to fetch a list of the documents and their document types. Concatenate the document list for multiple possible `attestationDocumentIds`.
+3. Filter the list to include only document types that are either `TERMS_CONDITIONS` or `DISCLOSURE_AND_CONSENT`.
+4. Display the URLs to the documents. As the document is in binary format, you will need to fetch the content using `GET /documents/${id}/file` and convert it to a BLOB.
 
 ```typescript
 const newBlob = new Blob([downloadDocument], {
@@ -495,6 +512,9 @@ const newBlob = new Blob([downloadDocument], {
 });
 const urlBlob = URL.createObjectURL(newBlob);
 ```
+(https://developer.mozilla.org/en-US/docs/Web/API/Response/blob#examples)
+
+5. Use `POST /clients/:id` to submit attestations.
 
 ### Hooks
 
