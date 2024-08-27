@@ -600,7 +600,9 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'steps.valuesMap.businessZipCode': 'ZIP Code',
   'steps.valuesMap.businessPhone': 'Phone',
   'steps.valuesMap.industryCategory': 'Industry Category',
+  'steps.valuesMap.industryCategoryPh': 'Select industry category',
   'steps.valuesMap.industryType': 'Industry Type',
+  'steps.valuesMap.industryTypePh': 'Select industry type',
   // -----
   'steps.valuesMap.controllerIsOwner': 'Controller',
   'steps.valuesMap.controllerIsOwnerBuss': ', Business Owner',
