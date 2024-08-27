@@ -12,7 +12,7 @@ import {
 } from '@/api/generated/embedded-banking.schemas';
 import { Grid, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
+import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';

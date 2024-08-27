@@ -11,7 +11,7 @@ import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import termsPDF from '../../../public/asset/docs/placeholder.pdf';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
-import { OnboardingWizard } from './OboardingWizard';
+import { OnboardingWizard } from './OnboardingWizard';
 
 const OnboardingWizardWithProvider = ({
   apiBaseUrl,

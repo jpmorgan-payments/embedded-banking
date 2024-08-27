@@ -30,7 +30,6 @@ type yInitValues = {
   buildStepper: (stepNames?: string[]) => any;
   setStepState: (val: any) => void;
   removeSteps: (val: any) => void;
-  // setActiveStep: any;
 };
 
 const initValues: yInitValues = {
@@ -43,7 +42,6 @@ const initValues: yInitValues = {
   buildStepper: () => {},
   setStepState: () => {},
   removeSteps: () => {},
-  // setActiveStep: () => {},
 };
 
 const StepperContext = createContext(initValues);
@@ -87,6 +85,7 @@ const sortByRefferenceArray = (refArray: any, targetArray: any) => {
 
   return targetArray;
 };
+
 const StepperProvider: FC<yStepper> = ({ children }) => {
   const [steps, setStepState] = useState(initValues);
 
@@ -160,18 +159,7 @@ const StepperProvider: FC<yStepper> = ({ children }) => {
     });
   };
 
-  // const addSteps = (nameList: string[]) => {
-  //   setStepState((state) => {
-  //     return {
-  //       ...state,
-  //       stepsList: [
-  //         ...stepsList.filter((step: any) => {
-  //           return nameList.includes(step.title);
-  //         }),
-  //       ],
-  //     };
-  //   });
-  // };
+  //TODO: Should we add steps?
 
   useEffect(() => {
     if (activeStep > 0) {

@@ -9,9 +9,8 @@ const useGetDataByClientId = () => {
   const { setError, setPending } = useError();
   const { clientId, setPartyId } = useRootConfig();
 
-  const { data, refetch, isPending, isError, error } = useSmbdoGetClient(
-    clientId as string
-  );
+  const { data, refetch, isPending, isError, error, isLoading } =
+    useSmbdoGetClient(clientId as string);
 
   useEffect(() => {
     if (isError) {
@@ -24,7 +23,7 @@ const useGetDataByClientId = () => {
   //TODO: Make sure there is no collision of this partyId
   setPartyId(data?.partyId);
 
-  return { data, refetch, isPending, isError, error };
+  return { data, refetch, isPending, isError, error, isLoading };
 };
 
 export { useGetDataByClientId };

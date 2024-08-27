@@ -21,7 +21,7 @@ import { useStepper } from '../../Stepper/Stepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 
-// TODO: neeed to add arguments for mock testing
+// TODO: QUESTION: What is the purpose of this component?
 const DecisionMakersStep = () => {
   const [open, setOpen] = useState(false);
   const [additionalDecisionMakers, setAdditionalDecisionMakers] =

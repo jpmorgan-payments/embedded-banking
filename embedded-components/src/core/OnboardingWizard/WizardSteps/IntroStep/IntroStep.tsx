@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
 import { Box, Card, CardContent, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
-import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.contex';
+import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 import { useStepper } from '@/core/OnboardingWizard/Stepper/Stepper';
 import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 

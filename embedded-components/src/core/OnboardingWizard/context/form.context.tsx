@@ -18,11 +18,11 @@ export type OnboardingForm = {
   questionsIds: string[] | undefined;
 };
 
-export type defaultVluesFormContext = {
+export type defaultValuesFormContext = {
   onboardingForm: OnboardingForm;
   setOnboardingForm: any | null;
 };
-export const defaultValues: defaultVluesFormContext = {
+export const defaultValues: defaultValuesFormContext = {
   onboardingForm: {
     attestations: undefined,
     legalStructure: '',
@@ -45,7 +45,7 @@ export const useOnboardingForm = (): {
   onboardingForm: OnboardingForm;
   setOnboardingForm: any;
 } => {
-  const context: defaultVluesFormContext = useContext(OnboardingFormContext);
+  const context: defaultValuesFormContext = useContext(OnboardingFormContext);
 
   if (context === undefined) {
     throw new Error(
