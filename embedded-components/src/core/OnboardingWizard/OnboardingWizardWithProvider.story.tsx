@@ -109,7 +109,7 @@ export const Primary: Story = {
           });
         }),
 
-        http.get('/ef/v1/documents/:id', () => {
+        http.get('/ef/do/v1/documents/:id', () => {
           return HttpResponse.json(efDocumentClientDetail);
         }),
 
