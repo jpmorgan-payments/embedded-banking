@@ -11,8 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui';
+
 // import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
-import { industryCategoriesMock as industryCategories } from '@/core/OnboardingWizard/utils/industryCategories.mock';
+
+import useGetCategories from './hooks/useGetOrgTypes';
 
 const IndustryFormField = ({
   form,
@@ -21,7 +23,9 @@ const IndustryFormField = ({
   // labelToken,
   // placeholderToken,
 }: any) => {
-  // TODO: Add a hook to fetch types as mock
+  // TODO: update to match api response
+  const industryCategories: any = useGetCategories();
+
   const industryTypes =
     industryCategories?.items
       ?.find?.(

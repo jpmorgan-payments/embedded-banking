@@ -68,6 +68,7 @@
     "react-error-boundary": "^4.0.13",
     "react-hook-form": "^7.52.1",
     "react-number-format": "^5.4.0",
+    "react-string-replace": "^1.1.1",
     "sonner": "^1.5.0",
     "tabler-icons-react": "^1.56.0",
     "tailwind-merge": "^2.4.0",
