@@ -84,14 +84,14 @@ const FormItem = React.forwardRef<
 });
 FormItem.displayName = 'FormItem';
 
-interface FormLablePropsRef
+interface FormLabelPropsRef
   extends React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> {
   asterisk?: boolean;
 }
 
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  FormLablePropsRef
+  FormLabelPropsRef
 >(({ className, asterisk, ...props }, ref) => {
   const { error, formItemId } = useFormField();
   return (
