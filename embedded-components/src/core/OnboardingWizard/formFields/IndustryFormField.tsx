@@ -23,7 +23,6 @@ const IndustryFormField = ({
   // placeholderToken,
 }: any) => {
   const { getContentToken } = useContentData('steps.valuesMap');
-  // TODO: update to match api response
   const industryCategories: any = useGetCategories();
 
   const industryTypes =
