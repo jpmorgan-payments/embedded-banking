@@ -2830,6 +2830,7 @@ __metadata:
     react-error-boundary: "npm:^4.0.13"
     react-hook-form: "npm:^7.52.1"
     react-number-format: "npm:^5.4.0"
+    react-string-replace: "npm:^1.1.1"
     replace: "npm:^1.2.2"
     rimraf: "npm:^6.0.1"
     sonner: "npm:^1.5.0"
@@ -12326,6 +12327,13 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/dcd523ada602bd0a839c2032cadf0b3e4af55ee85acefee3760976a9cceaa4606927801b093bbb8bf3c2989c71e048f5428c2c6eb9e6681762e86356833d039b
+  languageName: node
+  linkType: hard
+
+"react-string-replace@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "react-string-replace@npm:1.1.1"
+  checksum: 10c0/5a4a4fd9c3758b4680da113adf411342116238b4dc68fa4c4e9b04c046cb757d4f00d6ba441301fa3afb44c847dacc17a2707865698ff1fc78a369182458e894
   languageName: node
   linkType: hard
 

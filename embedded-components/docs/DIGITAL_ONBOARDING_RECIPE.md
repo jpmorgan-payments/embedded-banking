@@ -469,32 +469,12 @@ const { mutate: updateClient } = useUpdateClient();
 
 ## Attestation
 
+//
+
 - Use `GET /clients/:id` to fetch all client data for to find out the outstanding attestionDocumentIds.
   -- A list of of documents that needs to be engaged with.
-- Use `GET /documents/${id}` to fetch a list of documents that are required for the client
-- Use `/documents/${id}/file` to download the document, the document is binary, and required to be converted to BLOB via intercept, or any logical way that return responseType = blob
-
-```typescript
-AXIOS_INSTANCE.interceptors.request.use(
-  (config: any) => {
-    if (config.url.includes('/file')) {
-      config.responseType = 'blob';
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-```
-
-```typescript
-const newBlob = new Blob([downloadDocument], {
-  type: 'application/pdf',
-});
-const urlBlob = URL.createObjectURL(newBlob);
-```
+- Use `GET /documents/${attestionDocumentIds}` to fetch a documents that are required for the client
+- Use `/documents/${fileId}/file` to download the document, the document is binary, and required to be converted to BLOB via intercept, or any logical way that return responseType = blob
 
 ### Hooks
 

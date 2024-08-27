@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import reactStringReplace from 'react-string-replace';
 
 import { contentTokensOnboardingEng } from './contentTokensOnboardingEng';
 
@@ -13,6 +14,25 @@ const useContentData = (prefixes: string) => {
     const compoundKey = `${customPrefix ?? prefixes}.${key}`;
 
     const content = contentTokensList[compoundKey];
+
+    if (wordList && content) {
+      let contentTemplate: any = content;
+
+      wordList?.forEach((word, idx) => {
+        const refEx = new RegExp(`({word${idx || ''}})`, 'g');
+        contentTemplate = reactStringReplace(
+          contentTemplate,
+          refEx,
+          () => word
+        );
+      });
+
+      if (contentTemplate?.length) {
+        return contentTemplate?.join('');
+      }
+
+      return contentTemplate;
+    }
 
     return content;
   };

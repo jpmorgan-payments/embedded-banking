@@ -4,10 +4,19 @@ import * as yup from 'yup';
 import { createRegExpAndMessage } from '@/lib/utils';
 
 export const individualValidation: any = (getContentToken: any) => {
+  console.log(
+    '@@getContentToken',
+    getContentToken?.('validCharacters', undefined, 'common'),
+    getContentToken?.('invalidCharactersErrorMessage', undefined, 'common'),
+    '>>',
+    getContentToken?.(`minStringLengthAlert`, [2])
+  );
+
   return {
     firstName: yup
       .string()
       .default('')
+      .min(2, getContentToken?.(`minStringLengthAlert`, [1]) ?? '')
       .matches(
         ...createRegExpAndMessage(
           getContentToken?.('validCharacters', undefined, 'common'),
@@ -20,7 +29,7 @@ export const individualValidation: any = (getContentToken: any) => {
       )
       .matches(/^\S*\S$/, getContentToken?.(`invalidWhiteSpaces`) ?? '')
       .max(30, getContentToken?.(`maxStringLengthAlert`, [30]) ?? '')
-      .required(getContentToken?.(`firstName`) ?? ''),
+      .required(getContentToken?.(`controllerFirstName`) ?? ''),
     middleName: yup
       .string()
       .nullable()
@@ -41,6 +50,7 @@ export const individualValidation: any = (getContentToken: any) => {
       .default(''),
     lastName: yup
       .string()
+      .min(2, getContentToken?.(`minStringLengthAlert`, [1]) ?? '')
       .max(30, getContentToken?.(`maxStringLengthAlert`, [30]) ?? '')
       .matches(
         ...createRegExpAndMessage(
@@ -54,7 +64,7 @@ export const individualValidation: any = (getContentToken: any) => {
       )
       .matches(/^\S*\S$/, getContentToken?.(`invalidWhiteSpaces`) ?? '')
       .default('')
-      .required(getContentToken?.(`lastName`) ?? ''),
+      .required(getContentToken?.(`controllerLastName`) ?? ''),
     individualEmail: yup
       .string()
       .email()
