@@ -4,14 +4,6 @@ import * as yup from 'yup';
 import { createRegExpAndMessage } from '@/lib/utils';
 
 export const individualValidation: any = (getContentToken: any) => {
-  console.log(
-    '@@getContentToken',
-    getContentToken?.('validCharacters', undefined, 'common'),
-    getContentToken?.('invalidCharactersErrorMessage', undefined, 'common'),
-    '>>',
-    getContentToken?.(`minStringLengthAlert`, [2])
-  );
-
   return {
     firstName: yup
       .string()
