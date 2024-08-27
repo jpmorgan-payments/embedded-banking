@@ -6,7 +6,7 @@ import {
   ClientVerificationsInformationResponse,
 } from '@/api/generated/embedded-banking.schemas';
 
-type OnboardingContextType = {
+export type OnboardingContextType = {
   clientId?: string;
   setClientId?: (clientId: string) => void;
   onPostClientResponse?: (

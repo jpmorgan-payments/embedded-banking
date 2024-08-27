@@ -90,7 +90,6 @@
     "@storybook/testing-library": "^0.2.2",
     "@tanstack/react-query-devtools": "^5.51.16",
     "@testing-library/dom": "^9.3.4",
-    "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.3",
