@@ -18,7 +18,6 @@ import {
   getIndividualByRole,
   getIndividualDetailsByRole,
 } from '../utils/getIndividualDetailsByRole';
-
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
