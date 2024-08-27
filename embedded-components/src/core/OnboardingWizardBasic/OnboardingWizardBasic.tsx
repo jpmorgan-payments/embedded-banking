@@ -160,6 +160,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 initialStep={initialStep}
                 steps={steps}
                 variant={variant}
+                mobileBreakpoint="1279px"
               >
                 {steps.map((stepProps, index) => {
                   const { children, ...rest } = stepProps;
