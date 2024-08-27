@@ -11,7 +11,6 @@ import {
 } from '@/api/generated/embedded-banking';
 import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -31,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useStepper } from '@/components/ui/stepper';
+import { InfoPopover } from '@/components/ux/InfoPopover';
 
 import { FormActions } from '../FormActions/FormActions';
 import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
@@ -184,19 +184,25 @@ export const OrganizationStepForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="eb-space-y-6">
+      <form
+        onSubmit={onSubmit}
+        className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-4 eb-pt-0"
+      >
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
           <FormField
             control={form.control}
             name="organizationName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel asterisk>Organization name</FormLabel>
-                <FormDescription>
-                  The organization's legal name. It is the official name of the
-                  person or entity that owns a company. Must be the name used on
-                  the legal party's government forms and business paperwork.
-                </FormDescription>
+                <div className="eb-flex eb-items-center eb-space-x-2">
+                  <FormLabel asterisk>Organization name</FormLabel>
+                  <InfoPopover>
+                    The organization's legal name. It is the official name of
+                    the person or entity that owns a company. Must be the name
+                    used on the legal party's government forms and business
+                    paperwork.
+                  </InfoPopover>
+                </div>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -210,7 +216,7 @@ export const OrganizationStepForm = () => {
             name="dbaName"
             render={({ field }) => (
               <FormItem>
-                <div className="eb-flex eb-w-full eb-items-center eb-space-x-2">
+                <div className="eb-items-center eb-space-x-2">
                   <FormLabel>DBA (Doing Business As) name (optional)</FormLabel>
                 </div>
                 <FormControl>
@@ -305,75 +311,69 @@ export const OrganizationStepForm = () => {
               </FormItem>
             )}
           />
+        </div>
+        <fieldset className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4">
+          <legend className="-eb-m-1 eb-px-1 eb-text-sm eb-font-medium">
+            Organization Phone Information
+          </legend>
 
-          {/* Phone Information */}
-          <Card className="eb-mt-6">
-            <CardHeader>
-              <CardTitle className="eb-text-lg eb-font-medium">
-                Phone Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-3">
-              <FormField
-                control={form.control}
-                name="phone.phoneType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Type</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select phone type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="BUSINESS_PHONE">
-                          Business Phone
-                        </SelectItem>
-                        <SelectItem value="MOBILE_PHONE">
-                          Mobile Phone
-                        </SelectItem>
-                        <SelectItem value="ALTERNATE_PHONE">
-                          Alternate Phone
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone.countryCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Country Code</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="e.g. +1" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone.phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Enter phone number" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
+          <FormField
+            control={form.control}
+            name="phone.phoneType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select phone type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="BUSINESS_PHONE">
+                      Business Phone
+                    </SelectItem>
+                    <SelectItem value="MOBILE_PHONE">Mobile Phone</SelectItem>
+                    <SelectItem value="ALTERNATE_PHONE">
+                      Alternate Phone
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone.countryCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Country Code</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="e.g. +1" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone.phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Enter phone number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </fieldset>
+        <div>
           <FormField
             control={form.control}
             name="jurisdiction"
