@@ -1,9 +1,5 @@
 import { z } from 'zod';
 
-
-
-
-
 const phoneSchema = z.object({
   phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
   countryCode: z.string().regex(/^\+\d{1,3}$/, 'Invalid country code'),
@@ -156,4 +152,4 @@ export const OrganizationStepFormSchema = z
   .refine((data) => !data.websiteAvailable || !!data.website, {
     message: 'Website is required when Website Available is checked',
     path: ['website'],
-  });;
+  });
