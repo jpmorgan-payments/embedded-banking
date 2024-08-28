@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+
+
+
+
 const phoneSchema = z.object({
   phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
   countryCode: z.string().regex(/^\+\d{1,3}$/, 'Invalid country code'),
@@ -72,79 +76,84 @@ const secondaryMccSchema = z.object({
   mcc: z.string().regex(/^\d{4}$/, 'MCC must be exactly 4 digits'),
 });
 
-export const OrganizationStepFormSchema = z.object({
-  organizationName: z
-    .string()
-    .min(1, 'Organization name is required')
-    .max(100, 'Organization name must be 100 characters or less'),
-  organizationType: z.enum([
-    'LIMITED_LIABILITY_COMPANY',
-    'C_CORPORATION',
-    'S_CORPORATION',
-    'PARTNERSHIP',
-    'PUBLICLY_TRADED_COMPANY',
-    'NON_PROFIT_CORPORATION',
-    'GOVERNMENT_ENTITY',
-    'SOLE_PROPRIETORSHIP',
-    'UNINCORPORATED_ASSOCIATION',
-  ]),
-  countryOfFormation: z
-    .string()
-    .length(2, 'Country code must be exactly 2 characters'),
-  email: z.string().email('Invalid email address'),
-  yearOfFormation: z
-    .string()
-    .regex(/^(19|20)\d{2}$/, 'Invalid year of formation'),
-  addresses: z
-    .array(addressSchema)
-    .min(1, 'At least one address is required')
-    .max(5, 'Maximum 5 addresses allowed'),
-  associatedCountries: z
-    .array(associatedCountrySchema)
-    .max(100, 'Maximum 100 associated countries allowed')
-    .optional()
-    .default([]),
-  dbaName: z
-    .string()
-    .max(100, 'DBA name must be 100 characters or less')
-    .optional(),
-  entitiesInOwnership: z.boolean(),
-  industryCategory: z
-    .string()
-    .max(100, 'Industry category must be 100 characters or less')
-    .optional(),
-  industryType: z
-    .string()
-    .max(100, 'Industry type must be 100 characters or less')
-    .optional(),
-  jurisdiction: z
-    .string()
-    .length(2, 'Jurisdiction code must be exactly 2 characters'),
-  organizationDescription: z
-    .string()
-    .max(500, 'Organization description must be 500 characters or less')
-    .optional(),
-  organizationIds: z
-    .array(organizationIdSchema)
-    .max(6, 'Maximum 6 organization IDs allowed'),
-  phone: phoneSchema,
-  significantOwnership: z.boolean(),
-  tradeOverInternet: z.boolean(),
-  website: z
-    .string()
-    .url('Invalid URL')
-    .max(500, 'Website URL must be 500 characters or less')
-    .optional(),
-  websiteAvailable: z.boolean(),
-  mcc: z
-    .string()
-    .refine((value) => value === '' || /^\d{4}$/.test(value), {
-      message: 'MCC must be empty or exactly 4 digits',
-    })
-    .optional(),
-  secondaryMccList: z
-    .array(secondaryMccSchema)
-    .max(50, 'Maximum 50 secondary MCCs allowed')
-    .optional()
-    .default([]),
-});
+export const OrganizationStepFormSchema = z
+  .object({
+    organizationName: z
+      .string()
+      .min(1, 'Organization name is required')
+      .max(100, 'Organization name must be 100 characters or less'),
+    organizationType: z.enum([
+      'LIMITED_LIABILITY_COMPANY',
+      'C_CORPORATION',
+      'S_CORPORATION',
+      'PARTNERSHIP',
+      'PUBLICLY_TRADED_COMPANY',
+      'NON_PROFIT_CORPORATION',
+      'GOVERNMENT_ENTITY',
+      'SOLE_PROPRIETORSHIP',
+      'UNINCORPORATED_ASSOCIATION',
+    ]),
+    countryOfFormation: z
+      .string()
+      .length(2, 'Country code must be exactly 2 characters'),
+    email: z.string().email('Invalid email address'),
+    yearOfFormation: z
+      .string()
+      .regex(/^(19|20)\d{2}$/, 'Invalid year of formation'),
+    addresses: z
+      .array(addressSchema)
+      .min(1, 'At least one address is required')
+      .max(5, 'Maximum 5 addresses allowed'),
+    associatedCountries: z
+      .array(associatedCountrySchema)
+      .max(100, 'Maximum 100 associated countries allowed')
+      .optional()
+      .default([]),
+    dbaName: z
+      .string()
+      .max(100, 'DBA name must be 100 characters or less')
+      .optional(),
+    entitiesInOwnership: z.boolean(),
+    industryCategory: z
+      .string()
+      .max(100, 'Industry category must be 100 characters or less')
+      .optional(),
+    industryType: z
+      .string()
+      .max(100, 'Industry type must be 100 characters or less')
+      .optional(),
+    jurisdiction: z
+      .string()
+      .length(2, 'Jurisdiction code must be exactly 2 characters'),
+    organizationDescription: z
+      .string()
+      .max(500, 'Organization description must be 500 characters or less')
+      .optional(),
+    organizationIds: z
+      .array(organizationIdSchema)
+      .max(6, 'Maximum 6 organization IDs allowed'),
+    phone: phoneSchema,
+    significantOwnership: z.boolean(),
+    tradeOverInternet: z.boolean(),
+    websiteAvailable: z.boolean().default(false),
+    website: z
+      .string()
+      .url('Invalid URL')
+      .max(500, 'Website URL must be 500 characters or less')
+      .optional(),
+    mcc: z
+      .string()
+      .refine((value) => value === '' || /^\d{4}$/.test(value), {
+        message: 'MCC must be empty or exactly 4 digits',
+      })
+      .optional(),
+    secondaryMccList: z
+      .array(secondaryMccSchema)
+      .max(50, 'Maximum 50 secondary MCCs allowed')
+      .optional()
+      .default([]),
+  })
+  .refine((data) => !data.websiteAvailable || !!data.website, {
+    message: 'Website is required when Website Available is checked',
+    path: ['website'],
+  });;

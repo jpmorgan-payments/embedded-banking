@@ -70,6 +70,7 @@ export const OrganizationStepForm = () => {
       significantOwnership: false,
       tradeOverInternet: false,
       websiteAvailable: false,
+      website: '',
       secondaryMccList: [],
       mcc: '',
       associatedCountries: [],
@@ -303,64 +304,66 @@ export const OrganizationStepForm = () => {
                 Phone Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-3">
-              <FormField
-                control={form.control}
-                name="phone.phoneType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Type</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+            <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4">
+              <div className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-3">
+                <FormField
+                  control={form.control}
+                  name="phone.phoneType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Type</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select phone type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="BUSINESS_PHONE">
+                            Business Phone
+                          </SelectItem>
+                          <SelectItem value="MOBILE_PHONE">
+                            Mobile Phone
+                          </SelectItem>
+                          <SelectItem value="ALTERNATE_PHONE">
+                            Alternate Phone
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone.countryCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Country Code</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select phone type" />
-                        </SelectTrigger>
+                        <Input {...field} placeholder="e.g. +1" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="BUSINESS_PHONE">
-                          Business Phone
-                        </SelectItem>
-                        <SelectItem value="MOBILE_PHONE">
-                          Mobile Phone
-                        </SelectItem>
-                        <SelectItem value="ALTERNATE_PHONE">
-                          Alternate Phone
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone.countryCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Country Code</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="e.g. +1" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone.phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Enter phone number" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone.phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="Enter phone number" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </CardContent>
           </Card>
 
@@ -426,71 +429,126 @@ export const OrganizationStepForm = () => {
               </FormItem>
             )}
           />
+          <div className="eb-col-span-1 md:eb-col-span-2 lg:eb-col-span-3">
+            <div className="eb-grid eb-grid-cols-1 eb-gap-4 sm:eb-grid-cols-3">
+              <FormField
+                control={form.control}
+                name="significantOwnership"
+                render={({ field }) => (
+                  <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="eb-space-y-1 eb-leading-none">
+                      <FormLabel>Significant Ownership</FormLabel>
+                      <FormDescription>
+                        Indicate if there are individuals who own 25% or more of
+                        the client's business.
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name="significantOwnership"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Significant Ownership</FormLabel>
-                  <FormDescription>
-                    Indicate if there are individuals who own 25% or more of the
-                    client's business.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name="entitiesInOwnership"
+                render={({ field }) => (
+                  <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="eb-space-y-1 eb-leading-none">
+                      <FormLabel>Entities in Ownership</FormLabel>
+                      <FormDescription>
+                        Indicate if one or more businesses own part of the
+                        business connected to the client.
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name="entitiesInOwnership"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Entities in Ownership</FormLabel>
-                  <FormDescription>
-                    Indicate if one or more businesses own part of the business
-                    connected to the client.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name="tradeOverInternet"
+                render={({ field }) => (
+                  <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="eb-space-y-1 eb-leading-none">
+                      <FormLabel>Trade Over Internet</FormLabel>
+                      <FormDescription>
+                        Indicate if the business conducts trade over the
+                        internet.
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
 
-          <FormField
-            control={form.control}
-            name="tradeOverInternet"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Trade Over Internet</FormLabel>
-                  <FormDescription>
-                    Indicate if the business conducts trade over the internet.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
+          <Card className="eb-mt-6">
+            <CardHeader>
+              <CardTitle className="eb-text-lg eb-font-medium">
+                Website
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="eb-grid eb-grid-cols-1 eb-gap-4">
+              <div className="eb-w-full eb-space-y-4">
+                <FormField
+                  control={form.control}
+                  name="websiteAvailable"
+                  render={({ field }) => (
+                    <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={(checked) => {
+                            field.onChange(checked);
+                            if (!checked) {
+                              form.setValue('website', '');
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <div className="eb-space-y-1 eb-leading-none">
+                        <FormLabel>Website Available</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Website URL</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="url"
+                          disabled={!form.watch('websiteAvailable')}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Addresses */}
@@ -879,7 +937,12 @@ export const OrganizationStepForm = () => {
                 <FormControl>
                   <Checkbox
                     checked={field.value}
-                    onCheckedChange={field.onChange}
+                    onCheckedChange={(checked) => {
+                      field.onChange(checked);
+                      if (!checked) {
+                        form.setValue('website', '');
+                      }
+                    }}
                   />
                 </FormControl>
                 <div className="eb-space-y-1 eb-leading-none">
@@ -895,7 +958,11 @@ export const OrganizationStepForm = () => {
               <FormItem>
                 <FormLabel>Website</FormLabel>
                 <FormControl>
-                  <Input {...field} type="url" />
+                  <Input
+                    {...field}
+                    type="url"
+                    disabled={!form.watch('websiteAvailable')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
