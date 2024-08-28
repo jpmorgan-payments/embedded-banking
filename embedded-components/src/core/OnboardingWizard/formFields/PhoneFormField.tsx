@@ -17,7 +17,7 @@ const PhoneFormField = ({ name, form, labelToken, required }: any) => {
         {...{
           form,
           name: 'phoneType',
-          labelToken: 'Select an option',
+          labelToken: 'Phone Type',
           required,
           className: 'eb-w-full',
         }}
