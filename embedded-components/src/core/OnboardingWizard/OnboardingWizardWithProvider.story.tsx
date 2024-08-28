@@ -80,7 +80,7 @@ export const Primary: Story = {
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
-        primaryColor: 'red',
+        primaryColor: '#7CB9E8',
         borderRadius: '15px',
       },
     },
