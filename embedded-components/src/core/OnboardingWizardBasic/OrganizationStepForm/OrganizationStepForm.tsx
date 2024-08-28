@@ -284,102 +284,18 @@ export const OrganizationStepForm = () => {
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="industryCategory"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry Category</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="industryType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry Type</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
-        <fieldset className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4">
-          <legend className="-eb-m-1 eb-px-1 eb-text-sm eb-font-medium">
-            Organization Phone Information
-          </legend>
 
-          <FormField
-            control={form.control}
-            name="phone.phoneType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select phone type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="BUSINESS_PHONE">
-                      Business Phone
-                    </SelectItem>
-                    <SelectItem value="MOBILE_PHONE">Mobile Phone</SelectItem>
-                    <SelectItem value="ALTERNATE_PHONE">
-                      Alternate Phone
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone.countryCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Country Code</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="e.g. +1" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone.phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Enter phone number" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </fieldset>
-        <div>
+        <div className="eb-flex eb-flex-wrap eb-gap-6 md:eb-flex-nowrap">
           <FormField
             control={form.control}
             name="jurisdiction"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Jurisdiction</FormLabel>
+              <FormItem className="eb-grow md:eb-grow-0">
+                <div className="eb-flex eb-items-center eb-space-x-2">
+                  <FormLabel asterisk>Jurisdiction</FormLabel>
+                  <InfoPopover>Country code in ISO alpha-2 format.</InfoPopover>
+                </div>
                 <FormControl>
                   <Input {...field} maxLength={2} />
                 </FormControl>
@@ -392,8 +308,11 @@ export const OrganizationStepForm = () => {
             control={form.control}
             name="countryOfFormation"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel asterisk>Country of formation</FormLabel>
+              <FormItem className="eb-grow md:eb-grow-0">
+                <div className="eb-flex eb-items-center eb-space-x-2">
+                  <FormLabel asterisk>Country of formation</FormLabel>
+                  <InfoPopover>Country code in ISO alpha-2 format.</InfoPopover>
+                </div>
                 <FormControl>
                   <Input {...field} maxLength={2} />
                 </FormControl>
@@ -406,8 +325,11 @@ export const OrganizationStepForm = () => {
             control={form.control}
             name="yearOfFormation"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel asterisk>Year of formation</FormLabel>
+              <FormItem className="eb-grow md:eb-grow-0">
+                <div className="eb-flex eb-items-center eb-space-x-2">
+                  <FormLabel asterisk>Year of formation</FormLabel>
+                  <InfoPopover>Year of company formation.</InfoPopover>
+                </div>
                 <FormControl>
                   <Input {...field} maxLength={4} />
                 </FormControl>
@@ -415,28 +337,135 @@ export const OrganizationStepForm = () => {
               </FormItem>
             )}
           />
+        </div>
 
-          <FormField
-            control={form.control}
-            name="mcc"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Merchant Category Code (MCC)</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    maxLength={4}
-                    placeholder="Enter 4-digit MCC (optional)"
-                  />
-                </FormControl>
-                <FormDescription>
-                  Leave empty or enter exactly 4 digits for the MCC.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <fieldset className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4">
+          <legend className="-eb-m-1 eb-px-1 eb-text-sm eb-font-medium">
+            Organization Phone Information
+          </legend>
 
+          <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2">
+            <FormField
+              control={form.control}
+              name="phone.phoneType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select phone type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="BUSINESS_PHONE">
+                        Business Phone
+                      </SelectItem>
+                      <SelectItem value="MOBILE_PHONE">Mobile Phone</SelectItem>
+                      <SelectItem value="ALTERNATE_PHONE">
+                        Alternate Phone
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="eb-flex eb-gap-2">
+              <FormField
+                control={form.control}
+                name="phone.countryCode"
+                render={({ field }) => (
+                  <FormItem className="eb-shrink eb-grow-0">
+                    <FormLabel>Country Code</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="e.g. +1" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone.phoneNumber"
+                render={({ field }) => (
+                  <FormItem className="eb-grow">
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Enter phone number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4">
+          <legend className="-eb-m-1 eb-px-1 eb-text-sm eb-font-medium">
+            Industry Information
+          </legend>
+
+          <div className="eb-grid eb-grid-cols-1 eb-gap-6 sm:eb-grid-cols-2">
+            <FormField
+              control={form.control}
+              name="industryCategory"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Industry Category</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="industryType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Industry Type</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="eb-flex">
+            <FormField
+              control={form.control}
+              name="mcc"
+              render={({ field }) => (
+                <FormItem className="eb-grow sm:eb-grow-0">
+                  <div className="eb-flex eb-items-center eb-space-x-2">
+                    <FormLabel>Merchant Category Code (MCC)</FormLabel>
+                    <InfoPopover>
+                      Leave empty or enter exactly 4 digits for the MCC.
+                    </InfoPopover>
+                  </div>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      maxLength={4}
+                      placeholder="Enter 4-digit MCC (optional)"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </fieldset>
+        <div>
           <FormField
             control={form.control}
             name="significantOwnership"
