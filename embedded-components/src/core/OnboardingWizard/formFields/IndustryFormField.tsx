@@ -50,7 +50,9 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder={getContentToken('industryCategoryPh')} />
+                  <SelectValue
+                    placeholder={getContentToken('industryCategoryPh')}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -94,7 +96,9 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder={getContentToken('industryTypePh')} />
+                  <SelectValue
+                    placeholder={getContentToken('industryTypePh')}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
