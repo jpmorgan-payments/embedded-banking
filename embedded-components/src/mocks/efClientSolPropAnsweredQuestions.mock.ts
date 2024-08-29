@@ -44,7 +44,7 @@ export const efClientSolPropAnsweredQuestions: ClientResponse = {
         ],
         phone: {
           phoneType: 'BUSINESS_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '6316215110',
         },
         organizationIds: [

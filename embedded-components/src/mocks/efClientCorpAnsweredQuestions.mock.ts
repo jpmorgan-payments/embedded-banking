@@ -44,7 +44,7 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         ],
         phone: {
           phoneType: 'BUSINESS_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '6316215110',
         },
         organizationIds: [
@@ -91,12 +91,12 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '078-86-6616',
+            value: '123456789',
           },
         ],
         phone: {
           phoneType: 'MOBILE_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '6316215110',
         },
       },
@@ -139,7 +139,7 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
         ],
         phone: {
           phoneType: 'MOBILE_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '2017700500',
         },
       },
