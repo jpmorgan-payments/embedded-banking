@@ -1,7 +1,4 @@
-import { get } from 'lodash';
-
 import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
-import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
 import { Group, Stack, Title } from '@/components/ui';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';

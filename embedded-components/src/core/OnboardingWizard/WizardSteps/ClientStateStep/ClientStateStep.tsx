@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -13,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box } from '@/components/ui';
 
-import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
 import {
   individualFields,
@@ -55,10 +53,6 @@ const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
 
 export const ClientStateStep = () => {
   const { data: clientData, isLoading } = useGetDataByClientId();
-
-  const clientDataForm = useMemo(() => {
-    return clientData && fromApiToForm(clientData);
-  }, [clientData]);
 
   if (isLoading) {
     return <div>Loading client information...</div>;
