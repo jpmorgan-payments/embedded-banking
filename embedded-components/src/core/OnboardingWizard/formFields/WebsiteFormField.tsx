@@ -22,7 +22,7 @@ const WebsiteFromField = ({
 }: any) => {
   const [websiteAvailable, setWebsiteAvailable] = useState(false);
   return (
-    <Group className="eb-justify-start eb-align-baseline eb-grid-cols-3 eb-gap-16">
+    <Group className="eb-grid-cols-3 eb-justify-start eb-gap-16 eb-align-baseline">
       <CheckBoxFormFields
         {...{
           form,
