@@ -36,16 +36,13 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
 
-  const {
-    data: clientData,
-    isPending: isPendingClient,
-    status,
-  } = useGetDataByClientId();
+  const { data: clientData, isPending: isPendingClient } =
+    useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);
   }, [clientData]);
 
-  const { error: isError, pending: isPending } = useError();
+  const { error: isError } = useError();
 
   // TODO: Temporary comment for IP
   // useEffect(() => {

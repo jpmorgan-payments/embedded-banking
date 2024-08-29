@@ -1,4 +1,5 @@
 import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
+import { efClientPost } from '@/mocks/efClientPost.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
 import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
@@ -12,7 +13,6 @@ import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 import termsPDF from '../../../public/asset/docs/placeholder.pdf';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OnboardingWizard';
-import { efClientPost } from '@/mocks/efClientPost.mock';
 
 const OnboardingWizardWithProvider = ({
   apiBaseUrl,
