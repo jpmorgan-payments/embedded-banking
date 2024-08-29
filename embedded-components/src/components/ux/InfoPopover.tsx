@@ -15,14 +15,12 @@ interface InfoPopoverProps {
 export const InfoPopover = ({ children }: InfoPopoverProps) => {
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" type="button">
           <InfoIcon className="eb-h-4 eb-w-4 eb-stroke-primary" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent side="bottom" hideWhenDetached avoidCollisions={false}>
-        {children}
-      </PopoverContent>
+      <PopoverContent side="top">{children}</PopoverContent>
     </Popover>
   );
 };
