@@ -10,12 +10,9 @@ import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 import { useError } from '../../context/error.context';
 import NavigationButtons from '../../Stepper/NavigationButtons';
-import { fromApiToForm } from '../../utils/fromApiToForm';
 import { introSchema } from '../StepsSchema';
-import { getIndividualDetailsByRole } from '../utils/getIndividualDetailsByRole';
 // eslint-disable-next-line
 import { RenderForms } from '../utils/RenderForms';
-import { updateFormValues } from '../utils/updateFormValues';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
   const { setError } = useError();
@@ -23,8 +20,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
     jurisdictions,
     entityType,
     onGetClientsConfirmation,
-    isMock,
-    mockData,
+
     setClientId,
     setPartyId,
   } = useRootConfig();
@@ -44,25 +40,6 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
       updateSchema(introSchema);
     }
   }, [yupSchema]);
-
-  useEffect(() => {
-    if (isMock) {
-      if (mockData) {
-        const formData = fromApiToForm(mockData);
-        const indController = getIndividualDetailsByRole(
-          formData,
-          'CONTROLLER'
-        )[0];
-
-        updateFormValues(indController, form.setValue);
-        updateFormValues(
-          formData.organizationDetails.orgDetails,
-          form.setValue
-        );
-        form.setValue('individualEmail', indController.email);
-      }
-    }
-  }, [isMock]);
 
   //TODO: Should be API driven, and token Content?
   useEffect(() => {

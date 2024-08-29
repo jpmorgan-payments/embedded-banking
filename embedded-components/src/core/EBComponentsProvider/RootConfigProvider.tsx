@@ -10,11 +10,6 @@ export interface RootConfig {
   jurisdictions?: string[];
   entityType?: string;
   products?: string[];
-  mockSteps?: any;
-  isMockResponse?: boolean;
-  isMock?: boolean;
-  mockData?: any;
-  mockQuestions?: any;
   setClientId?: any;
   setPartyId?: any;
   onPostClientsVerification: ({
