@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-import { Separator } from '@radix-ui/react-select';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -12,12 +10,14 @@ import {
 import { ClientStatus } from '@/api/generated/embedded-banking.schemas';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Box, Title } from '@/components/ui';
+import { Box } from '@/components/ui';
 
-import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
-import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
-import { fromApiToForm } from '../../utils/fromApiToForm';
 import { useGetDataByClientId } from '../hooks';
+import {
+  individualFields,
+  organizationFields,
+} from '../ReviewStep/partyFields';
+import { RenderParty } from '../ReviewStep/RenderParty';
 
 const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
   {
@@ -53,10 +53,6 @@ const statusConfig: Record<ClientStatus, { icon: JSX.Element; color: string }> =
 
 export const ClientStateStep = () => {
   const { data: clientData, isLoading } = useGetDataByClientId();
-
-  const clientDataForm = useMemo(() => {
-    return clientData && fromApiToForm(clientData);
-  }, [clientData]);
 
   if (isLoading) {
     return <div>Loading client information...</div>;
@@ -149,23 +145,10 @@ export const ClientStateStep = () => {
         </div>
 
         <Box className="eb-space-y-4">
-          <CardReviewBusiness data={clientDataForm} type="organization" />
-        </Box>
-        <Separator />
-        <Title as="h5" className="eb-my-2 eb-uppercase">
-          Management Ownership
-        </Title>
-        <Box className="eb-grid-cols-3">
-          {Object.entries(clientDataForm.individualDetails).map(
-            ([key, val]: any) => {
-              return (
-                <CardReviewIndividual
-                  data={val}
-                  type="organization"
-                  key={key}
-                />
-              );
-            }
+          {clientData?.parties?.map((party: any) =>
+            party.partyType === 'ORGANIZATION'
+              ? RenderParty(party, organizationFields)
+              : RenderParty(party, individualFields)
           )}
         </Box>
       </CardContent>

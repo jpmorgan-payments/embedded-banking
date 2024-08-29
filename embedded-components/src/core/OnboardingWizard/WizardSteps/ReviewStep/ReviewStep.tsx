@@ -1,7 +1,4 @@
-import { get } from 'lodash';
-
 import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
-import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
 import { Group, Stack, Title } from '@/components/ui';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -11,6 +8,7 @@ import { useGetDataByClientId } from '../hooks';
 import { reviewSchema } from '../StepsSchema';
 import OutstandingKYCRequirements from './OustandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
+import { RenderParty } from './RenderParty';
 
 const isOutstandingEmpty = (outstanding: { [x: string]: string | any[] }) => {
   if (!outstanding || typeof outstanding !== 'object') {
@@ -35,40 +33,6 @@ const ReviewStep = () => {
       .join(','),
   });
 
-  const renderParty = (
-    party: PartyResponse,
-    fields: { label: any; path: any; transformFunc?: any }[]
-  ) => (
-    <div key={party.id + (party?.partyType ?? '')} className="eb-mb-4 eb-p-4">
-      <h2 className="eb-mb-4 eb-text-xl eb-font-bold">{party.partyType}</h2>
-      <dl className="eb-ml-2 eb-space-y-2">
-        {fields.map(({ label, path, transformFunc }) => {
-          const value = get(party, path);
-          if (value !== undefined && value !== null) {
-            return (
-              <div
-                key={path}
-                className="eb-flex eb-border-b eb-border-dotted eb-border-gray-300 sm:eb-justify-between"
-              >
-                <dt className="eb-w-1/3 sm:eb-mb-0">{label}:</dt>
-                <dd className="sm:eb-w-2/3 sm:eb-pl-4">
-                  {transformFunc
-                    ? transformFunc(value)
-                    : typeof value === 'boolean'
-                      ? value.toString()
-                      : Array.isArray(value)
-                        ? value.join(', ')
-                        : value}
-                </dd>
-              </div>
-            );
-          }
-          return null;
-        })}
-      </dl>
-    </div>
-  );
-
   return (
     <>
       <Stack className="eb-w-full eb-text-sm">
@@ -85,8 +49,8 @@ const ReviewStep = () => {
         <div className="eb-w-xl eb-px-4">
           {clientData?.parties?.map((party: any) =>
             party.partyType === 'ORGANIZATION'
-              ? renderParty(party, organizationFields)
-              : renderParty(party, individualFields)
+              ? RenderParty(party, organizationFields)
+              : RenderParty(party, individualFields)
           )}
         </div>
 
