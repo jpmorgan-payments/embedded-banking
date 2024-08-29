@@ -1,11 +1,16 @@
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import { z } from 'zod';
 
 export const PhoneSchema = z.object({
   phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
-  countryCode: z
-    .string()
-    .regex(/^(0{2}|\+)?[1-9]{1,3}$/, 'Invalid country code'),
-  phoneNumber: z.string().regex(/^\d{10}$/, 'Phone number must be 10 digits'),
+  phoneNumber: z
+    .object({
+      countryCode: z.string(),
+      nationalNumber: z.string(),
+    })
+    .refine((val) => isValidPhoneNumber(val.countryCode + val.nationalNumber), {
+      message: 'Invalid phone number',
+    }),
 });
 
 export const AddressSchema = z.object({

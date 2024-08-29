@@ -21,9 +21,9 @@ const buttonVariants = cva(
         link: 'eb-text-primary eb-underline-offset-4 hover:eb-underline',
       },
       size: {
-        default: 'eb-h-9 eb-px-4 eb-py-2',
-        sm: 'eb-h-8 eb-rounded-md eb-px-3',
-        lg: 'eb-h-10 eb-rounded-md eb-px-8',
+        default: 'eb-h-10 eb-px-4 eb-py-2',
+        sm: 'eb-h-9 eb-rounded-md eb-px-3',
+        lg: 'eb-h-11 eb-rounded-md eb-px-8',
         icon: 'eb-h-5 eb-w-5',
       },
     },

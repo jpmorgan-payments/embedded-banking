@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { parsePhoneNumber } from 'react-phone-number-input';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -22,6 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { PhoneInput } from '@/components/ui/phone-input';
 import {
   Select,
   SelectContent,
@@ -49,7 +51,7 @@ export const OrganizationStepForm = () => {
   const { clientId, onPostClientResponse } = useOnboardingContext();
 
   const form = useForm<z.infer<typeof OrganizationStepFormSchema>>({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: zodResolver(OrganizationStepFormSchema),
     defaultValues: {
       organizationName: '',
@@ -68,7 +70,13 @@ export const OrganizationStepForm = () => {
         },
       ],
       organizationIds: [],
-      phone: { phoneType: 'BUSINESS_PHONE', countryCode: '', phoneNumber: '' },
+      phone: {
+        phoneType: 'BUSINESS_PHONE',
+        phoneNumber: {
+          countryCode: '+1',
+          nationalNumber: '917',
+        },
+      },
       entitiesInOwnership: false,
       significantOwnership: false,
       tradeOverInternet: false,
@@ -375,34 +383,40 @@ export const OrganizationStepForm = () => {
               )}
             />
 
-            <div className="eb-flex eb-gap-2">
-              <FormField
-                control={form.control}
-                name="phone.countryCode"
-                render={({ field }) => (
-                  <FormItem className="eb-shrink eb-grow-0">
-                    <FormLabel>Country Code</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="e.g. +1" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone.phoneNumber"
-                render={({ field }) => (
-                  <FormItem className="eb-grow">
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Enter phone number" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="phone.phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <PhoneInput
+                      {...field}
+                      countries={['US']}
+                      value={
+                        field.value.nationalNumber
+                          ? `${field.value.countryCode}${field.value.nationalNumber}`
+                          : ''
+                      }
+                      onChange={(value) => {
+                        const phoneNumber = parsePhoneNumber(value);
+                        field.onChange({
+                          ...field.value,
+                          countryCode: phoneNumber?.countryCallingCode
+                            ? `+${phoneNumber.countryCallingCode}`
+                            : '',
+                          nationalNumber: phoneNumber?.nationalNumber || '',
+                        });
+                      }}
+                      placeholder="Enter phone number"
+                      addInternationalOption
+                      defaultCountry="US"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </fieldset>
         <fieldset className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4">
