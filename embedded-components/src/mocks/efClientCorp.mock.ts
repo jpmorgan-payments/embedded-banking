@@ -44,7 +44,7 @@ export const efClientCorpMock: ClientResponse = {
         ],
         phone: {
           phoneType: 'BUSINESS_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '6316215110',
         },
         organizationIds: [
@@ -96,7 +96,7 @@ export const efClientCorpMock: ClientResponse = {
         ],
         phone: {
           phoneType: 'MOBILE_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '6316215110',
         },
       },
@@ -139,7 +139,7 @@ export const efClientCorpMock: ClientResponse = {
         ],
         phone: {
           phoneType: 'MOBILE_PHONE',
-          countryCode: 'US',
+          countryCode: '+1',
           phoneNumber: '2017700500',
         },
       },
