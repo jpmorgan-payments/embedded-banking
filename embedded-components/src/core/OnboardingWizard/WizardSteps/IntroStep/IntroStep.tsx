@@ -91,7 +91,6 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
       businessEmail,
       countryOfFormation,
     } = form.getValues();
-
     await postClient({
       data: {
         parties: [

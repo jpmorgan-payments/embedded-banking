@@ -36,7 +36,11 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
 
-  const { data: clientData } = useGetDataByClientId();
+  const {
+    data: clientData,
+    isPending: isPendingClient,
+    status,
+  } = useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);
   }, [clientData]);
@@ -102,8 +106,10 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                   <CardTitle>{title}</CardTitle>
                 </CardHeader>
               )}
-              {isPending ? (
-                <LoadingState message="Fetching client data..." />
+              {!!clientId && isPendingClient ? (
+                <>
+                  <LoadingState message="Fetching client data..." />
+                </>
               ) : (
                 <>
                   <ErrorBoundary
@@ -124,7 +130,7 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                       </>
                     )}
                   >
-                    {clientData?.status === 'NEW' ? (
+                    {clientData?.status === 'NEW' || !clientData ? (
                       <>
                         {!!stepsList?.length &&
                           (activeStep !== 0 || clientId) && (

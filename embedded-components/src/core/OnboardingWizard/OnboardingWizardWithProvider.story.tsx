@@ -12,6 +12,7 @@ import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 import termsPDF from '../../../public/asset/docs/placeholder.pdf';
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OnboardingWizard';
+import { efClientPost } from '@/mocks/efClientPost.mock';
 
 const OnboardingWizardWithProvider = ({
   apiBaseUrl,
@@ -142,7 +143,7 @@ export const NoClient: Story = {
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
-        primaryColor: 'red',
+        primaryColor: '#7CB9E8',
         borderRadius: '15px',
       },
     },
@@ -156,8 +157,11 @@ export const NoClient: Story = {
   parameters: {
     msw: {
       handlers: [
+        http.post('/ef/do/v1/clients', () => {
+          return HttpResponse.json(efClientPost);
+        }),
         http.get('/ef/do/v1/clients/0030000132', () => {
-          return HttpResponse.json(efClientSolProp);
+          return HttpResponse.json(efClientCorpMock);
         }),
         http.get('/ef/do/v1/questions', (req) => {
           const url = new URL(req.request.url);
