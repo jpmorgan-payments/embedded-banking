@@ -95,6 +95,9 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
+        http.post('/ef/do/v1/clients/0030000139', () => {
+          return HttpResponse.json(efClientPost);
+        }),
         http.get('/ef/do/v1/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
         }),
