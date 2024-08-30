@@ -59,7 +59,7 @@ const QuestionsStep = ({ children }: any) => {
     isSuccess: isSucessSub,
   }: { data: QuestionListResponse | undefined; isSuccess: boolean } =
     useGetQuestions((findSubQuestions ?? ['']) as string[]);
-    
+
   const fullQuesitonSet = uniqBy(
     [questionsData?.questions, subQuestionsData?.questions].flat(),
     'id'
