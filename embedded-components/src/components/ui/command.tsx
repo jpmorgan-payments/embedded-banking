@@ -41,6 +41,7 @@ const CommandInput = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     className="eb-flex eb-items-center eb-border-b eb-px-3"
+    // eslint-disable-next-line react/no-unknown-property -- temp fix while using wrong cmdk package
     cmdk-input-wrapper=""
   >
     <Search className="eb-mr-2 eb-h-4 eb-w-4 eb-shrink-0 eb-opacity-50" />
