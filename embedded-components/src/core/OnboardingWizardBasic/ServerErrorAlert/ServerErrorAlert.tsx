@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { AlertCircleIcon, RefreshCwIcon } from 'lucide-react';
 
 import { ErrorType } from '@/api/axios-instance';
-import { ApiErrorV2 } from '@/api/generated/embedded-banking.schemas';
+import { ApiError } from '@/api/generated/smbdo.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +14,7 @@ const defaultErrorMessage: Record<string, string> = {
 };
 
 type ServerErrorAlertProps = {
-  error: ErrorType<ApiErrorV2> | null;
+  error: ErrorType<ApiError> | null;
   customErrorMessage?: string | Record<string, string>;
   tryAgainAction?: () => void;
 };

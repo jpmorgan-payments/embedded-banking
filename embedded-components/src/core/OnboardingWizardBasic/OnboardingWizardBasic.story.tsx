@@ -6,10 +6,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
 import {
-  ApiErrorV2,
+  ApiError,
   ClientResponse,
-  ClientVerificationsInformationResponse,
-} from '@/api/generated/embedded-banking.schemas';
+  ClientVerificationResponse,
+} from '@/api/generated/smbdo.schemas';
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
 import { OnboardingWizardBasic } from './OnboardingWizardBasic';
@@ -30,10 +30,10 @@ export const OnboardingWizardBasicWithProvider = ({
   headers: Record<string, string>;
   title: string;
   theme: Record<string, unknown>;
-  onPostClientResponse: (response?: ClientResponse, error?: ApiErrorV2) => void;
+  onPostClientResponse: (response?: ClientResponse, error?: ApiError) => void;
   onPostClientVerificationsResponse?: (
-    response?: ClientVerificationsInformationResponse,
-    error?: ApiErrorV2
+    response?: ClientVerificationResponse,
+    error?: ApiError
   ) => void;
   setClientId?: (s: string) => void;
   clientId?: string;

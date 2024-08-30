@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
-import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import { useSmbdoPostClients } from '@/api/generated/smbdo';
+import { CreateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import {
   Form,
