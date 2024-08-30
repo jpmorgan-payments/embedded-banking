@@ -56,7 +56,7 @@ const QuestionsStep = ({ children }: any) => {
 
   const {
     data: subQuestionsData,
-    isSuccess: isSucessSub,
+    // isSuccess: isSucessSub,
   }: { data: QuestionListResponse | undefined; isSuccess: boolean } =
     useGetQuestions((findSubQuestions ?? ['']) as string[]);
 
