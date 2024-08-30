@@ -6,11 +6,8 @@ import { parsePhoneNumber } from 'react-phone-number-input';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import {
-  useSmbdoGetClient,
-  useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
-import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
+import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
