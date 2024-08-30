@@ -66,7 +66,7 @@ const OnboardingWizardWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardWithProvider> = {
-  title: 'Onboarding Wizard / General',
+  title: 'Onboarding Wizard / Steps',
   component: OnboardingWizardWithProvider,
 };
 export default meta;

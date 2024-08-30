@@ -11,8 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui';
-// import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
-import { industryCategoriesMock as industryCategories } from '@/core/OnboardingWizard/utils/industryCategories.mock';
+import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
+
+import useGetCategories from './hooks/useGetOrgTypes';
 
 const IndustryFormField = ({
   form,
@@ -21,7 +22,9 @@ const IndustryFormField = ({
   // labelToken,
   // placeholderToken,
 }: any) => {
-  // TODO: Add a hook to fetch types as mock
+  const { getContentToken } = useContentData('steps.valuesMap');
+  const industryCategories: any = useGetCategories();
+
   const industryTypes =
     industryCategories?.items
       ?.find?.(
@@ -37,8 +40,7 @@ const IndustryFormField = ({
         name="industryCategory"
         render={({ field }) => (
           <FormItem className="eb-mt-5 eb-w-full">
-            {/* TODO:// MISIng content Type */}
-            <FormLabel>Industry Category</FormLabel>
+            <FormLabel>{getContentToken('industryCategory')}</FormLabel>
             <Select
               onValueChange={(value) => {
                 field.onChange(value);
@@ -48,7 +50,9 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select industry category" />
+                  <SelectValue
+                    placeholder={getContentToken('industryCategoryPh')}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -82,7 +86,7 @@ const IndustryFormField = ({
         name="industryType"
         render={({ field }) => (
           <FormItem className="eb-mt-5 eb-w-full">
-            <FormLabel>Industry Type</FormLabel>
+            <FormLabel>{getContentToken('industryType')}</FormLabel>
             <Select
               onValueChange={(value) => {
                 field.onChange(value);
@@ -92,7 +96,9 @@ const IndustryFormField = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select industry type" />
+                  <SelectValue
+                    placeholder={getContentToken('industryTypePh')}
+                  />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>

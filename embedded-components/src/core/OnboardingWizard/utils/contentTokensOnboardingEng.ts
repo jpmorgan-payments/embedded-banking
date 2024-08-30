@@ -449,6 +449,7 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'schema.controllerDetailsSchema.controllerSsn9Req': `(!) SSN is required`,
   'schema.controllerDetailsSchema.controllerAddressLine1': `(!) Address Line 1 is required`,
   'schema.controllerDetailsSchema.addressInvalidCharacters': `(!) Invalid characters. Please use only letters, numbers, and allowed characters - . ' / & # @ % `,
+  'schema.controllerDetailsSchema.minStringLengthAlert': `(!) Should be more than {word} characters`,
   'schema.controllerDetailsSchema.maxStringLengthAlert': `(!) Should be less than {word} characters`,
   'schema.controllerDetailsSchema.controllerCity': `(!) City is required`,
   'schema.controllerDetailsSchema.validBusinessCity': `(!) Please provide a valid city name`,
@@ -599,7 +600,9 @@ const contentTokensOnboardingEng: Record<string, string | string[]> = {
   'steps.valuesMap.businessZipCode': 'ZIP Code',
   'steps.valuesMap.businessPhone': 'Phone',
   'steps.valuesMap.industryCategory': 'Industry Category',
+  'steps.valuesMap.industryCategoryPh': 'Select industry category',
   'steps.valuesMap.industryType': 'Industry Type',
+  'steps.valuesMap.industryTypePh': 'Select industry type',
   // -----
   'steps.valuesMap.controllerIsOwner': 'Controller',
   'steps.valuesMap.controllerIsOwnerBuss': ', Business Owner',

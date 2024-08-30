@@ -8,7 +8,7 @@ import { Box, Button, Stack } from '@/components/ui';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
-import { useFormSchema } from '../../context/formProvider.contex';
+import { useFormSchema } from '../../context/formProvider.context';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -98,11 +98,11 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
                   indID
                 ].roles.includes('CONTROLLER');
               })
-              .map((contollerID: any) => {
+              .map((controllerID: any) => {
                 const controller =
-                  businessOwnerForm.individualDetails[contollerID];
+                  businessOwnerForm.individualDetails[controllerID];
                 return (
-                  <div key={contollerID} className="eb-grid-cols-subgrid">
+                  <div key={controllerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
@@ -126,12 +126,12 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
                   )
                 );
               })
-              .map((contollerID: any) => {
+              .map((controllerID: any) => {
                 const controller =
-                  businessOwnerForm.individualDetails[contollerID];
+                  businessOwnerForm.individualDetails[controllerID];
 
                 return (
-                  <div key={contollerID} className="eb-grid-cols-subgrid">
+                  <div key={controllerID} className="eb-grid-cols-subgrid">
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}

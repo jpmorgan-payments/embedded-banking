@@ -8,7 +8,6 @@ import { OnboardingWizardSchema } from './OnboardingWizardSchema';
 import { StepperProvider } from './Stepper/Stepper';
 
 export interface OnboardingWizardInitProps extends RootConfig {
-  isMock?: boolean;
   title?: string;
   clientId?: string;
   onPostClientsVerification: ({
@@ -27,7 +26,6 @@ export interface OnboardingWizardInitProps extends RootConfig {
   }) => void;
 }
 
-//TODO: props types needs to have
 const OnboardingWizard = ({
   clientId,
   onPostClientsVerification,

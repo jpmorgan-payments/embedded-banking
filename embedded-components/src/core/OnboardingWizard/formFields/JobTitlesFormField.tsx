@@ -13,31 +13,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui';
+import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
-// import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
-
-// TODO: API FETCH on Titles
-const jobTitles = [
-  'CEO',
-  'CFO',
-  'COO',
-  'President',
-  'Chairman',
-  'Senior Branch Manager',
-  'Other',
-];
+import useGetJobTitle from './hooks/useGetJobTitle';
 
 const JobTitlesFormField = ({ form, name, required }: any) => {
-  const [jobTitleIsOther, setJobTitleIsOther] = useState(false);
-  // TODO: Other jobs states incomplete
-  const [, setSelectedJobTitle] = useState('CEO');
+  const jobTitle = form.getValues('jobTitle');
 
-  const handleJobTitleChange = (jobTitle: string) => {
-    setSelectedJobTitle(jobTitle);
-    if (jobTitle === 'Other') {
-      setJobTitleIsOther(true);
-    } else {
-      setJobTitleIsOther(false);
+  const jobTitles = useGetJobTitle();
+  const { getContentToken } = useContentData('steps.valuesMap');
+  const { getContentToken: getContentTokenController } = useContentData(
+    'steps.ControllerDetailsStep'
+  );
+  const [title, setSelectedJobTitle] = useState(jobTitle);
+  const jobTitleIsOther = title === 'Other';
+
+  const handleJobTitleChange = (job: string) => {
+    setSelectedJobTitle(job);
+    if (job !== 'Other') {
+      form.setValue('jobTitleDescription', '');
     }
   };
 
@@ -49,7 +43,9 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
         render={({ field }) => {
           return (
             <FormItem className="">
-              <FormLabel asterisk={required}>Job Title</FormLabel>
+              <FormLabel asterisk={required}>
+                {getContentToken('jobTitle')}
+              </FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
@@ -60,7 +56,9 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
                 <FormControl>
                   <SelectTrigger>
                     {/* TODO: placholder needs token */}
-                    <SelectValue placeholder="Select Job Title" />
+                    <SelectValue
+                      placeholder={getContentTokenController('selectPlc')}
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -78,13 +76,15 @@ const JobTitlesFormField = ({ form, name, required }: any) => {
           );
         }}
       />
+
       <FormField
-        //TODO make required if job selected is "Other" and disabled otherwise
         control={form.control}
         name="jobTitleDescription"
         render={({ field }) => (
           <FormItem>
-            <FormLabel asterisk={!!jobTitleIsOther}>Job Description</FormLabel>
+            <FormLabel asterisk={!!jobTitleIsOther}>
+              {getContentTokenController('inputLabel')}
+            </FormLabel>
             <FormControl>
               <Input
                 {...field}

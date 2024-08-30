@@ -10,14 +10,14 @@ import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 
 import { useRootConfig } from '../EBComponentsProvider/RootConfigProvider';
 import { useError } from './context/error.context';
-// import { useOnboardingForm } from './context/form.context';
-import { FormProvider } from './context/formProvider.contex';
+import { FormProvider } from './context/formProvider.context';
 // import { useIPAddress } from './hooks/getIPAddress';
 import NavigationButtons from './Stepper/NavigationButtons';
 import { useStepper } from './Stepper/Stepper';
 import StepperHeader from './Stepper/StepperHeader';
 import { fromApiToForm } from './utils/fromApiToForm';
 import { useContentData } from './utils/useContentData';
+import { ClientStateStep } from './WizardSteps/ClientStateStep/ClientStateStep';
 import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
@@ -32,17 +32,17 @@ export const OnboardingWizardSchema = ({ title }: any) => {
     CurrentStep,
     currentFormSchema,
   } = useStepper();
-  // const { onboardingForm, setOnboardingForm } = useOnboardingForm();
 
   // TODO: Temporary comment for IP
   // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
 
-  const { data } = useGetDataByClientId();
+  const { data: clientData, isPending: isPendingClient } =
+    useGetDataByClientId();
   const clientDataForm = useMemo(() => {
-    return data && fromApiToForm(data);
-  }, [data]);
+    return clientData && fromApiToForm(clientData);
+  }, [clientData]);
 
-  const { error: isError, pending: isPending } = useError();
+  const { error: isError } = useError();
 
   // TODO: Temporary comment for IP
   // useEffect(() => {
@@ -103,20 +103,12 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                   <CardTitle>{title}</CardTitle>
                 </CardHeader>
               )}
-              {isPending ? (
-                <LoadingState message="Fetching client data..." />
+              {!!clientId && isPendingClient ? (
+                <>
+                  <LoadingState message="Fetching client data..." />
+                </>
               ) : (
                 <>
-                  {!!stepsList?.length && (activeStep !== 0 || clientId) && (
-                    <StepperHeader
-                      activeStep={activeStep}
-                      setCurrentStep={setCurrentStep}
-                      steps={stepsList?.map((step: any) => step?.title)}
-                      key={stepsList?.length}
-                    ></StepperHeader>
-                  )}
-
-                  {isError && <ServerAlertMessage />}
                   <ErrorBoundary
                     onReset={reset}
                     fallbackRender={({ resetErrorBoundary, error }) => (
@@ -135,25 +127,43 @@ export const OnboardingWizardSchema = ({ title }: any) => {
                       </>
                     )}
                   >
-                    <CardContent>
-                      <Box className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
-                        <FormProvider>
-                          {CurrentStep && (
-                            <CurrentStep
-                              {...{
-                                formSchema: currentFormSchema,
-                                yupSchema: validationSchema,
-                              }}
-                            >
-                              <NavigationButtons
-                                setActiveStep={setCurrentStep}
-                                activeStep={activeStep}
-                              />
-                            </CurrentStep>
+                    {clientData?.status === 'NEW' || !clientData ? (
+                      <>
+                        {!!stepsList?.length &&
+                          (activeStep !== 0 || clientId) && (
+                            <StepperHeader
+                              activeStep={activeStep}
+                              setCurrentStep={setCurrentStep}
+                              steps={stepsList?.map((step: any) => step?.title)}
+                              key={stepsList?.length}
+                            ></StepperHeader>
                           )}
-                        </FormProvider>
-                      </Box>
-                    </CardContent>
+
+                        {isError && <ServerAlertMessage />}
+
+                        <CardContent>
+                          <Box className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">
+                            <FormProvider>
+                              {CurrentStep && (
+                                <CurrentStep
+                                  {...{
+                                    formSchema: currentFormSchema,
+                                    yupSchema: validationSchema,
+                                  }}
+                                >
+                                  <NavigationButtons
+                                    setActiveStep={setCurrentStep}
+                                    activeStep={activeStep}
+                                  />
+                                </CurrentStep>
+                              )}
+                            </FormProvider>
+                          </Box>
+                        </CardContent>
+                      </>
+                    ) : (
+                      <ClientStateStep />
+                    )}
                   </ErrorBoundary>
                 </>
               )}

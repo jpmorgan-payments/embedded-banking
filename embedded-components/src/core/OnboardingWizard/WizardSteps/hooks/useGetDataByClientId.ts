@@ -6,25 +6,40 @@ import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useError } from '../../context/error.context';
 
 const useGetDataByClientId = () => {
-  const { setError, setPending } = useError();
+  const { setError, setPending, setRefetch } = useError();
   const { clientId, setPartyId } = useRootConfig();
 
-  const { data, refetch, isPending, isError, error } = useSmbdoGetClient(
-    clientId as string
-  );
+  const {
+    data,
+    refetch,
+    isPending,
+    isError,
+    error,
+    isLoading,
+    status,
+    refetch: refetchClient,
+  } = useSmbdoGetClient(clientId ?? '', {
+    query: {
+      enabled: !!clientId,
+    },
+  });
 
   useEffect(() => {
     if (isError) {
       setError(error);
     }
 
+    if (refetchClient) {
+      setRefetch(refetchClient);
+    }
+
     setPending(isPending);
-  }, [isError, isPending]);
+  }, [isError, isPending, refetchClient]);
 
   //TODO: Make sure there is no collision of this partyId
   setPartyId(data?.partyId);
 
-  return { data, refetch, isPending, isError, error };
+  return { data, refetch, isPending, isError, error, isLoading, status };
 };
 
 export { useGetDataByClientId };

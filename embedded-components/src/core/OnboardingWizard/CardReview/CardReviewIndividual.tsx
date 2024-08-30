@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
   Group,
@@ -12,13 +11,11 @@ import {
   Title,
 } from '@/components/ui';
 
-// import { DecisionMakerModal } from '../Modals/DecisionMakerModal';
-
 interface CardReviewIndividualProps {
   data: any;
   type: 'organization' | 'individual';
-  title: string;
-  onEdit: any;
+  title?: string;
+  onEdit?: any;
 }
 
 const CardReviewIndividual = ({
@@ -27,12 +24,14 @@ const CardReviewIndividual = ({
   // title,
   onEdit,
 }: CardReviewIndividualProps) => {
-  // const [open, setOpen] = useState(false);
   const {
     // email,
     indDetails,
   } = data;
+
   const {
+    jobTitle,
+    jobTitleDescription,
     city,
     countryOfResidence,
     firstName,
@@ -46,24 +45,32 @@ const CardReviewIndividual = ({
 
   return (
     <>
-      <Card className="eb-min-w-96">
-        <CardHeader className="">
-          <CardTitle></CardTitle>
-          <Group className="eb-ml-auto">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                onEdit(true);
-              }}
-            >
-              <Edit /> Edit
-            </Button>
-          </Group>
-        </CardHeader>
+      <Card className="eb-min-w-96 eb-pt-8">
+        {onEdit && (
+          <CardHeader className="">
+            <CardTitle></CardTitle>
+
+            <Group className="eb-ml-auto">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  onEdit(true);
+                }}
+              >
+                <Edit /> Edit
+              </Button>
+            </Group>
+          </CardHeader>
+        )}
         <CardContent>
-          <Title as="h5">
-            {firstName} {lastName}
-          </Title>
+          <Group>
+            <Title as="h5">
+              {firstName} {lastName},
+            </Title>
+            <Text>
+              &nbsp; {jobTitle === 'Other' ? jobTitleDescription : jobTitle}
+            </Text>
+          </Group>
           <Group>
             <Text size="sm">
               {[addressLine1, addressLine2, addressLine3].join(' ')}
@@ -75,7 +82,6 @@ const CardReviewIndividual = ({
             </Text>
           </Group>
         </CardContent>
-        <CardFooter></CardFooter>
       </Card>
     </>
   );
