@@ -39,9 +39,8 @@ const QuestionsStep = ({ children }: any) => {
   const {
     data: questionsData,
     isSuccess,
-  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
-    questionList as string[]
-  );
+  }: { data: QuestionListResponse | undefined; isSuccess: boolean } =
+    useGetQuestions(questionList as string[]);
 
   const findSubQuestions = questionsData?.questions
     ?.filter((q) => q?.subQuestions?.length)
@@ -57,10 +56,10 @@ const QuestionsStep = ({ children }: any) => {
 
   const {
     data: subQuestionsData,
-    // isSuccess: isSucessSub,
-  }: { data: QuestionListResponse; isSuccess: boolean } = useGetQuestions(
-    (findSubQuestions ?? ['']) as string[]
-  );
+    isSuccess: isSucessSub,
+  }: { data: QuestionListResponse | undefined; isSuccess: boolean } =
+    useGetQuestions((findSubQuestions ?? ['']) as string[]);
+    
   const fullQuesitonSet = uniqBy(
     [questionsData?.questions, subQuestionsData?.questions].flat(),
     'id'
