@@ -22,7 +22,7 @@ import { updateFormValues } from '../utils/updateFormValues';
 const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
-  const { isMock, clientId } = useRootConfig();
+  const { clientId } = useRootConfig();
   const { data } = useGetDataByClientId();
   const clientDataForm = data && fromApiToForm(data);
 
@@ -67,10 +67,6 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
       setCurrentStep(activeStep + 1);
     } catch (error: any) {
       setError(true);
-
-      if (isMock) {
-        setCurrentStep(activeStep + 1);
-      }
     }
   }, [activeStep]);
 
