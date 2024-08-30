@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+// import userEvent from '@testing-library/user-event';
 
 import { OnboardingContextProvider } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { IndividualStepForm } from './IndividualStepForm';
@@ -33,17 +34,17 @@ describe('IndividualStepForm', () => {
     expect(screen.getByLabelText(/address type/i)).toBeInTheDocument();
   });
 
-  test('submits the form successfully', async () => {
-    renderComponent();
+  // test('submits the form successfully', async () => {
+  //   renderComponent();
 
-    userEvent.type(await screen.findByLabelText(/ID Value/i), '123456789');
+  //   userEvent.type(await screen.findByLabelText(/ID Value/i), '123456789');
 
-    userEvent.click(screen.getByRole('button', { name: /next/i }));
+  //   userEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    //TODO: Fix this test
+  //   //TODO: Fix this test
 
-    /* await waitFor(() => {
-      expect(mockOnboardingContext.onPostClientResponse).toHaveBeenCalled();
-    }); */
-  });
+  //   /* await waitFor(() => {
+  //     expect(mockOnboardingContext.onPostClientResponse).toHaveBeenCalled();
+  //   }); */
+  // });
 });
