@@ -24,8 +24,13 @@ jobs:
       - name: Run shell script - Monthly Clones
         run: |
           chmod +x monthly_clones.sh
-          ./monthly_clones.sh $(date +'%Y-%m')
+          ./monthly_clones.sh $(date -d "-1 month" +'%Y-%m')
       - name: Run shell script - Monthly Clones
         run: |
           chmod +x monthly_traffic.sh
-          ./monthly_traffic.sh $(date +'%Y-%m')
+          ./monthly_traffic.sh $(date -d "-1 month" +'%Y-%m')
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Apply monthly metrics changes
+          branch: metrics
