@@ -33,9 +33,6 @@ export const OnboardingWizardSchema = ({ title }: any) => {
     currentFormSchema,
   } = useStepper();
 
-  // TODO: Temporary comment for IP
-  // const { data: ipAddress, status: ipFetchStatus } = useIPAddress();
-
   const { data: clientData, isPending: isPendingClient } =
     useGetDataByClientId();
   const clientDataForm = useMemo(() => {
@@ -43,18 +40,6 @@ export const OnboardingWizardSchema = ({ title }: any) => {
   }, [clientData]);
 
   const { error: isError } = useError();
-
-  // TODO: Temporary comment for IP
-  // useEffect(() => {
-  //   //TODO: Do something if ipFetchStatus, fails, or stalls
-  // }, [ipFetchStatus]);
-
-  // //TODO: Turn all the below effects, and Memoes into a hook
-  // useEffect(() => {
-  //   if (ipAddress) {
-  //     setOnboardingForm({ ...onboardingForm, ip: ipAddress });
-  //   }
-  // }, [ipAddress]);
 
   // TODO: IMPROVE STEPPER, when logic dictates for more robust STEP
   useEffect(() => {

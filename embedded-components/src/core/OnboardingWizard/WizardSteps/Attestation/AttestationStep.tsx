@@ -18,8 +18,6 @@ import { useStepper } from '../../Stepper/useStepper';
 import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 
-// import { PdfDisplay } from './PdfDisplay';
-
 const AttestationStep = () => {
   const { toast } = useToast();
   const form = useFormContext();
@@ -105,21 +103,6 @@ const AttestationStep = () => {
 
       {isError && <>{JSON.stringify(data?.context[0]?.message)}</>}
 
-      {/* <PdfDisplay
-        data-testid="pdf-display"
-        // file={termsAndConditionsDocId}
-
-        file={termsAndConditionsDocId || '/asset/docs/terms.pdf' }
-        onLoad={() => setPdfLoaded(true)}
-        onScrolledToBottom={() => {
-          if (pdfLoaded) {
-            form.setValue('reviewedTerms', true);
-          }
-        }}
-      /> */}
-
-      {/* <Separator /> */}
-
       <Stack className="eb-mt-4 eb-pl-6">
         <ul className="eb-list-outside eb-space-y-2">
           <li>
@@ -179,21 +162,6 @@ const AttestationStep = () => {
                     <IconExternalLink size={12} />
                   </Group>
                 </a>
-                {/* &nbsp;
-              <a
-                className={`eb-underline eb-decoration-primary eb-underline-offset-4 ${EDC && 'eb-decoration-transparent'}`}
-                href="https://www.jpmorganchase.com/legal/terms-and-conditions"
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => {
-                  setEDC(true);
-                }}
-              >
-                <Group>
-                  the E-Sign Disclosure and Consent,
-                  <IconExternalLink size={12} />
-                </Group>
-              </a> */}
                 and the certifications directly above.
               </Group>
             )}
@@ -219,8 +187,6 @@ const AttestationStep = () => {
           ? 'Please agree to all terms and review all documents'
           : 'Submit'}
       </NavigationButtons>
-      {/* </form>
-      </Form> */}
     </section>
   );
 };
