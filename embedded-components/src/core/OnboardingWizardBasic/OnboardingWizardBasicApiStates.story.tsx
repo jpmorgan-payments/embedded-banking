@@ -44,7 +44,7 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
           return HttpResponse.json({
@@ -54,10 +54,10 @@ export const Primary: Story = {
             ),
           });
         }),
-        http.get('/ef/do/v1/clients/0030000130', () => {
+        http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
-        http.post('/ef/do/v1/clients/0030000130', () => {
+        http.post('/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
       ],
@@ -75,12 +75,12 @@ export const WithLoadingState = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', async () => {
+        http.get('/clients/0030000130', async () => {
           // Delay the response by 3 seconds (3000 milliseconds)
           await delay(5000);
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
-        http.post('/ef/do/v1/clients/0030000130', async () => {
+        http.post('/clients/0030000130', async () => {
           // You can add a delay here too if needed
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
@@ -99,10 +99,10 @@ export const WithLoadingStateAndError = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', async () => {
+        http.get('/clients/0030000130', async () => {
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
-        http.post('/ef/do/v1/clients/0030000130', async () => {
+        http.post('/clients/0030000130', async () => {
           await delay(1000); // Adding a small delay to the error response
           return HttpResponse.json(
             {
@@ -139,7 +139,7 @@ export const WithErrorOnGet = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', async () => {
+        http.get('/clients/0030000130', async () => {
           return HttpResponse.json(
             {
               title: 'Invalid Data',
@@ -170,7 +170,7 @@ export const OnboardingInProgress = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', async () => {
+        http.get('/clients/0030000130', async () => {
           return HttpResponse.json({
             ...efClientSolPropWithMoreData,
             status: 'PENDING',

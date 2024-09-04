@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '@/api/generated/smbdo.schemas';
 
 export const efClientSolPropWithMoreData: ClientResponse = {
   id: '0030000129',
@@ -30,7 +30,7 @@ export const efClientSolPropWithMoreData: ClientResponse = {
         industryType: 'Retail Bakeries',
         countryOfFormation: 'US',
         yearOfFormation: '2023',
-        significantOwnership: true,
+        // significantOwnership: true,
         entitiesInOwnership: false,
         addresses: [
           {

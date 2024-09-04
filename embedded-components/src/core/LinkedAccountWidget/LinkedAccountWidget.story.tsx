@@ -47,7 +47,7 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/v1/recipients', () => {
+        http.get('/recipients', () => {
           return HttpResponse.json(linkedAccountListMock);
         }),
       ],
@@ -84,7 +84,7 @@ export const RejectedMockAPI: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/v1/recipients', () => {
+        http.get('/recipients', () => {
           return HttpResponse.json(linkedAccountRejectedMock);
         }),
       ],

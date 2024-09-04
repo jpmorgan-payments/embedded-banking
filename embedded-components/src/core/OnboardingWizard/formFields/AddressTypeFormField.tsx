@@ -1,4 +1,4 @@
-import { AddressDtoSmbdoAddressType } from '@/api/generated/embedded-banking.schemas';
+import { AddressDtoAddressType } from '@/api/generated/smbdo.schemas';
 import {
   FormControl,
   FormField,
@@ -15,7 +15,7 @@ import {
 // import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 
 const addressIndividualTypes: {
-  value: AddressDtoSmbdoAddressType;
+  value: AddressDtoAddressType;
   label: string;
 }[] = [
   { value: 'LEGAL_ADDRESS', label: 'Legal' },
@@ -25,7 +25,7 @@ const addressIndividualTypes: {
 ];
 
 const addressORganizationTypes: {
-  value: AddressDtoSmbdoAddressType;
+  value: AddressDtoAddressType;
   label: string;
 }[] = [
   { value: 'LEGAL_ADDRESS', label: 'Legal' },

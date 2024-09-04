@@ -95,13 +95,13 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('/ef/do/v1/clients/0030000139', () => {
+        http.post('/clients/0030000139', () => {
           return HttpResponse.json(efClientPost);
         }),
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
 
@@ -113,11 +113,11 @@ export const Primary: Story = {
           });
         }),
 
-        http.get('/ef/do/v1/documents/:id', () => {
+        http.get('/documents/:id', () => {
           return HttpResponse.json(efDocumentClientDetail);
         }),
 
-        http.get('/ef/do/v1/documents/:id/file', async () => {
+        http.get('/documents/:id/file', async () => {
           const bufferBlob = await fetch(termsPDF).then((res) =>
             res.arrayBuffer()
           );
@@ -130,7 +130,7 @@ export const Primary: Story = {
           });
         }),
 
-        http.post('/ef/do/v1/clients/:id/verifications', () => {
+        http.post('/clients/:id/verifications', () => {
           return HttpResponse.json({ success: 'TRUE' });
         }),
       ],
@@ -160,13 +160,13 @@ export const NoClient: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('/ef/do/v1/clients', () => {
+        http.post('/clients', () => {
           return HttpResponse.json(efClientPost);
         }),
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
 
@@ -187,7 +187,7 @@ export const NoThemeWithPDPAPIs: Story = {
   ...Primary,
   args: {
     ...Primary.args,
-    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
+    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi//ef/do/v1',
     clientId: '123',
   },
   /*play: async ({ canvasElement }) => {
@@ -239,10 +239,10 @@ export const NoThemeWithMocksSoleProp: Story = {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
         }),
-        http.get('/ef/do/v1/parties/2000000112', () => {
+        http.get('/parties/2000000112', () => {
           return HttpResponse.json(partyWithMissingfields);
         }),
       ],
@@ -259,7 +259,7 @@ export const NoThemeWithMocksSolePropAnsweredQuestions: Story = {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000139', () => {
+        http.get('/clients/0030000139', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
       ],
@@ -276,10 +276,10 @@ export const NoThemeWithMocksLLC: Story = {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000130', () => {
+        http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
           return HttpResponse.json({
@@ -304,7 +304,7 @@ export const NoThemeWithMocksLLCAnsweredQuestions: Story = {
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
 
-        http.get('/ef/do/v1/clients/0030000130', () => {
+        http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
       ],

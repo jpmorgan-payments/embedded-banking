@@ -1,12 +1,12 @@
 import {
-  AddressDtoSmbdo,
+  AddressDto,
   ClientResponse,
   IndividualDetails,
-  IndividualIdentityDTO,
+  IndividualIdentity,
   OrganizationDetails,
   OrganizationIdentityDto,
   PartyResponse,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 
 import { transformDateofBirth } from '../WizardSteps/utils/transformDateofBirth';
 
@@ -51,9 +51,9 @@ const fromApiToForm = (client: ClientResponse) => {
       orgDetails.industryType = orgD.industryType;
       orgDetails.countryOfFormation = orgD.countryOfFormation;
       orgDetails.yearOfFormation = orgD.yearOfFormation;
-      orgDetails.significantOwnership = orgD.significantOwnership
-        ? 'true'
-        : 'false';
+      // orgDetails.significantOwnership = orgD.significantOwnership
+      //   ? 'true'
+      //   : 'false';
       orgDetails.entitiesInOwnership = orgD.entitiesInOwnership
         ? 'true'
         : 'false';
@@ -66,9 +66,9 @@ const fromApiToForm = (client: ClientResponse) => {
       orgDetails.countryCode = orgD?.phone?.countryCode || '';
       orgDetails.businessPhone = orgD?.phone?.phoneNumber || '';
 
-      orgD?.addresses?.forEach((address: AddressDtoSmbdo) => {
+      orgD?.addresses?.forEach((address: AddressDto) => {
         orgDetails.addressType = address.addressType;
-        address.addressLines.forEach((addLine, idx) => {
+        address.addressLines.forEach((addLine: any, idx: number) => {
           orgDetails[`businessAddressLine${idx + 1}`] = addLine;
         });
         orgDetails.businessCity = address.city;
@@ -118,9 +118,9 @@ const fromApiToForm = (client: ClientResponse) => {
       indDetails.phoneType = indD?.phone?.phoneType || '';
       indDetails.countryCode = indD?.phone?.countryCode || '';
 
-      indD?.addresses?.forEach((address: AddressDtoSmbdo) => {
+      indD?.addresses?.forEach((address: AddressDto) => {
         indDetails.addressType = address.addressType;
-        address.addressLines.forEach((addLine, idx) => {
+        address.addressLines.forEach((addLine: any, idx: number) => {
           indDetails[`addressLine${idx + 1}`] = addLine;
         });
         indDetails.city = address.city;
@@ -129,7 +129,7 @@ const fromApiToForm = (client: ClientResponse) => {
         indDetails.country = address.country;
       });
 
-      indD?.individualIds?.forEach((indId: IndividualIdentityDTO) => {
+      indD?.individualIds?.forEach((indId: IndividualIdentity) => {
         const { idType, value } = indId;
         indDetails[`${idType.toLocaleLowerCase()}`] = value.trim();
       });

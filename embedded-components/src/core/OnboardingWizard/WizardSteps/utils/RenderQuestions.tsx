@@ -1,7 +1,7 @@
 import {
-  SchemasQuestionResponse,
-  SchemasQuestionResponseSubQuestionsItem,
-} from '@/api/generated/embedded-banking.schemas';
+  QuestionResponse,
+  QuestionResponseSubQuestionsItem,
+} from '@/api/generated/smbdo.schemas';
 import { Box, Separator, Title } from '@/components/ui';
 
 import { CalendarFormField } from '../../formFields/CalendarFormField';
@@ -22,7 +22,7 @@ import { UsStatesFormField } from '../../formFields/UsStatesFormField';
 import { YesNoFromField } from '../../formFields/YesNoFromField';
 
 export interface QuestionSchema extends SelectFormFieldProps {
-  questions: SchemasQuestionResponse[];
+  questions: QuestionResponse[];
   parentId: string;
   fieldType:
     | 'input'
@@ -67,11 +67,12 @@ const RenderQuestions = ({
           parentId,
           questions,
         }: QuestionSchema) => {
-          const parentQuestion: SchemasQuestionResponse | undefined =
-            questions?.find((q) => q.id === parentId);
+          const parentQuestion: QuestionResponse | undefined = questions?.find(
+            (q) => q.id === parentId
+          );
 
           const subParentQuestion:
-            | SchemasQuestionResponseSubQuestionsItem[]
+            | QuestionResponseSubQuestionsItem[]
             | undefined = parentQuestion?.subQuestions?.filter((subQ) => {
             return Array.isArray(form.getValues(parentId))
               ? form.getValues(parentId).includes(subQ.anyValuesMatch)

@@ -3,13 +3,13 @@ import uniqBy from 'lodash/uniqBy';
 import { useFormContext } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import {
   QuestionListResponse,
+  QuestionResponse,
   ResponseSchema,
   ResponseSchemaItem,
-  SchemasQuestionResponse,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 import { Grid, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
@@ -253,7 +253,7 @@ const QuestionsStep = ({ children }: any) => {
   };
 
   const questionSchame = fullQuesitonSet?.length
-    ? fullQuesitonSet?.map((question: any | SchemasQuestionResponse) => {
+    ? fullQuesitonSet?.map((question: any | QuestionResponse) => {
         return {
           name: question?.id,
           labelToken: question?.content?.[0].label,

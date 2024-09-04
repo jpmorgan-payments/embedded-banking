@@ -102,7 +102,7 @@ export const WithClientId: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
           return HttpResponse.json({
@@ -112,10 +112,10 @@ export const WithClientId: Story = {
             ),
           });
         }),
-        http.get('/ef/do/v1/clients/0030000133', () => {
+        http.get('/clients/0030000133', () => {
           return HttpResponse.json(efClientCorpEBMock);
         }),
-        http.post('/ef/do/v1/clients/0030000133', () => {
+        http.post('/clients/0030000133', () => {
           return HttpResponse.json(efClientCorpEBMock);
         }),
       ],
@@ -188,10 +188,10 @@ export const ReviewAndAttestNoOustanding: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', () => {
+        http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
-        http.post('/ef/do/v1/clients/0030000130', () => {
+        http.post('/clients/0030000130', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
       ],

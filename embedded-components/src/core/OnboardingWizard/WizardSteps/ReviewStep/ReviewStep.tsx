@@ -1,4 +1,4 @@
-import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
+import { useSmbdoListQuestions } from '@/api/generated/smbdo';
 import { Group, Stack, Title } from '@/components/ui';
 
 import NavigationButtons from '../../Stepper/NavigationButtons';

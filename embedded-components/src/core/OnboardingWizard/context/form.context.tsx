@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponseOutstanding } from '@/api/generated/smbdo.schemas';
 
 //import { useListClients } from '../hooks/useListClients';
 

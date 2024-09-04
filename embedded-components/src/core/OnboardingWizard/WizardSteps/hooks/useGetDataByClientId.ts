@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
+import { useSmbdoGetClient } from '@/api/generated/smbdo';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 import { useError } from '../../context/error.context';

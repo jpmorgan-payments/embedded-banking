@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '@/api/generated/smbdo.schemas';
 
 export const efClientPost: ClientResponse = {
   id: '0030000132',
@@ -16,10 +16,7 @@ export const efClientPost: ClientResponse = {
       organizationDetails: {
         organizationType: 'SOLE_PROPRIETORSHIP',
         organizationName: 'Central Park Getaways',
-
         countryOfFormation: 'US',
-
-        significantOwnership: true,
         entitiesInOwnership: false,
       },
     },

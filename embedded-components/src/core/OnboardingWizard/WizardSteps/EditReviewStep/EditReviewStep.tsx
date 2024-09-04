@@ -1,3 +1,4 @@
+//TODO: FILE pending DELETING
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -13,7 +14,7 @@ import { useOnboardingForm } from '@/core/OnboardingWizard/context/form.context'
 
 import { CardReviewBusiness } from '../../CardReview/CardReviewBusiness';
 import { CardReviewIndividual } from '../../CardReview/CardReviewIndividual';
-import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
+// import { BusinessDetailsModal } from '../../Modals/BusinessDetailsModal';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
 import NavigationButtons from '../../Stepper/NavigationButtons';
@@ -116,7 +117,7 @@ const EditReviewStep = () => {
             })}
         </Stack>
         <Dialog open={edit} onOpenChange={onEditBusiness}>
-          {reviewData?.organizationDetails && (
+          {/* {reviewData?.organizationDetails && (
             <BusinessDetailsModal
               formData={reviewData?.organizationDetails}
               onCancel={(id: string) => {
@@ -126,7 +127,7 @@ const EditReviewStep = () => {
                 }
               }}
             />
-          )}
+          )} */}
         </Dialog>
 
         <Dialog open={editIndividual} onOpenChange={onEditIndividual}>

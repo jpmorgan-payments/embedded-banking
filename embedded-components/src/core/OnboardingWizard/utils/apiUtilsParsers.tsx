@@ -1,7 +1,9 @@
 import {
+  ClientProductList,
   CreateClientRequestSmbdo,
+  CreatePartyRequestInlineRequired,
   UpdateClientRequestSmbdo,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 
 import { OnboardingForm } from '../context/form.context';
 
@@ -143,8 +145,12 @@ export const formToAPIBody = (
       }
     }
     const form = {
-      parties: [...parties, businessParty, controllerParty],
-      products: ['EMBEDDED_PAYMENTS'],
+      parties: [
+        ...parties,
+        businessParty,
+        controllerParty,
+      ] as CreatePartyRequestInlineRequired[],
+      products: ['EMBEDDED_PAYMENTS'] as ClientProductList,
     };
 
     return form;

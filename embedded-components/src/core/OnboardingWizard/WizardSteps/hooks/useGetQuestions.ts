@@ -1,4 +1,4 @@
-import { useSmbdoListQuestions } from '@/api/generated/embedded-banking';
+import { useSmbdoListQuestions } from '@/api/generated/smbdo';
 
 const useGetQuestions = (questionsIds: string[]) => {
   const { data, refetch, isPending, isSuccess } = useSmbdoListQuestions({

@@ -6,7 +6,7 @@ import {
   RecipientContactContactType,
   RecipientStatus,
   RecipientType,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/ef-v1.schemas';
 
 export const linkedAccountListMock: ListRecipientsResponse = {
   page: 0,
