@@ -46,7 +46,7 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
           return HttpResponse.json({
@@ -56,10 +56,10 @@ export const Primary: Story = {
             ),
           });
         }),
-        http.get('/ef/do/v1/clients/0030000129', () => {
+        http.get('/clients/0030000129', () => {
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
-        http.post('/ef/do/v1/clients/0030000129', () => {
+        http.post('/clients/0030000129', () => {
           return HttpResponse.json(efClientSolPropWithMoreData);
         }),
       ],
@@ -77,7 +77,7 @@ export const LLC: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000130', async () => {
+        http.get('/clients/0030000130', async () => {
           return HttpResponse.json(efClientCorpMock);
         }),
       ],
@@ -95,7 +95,7 @@ export const EMBEDDED_BANKING_LLC: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000133', async () => {
+        http.get('/clients/0030000133', async () => {
           return HttpResponse.json(efClientCorpEBMock);
         }),
       ],
