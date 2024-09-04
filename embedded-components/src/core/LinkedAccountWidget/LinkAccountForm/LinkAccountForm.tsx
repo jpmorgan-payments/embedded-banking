@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { getRecipientLabel } from '@/lib/getAccountLabelFromPartyDetails';
-import { useCreateRecipient } from '@/api/generated/embedded-banking';
+import { useCreateRecipient } from '@/api/generated/ef-v1';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

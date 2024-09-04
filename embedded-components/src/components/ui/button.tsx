@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           'eb-bg-destructive eb-text-destructive-foreground hover:eb-bg-destructive/90 hover:eb-drop-shadow-md',
         outline:
-          'eb-border eb-border-input eb-bg-background eb-text-foreground hover:eb-bg-accent hover:eb-text-accent-foreground hover:eb-drop-shadow-md',
+          'eb-border eb-border-input eb-bg-background eb-text-foreground hover:eb-bg-accent hover:eb-text-accent-foreground',
         secondary:
           'eb-bg-secondary eb-text-secondary-foreground hover:eb-bg-secondary/80 hover:eb-drop-shadow-md',
         ghost: 'hover:eb-bg-accent hover:eb-text-accent-foreground',
@@ -24,7 +24,7 @@ const buttonVariants = cva(
         default: 'eb-h-10 eb-px-4 eb-py-2',
         sm: 'eb-h-9 eb-rounded-md eb-px-3',
         lg: 'eb-h-11 eb-rounded-md eb-px-8',
-        icon: 'eb-h-10 eb-w-10',
+        icon: 'eb-h-5 eb-w-5',
       },
     },
     defaultVariants: {

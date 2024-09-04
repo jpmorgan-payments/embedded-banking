@@ -1,32 +1,8 @@
 import { z } from 'zod';
 
-const phoneSchema = z.object({
-  phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
-  countryCode: z.string().regex(/^\+\d{1,3}$/, 'Invalid country code'),
-  phoneNumber: z.string().regex(/^\d{10}$/, 'Phone number must be 10 digits'),
-});
+import { AddressSchema, PhoneSchema } from '../utils/schemas';
 
-const addressSchema = z.object({
-  addressType: z.enum([
-    'LEGAL_ADDRESS',
-    'MAILING_ADDRESS',
-    'BUSINESS_ADDRESS',
-    'RESIDENTIAL_ADDRESS',
-  ]),
-  addressLines: z
-    .array(z.string().max(60, 'Address line must be 60 characters or less'))
-    .min(1)
-    .max(5),
-  city: z.string().max(34, 'City name must be 34 characters or less'),
-  state: z
-    .string()
-    .max(30, 'State name must be 30 characters or less')
-    .optional(),
-  postalCode: z.string().max(10, 'Postal code must be 10 characters or less'),
-  country: z.string().length(2, 'Country code must be exactly 2 characters'),
-});
-
-const organizationIdSchema = z.object({
+export const OrganizationIdSchema = z.object({
   description: z
     .string()
     .max(100, 'Description must be 100 characters or less')
@@ -73,10 +49,11 @@ const secondaryMccSchema = z.object({
 });
 
 export const OrganizationStepFormSchema = z.object({
-  organizationName: z
+  organizationName: z.string().min(1, 'Organization name is required'),
+  dbaName: z
     .string()
-    .min(1, 'Organization name is required')
-    .max(100, 'Organization name must be 100 characters or less'),
+    .max(100, 'DBA name must be 100 characters or less')
+    .optional(),
   organizationType: z.enum([
     'LIMITED_LIABILITY_COMPANY',
     'C_CORPORATION',
@@ -96,7 +73,7 @@ export const OrganizationStepFormSchema = z.object({
     .string()
     .regex(/^(19|20)\d{2}$/, 'Invalid year of formation'),
   addresses: z
-    .array(addressSchema)
+    .array(AddressSchema)
     .min(1, 'At least one address is required')
     .max(5, 'Maximum 5 addresses allowed'),
   associatedCountries: z
@@ -104,10 +81,6 @@ export const OrganizationStepFormSchema = z.object({
     .max(100, 'Maximum 100 associated countries allowed')
     .optional()
     .default([]),
-  dbaName: z
-    .string()
-    .max(100, 'DBA name must be 100 characters or less')
-    .optional(),
   entitiesInOwnership: z.boolean(),
   industryCategory: z
     .string()
@@ -119,15 +92,17 @@ export const OrganizationStepFormSchema = z.object({
     .optional(),
   jurisdiction: z
     .string()
-    .length(2, 'Jurisdiction code must be exactly 2 characters'),
+    .length(2, 'Jurisdiction code must be exactly 2 characters')
+    .optional()
+    .or(z.literal('')),
   organizationDescription: z
     .string()
     .max(500, 'Organization description must be 500 characters or less')
     .optional(),
   organizationIds: z
-    .array(organizationIdSchema)
+    .array(OrganizationIdSchema)
     .max(6, 'Maximum 6 organization IDs allowed'),
-  phone: phoneSchema,
+  phone: PhoneSchema,
   significantOwnership: z.boolean(),
   tradeOverInternet: z.boolean(),
   website: z

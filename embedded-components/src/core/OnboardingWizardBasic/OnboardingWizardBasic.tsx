@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 
-import { useSmbdoGetClient } from '@/api/generated/embedded-banking';
+import { useSmbdoGetClient } from '@/api/generated/smbdo';
 import {
-  ApiErrorV2,
+  ApiError,
+  ClientProductList,
   ClientResponse,
-  ClientVerificationsInformationResponse,
-} from '@/api/generated/embedded-banking.schemas';
+  ClientVerificationResponse,
+} from '@/api/generated/smbdo.schemas';
 import {
   Card,
   CardContent,
@@ -17,7 +18,7 @@ import { Step, Stepper } from '@/components/ui/stepper';
 
 import { AdditionalQuestionsStepForm } from './AdditionalQuestionsStepForm/AdditionalQuestionsStepForm';
 import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
-import { ClientOnboardingStateView } from './ClientOnbordingStateView/ClientOnbordingStateView';
+import { ClientOnboardingStateView } from './ClientOnboardingStateView/ClientOnboardingStateView';
 import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
 import { FormLoadingState } from './FormLoadingState/FormLoadingState';
 import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
@@ -35,7 +36,7 @@ const stepsInitial = [
     children: <DecisionMakerStepForm />,
     onlyVisibleFor: {
       organizationType: ['LIMITED_LIABILITY_COMPANY'],
-      product: ['EMBEDDED_BANKING'],
+      product: ['MERCHANT_SERVICES'] as ClientProductList,
     },
   },
   {
@@ -43,7 +44,7 @@ const stepsInitial = [
     children: <BusinessOwnerStepForm />,
     onlyVisibleFor: {
       organizationType: ['LIMITED_LIABILITY_COMPANY'],
-      product: ['EMBEDDED_PAYMENTS', 'EMBEDDED_BANKING'],
+      product: ['EMBEDDED_PAYMENTS', 'MERCHANT_SERVICES'] as ClientProductList,
     },
   },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
@@ -60,13 +61,10 @@ type OnboardingWizardBasicProps = {
   clientId?: string;
   title?: string;
   setClientId?: (clientId: string) => void;
-  onPostClientResponse?: (
-    response?: ClientResponse,
-    error?: ApiErrorV2
-  ) => void;
+  onPostClientResponse?: (response?: ClientResponse, error?: ApiError) => void;
   onPostClientVerificationsResponse?: (
-    response?: ClientVerificationsInformationResponse,
-    error?: ApiErrorV2
+    response?: ClientVerificationResponse,
+    error?: ApiError
   ) => void;
   initialStep?: number;
   variant?: 'circle' | 'circle-alt' | 'line';
@@ -160,6 +158,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
                 initialStep={initialStep}
                 steps={steps}
                 variant={variant}
+                mobileBreakpoint="1279px"
               >
                 {steps.map((stepProps, index) => {
                   const { children, ...rest } = stepProps;
