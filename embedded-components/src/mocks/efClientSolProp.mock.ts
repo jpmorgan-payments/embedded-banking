@@ -30,7 +30,7 @@ export const efClientSolProp: ClientResponse = {
         industryType: 'Retail Bakeries',
         countryOfFormation: 'US',
         yearOfFormation: '2023',
-        significantOwnership: true,
+        // significantOwnership: true,
         entitiesInOwnership: false,
         addresses: [
           {
