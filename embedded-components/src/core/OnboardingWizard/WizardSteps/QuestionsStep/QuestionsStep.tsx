@@ -3,7 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 import { useFormContext } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useSmbdoUpdateClient, } from '@/api/generated/smbdo';
+import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import {
   QuestionListResponse,
   QuestionResponse,

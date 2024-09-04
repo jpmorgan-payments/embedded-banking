@@ -187,7 +187,7 @@ export const NoThemeWithPDPAPIs: Story = {
   ...Primary,
   args: {
     ...Primary.args,
-    apiBaseUrl: "https://api-mock.payments.jpmorgan.com/tsapi//ef/do/v1",
+    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi//ef/do/v1',
     clientId: '123',
   },
   /*play: async ({ canvasElement }) => {

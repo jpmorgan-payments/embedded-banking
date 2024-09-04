@@ -67,8 +67,9 @@ const RenderQuestions = ({
           parentId,
           questions,
         }: QuestionSchema) => {
-          const parentQuestion: QuestionResponse | undefined =
-            questions?.find((q) => q.id === parentId);
+          const parentQuestion: QuestionResponse | undefined = questions?.find(
+            (q) => q.id === parentId
+          );
 
           const subParentQuestion:
             | QuestionResponseSubQuestionsItem[]

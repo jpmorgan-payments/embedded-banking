@@ -1,10 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 
 //TODO: why useGetParty is not prefixed with Smbdo?
-import {
-  useGetParty,
-  useSmbdoListQuestions,
-} from '@/api/generated/smbdo';
+import { useGetParty, useSmbdoListQuestions } from '@/api/generated/smbdo';
 import { ClientResponse } from '@/api/generated/smbdo.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
