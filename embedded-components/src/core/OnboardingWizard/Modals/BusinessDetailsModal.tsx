@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useSmbdoUpdateParty } from '@/api/generated/smbdo';
+import { useUpdateParty } from '@/api/generated/smbdo';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -39,7 +39,7 @@ const BusinessDetailsModal = ({
   // const { getContentToken: getFormSchema } = useContentData(
   //   'steps.BusinessDetailsStep'
   // );
-  const { mutateAsync: updateParty, isPending } = useSmbdoUpdateParty();
+  const { mutateAsync: updateParty, isPending } = useUpdateParty();
 
   const defaultInitialValues = {};
 
@@ -55,7 +55,7 @@ const BusinessDetailsModal = ({
       const data = fromFormToOrgParty(form.getValues());
 
       const res = await updateParty({
-        id: formData.id,
+        partyId: formData.id,
         data: {
           email: formData?.email,
           organizationDetails: data,

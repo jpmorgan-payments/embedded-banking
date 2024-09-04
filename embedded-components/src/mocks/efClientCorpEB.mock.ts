@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/smbdos';
+import { ClientResponse } from '@/api/generated/smbdo.schemas';
 
 export const efClientCorpEBMock: ClientResponse = {
   id: '0030000133',
@@ -30,7 +30,7 @@ export const efClientCorpEBMock: ClientResponse = {
         industryType: 'Jewelry Retailers',
         countryOfFormation: 'US',
         yearOfFormation: '2023',
-        significantOwnership: true,
+        // significantOwnership: true,
         entitiesInOwnership: false,
         addresses: [
           {
@@ -146,7 +146,8 @@ export const efClientCorpEBMock: ClientResponse = {
     },
   ],
   partyId: '2000000111',
-  products: ['EMBEDDED_BANKING'],
+  // MERCHANT_SERVICES',
+  products: ['EMBEDDED_PAYMENTS'],
   outstanding: {
     attestationDocumentIds: ['abcd1c1d-6635-43ff-a8e5-b252926bddef'],
     documentRequestIds: [],

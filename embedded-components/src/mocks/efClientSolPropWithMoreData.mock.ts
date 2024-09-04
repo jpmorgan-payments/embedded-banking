@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/smbdos';
+import { ClientResponse } from '@/api/generated/smbdo.schemas';
 
 export const efClientSolPropWithMoreData: ClientResponse = {
   id: '0030000129',

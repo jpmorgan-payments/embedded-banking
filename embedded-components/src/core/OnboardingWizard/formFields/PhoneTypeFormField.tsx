@@ -1,4 +1,4 @@
-import { PhoneSmbdoPhoneType } from '@/api/generated/smbdos';
+import { PhoneSmbdoPhoneType } from '@/api/generated/smbdo.schemas';
 import {
   FormControl,
   FormField,

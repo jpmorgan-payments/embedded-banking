@@ -1,4 +1,4 @@
-import { PartyResponse } from '@/api/generated/smbdos';
+import { PartyResponse } from '@/api/generated/smbdo.schemas';
 
 export const partyWithMissingfields: PartyResponse = {
   access: [],
