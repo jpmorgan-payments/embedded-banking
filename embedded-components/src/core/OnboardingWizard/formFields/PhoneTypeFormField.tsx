@@ -1,4 +1,4 @@
-import { PhoneSmbdoPhoneType } from '@/api/generated/embedded-banking.schemas';
+import { PhoneSmbdoPhoneType } from '@/api/generated/smbdos';
 import {
   FormControl,
   FormField,

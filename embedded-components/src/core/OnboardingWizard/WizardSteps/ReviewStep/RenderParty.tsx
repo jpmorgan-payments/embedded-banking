@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 
-import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
+import { PartyResponse } from '@/api/generated/smbdo.schemas';
 
 const RenderParty = (
   party: PartyResponse,

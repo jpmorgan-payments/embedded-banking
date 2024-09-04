@@ -7,7 +7,7 @@ import {
   XCircleIcon,
 } from 'lucide-react';
 
-import { ClientStatus } from '@/api/generated/embedded-banking.schemas';
+import { ClientStatus } from '@/api/generated/smbdo.schemas';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box } from '@/components/ui';

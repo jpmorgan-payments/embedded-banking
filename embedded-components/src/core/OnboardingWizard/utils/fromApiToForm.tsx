@@ -6,7 +6,7 @@ import {
   OrganizationDetails,
   OrganizationIdentityDto,
   PartyResponse,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdos';
 
 import { transformDateofBirth } from '../WizardSteps/utils/transformDateofBirth';
 

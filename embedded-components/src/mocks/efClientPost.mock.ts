@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '@/api/generated/smbdos';
 
 export const efClientPost: ClientResponse = {
   id: '0030000132',

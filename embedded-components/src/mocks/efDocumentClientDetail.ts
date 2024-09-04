@@ -1,4 +1,4 @@
-import { ListDocumentsResponse } from '@/api/generated/embedded-banking.schemas';
+import { ListDocumentsResponse } from '@/api/generated/smbdos';
 
 export const efDocumentClientDetail: ListDocumentsResponse = {
   metadata: {

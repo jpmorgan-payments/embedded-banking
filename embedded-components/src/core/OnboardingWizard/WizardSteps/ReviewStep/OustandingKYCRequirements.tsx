@@ -1,14 +1,15 @@
 import { AlertTriangle } from 'lucide-react';
 
+//TODO: why useGetParty is not prefixed with Smbdo?
 import {
-  useSmbdoGetParty,
+  useGetParty,
   useSmbdoListQuestions,
-} from '@/api/generated/embedded-banking';
-import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo';
+import { ClientResponse } from '@/api/generated/smbdo.schemas';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const MissingPartyFields = ({ partyId }: { partyId: string }) => {
-  const { data: party } = useSmbdoGetParty(partyId);
+  const { data: party } = useGetParty(partyId);
   const partyValidationResponseFields = party?.validationResponse?.filter(
     (r) => r.validationStatus === 'NEEDS_INFO'
   )?.[0]?.fields;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
+import { useSmbdoPostClients } from '@/api/generated/smbdo';
 import { Box, Card, CardContent, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';

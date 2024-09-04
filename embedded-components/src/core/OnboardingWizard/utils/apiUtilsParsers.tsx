@@ -1,7 +1,7 @@
 import {
   CreateClientRequestSmbdo,
   UpdateClientRequestSmbdo,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdos';
 
 import { OnboardingForm } from '../context/form.context';
 

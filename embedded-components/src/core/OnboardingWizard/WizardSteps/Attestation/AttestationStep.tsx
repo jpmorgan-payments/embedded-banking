@@ -7,7 +7,8 @@ import {
   useSmbdoDownloadDocument,
   useSmbdoGetDocumentDetail,
   useSmbdoPostClientVerifications,
-} from '@/api/generated/embedded-banking';
+} from '@/api/generated/smbdo';
+import { DocumentResponse } from '@/api/generated/smbdo.schemas';
 import { useToast } from '@/components/ui/use-toast';
 import { Checkbox, Group, Label, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
@@ -65,14 +66,17 @@ const AttestationStep = () => {
 
   const [doc, setDocs] = useState<any>(null);
   const { data: clientData } = useGetDataByClientId();
-
-  const { data: DocumentDetail } = useSmbdoGetDocumentDetail(
+  //TODO: we need to create a
+  const { data: DocumentDetail } = useSmbdoGetDocumentDetail<DocumentResponse>(
     clientData?.outstanding.attestationDocumentIds?.[0] ?? ''
   );
 
-  const termsAndConditionsDocId = DocumentDetail?.documentDetails?.find(
-    (item: any) => item.documentType === 'TERMS_CONDITIONS'
-  )?.id;
+  console.log('@@DocumentDetail', DocumentDetail);
+
+  const termsAndConditionsDocId =
+    DocumentDetail?.documentType === 'TERMS_CONDITIONS'
+      ? DocumentDetail?.id
+      : '';
 
   const { getContentToken } = useContentData('steps.VerificationsStep');
 

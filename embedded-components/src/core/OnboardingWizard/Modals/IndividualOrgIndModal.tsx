@@ -1,7 +1,7 @@
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useSmbdoUpdateClient } from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import { Button } from '@/components/ui/button';
 import {
   DialogClose,

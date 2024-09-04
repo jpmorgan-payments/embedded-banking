@@ -1,4 +1,4 @@
-import { PartyResponse } from '@/api/generated/embedded-banking.schemas';
+import { PartyResponse } from '@/api/generated/smbdos';
 
 export const partyWithMissingfields: PartyResponse = {
   access: [],

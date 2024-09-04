@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useSmbdoUpdateParty } from '@/api/generated/embedded-banking';
+import { useSmbdoUpdateParty } from '@/api/generated/smbdo';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,

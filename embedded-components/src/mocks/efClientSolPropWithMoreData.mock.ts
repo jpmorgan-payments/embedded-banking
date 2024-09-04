@@ -1,4 +1,4 @@
-import { ClientResponse } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponse } from '@/api/generated/smbdos';
 
 export const efClientSolPropWithMoreData: ClientResponse = {
   id: '0030000129',

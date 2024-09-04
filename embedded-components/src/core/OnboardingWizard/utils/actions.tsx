@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { ClientResponseOutstanding } from '@/api/generated/embedded-banking.schemas';
+import { ClientResponseOutstanding } from '@/api/generated/smbdos';
 
 import { OnboardingForm } from '../context/form.context';
 

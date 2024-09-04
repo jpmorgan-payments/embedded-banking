@@ -1,4 +1,4 @@
-import { Recipient } from '@/api/generated/embedded-banking.schemas';
+import { Recipient } from '@/api/generated/smbdos';
 
 export const getRecipientLabel = (recipient: Recipient) => {
   const name =

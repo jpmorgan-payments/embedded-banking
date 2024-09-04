@@ -1,7 +1,7 @@
 import {
   IndividualDetails,
   OrganizationDetails,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdos';
 
 // import { any } from '../Steps/BusinessDetailsStep/BusinessDetailsStep.schema';
 // import { any } from '../Steps/PersonalDetailsStep/PersonalDetailsStep.schema';
