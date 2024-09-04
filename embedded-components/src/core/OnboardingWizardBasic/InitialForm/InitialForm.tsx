@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { useSmbdoPostClients } from '@/api/generated/embedded-banking';
-import { CreateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import { useSmbdoPostClients } from '@/api/generated/smbdo';
+import { CreateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -16,6 +16,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useStepper } from '@/components/ui/stepper';
 
 import { FormLoadingState } from '../FormLoadingState/FormLoadingState';
@@ -38,7 +45,7 @@ export const InitialForm = () => {
     resolver: zodResolver(InitialFormSchema),
     defaultValues: {
       organizationName: '',
-      organizationType: 'C_CORPORATION',
+      organizationType: undefined,
       countryOfFormation: '',
     },
   });
@@ -137,9 +144,36 @@ export const InitialForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel asterisk>Organization type</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select organization type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="LIMITED_LIABILITY_COMPANY">
+                    Limited Liability Company
+                  </SelectItem>
+                  <SelectItem value="C_CORPORATION">C Corporation</SelectItem>
+                  <SelectItem value="S_CORPORATION">S Corporation</SelectItem>
+                  <SelectItem value="PARTNERSHIP">Partnership</SelectItem>
+                  <SelectItem value="PUBLICLY_TRADED_COMPANY">
+                    Publicly Traded Company
+                  </SelectItem>
+                  <SelectItem value="NON_PROFIT_CORPORATION">
+                    Non-Profit Corporation
+                  </SelectItem>
+                  <SelectItem value="GOVERNMENT_ENTITY">
+                    Government Entity
+                  </SelectItem>
+                  <SelectItem value="SOLE_PROPRIETORSHIP">
+                    Sole Proprietorship
+                  </SelectItem>
+                  <SelectItem value="UNINCORPORATED_ASSOCIATION">
+                    Unincorporated Association
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

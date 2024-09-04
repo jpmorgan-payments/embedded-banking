@@ -5,11 +5,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import {
-  useSmbdoGetClient,
-  useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
-import { UpdateClientRequestSmbdo } from '@/api/generated/embedded-banking.schemas';
+import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
+import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {

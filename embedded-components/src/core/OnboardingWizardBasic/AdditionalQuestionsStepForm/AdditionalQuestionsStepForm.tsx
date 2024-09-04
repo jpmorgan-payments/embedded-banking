@@ -9,11 +9,11 @@ import {
   useSmbdoGetClient,
   useSmbdoListQuestions,
   useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
+} from '@/api/generated/smbdo';
 import {
-  SchemasQuestionResponse,
+  QuestionResponse,
   UpdateClientRequestSmbdo,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 import {
   Form,
   FormControl,
@@ -42,7 +42,7 @@ import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 // Define question IDs that should use a datepicker
 const DATE_QUESTION_IDS = ['30071', '30073']; // Add more IDs as needed
 
-const createDynamicZodSchema = (questionsData: SchemasQuestionResponse[]) => {
+const createDynamicZodSchema = (questionsData: QuestionResponse[]) => {
   const schemaFields: Record<string, z.ZodTypeAny> = {};
 
   questionsData.forEach((question) => {
@@ -225,7 +225,7 @@ export const AdditionalQuestionsStepForm = () => {
     },
   });
 
-  const renderQuestionInput = (question: SchemasQuestionResponse) => {
+  const renderQuestionInput = (question: QuestionResponse) => {
     const fieldName = `question_${question.id ?? 'undefined'}`;
     const itemType = question?.responseSchema?.items?.type ?? 'string';
     // @ts-expect-error
@@ -438,8 +438,7 @@ export const AdditionalQuestionsStepForm = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dynamicSchema = useMemo(() => {
-    const visibleQuestions: SchemasQuestionResponse[] =
-      questionsData?.questions ?? [];
+    const visibleQuestions: QuestionResponse[] = questionsData?.questions ?? [];
     if (!visibleQuestions) return z.object({});
     return createDynamicZodSchema(visibleQuestions);
   }, [questionsData]);
@@ -450,7 +449,7 @@ export const AdditionalQuestionsStepForm = () => {
     defaultValues,
   });
 
-  const isQuestionVisible = (question: SchemasQuestionResponse) => {
+  const isQuestionVisible = (question: QuestionResponse) => {
     if (!question.parentQuestionId) return true;
 
     const parentQuestion = questionsData?.questions?.find(
@@ -479,7 +478,7 @@ export const AdditionalQuestionsStepForm = () => {
     return false;
   };
 
-  const isQuestionParent = (question: SchemasQuestionResponse) => {
+  const isQuestionParent = (question: QuestionResponse) => {
     return !question.parentQuestionId;
   };
 

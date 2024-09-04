@@ -8,17 +8,17 @@ import {
   useSmbdoListQuestions,
   useSmbdoPostClientVerifications,
   useSmbdoUpdateClient,
-} from '@/api/generated/embedded-banking';
+} from '@/api/generated/smbdo';
 import {
   PartyResponse,
   UpdateClientRequestSmbdo,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 import { useStepper } from '@/components/ui/stepper';
 import { Button, Checkbox, Label, Stack, Title } from '@/components/ui';
 
 import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingContextProvider';
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
-import OutstandingKYCRequirements from './OustandingKYCRequirements';
+import OutstandingKYCRequirements from './OutstandingKYCRequirements';
 import { individualFields, organizationFields } from './partyFields';
 
 interface ClientResponseOutstanding {
@@ -39,8 +39,7 @@ const isOutstandingEmpty = (
 
 export const ReviewAndAttestStepForm = () => {
   const { nextStep, prevStep, isDisabledStep } = useStepper();
-  const { clientId, onPostClientVerificationsResponse } =
-    useOnboardingContext();
+  const { clientId, onPostClientResponse } = useOnboardingContext();
 
   const [termsAgreed, setTermsAgreed] = useState({
     useOfAccount: false,
@@ -55,16 +54,15 @@ export const ReviewAndAttestStepForm = () => {
   // Fetch client data
   const { data: clientData } = useSmbdoGetClient(clientId ?? '');
 
-  //Update client attestation
+  // Update client attestation
   const { mutateAsync: updateClient, error: updateClientError } =
     useSmbdoUpdateClient({
       mutation: {
+        onSettled: (data, error) => {
+          onPostClientResponse?.(data, error?.response?.data);
+        },
         onSuccess: () => {
           toast.success('Attestation details updated successfully');
-          onPostClientVerificationsResponse?.(
-            clientData,
-            updateClientError?.response?.data
-          );
           nextStep();
         },
         onError: () => {
@@ -129,7 +127,7 @@ export const ReviewAndAttestStepForm = () => {
         data: requestBody,
       });
 
-      await initiateKYC({ id: clientId });
+      await initiateKYC({ id: clientId, data: requestBody });
     }
   };
 

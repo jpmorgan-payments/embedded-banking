@@ -1,21 +1,18 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react';
 
 import {
-  ApiErrorV2,
+  ApiError,
   ClientResponse,
-  ClientVerificationsInformationResponse,
-} from '@/api/generated/embedded-banking.schemas';
+  ClientVerificationResponse,
+} from '@/api/generated/smbdo.schemas';
 
 export type OnboardingContextType = {
   clientId?: string;
   setClientId?: (clientId: string) => void;
-  onPostClientResponse?: (
-    response?: ClientResponse,
-    error?: ApiErrorV2
-  ) => void;
+  onPostClientResponse?: (response?: ClientResponse, error?: ApiError) => void;
   onPostClientVerificationsResponse?: (
-    response?: ClientVerificationsInformationResponse,
-    error?: ApiErrorV2
+    response?: ClientVerificationResponse,
+    error?: ApiError
   ) => void;
 };
 

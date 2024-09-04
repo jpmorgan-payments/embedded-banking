@@ -8,7 +8,7 @@ import { getRecipientLabel } from '@/lib/getAccountLabelFromPartyDetails';
 import {
   useGetRecipient,
   useRecipientsVerification,
-} from '@/api/generated/embedded-banking';
+} from '@/api/generated/ef-v1';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {

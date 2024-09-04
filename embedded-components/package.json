@@ -28,8 +28,8 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "generate-api": "orval --config ./orval.config.cjs && yarn fix-generated-files && yarn prettify-generated-files",
-    "fix-generated-files": "yarn replace '((?:\\s|\\<))(\\d\\S*)Response' '$1N$2Response' ./src/api/generated/embedded-banking.ts && yarn replace '(.*= ;)' '' ./src/api/generated/embedded-banking.schemas.ts",
-    "prettify-generated-files": "npx prettier --write './src/api/generated/embedded-banking.*'"
+    "fix-generated-files": "yarn replace '((?:\\s|\\<))(\\d\\S*)Response' '$1N$2Response' ./src/api/generated/*",
+    "prettify-generated-files": "npx prettier --write './src/api/generated/*'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
@@ -56,6 +56,7 @@
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
     "colortranslator": "^4.1.0",
     "date-fns": "^3.6.0",
     "deepmerge": "^4.3.1",
@@ -68,6 +69,7 @@
     "react-error-boundary": "^4.0.13",
     "react-hook-form": "^7.52.1",
     "react-number-format": "^5.4.0",
+    "react-phone-number-input": "^3.4.5",
     "react-string-replace": "^1.1.1",
     "sonner": "^1.5.0",
     "tabler-icons-react": "^1.56.0",
@@ -116,7 +118,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^24.1.1",
     "msw-storybook-addon": "^2.0.3",
-    "orval": "^6.31.0",
+    "orval": "^7.0.1",
     "postcss": "^8.4.40",
     "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "^7.0.1",

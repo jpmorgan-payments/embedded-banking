@@ -1,8 +1,8 @@
 import { LinkIcon, PencilLineIcon } from 'lucide-react';
 
 import { getRecipientLabel } from '@/lib/getAccountLabelFromPartyDetails';
-import { useGetAllRecipients } from '@/api/generated/embedded-banking';
-import { RecipientStatus } from '@/api/generated/embedded-banking.schemas';
+import { useGetAllRecipients } from '@/api/generated/ef-v1';
+import { RecipientStatus } from '@/api/generated/ef-v1.schemas';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge, Separator } from '@/components/ui';

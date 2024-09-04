@@ -6,7 +6,7 @@ import {
   ClientResponse,
   CreateClientRequestSmbdo,
   UpdateClientRequestSmbdo,
-} from '@/api/generated/embedded-banking.schemas';
+} from '@/api/generated/smbdo.schemas';
 
 import { OnboardingWizardFormValues, partyFieldMap } from './fieldMap';
 
