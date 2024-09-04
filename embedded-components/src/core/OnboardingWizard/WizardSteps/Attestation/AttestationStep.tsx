@@ -71,8 +71,6 @@ const AttestationStep = () => {
     clientData?.outstanding.attestationDocumentIds?.[0] ?? ''
   );
 
-  console.log('@@DocumentDetail', DocumentDetail);
-
   const termsAndConditionsDocId =
     DocumentDetail?.documentType === 'TERMS_CONDITIONS'
       ? DocumentDetail?.id
