@@ -1,4 +1,4 @@
-import { Recipient } from '@/api/generated/smbdo.schemas';
+import { Recipient } from '@/api/generated/ef-v1.schemas';
 
 export const getRecipientLabel = (recipient: Recipient) => {
   const name =
