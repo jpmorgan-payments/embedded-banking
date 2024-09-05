@@ -2,12 +2,14 @@
 import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { parsePhoneNumber } from 'react-phone-number-input';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
-import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
+import {
+  PhoneSmbdoPhoneType,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -68,11 +70,9 @@ export const OrganizationStepForm = () => {
       ],
       organizationIds: [],
       phone: {
-        phoneType: 'BUSINESS_PHONE',
-        phoneNumber: {
-          countryCode: '+1',
-          nationalNumber: '917',
-        },
+        phoneType: undefined,
+        countryCode: '',
+        phoneNumber: '',
       },
       entitiesInOwnership: false,
       significantOwnership: false,
@@ -252,10 +252,7 @@ export const OrganizationStepForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>Organization type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select organization type" />
@@ -357,8 +354,14 @@ export const OrganizationStepForm = () => {
                 <FormItem>
                   <FormLabel>Phone Type</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      form.setValue('phone', {
+                        ...form.getValues().phone,
+                        phoneType: value as PhoneSmbdoPhoneType,
+                      });
+                    }}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -382,7 +385,7 @@ export const OrganizationStepForm = () => {
 
             <FormField
               control={form.control}
-              name="phone.phoneNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
@@ -390,23 +393,8 @@ export const OrganizationStepForm = () => {
                     <PhoneInput
                       {...field}
                       countries={['US']}
-                      value={
-                        field.value.nationalNumber
-                          ? `${field.value.countryCode}${field.value.nationalNumber}`
-                          : ''
-                      }
-                      onChange={(value) => {
-                        const phoneNumber = parsePhoneNumber(value);
-                        field.onChange({
-                          ...field.value,
-                          countryCode: phoneNumber?.countryCallingCode
-                            ? `+${phoneNumber.countryCallingCode}`
-                            : '',
-                          nationalNumber: phoneNumber?.nationalNumber || '',
-                        });
-                      }}
                       placeholder="Enter phone number"
-                      addInternationalOption
+                      international={false}
                       defaultCountry="US"
                     />
                   </FormControl>
@@ -891,36 +879,6 @@ export const OrganizationStepForm = () => {
 
         {/* Additional Fields */}
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
-          <FormField
-            control={form.control}
-            name="phone.phoneType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select phone type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="BUSINESS_PHONE">
-                      Business Phone
-                    </SelectItem>
-                    <SelectItem value="MOBILE_PHONE">Mobile Phone</SelectItem>
-                    <SelectItem value="ALTERNATE_PHONE">
-                      Alternate Phone
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="websiteAvailable"
