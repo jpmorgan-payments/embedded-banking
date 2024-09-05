@@ -1,17 +1,23 @@
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { z } from 'zod';
 
-export const PhoneSchema = z.object({
-  phoneType: z.enum(['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE']),
-  phoneNumber: z
-    .object({
-      countryCode: z.string(),
-      nationalNumber: z.string(),
-    })
-    .refine((val) => isValidPhoneNumber(val.countryCode + val.nationalNumber), {
-      message: 'Invalid phone number',
-    }),
-});
+import { PhoneSmbdoPhoneType } from '@/api/generated/smbdo.schemas';
+
+export const PhoneTypeSchema: z.ZodType<PhoneSmbdoPhoneType> = z.enum([
+  'BUSINESS_PHONE',
+  'MOBILE_PHONE',
+  'ALTERNATE_PHONE',
+]);
+
+export const PhoneSchema = z
+  .object({
+    phoneType: PhoneTypeSchema,
+    countryCode: z.string(),
+    phoneNumber: z.string(),
+  })
+  .refine((val) => isValidPhoneNumber(val.countryCode + val.phoneNumber), {
+    message: 'Invalid phone number',
+  });
 
 export const AddressSchema = z.object({
   addressType: z.enum([

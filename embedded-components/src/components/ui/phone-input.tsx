@@ -2,6 +2,7 @@ import * as React from 'react';
 import { E164Number } from 'libphonenumber-js';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 import * as RPNInput from 'react-phone-number-input';
+import { parsePhoneNumber } from 'react-phone-number-input';
 import flags from 'react-phone-number-input/flags';
 
 import { cn } from '@/lib/utils';
@@ -23,17 +24,23 @@ import {
 
 import { ScrollArea } from './scroll-area';
 
+type PhoneValue = {
+  countryCode: string;
+  phoneNumber: string;
+};
+
 type PhoneInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'onChange' | 'value'
 > &
-  Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
-    onChange?: (value: RPNInput.Value) => void;
+  Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange' | 'value'> & {
+    onChange?: (value: PhoneValue) => void;
+    value: PhoneValue;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, ...props }, ref) => {
+    ({ className, onChange, value, ...props }, ref) => {
       return (
         <RPNInput.default
           ref={ref}
@@ -41,6 +48,9 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
           flagComponent={FlagComponent}
           countrySelectComponent={CountrySelect}
           inputComponent={InputComponent}
+          value={
+            value.phoneNumber ? `${value.countryCode}${value.phoneNumber}` : ''
+          }
           /**
            * Handles the onChange event.
            *
@@ -50,7 +60,16 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
            *
            * @param {E164Number | undefined} value - The entered value
            */
-          onChange={(value) => onChange?.(value || ('' as E164Number))}
+          onChange={(number) => {
+            const phoneNumber = parsePhoneNumber(number || ('' as E164Number));
+            onChange?.({
+              ...value,
+              countryCode: phoneNumber?.countryCallingCode
+                ? `+${phoneNumber.countryCallingCode}`
+                : '',
+              phoneNumber: phoneNumber?.nationalNumber || '',
+            });
+          }}
           {...props}
         />
       );

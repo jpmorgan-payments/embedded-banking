@@ -1,13 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { parsePhoneNumber } from 'react-phone-number-input';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
-import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
+import {
+  PhoneSmbdoPhoneType,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -43,6 +45,75 @@ import {
 } from '../utils/formUtils';
 import { OrganizationStepFormSchema } from './OrganizationStepForm.schema';
 
+type AddressLinesProps = {
+  control: any;
+  addressIndex: number;
+};
+
+const AddressLines: FC<AddressLinesProps> = ({ control, addressIndex }) => {
+  const {
+    fields: addressLineFields,
+    append: appendAddressLine,
+    remove: removeAddressLine,
+  } = useFieldArray({
+    control,
+    name: `addresses.${addressIndex}.addressLines`,
+    rules: {
+      maxLength: 5,
+      minLength: 1,
+    },
+  });
+
+  return (
+    <>
+      {addressLineFields.map((addressLineField, index) => (
+        <FormField
+          key={addressLineField.id}
+          control={control}
+          name={`addresses.${addressIndex}.addressLines.${index}`}
+          render={({ field }) => (
+            <FormItem>
+              <div className="eb-flex eb-items-center eb-space-x-2">
+                <FormLabel asterisk={index === 0}>
+                  Address Line {index + 1}
+                </FormLabel>
+                {index === 0 && (
+                  <InfoPopover>
+                    The first line must not be a PO Box and must begin with a
+                    number.
+                  </InfoPopover>
+                )}
+              </div>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      ))}
+      <div className="eb-grid eb-grid-cols-2 eb-gap-6">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => appendAddressLine('')}
+          disabled={addressLineFields.length >= 5}
+        >
+          Add Line
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => removeAddressLine(addressLineFields.length - 1)}
+          disabled={addressLineFields.length <= 1}
+        >
+          Remove Line
+        </Button>
+      </div>
+    </>
+  );
+};
+
 export const OrganizationStepForm = () => {
   const { nextStep } = useStepper();
   const { clientId, onPostClientResponse } = useOnboardingContext();
@@ -68,14 +139,11 @@ export const OrganizationStepForm = () => {
       ],
       organizationIds: [],
       phone: {
-        phoneType: 'BUSINESS_PHONE',
-        phoneNumber: {
-          countryCode: '+1',
-          nationalNumber: '917',
-        },
+        phoneType: undefined,
+        countryCode: '',
+        phoneNumber: '',
       },
       entitiesInOwnership: false,
-      significantOwnership: false,
       tradeOverInternet: false,
       websiteAvailable: false,
       secondaryMccList: [],
@@ -252,10 +320,7 @@ export const OrganizationStepForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel asterisk>Organization type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select organization type" />
@@ -357,8 +422,14 @@ export const OrganizationStepForm = () => {
                 <FormItem>
                   <FormLabel>Phone Type</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      form.setValue('phone', {
+                        ...form.getValues().phone,
+                        phoneType: value as PhoneSmbdoPhoneType,
+                      });
+                    }}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -382,7 +453,7 @@ export const OrganizationStepForm = () => {
 
             <FormField
               control={form.control}
-              name="phone.phoneNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
@@ -390,23 +461,8 @@ export const OrganizationStepForm = () => {
                     <PhoneInput
                       {...field}
                       countries={['US']}
-                      value={
-                        field.value.nationalNumber
-                          ? `${field.value.countryCode}${field.value.nationalNumber}`
-                          : ''
-                      }
-                      onChange={(value) => {
-                        const phoneNumber = parsePhoneNumber(value);
-                        field.onChange({
-                          ...field.value,
-                          countryCode: phoneNumber?.countryCallingCode
-                            ? `+${phoneNumber.countryCallingCode}`
-                            : '',
-                          nationalNumber: phoneNumber?.nationalNumber || '',
-                        });
-                      }}
                       placeholder="Enter phone number"
-                      addInternationalOption
+                      international={false}
                       defaultCountry="US"
                     />
                   </FormControl>
@@ -479,28 +535,6 @@ export const OrganizationStepForm = () => {
         <div>
           <FormField
             control={form.control}
-            name="significantOwnership"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Significant Ownership</FormLabel>
-                  <FormDescription>
-                    Indicate if there are individuals who own 25% or more of the
-                    client's business.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="entitiesInOwnership"
             render={({ field }) => (
               <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
@@ -546,13 +580,15 @@ export const OrganizationStepForm = () => {
         {/* Addresses */}
         <div className="eb-space-y-4">
           <h3 className="eb-text-lg eb-font-medium">Addresses</h3>
-          {addressFields.map((fieldItem, index) => (
-            <div
-              key={fieldItem.id}
-              className="eb-space-y-4 eb-rounded-md eb-border eb-p-4"
-            >
-              <h4 className="eb-font-medium">Address {index + 1}</h4>
-              <div className="eb-grid eb-grid-cols-1 eb-gap-4 md:eb-grid-cols-2 lg:eb-grid-cols-3">
+          <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3 xl:eb-grid-cols-4">
+            {addressFields.map((fieldItem, index) => (
+              <fieldset
+                key={fieldItem.id}
+                className="eb-grid eb-gap-6 eb-rounded-lg eb-border eb-p-4"
+              >
+                <legend className="-eb-m-1 eb-px-1 eb-text-sm eb-font-medium">
+                  Address {index + 1}
+                </legend>
                 <FormField
                   control={form.control}
                   name={`addresses.${index}.addressType`}
@@ -561,7 +597,7 @@ export const OrganizationStepForm = () => {
                       <FormLabel>Address Type</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -587,103 +623,96 @@ export const OrganizationStepForm = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name={`addresses.${index}.addressLines.0`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Address Line 1</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter address line 1" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`addresses.${index}.city`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>City</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter city" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`addresses.${index}.state`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>State</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter state" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`addresses.${index}.postalCode`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Postal Code</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="Enter postal code" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`addresses.${index}.country`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Country</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          maxLength={2}
-                          placeholder="e.g., US"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Button
-                type="button"
-                onClick={() => removeAddress(index)}
-                variant="outline"
-                size="sm"
-                className="eb-mt-2"
-              >
-                Remove Address
-              </Button>
-            </div>
-          ))}
-          <Button
-            type="button"
-            onClick={() =>
-              appendAddress({
-                addressType: 'BUSINESS_ADDRESS',
-                addressLines: [''],
-                city: '',
-                postalCode: '',
-                country: '',
-              })
-            }
-            variant="outline"
-            size="sm"
-          >
-            Add Address
-          </Button>
+
+                <AddressLines control={form.control} addressIndex={index} />
+
+                <div className="eb-grid eb-grid-cols-1 eb-gap-6 sm:eb-grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name={`addresses.${index}.city`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Enter city" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`addresses.${index}.state`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>State</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Enter state" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`addresses.${index}.postalCode`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Postal Code</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Enter postal code" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`addresses.${index}.country`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Country</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            maxLength={2}
+                            placeholder="e.g., US"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <Button
+                  type="button"
+                  onClick={() => removeAddress(index)}
+                  variant="outline"
+                  size="sm"
+                  className="eb-mt-2"
+                >
+                  Remove Address
+                </Button>
+              </fieldset>
+            ))}
+            <Button
+              type="button"
+              onClick={() =>
+                appendAddress({
+                  addressType: 'BUSINESS_ADDRESS',
+                  addressLines: [''],
+                  city: '',
+                  postalCode: '',
+                  country: '',
+                })
+              }
+              variant="outline"
+              size="sm"
+              className="eb-mt-2"
+            >
+              Add Address
+            </Button>
+          </div>
         </div>
 
         {/* Organization IDs */}
@@ -891,36 +920,6 @@ export const OrganizationStepForm = () => {
 
         {/* Additional Fields */}
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
-          <FormField
-            control={form.control}
-            name="phone.phoneType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select phone type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="BUSINESS_PHONE">
-                      Business Phone
-                    </SelectItem>
-                    <SelectItem value="MOBILE_PHONE">Mobile Phone</SelectItem>
-                    <SelectItem value="ALTERNATE_PHONE">
-                      Alternate Phone
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="websiteAvailable"
