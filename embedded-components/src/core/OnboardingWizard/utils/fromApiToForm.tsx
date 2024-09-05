@@ -1,5 +1,6 @@
 import {
   AddressDto,
+  
   ClientResponse,
   IndividualDetails,
   IndividualIdentity,
@@ -11,15 +12,13 @@ import {
 import { transformDateofBirth } from '../WizardSteps/utils/transformDateofBirth';
 
 const fromApiToForm = (client: ClientResponse) => {
-  if (!client?.parties) {
-    throw new Error('API Response failed,  no parties detected');
-  }
+  
   const flattened: any = {
-    id: client.id,
-    attestations: client.attestations,
-    partyId: client.partyId,
-    products: client.products,
-    outstanding: client.outstanding,
+    id: client?.id,
+    attestations: client?.attestations,
+    partyId: client?.partyId,
+    products: client?.products,
+    outstanding: client?.outstanding,
     questionResponses: client.questionResponses,
     status: client.status,
     organizationDetails: {},
@@ -36,7 +35,6 @@ const fromApiToForm = (client: ClientResponse) => {
       org.email = party.email;
       org.roles = party.roles;
       org.profileStatus = party.profileStatus;
-      org.status = party.status;
       org.createdAt = party.createdAt;
 
       org.orgDetails = {};
