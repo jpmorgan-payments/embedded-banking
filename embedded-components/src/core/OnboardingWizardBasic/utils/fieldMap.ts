@@ -22,7 +22,6 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   organizationDescription: 'organizationDetails.organizationDescription',
   industryCategory: 'organizationDetails.industryCategory',
   industryType: 'organizationDetails.industryType',
-  significantOwnership: 'organizationDetails.significantOwnership',
   entitiesInOwnership: 'organizationDetails.entitiesInOwnership',
   mcc: 'organizationDetails.mcc',
   addresses: 'organizationDetails.addresses',
