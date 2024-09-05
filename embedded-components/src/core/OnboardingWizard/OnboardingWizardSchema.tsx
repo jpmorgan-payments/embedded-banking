@@ -1,5 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import { use } from 'chai';
+import { set } from 'date-fns';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,7 +24,7 @@ import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
 
-export const OnboardingWizardSchema = ({ title }: any) => {
+export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
   const { clientId } = useRootConfig();
   const {
     activeStep,
@@ -64,6 +66,12 @@ export const OnboardingWizardSchema = ({ title }: any) => {
       buildStepper();
     }
   }, [clientId, clientDataForm]);
+
+  useEffect(() => {
+    if (currentStep && Number.isInteger(currentStep)) {
+      setCurrentStep(currentStep);
+    }
+  }, [currentStep]);
 
   const { getContentToken } = useContentData(
     `schema.${CurrentStep?.contentData ?? ''}`

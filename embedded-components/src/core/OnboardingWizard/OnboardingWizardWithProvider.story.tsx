@@ -77,7 +77,7 @@ export const Primary: Story = {
   name: 'Basic OnboardingWizard',
   args: {
     apiBaseUrl: '/',
-    clientId: '0030000132',
+    clientId: '',
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
@@ -95,7 +95,7 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('/clients/0030000139', () => {
+        http.post('/clients', () => {
           return HttpResponse.json(efClientPost);
         }),
         http.get('/clients/0030000132', () => {
@@ -139,10 +139,10 @@ export const Primary: Story = {
 };
 
 export const NoClient: Story = {
-  name: 'Basic OnboardingWizard without ClientId',
+  name: 'Client Approved',
   args: {
     apiBaseUrl: '/',
-    clientId: '',
+    clientId: '0030000132',
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
@@ -160,11 +160,11 @@ export const NoClient: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('/clients', () => {
+        http.post('/clients/0030000139', () => {
           return HttpResponse.json(efClientPost);
         }),
         http.get('/clients/0030000132', () => {
-          return HttpResponse.json(efClientCorpMock);
+          return HttpResponse.json(efClientSolProp);
         }),
         http.get('/questions', (req) => {
           const url = new URL(req.request.url);
@@ -183,11 +183,11 @@ export const NoClient: Story = {
 };
 
 export const NoThemeWithPDPAPIs: Story = {
-  name: 'No theme with PDP mocked APIs',
+  name: 'PDP mocked APIs',
   ...Primary,
   args: {
     ...Primary.args,
-    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi//ef/do/v1',
+    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/ef/do/v1',
     clientId: '123',
   },
   /*play: async ({ canvasElement }) => {
@@ -230,29 +230,9 @@ export const NoThemeWithPDPAPIs: Story = {
       },*/
 };
 
-export const NoThemeWithMocksSoleProp: Story = {
-  ...Primary,
-  name: 'No theme with mocked Sole Prop client with unanswered questions and missing party attributes',
-  args: { ...Primary.args, clientId: '0030000132' },
-  parameters: {
-    msw: {
-      handlers: [
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        ...Primary?.parameters?.msw?.handlers,
-        http.get('/clients/0030000132', () => {
-          return HttpResponse.json(efClientSolProp);
-        }),
-        http.get('/parties/2000000112', () => {
-          return HttpResponse.json(partyWithMissingfields);
-        }),
-      ],
-    },
-  },
-};
-
 export const NoThemeWithMocksSolePropAnsweredQuestions: Story = {
   ...Primary,
-  name: 'No theme with mocked Sole Prop client with answered questions',
+  name: 'Sole Prop client',
   args: { ...Primary.args, clientId: '0030000139' },
   parameters: {
     msw: {
@@ -269,7 +249,7 @@ export const NoThemeWithMocksSolePropAnsweredQuestions: Story = {
 
 export const NoThemeWithMocksLLC: Story = {
   ...Primary,
-  name: 'No theme with mocked LLC client with unanswered questions',
+  name: 'LLC client with unanswered questions',
   args: { ...Primary.args, clientId: '0030000130' },
   parameters: {
     msw: {
@@ -288,24 +268,6 @@ export const NoThemeWithMocksLLC: Story = {
               questionIds?.includes(q.id)
             ),
           });
-        }),
-      ],
-    },
-  },
-};
-
-export const NoThemeWithMocksLLCAnsweredQuestions: Story = {
-  ...Primary,
-  name: 'No theme with mocked LLC client with answered questions',
-  args: { ...Primary.args, clientId: '0030000130' },
-  parameters: {
-    msw: {
-      handlers: [
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        ...Primary?.parameters?.msw?.handlers,
-
-        http.get('/clients/0030000130', () => {
-          return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),
       ],
     },
