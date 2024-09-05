@@ -103,7 +103,6 @@ export const OrganizationStepFormSchema = z.object({
     .array(OrganizationIdSchema)
     .max(6, 'Maximum 6 organization IDs allowed'),
   phone: PhoneSchema,
-  significantOwnership: z.boolean(),
   tradeOverInternet: z.boolean(),
   website: z
     .string()
