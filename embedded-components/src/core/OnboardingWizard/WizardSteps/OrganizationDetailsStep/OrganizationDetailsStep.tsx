@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
@@ -21,6 +21,10 @@ import { updateFormValues } from '../utils/updateFormValues';
 
 const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
+  const [orgCat, setOrgCatType] = useState({
+    orgCategory: '',
+    orgType: '',
+  });
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { clientId } = useRootConfig();
   const { data } = useGetDataByClientId();
@@ -33,18 +37,30 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { setError } = useError();
 
   const orgData = getOrg(clientDataForm);
+  useEffect(() => {
+    updateSchema(yupSchema);
+  }, [yupSchema]);
 
   useEffect(() => {
     if (clientDataForm) {
       const orgDetail = getOrgDetails(clientDataForm);
 
       updateFormValues(orgDetail, form.setValue);
+      setOrgCatType({
+        orgCategory: orgDetail?.industryCategory,
+        orgType: orgDetail?.industryType,
+      });
     }
-  }, [clientDataForm?.id]);
+  }, [JSON.stringify(orgData)]);
 
   useEffect(() => {
-    updateSchema(yupSchema);
-  }, [yupSchema]);
+    if (orgCat.orgCategory) {
+      form.setValue('industryCategory', orgCat.orgCategory);
+    }
+    if (orgCat.orgType) {
+      form.setValue('industryType', orgCat.orgType);
+    }
+  }, [JSON.stringify(orgCat)]);
 
   const onSubmit = useCallback(async () => {
     const dataParty = fromFormToOrgParty(form.getValues());

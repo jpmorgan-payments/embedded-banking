@@ -7,7 +7,7 @@ import { useError } from '../../context/error.context';
 
 const useGetDataByClientId = () => {
   const { setError, setPending, setRefetch } = useError();
-  const { clientId, setPartyId } = useRootConfig();
+  const { clientId } = useRootConfig();
 
   const {
     data,
@@ -37,7 +37,7 @@ const useGetDataByClientId = () => {
   }, [isError, isPending, refetchClient]);
 
   //TODO: Make sure there is no collision of this partyId
-  setPartyId(data?.partyId);
+  // setPartyId(data?.partyId);
 
   return { data, refetch, isPending, isError, error, isLoading, status };
 };

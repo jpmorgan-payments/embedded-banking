@@ -21,8 +21,8 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
     addressLines.push(business?.businessAddressLine2);
   }
   //TODO: 3rd line business needs to be added back
-  // if (business?.businessAddressLine3)
-  //   addressLines.push(business?.businessAddressLine3);
+  if (business?.businessAddressLine3)
+    addressLines.push(business?.businessAddressLine3);
 
   const organizationSwitch = (businessType: string | undefined) => {
     const map: any = {
@@ -77,6 +77,7 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
       ...(business?.website ? { website: business?.website } : {}),
     },
   };
+
   return party;
 };
 
@@ -88,7 +89,8 @@ export const makeIndividual = (
   const addressLines = [];
   if (owner?.addressLine1) addressLines.push(owner?.addressLine1);
   if (owner?.addressLine2) addressLines.push(owner?.addressLine2);
-  // if (owner?.addressLine3) addressLines.push(owner?.addressLine3);
+  if (owner?.addressLine3) addressLines.push(owner?.addressLine3);
+
   const party = {
     partyType: 'INDIVIDUAL',
     email: owner?.email,
