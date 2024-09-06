@@ -10,6 +10,7 @@ import { StepperProvider } from './Stepper/Stepper';
 export interface OnboardingWizardInitProps extends RootConfig {
   title?: string;
   clientId?: string;
+  currentStep?: number;
   onPostClientsVerification: ({
     clientId,
     clientResponse,

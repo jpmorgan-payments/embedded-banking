@@ -1,9 +1,10 @@
+import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
+import { efClientCorpEBMock } from '@/mocks/efClientCorpEB.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
-import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
 import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
 import type { Meta, StoryObj } from '@storybook/react';
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
@@ -63,7 +64,7 @@ const OnboardingWizardWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardWithProvider> = {
-  title: 'Onboarding Wizard / API States',
+  title: 'Onboarding Wizard / Product',
   component: OnboardingWizardWithProvider,
 };
 export default meta;
@@ -71,7 +72,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardWithProvider>;
 
 export const Primary: Story = {
-  name: 'Default 200 OK',
+  name: 'nboardingWizard',
   args: {
     apiBaseUrl: '/',
     clientId: '0030000132',
@@ -132,9 +133,9 @@ export const Primary: Story = {
   },
 };
 
-export const WithLoadingState = {
-  name: 'LOADING State',
+export const LLC: Story = {
   ...Primary,
+  name: 'Limited Liability Company EP',
   args: {
     ...Primary.args,
     clientId: '0030000130',
@@ -143,105 +144,25 @@ export const WithLoadingState = {
     msw: {
       handlers: [
         http.get('/clients/0030000130', async () => {
-          // Delay the response by 3 seconds (3000 milliseconds)
-          await delay(5000);
-          return HttpResponse.json(efClientSolPropWithMoreData);
-        }),
-        http.post('/clients/0030000130', async () => {
-          // You can add a delay here too if needed
-          return HttpResponse.json(efClientSolPropWithMoreData);
+          return HttpResponse.json(efClientCorpMock);
         }),
       ],
     },
   },
 };
 
-export const WithLoadingStateAndError = {
-  name: 'Error On POST',
+export const EMBEDDED_BANKING_LLC: Story = {
   ...Primary,
+  name: 'Limited Liability Company EB',
   args: {
     ...Primary.args,
-    clientId: '0030000130',
+    clientId: '0030000133',
   },
   parameters: {
     msw: {
       handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json(efClientSolPropWithMoreData);
-        }),
-        http.post('/clients/0030000130', async () => {
-          await delay(1000); // Adding a small delay to the error response
-          return HttpResponse.json(
-            {
-              title: 'Invalid Data',
-              httpStatus: 400,
-              context: [
-                {
-                  message: 'Invalid email format.',
-                  location: 'BODY',
-                  field: 'email',
-                },
-                {
-                  message: 'Invalid phone number format.',
-                  location: 'BODY',
-                  field: 'phone.phoneNumber',
-                },
-              ],
-            },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
-};
-
-export const WithErrorOnGet = {
-  name: 'Server error on GET /clients/:clientId',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json(
-            {
-              title: 'Invalid Data',
-              httpStatus: 400,
-              context: [
-                {
-                  message: 'Client with ID [0030000130] does not exist.',
-                  location: 'BODY',
-                  field: 'clientId',
-                },
-              ],
-            },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
-};
-
-export const OnboardingInProgress = {
-  name: 'ClientStatus: PENDING',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json({
-            ...efClientSolPropWithMoreData,
-            status: 'PENDING',
-          });
+        http.get('/clients/0030000133', async () => {
+          return HttpResponse.json(efClientCorpEBMock);
         }),
       ],
     },

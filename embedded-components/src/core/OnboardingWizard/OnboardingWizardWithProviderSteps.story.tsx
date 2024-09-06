@@ -2,9 +2,7 @@ import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
 import { efClientPost } from '@/mocks/efClientPost.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
-import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
 import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
-import { partyWithMissingfields } from '@/mocks/efPartyWithMissingFields.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
@@ -23,6 +21,7 @@ const OnboardingWizardWithProvider = ({
   onPostClientsVerification,
   setClientId,
   clientId,
+  currentStep,
 }: {
   apiBaseUrl: string;
   headers: Record<string, string>;
@@ -45,6 +44,7 @@ const OnboardingWizardWithProvider = ({
 
   setClientId?: (s: string) => void;
   clientId?: string;
+  currentStep?: number;
 }) => {
   return (
     <>
@@ -59,6 +59,7 @@ const OnboardingWizardWithProvider = ({
           onPostClientsVerification={onPostClientsVerification}
           setClientId={setClientId}
           clientId={clientId}
+          currentStep={currentStep}
         />
       </EBComponentsProvider>
     </>
@@ -74,10 +75,10 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardWithProvider>;
 
 export const Primary: Story = {
-  name: 'Basic OnboardingWizard',
+  name: 'Intro Step',
   args: {
     apiBaseUrl: '/',
-    clientId: '0030000132',
+    clientId: '',
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
@@ -85,6 +86,7 @@ export const Primary: Story = {
         borderRadius: '15px',
       },
     },
+    currentStep: 0,
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
@@ -135,8 +137,8 @@ export const Primary: Story = {
   },
 };
 
-export const NoClient: Story = {
-  name: 'Basic OnboardingWizard without ClientId',
+export const IndividualStep: Story = {
+  name: 'Individual Step',
   args: {
     apiBaseUrl: '/',
     clientId: '',
@@ -147,6 +149,7 @@ export const NoClient: Story = {
         borderRadius: '15px',
       },
     },
+    currentStep: 1,
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },
@@ -179,104 +182,19 @@ export const NoClient: Story = {
   },
 };
 
-export const NoThemeWithPDPAPIs: Story = {
-  name: 'No theme with PDP mocked APIs',
+export const OrganizationStep: Story = {
   ...Primary,
-  args: {
-    ...Primary.args,
-    apiBaseUrl: 'https://api-mock.payments.jpmorgan.com/tsapi/',
-    clientId: '123',
-  },
-  /*play: async ({ canvasElement }) => {
-        // https://storybook.js.org/docs/writing-stories/play-function
-    
-        const canvas = within(canvasElement);
-        // 👇 Simulate interactions with the component
-        await userEvent.type(
-          await canvas.findByLabelText('Name of Your Business', {
-            selector: 'input',
-          }),
-          'Sample Business',
-          {
-            delay: 10,
-          }
-        );
-    
-        await userEvent.type(
-          await canvas.findByLabelText('Business Email', {
-            selector: 'input',
-          }),
-          'example-email@email.com',
-          {
-            delay: 10,
-          }
-        );
-    
-        await userEvent.click(
-          await canvas.findByRole('combobox', {
-            name: 'Organization Type',
-          }),
-          {
-            delay: 100,
-          }
-        );
-    
-        await userEvent.click(await canvas.findByText('Sole Proprietorship'), {
-          pointerEventsCheck: 0,
-        });
-      },*/
-};
-
-export const NoThemeWithMocksSoleProp: Story = {
-  ...Primary,
-  name: 'No theme with mocked Sole Prop client with unanswered questions and missing party attributes',
-  args: { ...Primary.args, clientId: '0030000132' },
+  name: 'Organization Step',
+  args: { ...Primary.args, clientId: '0030000130', currentStep: 1 },
   parameters: {
     msw: {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000132', () => {
-          return HttpResponse.json(efClientSolProp);
-        }),
-        http.get('/ef/do/v1/parties/2000000112', () => {
-          return HttpResponse.json(partyWithMissingfields);
-        }),
-      ],
-    },
-  },
-};
-
-export const NoThemeWithMocksSolePropAnsweredQuestions: Story = {
-  ...Primary,
-  name: 'No theme with mocked Sole Prop client with answered questions',
-  args: { ...Primary.args, clientId: '0030000139' },
-  parameters: {
-    msw: {
-      handlers: [
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000139', () => {
-          return HttpResponse.json(efClientSolPropAnsweredQuestions);
-        }),
-      ],
-    },
-  },
-};
-
-export const NoThemeWithMocksLLC: Story = {
-  ...Primary,
-  name: 'No theme with mocked LLC client with unanswered questions',
-  args: { ...Primary.args, clientId: '0030000130' },
-  parameters: {
-    msw: {
-      handlers: [
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        ...Primary?.parameters?.msw?.handlers,
-        http.get('/ef/do/v1/clients/0030000130', () => {
+        http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
           return HttpResponse.json({
@@ -291,18 +209,108 @@ export const NoThemeWithMocksLLC: Story = {
   },
 };
 
-export const NoThemeWithMocksLLCAnsweredQuestions: Story = {
+export const BusinessOwnerStep: Story = {
   ...Primary,
-  name: 'No theme with mocked LLC client with answered questions',
-  args: { ...Primary.args, clientId: '0030000130' },
+  name: 'Business Owner Step',
+  args: { ...Primary.args, clientId: '0030000130', currentStep: 2 },
   parameters: {
     msw: {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
+        http.get('/clients/0030000130', () => {
+          return HttpResponse.json(efClientCorpMock);
+        }),
+        http.get('/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
+        }),
+      ],
+    },
+  },
+};
 
-        http.get('/ef/do/v1/clients/0030000130', () => {
-          return HttpResponse.json(efClientSolPropAnsweredQuestions);
+export const QuestionsStep: Story = {
+  ...Primary,
+  name: 'Questions Step',
+  args: { ...Primary.args, clientId: '0030000130', currentStep: 3 },
+  parameters: {
+    msw: {
+      handlers: [
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        ...Primary?.parameters?.msw?.handlers,
+        http.get('/clients/0030000130', () => {
+          return HttpResponse.json(efClientCorpMock);
+        }),
+        http.get('/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
+        }),
+      ],
+    },
+  },
+};
+
+export const ReviewStep: Story = {
+  ...Primary,
+  name: 'Review Step',
+  args: { ...Primary.args, clientId: '0030000130', currentStep: 4 },
+  parameters: {
+    msw: {
+      handlers: [
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        ...Primary?.parameters?.msw?.handlers,
+        http.get('/clients/0030000130', () => {
+          return HttpResponse.json(efClientCorpMock);
+        }),
+        http.get('/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
+        }),
+      ],
+    },
+  },
+};
+
+export const AttestationStep: Story = {
+  ...Primary,
+  name: 'Attestation Step',
+  args: { ...Primary.args, clientId: '0030000130', currentStep: 5 },
+  parameters: {
+    msw: {
+      handlers: [
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        ...Primary?.parameters?.msw?.handlers,
+        http.get('/clients/0030000130', () => {
+          return HttpResponse.json(efClientCorpMock);
+        }),
+        http.get('/questions', (req) => {
+          const url = new URL(req.request.url);
+          const questionIds = url.searchParams.get('questionIds');
+          return HttpResponse.json({
+            metadata: efClientQuestionsMock.metadata,
+            questions: efClientQuestionsMock?.questions.filter((q) =>
+              questionIds?.includes(q.id)
+            ),
+          });
         }),
       ],
     },

@@ -22,7 +22,7 @@ import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
 
-export const OnboardingWizardSchema = ({ title }: any) => {
+export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
   const { clientId } = useRootConfig();
   const {
     activeStep,
@@ -64,6 +64,12 @@ export const OnboardingWizardSchema = ({ title }: any) => {
       buildStepper();
     }
   }, [clientId, clientDataForm]);
+
+  useEffect(() => {
+    if (currentStep && Number.isInteger(currentStep)) {
+      setCurrentStep(currentStep);
+    }
+  }, [currentStep]);
 
   const { getContentToken } = useContentData(
     `schema.${CurrentStep?.contentData ?? ''}`
