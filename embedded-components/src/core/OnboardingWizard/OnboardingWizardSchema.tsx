@@ -1,7 +1,5 @@
 import { useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
-import { use } from 'chai';
-import { set } from 'date-fns';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

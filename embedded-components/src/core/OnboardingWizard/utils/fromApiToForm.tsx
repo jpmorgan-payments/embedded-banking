@@ -1,6 +1,5 @@
 import {
   AddressDto,
-  
   ClientResponse,
   IndividualDetails,
   IndividualIdentity,
@@ -12,7 +11,6 @@ import {
 import { transformDateofBirth } from '../WizardSteps/utils/transformDateofBirth';
 
 const fromApiToForm = (client: ClientResponse) => {
-  
   const flattened: any = {
     id: client?.id,
     attestations: client?.attestations,

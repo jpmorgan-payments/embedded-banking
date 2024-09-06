@@ -2,9 +2,7 @@ import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
 import { efClientPost } from '@/mocks/efClientPost.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
-import { efClientSolPropAnsweredQuestions } from '@/mocks/efClientSolPropAnsweredQuestions.mock';
 import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
-import { partyWithMissingfields } from '@/mocks/efPartyWithMissingFields.mock';
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
