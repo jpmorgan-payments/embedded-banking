@@ -258,6 +258,9 @@ export const NoThemeWithMocksLLC: Story = {
         http.get('/clients/0030000130', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
+        http.post('/clients/0030000130', () => {
+          return HttpResponse.json(efClientCorpMock);
+        }),
         http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');

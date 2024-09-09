@@ -219,7 +219,7 @@ const RenderForms = ({
               return (
                 <Box
                   className="eb-col-span-3"
-                  key={getContentToken(labelToken) ?? labelToken}
+                  key={(getContentToken(labelToken) ?? labelToken) || name}
                 >
                   <Title as="h3" className="eb-mb-4">
                     {getContentToken(labelToken) ?? labelToken}
@@ -319,6 +319,7 @@ const RenderForms = ({
             case 'addressType':
               return (
                 <AdressTypeFormField
+                  key={name}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,

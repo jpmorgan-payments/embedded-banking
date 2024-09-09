@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
@@ -23,6 +23,9 @@ import { RenderForms } from '../utils/RenderForms';
 import { updateFormValues } from '../utils/updateFormValues';
 
 const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
+  const [jobTitle, setJobTitle] = useState({
+    jobTitle: '',
+  });
   const { getContentToken } = useContentData('steps.ControllerDetailsStep');
   const { clientId } = useRootConfig();
   const form = useFormContext();
@@ -57,10 +60,22 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
     if (clientDataForm) {
       if (indController) {
         updateFormValues(indController, form.setValue);
+
         form.setValue('individualEmail', indController.email);
+        form.setValue('jobTitle', indController.jobTitle);
+
+        setJobTitle({
+          jobTitle: indController.jobTitle,
+        });
       }
     }
   }, [clientDataForm, indController]);
+
+  useEffect(() => {
+    if (jobTitle.jobTitle) {
+      form.setValue('jobTitle', jobTitle.jobTitle);
+    }
+  }, [JSON.stringify(jobTitle)]);
 
   const onSubmit = async () => {
     const errors = form?.formState?.errors;
