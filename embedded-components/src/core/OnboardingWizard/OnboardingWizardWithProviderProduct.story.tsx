@@ -64,7 +64,7 @@ const OnboardingWizardWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardWithProvider> = {
-  title: 'Onboarding Wizard / Product',
+  title: 'Onboarding Wizard / Product & Entity Type',
   component: OnboardingWizardWithProvider,
 };
 export default meta;
@@ -72,7 +72,7 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardWithProvider>;
 
 export const Primary: Story = {
-  name: 'nboardingWizard',
+  name: 'Onboarding Wizard',
   args: {
     apiBaseUrl: '/',
     clientId: '0030000132',
