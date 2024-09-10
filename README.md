@@ -90,7 +90,7 @@ If you are interested in going further with Embedded Banking APIs, you can join 
 
 This process can take a few days, and in order to make calls to the UAT, you must provide some SSL certificates.
 
-To register as a developer with J.P. Morgan's APIs, visit [developer.payments.jpmorgan.com](http://developer.jpmorgan.com/](https://developer.payments.jpmorgan.com).
+To register as a developer with J.P. Morgan's APIs, visit [developer.payments.jpmorgan.com](https://developer.payments.jpmorgan.com).
 
 Once you have completed onboarding, and you have the correct certificate files ready, you can upload them to your server.
 
