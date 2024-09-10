@@ -15,7 +15,7 @@ import { introSchema } from '../StepsSchema';
 import { RenderForms } from '../utils/RenderForms';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
-  const { setError } = useError();
+  const { setError, error: isError } = useError();
   const {
     jurisdictions,
     entityType,
@@ -171,7 +171,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
           <NavigationButtons
             setActiveStep={setCurrentStep}
             activeStep={activeStep}
-            disabled={postClientStatus === 'pending'}
+            disabled={postClientStatus === 'pending' || isError}
           />
         </form>
       </Box>

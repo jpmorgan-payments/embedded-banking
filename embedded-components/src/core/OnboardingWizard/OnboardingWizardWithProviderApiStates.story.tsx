@@ -1,3 +1,4 @@
+import { efClientPost } from '@/mocks/efClientPost.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
 import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
@@ -92,10 +93,13 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.post('/clients', () => {
+          return HttpResponse.json(efClientPost);
+        }),
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
 
@@ -107,11 +111,11 @@ export const Primary: Story = {
           });
         }),
 
-        http.get('/ef/do/v1/documents/:id', () => {
+        http.get('/documents/:id', () => {
           return HttpResponse.json(efDocumentClientDetail);
         }),
 
-        http.get('/ef/do/v1/documents/:id/file', async () => {
+        http.get('/documents/:id/file', async () => {
           const bufferBlob = await fetch(termsPDF).then((res) =>
             res.arrayBuffer()
           );
@@ -124,7 +128,7 @@ export const Primary: Story = {
           });
         }),
 
-        http.post('/ef/do/v1/clients/:id/verifications', () => {
+        http.post('/clients/:id/verifications', () => {
           return HttpResponse.json({ success: 'TRUE' });
         }),
       ],
@@ -196,8 +200,39 @@ export const WithLoadingStateAndError = {
   },
 };
 
+export const WithErrorOnInit = {
+  name: 'Server error without ClientID',
+  ...Primary,
+  args: {
+    ...Primary.args,
+    clientId: '',
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/clients/0030000130', async () => {
+          return HttpResponse.json(
+            {
+              title: 'Invalid Data',
+              httpStatus: 400,
+              context: [
+                {
+                  message: 'Client with ID [0030000130] does not exist.',
+                  location: 'BODY',
+                  field: 'clientId',
+                },
+              ],
+            },
+            { status: 400 }
+          );
+        }),
+      ],
+    },
+  },
+};
+
 export const WithErrorOnGet = {
-  name: 'Server error on GET /clients/:clientId',
+  name: 'Server error with ClientID',
   ...Primary,
   args: {
     ...Primary.args,

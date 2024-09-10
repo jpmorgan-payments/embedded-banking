@@ -14,6 +14,7 @@ import { Grid, Stack, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 
+import { useError } from '../../context/error.context';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
 // import { updateOutstandingItems } from '../../utils/actions';
@@ -29,6 +30,7 @@ const QuestionsStep = ({ children }: any) => {
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { data } = useGetDataByClientId();
   const { clientId } = useRootConfig();
+  const { setError, error: isError } = useError();
 
   const questionList =
     (data?.outstanding?.questionIds?.length &&
@@ -208,7 +210,7 @@ const QuestionsStep = ({ children }: any) => {
 
       setCurrentStep(activeStep + 1);
     } catch (err) {
-      console.log('@@err', err);
+      setError(true);
     }
   }, [activeStep]);
 

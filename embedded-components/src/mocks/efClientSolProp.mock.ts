@@ -1,7 +1,7 @@
 import { ClientResponse } from '@/api/generated/smbdo.schemas';
 
 export const efClientSolProp: ClientResponse = {
-  id: '0030000129',
+  id: '0030000132',
   attestations: [
     {
       attesterFullName: 'Monica Gellar',
