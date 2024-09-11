@@ -33,10 +33,8 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
     currentFormSchema,
   } = useStepper();
 
-  const {
-    data: clientData,
-    isPending: isPendingClient,
-  } = useGetDataByClientId();
+  const { data: clientData, isPending: isPendingClient } =
+    useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);
   }, [clientData]);
