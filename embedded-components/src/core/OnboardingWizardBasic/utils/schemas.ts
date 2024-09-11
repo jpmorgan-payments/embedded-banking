@@ -19,6 +19,11 @@ export const PhoneSchema = z
     message: 'Invalid phone number',
   });
 
+const AddressLineSchema = z
+  .string()
+  .min(1, 'Address line is required')
+  .max(60, 'Address line must be 60 characters or less');
+
 export const AddressSchema = z.object({
   addressType: z.enum([
     'LEGAL_ADDRESS',
@@ -26,10 +31,7 @@ export const AddressSchema = z.object({
     'BUSINESS_ADDRESS',
     'RESIDENTIAL_ADDRESS',
   ]),
-  addressLines: z
-    .array(z.string().max(60, 'Address line must be 60 characters or less'))
-    .min(1)
-    .max(5),
+  addressLines: z.array(AddressLineSchema).min(1).max(5),
   city: z.string().max(34, 'City name must be 34 characters or less'),
   state: z
     .string()
