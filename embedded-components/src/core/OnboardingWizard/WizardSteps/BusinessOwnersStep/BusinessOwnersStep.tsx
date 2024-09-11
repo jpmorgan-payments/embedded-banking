@@ -8,7 +8,6 @@ import { Box, Button, Stack } from '@/components/ui';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
-import { useError } from '../../context/error.context';
 import { useFormSchema } from '../../context/formProvider.context';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
@@ -28,8 +27,6 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
   const { getContentToken } = useContentData('steps.BusinessOwnersStep');
   const { updateSchema } = useFormSchema();
   const [open, setOpen] = useState(false);
-
-  const { setError, error: isError } = useError();
 
   const [additionalBusinessOwners, setAdditionalBusinessOwners] =
     useState(false);

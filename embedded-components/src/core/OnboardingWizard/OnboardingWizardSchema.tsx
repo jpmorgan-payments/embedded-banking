@@ -36,7 +36,6 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
   const {
     data: clientData,
     isPending: isPendingClient,
-    isError: isErrorClient,
   } = useGetDataByClientId();
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);

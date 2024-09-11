@@ -15,7 +15,6 @@ type ServerErrorAlertProps = {
 const ServerAlertMessage = ({
   title,
   tryAgainAction,
-  customErrorMessage,
 }: ServerErrorAlertProps) => {
   const { setError, error } = useError();
   const { getContentToken: getContent } = useContentData(

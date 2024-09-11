@@ -30,7 +30,7 @@ const QuestionsStep = ({ children }: any) => {
   const { getContentToken } = useContentData('steps.AdditionalDetailsStep');
   const { data } = useGetDataByClientId();
   const { clientId } = useRootConfig();
-  const { setError, error: isError } = useError();
+  const { setError } = useError();
 
   const questionList =
     (data?.outstanding?.questionIds?.length &&
