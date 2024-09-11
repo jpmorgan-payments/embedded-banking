@@ -15,7 +15,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useStepper } from '@/components/ui/stepper';
+import { RadioGroup, RadioGroupItem } from '@/components/ui';
 import { InfoPopover } from '@/components/ux/InfoPopover';
 
 import { FormActions } from '../FormActions/FormActions';
@@ -66,36 +66,51 @@ const AddressLines: FC<AddressLinesProps> = ({ control, addressIndex }) => {
 
   return (
     <>
-      {addressLineFields.map((addressLineField, index) => (
-        <FormField
-          key={addressLineField.id}
-          control={control}
-          name={`addresses.${addressIndex}.addressLines.${index}`}
-          render={({ field }) => (
-            <FormItem>
-              <div className="eb-flex eb-items-center eb-space-x-2">
-                <FormLabel asterisk={index === 0}>
-                  Address Line {index + 1}
-                </FormLabel>
-                {index === 0 && (
-                  <InfoPopover>
-                    The first line must not be a PO Box and must begin with a
-                    number.
-                  </InfoPopover>
-                )}
-              </div>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      ))}
+      <FormField
+        control={control}
+        name={`addresses.${addressIndex}.addressLines.0`}
+        render={({ field }) => (
+          <FormItem>
+            <div className="eb-flex eb-items-center eb-space-x-2">
+              <FormLabel asterisk>Address Line 1</FormLabel>
+              <InfoPopover>
+                The first line must not be a PO Box and must begin with a
+                number.
+              </InfoPopover>
+            </div>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      {addressLineFields.map((addressLineField, index) => {
+        if (index === 0) return null;
+        return (
+          <FormField
+            key={addressLineField.id}
+            control={control}
+            name={`addresses.${addressIndex}.addressLines.${index}`}
+            render={({ field }) => (
+              <FormItem>
+                <div className="eb-flex eb-items-center eb-space-x-2">
+                  <FormLabel>Address Line {index + 1}</FormLabel>
+                </div>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        );
+      })}
       <div className="eb-grid eb-grid-cols-2 eb-gap-6">
         <Button
           type="button"
           variant="outline"
+          size="sm"
           onClick={() => appendAddressLine('')}
           disabled={addressLineFields.length >= 5}
         >
@@ -104,6 +119,7 @@ const AddressLines: FC<AddressLinesProps> = ({ control, addressIndex }) => {
         <Button
           type="button"
           variant="outline"
+          size="sm"
           onClick={() => removeAddressLine(addressLineFields.length - 1)}
           disabled={addressLineFields.length <= 1}
         >
@@ -131,7 +147,7 @@ export const OrganizationStepForm = () => {
       addresses: [
         {
           addressType: 'BUSINESS_ADDRESS',
-          addressLines: [''],
+          addressLines: [],
           city: '',
           postalCode: '',
           country: '',
@@ -143,8 +159,8 @@ export const OrganizationStepForm = () => {
         countryCode: '',
         phoneNumber: '',
       },
-      entitiesInOwnership: false,
-      tradeOverInternet: false,
+      entitiesInOwnership: undefined,
+      tradeOverInternet: undefined,
       websiteAvailable: false,
       secondaryMccList: [],
       mcc: '',
@@ -532,55 +548,87 @@ export const OrganizationStepForm = () => {
             />
           </div>
         </fieldset>
-        <div>
-          <FormField
-            control={form.control}
-            name="entitiesInOwnership"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Entities in Ownership</FormLabel>
-                  <FormDescription>
-                    Indicate if one or more businesses own part of the business
-                    connected to the client.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="entitiesInOwnership"
+          render={({ field }) => (
+            <FormItem className="eb-space-y-3">
+              <FormLabel asterisk>
+                Are there one or more entities that own part of the business
+                connected to the client?
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={(value) => field.onChange(value === 'yes')}
+                  value={
+                    field.value === undefined
+                      ? undefined
+                      : field.value
+                        ? 'yes'
+                        : 'no'
+                  }
+                  className="eb-flex eb-flex-col eb-space-y-1"
+                >
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="yes" />
+                    </FormControl>
+                    <FormLabel className="eb-font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="no" />
+                    </FormControl>
+                    <FormLabel className="eb-font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="tradeOverInternet"
-            render={({ field }) => (
-              <FormItem className="eb-flex eb-flex-row eb-items-start eb-space-x-3 eb-space-y-0 eb-rounded-md eb-border eb-p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="eb-space-y-1 eb-leading-none">
-                  <FormLabel>Trade Over Internet</FormLabel>
-                  <FormDescription>
-                    Indicate if the business conducts trade over the internet.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="tradeOverInternet"
+          render={({ field }) => (
+            <FormItem className="eb-space-y-3">
+              <FormLabel asterisk>
+                Does the business conduct trade over the internet?
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={(value) => field.onChange(value === 'yes')}
+                  value={
+                    field.value === undefined
+                      ? undefined
+                      : field.value
+                        ? 'yes'
+                        : 'no'
+                  }
+                  className="eb-flex eb-flex-col eb-space-y-1"
+                >
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="yes" />
+                    </FormControl>
+                    <FormLabel className="eb-font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="no" />
+                    </FormControl>
+                    <FormLabel className="eb-font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
         {/* Addresses */}
         <div className="eb-space-y-4">
           <h3 className="eb-text-lg eb-font-medium">Addresses</h3>
-          <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3 xl:eb-grid-cols-4">
+          <div className="eb-grid eb-grid-cols-1 eb-items-start eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3 xl:eb-grid-cols-4">
             {addressFields.map((fieldItem, index) => (
               <fieldset
                 key={fieldItem.id}
@@ -698,13 +746,18 @@ export const OrganizationStepForm = () => {
             <Button
               type="button"
               onClick={() =>
-                appendAddress({
-                  addressType: 'BUSINESS_ADDRESS',
-                  addressLines: [''],
-                  city: '',
-                  postalCode: '',
-                  country: '',
-                })
+                appendAddress(
+                  {
+                    addressType: 'BUSINESS_ADDRESS',
+                    addressLines: [''],
+                    city: '',
+                    postalCode: '',
+                    country: '',
+                  },
+                  {
+                    shouldFocus: false,
+                  }
+                )
               }
               variant="outline"
               size="sm"
@@ -784,7 +837,7 @@ export const OrganizationStepForm = () => {
                     <FormItem>
                       <FormLabel>Expiry Date</FormLabel>
                       <FormControl>
-                        <Input {...field} type="date" />
+                        <Input {...field} type="date" className="eb-w-full" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
