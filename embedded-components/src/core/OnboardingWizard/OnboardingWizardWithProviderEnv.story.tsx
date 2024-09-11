@@ -1,6 +1,7 @@
-
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
+
 import { onRegistrationProp } from '../EBComponentsProvider/RootConfigProvider';
 import { OnboardingWizard } from './OnboardingWizard';
 
@@ -89,26 +90,26 @@ export const Primary: Story = {
 };
 
 export const Dev: Story = {
-    name: 'DEV',
-    args: {
-      apiBaseUrl: '/paste-dev-url-here',
-      headers: {
-        api_gateway_client_id: 'OBTSTSTCL1',
-      },
-      clientId: '',
-      title: 'Onboarding Wizard Simple',
-      theme: {
-        variables: {
-          primaryColor: '#7CB9E8',
-          borderRadius: '15px',
-        },
-      },
-      onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
-        console.log('@@clientId', clientId);
-      },
-      onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
-        console.log('@@clientId', clientId);
+  name: 'DEV',
+  args: {
+    apiBaseUrl: '/paste-dev-url-here',
+    headers: {
+      api_gateway_client_id: 'OBTSTSTCL1',
+    },
+    clientId: '',
+    title: 'Onboarding Wizard Simple',
+    theme: {
+      variables: {
+        primaryColor: '#7CB9E8',
+        borderRadius: '15px',
       },
     },
-    parameters: {},
-  };
+    onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+    onPostClientsVerification: ({ clientId }: onRegistrationProp) => {
+      console.log('@@clientId', clientId);
+    },
+  },
+  parameters: {},
+};

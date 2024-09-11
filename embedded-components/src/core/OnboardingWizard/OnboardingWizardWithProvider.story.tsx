@@ -76,7 +76,7 @@ export const Primary: Story = {
   name: 'Basic OnboardingWizard',
   args: {
     apiBaseUrl: '/',
-    headers:{
+    headers: {
       api_gateway_client_id: 'EBCLIENT22',
     },
     clientId: '',
