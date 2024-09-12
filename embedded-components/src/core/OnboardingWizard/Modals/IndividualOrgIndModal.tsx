@@ -108,22 +108,22 @@ const IndividualOrgIndModal = ({
     }
   };
 
-  const handleRemoveOwner = async () => {
-    // const res = await updateParty({
-    //   id: clientId ?? '',
-    //   data: {
-    //     addParties: [
-    //       {
-    //         id: partyId,
-    //         // status: 'INACTIVE',
-    //       },
-    //     ],
-    //   },
-    // });
-    // if (res?.id) {
-    //   onOpenChange(res?.id);
-    // }
-  };
+  // const handleRemoveOwner = async () => {
+  //   const res = await updateParty({
+  //     id: clientId ?? '',
+  //     data: {
+  //       addParties: [
+  //         {
+  //           id: partyId,
+  //           status: 'INACTIVE',
+  //         },
+  //       ],
+  //     },
+  //   });
+  //   if (res?.id) {
+  //     onOpenChange(res?.id);
+  //   }
+  // };
 
   return (
     <DialogContent>
@@ -152,7 +152,7 @@ const IndividualOrgIndModal = ({
               </Button>
             </DialogClose>
             <div className="eb-flex eb-justify-end">
-              {data ? (
+              {/* {data ? (
                 <Button
                   onClick={handleRemoveOwner}
                   type="button"
@@ -163,7 +163,7 @@ const IndividualOrgIndModal = ({
                 </Button>
               ) : (
                 <></>
-              )}
+              )} */}
               <Button type="submit" disabled={createPartyisPending}>
                 {data ? 'Update' : 'Save'}
               </Button>

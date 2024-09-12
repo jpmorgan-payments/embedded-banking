@@ -1,10 +1,9 @@
 import { efClientPost } from '@/mocks/efClientPost.mock';
 import { efClientQuestionsMock } from '@/mocks/efClientQuestions.mock';
 import { efClientSolProp } from '@/mocks/efClientSolProp.mock';
-import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData.mock';
 import { efDocumentClientDetail } from '@/mocks/efDocumentClientDetail';
 import type { Meta, StoryObj } from '@storybook/react';
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import { EBComponentsProvider } from '@/core/EBComponentsProvider';
 
@@ -64,7 +63,7 @@ const OnboardingWizardWithProvider = ({
 };
 
 const meta: Meta<typeof OnboardingWizardWithProvider> = {
-  title: 'Onboarding Wizard / API States',
+  title: 'Onboarding Wizard / Theme',
   component: OnboardingWizardWithProvider,
 };
 export default meta;
@@ -72,10 +71,13 @@ export default meta;
 type Story = StoryObj<typeof OnboardingWizardWithProvider>;
 
 export const Primary: Story = {
-  name: 'Default 200 OK',
+  name: 'Default theme',
   args: {
     apiBaseUrl: '/',
-    clientId: '0030000132',
+    headers: {
+      api_gateway_client_id: 'EBCLIENT22',
+    },
+    clientId: '',
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
@@ -136,149 +138,30 @@ export const Primary: Story = {
   },
 };
 
-export const WithLoadingState = {
-  name: 'LOADING State',
+export const Dark: Story = {
+  name: 'Dark theme',
   ...Primary,
   args: {
     ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          // Delay the response by 3 seconds (3000 milliseconds)
-          await delay(5000);
-          return HttpResponse.json(efClientSolPropWithMoreData);
-        }),
-        http.post('/clients/0030000130', async () => {
-          // You can add a delay here too if needed
-          return HttpResponse.json(efClientSolPropWithMoreData);
-        }),
-      ],
+    title: 'Onboarding (Dark theme)',
+    theme: {
+      colorScheme: 'dark',
     },
   },
 };
 
-export const WithLoadingStateAndError = {
-  name: 'Error On POST',
+export const Example1: Story = {
+  name: 'Example with different font',
   ...Primary,
   args: {
     ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json(efClientSolPropWithMoreData);
-        }),
-        http.post('/clients/0030000130', async () => {
-          await delay(1000); // Adding a small delay to the error response
-          return HttpResponse.json(
-            {
-              title: 'Invalid Data',
-              httpStatus: 400,
-              context: [
-                {
-                  message: 'Invalid email format.',
-                  location: 'BODY',
-                  field: 'email',
-                },
-                {
-                  message: 'Invalid phone number format.',
-                  location: 'BODY',
-                  field: 'phone.phoneNumber',
-                },
-              ],
-            },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
-};
-
-export const WithErrorOnInit = {
-  name: 'Server error without ClientID',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    clientId: '',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json(
-            {
-              title: 'Invalid Data',
-              httpStatus: 400,
-              context: [
-                {
-                  message: 'Client with ID [0030000130] does not exist.',
-                  location: 'BODY',
-                  field: 'clientId',
-                },
-              ],
-            },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
-};
-
-export const WithErrorOnGet = {
-  name: 'Server error with ClientID',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json(
-            {
-              title: 'Invalid Data',
-              httpStatus: 400,
-              context: [
-                {
-                  message: 'Client with ID [0030000130] does not exist.',
-                  location: 'BODY',
-                  field: 'clientId',
-                },
-              ],
-            },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
-};
-
-export const OnboardingInProgress = {
-  name: 'ClientStatus: PENDING',
-  ...Primary,
-  args: {
-    ...Primary.args,
-    clientId: '0030000130',
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/clients/0030000130', async () => {
-          return HttpResponse.json({
-            ...efClientSolPropWithMoreData,
-            status: 'PENDING',
-          });
-        }),
-      ],
+    title: 'Onboarding (Different font)',
+    theme: {
+      variables: {
+        primaryColor: 'teal',
+        borderRadius: '15px',
+        fontFamily: 'Nunito sans',
+      },
     },
   },
 };

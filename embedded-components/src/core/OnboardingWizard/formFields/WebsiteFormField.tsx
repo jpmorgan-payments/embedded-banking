@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   FormControl,
@@ -19,7 +19,24 @@ const WebsiteFromField = ({
   placeholderToken,
   required,
 }: any) => {
-  const [websiteAvailable, setWebsiteAvailable] = useState(false);
+  const [websiteAvailable, setWebsiteAvailable] = useState(
+    form.getValues()?.websiteAvailable
+  );
+
+  useEffect(() => {
+    setWebsiteAvailable(form.getValues()?.websiteAvailable);
+  }, [form.getValues()?.websiteAvailable]);
+
+  useEffect(() => {
+    if (!websiteAvailable && form.getValues()?.websiteAvailable) {
+      form.setValue('website', '');
+      form.setValue('websiteAvailable', false);
+    } else if (!form.getValues()?.websiteAvailable && websiteAvailable) {
+      form.setValue('websiteAvailable', true);
+      setWebsiteAvailable(true);
+    }
+  }, [websiteAvailable]);
+
   return (
     <Group className="eb-grid-cols-3 eb-justify-start eb-gap-16 eb-align-baseline">
       <CheckBoxFormFields

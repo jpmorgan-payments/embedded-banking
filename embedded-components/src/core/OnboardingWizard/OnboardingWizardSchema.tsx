@@ -39,7 +39,7 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
     return clientData && fromApiToForm(clientData);
   }, [clientData]);
 
-  const { error: isError } = useError();
+  const { error: isError, refetch } = useError();
 
   // TODO: IMPROVE STEPPER, when logic dictates for more robust STEP
   useEffect(() => {
@@ -94,9 +94,13 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
                   <CardTitle>{title}</CardTitle>
                 </CardHeader>
               )}
-              {!!clientId && isPendingClient ? (
+              {!!clientId && isPendingClient && !isError ? (
                 <>
                   <LoadingState message="Fetching client data..." />
+                </>
+              ) : isError && !clientId ? (
+                <>
+                  <ServerAlertMessage tryAgainAction={refetch} />
                 </>
               ) : (
                 <>
@@ -130,7 +134,9 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
                             ></StepperHeader>
                           )}
 
-                        {isError && <ServerAlertMessage />}
+                        {isError && (
+                          <ServerAlertMessage tryAgainAction={refetch} />
+                        )}
 
                         <CardContent>
                           <Box className="eb-flex eb-items-center eb-space-x-4 eb-rounded-md eb-border eb-p-5">

@@ -15,7 +15,7 @@ import { introSchema } from '../StepsSchema';
 import { RenderForms } from '../utils/RenderForms';
 
 const IntroStep = ({ formSchema, yupSchema }: any) => {
-  const { setError } = useError();
+  const { setError, error: isError } = useError();
   const {
     jurisdictions,
     entityType,
@@ -142,7 +142,9 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
                             .toString()
                             .split(',')
                             .map((val: any) => (
-                              <li key={val}>{val}</li>
+                              <li key={val}>
+                                <Text>{val}</Text>
+                              </li>
                             ))}
                         </ul>
                       </>
@@ -159,7 +161,11 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
                           .split(',')
                           .filter((i: string) => i)
                           .map((item: string) => {
-                            return <li key={item}>{item}</li>;
+                            return (
+                              <li key={item}>
+                                <Text>{item}</Text>
+                              </li>
+                            );
                           })}
                       </ul>
                     </>
@@ -171,7 +177,7 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
           <NavigationButtons
             setActiveStep={setCurrentStep}
             activeStep={activeStep}
-            disabled={postClientStatus === 'pending'}
+            disabled={postClientStatus === 'pending' || isError}
           />
         </form>
       </Box>
