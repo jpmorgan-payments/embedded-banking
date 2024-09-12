@@ -30,7 +30,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { data } = useGetDataByClientId();
   const clientDataForm = data && fromApiToForm(data);
 
-  const { mutateAsync: updateController, isPending: createPartyIsPending } =
+  const { mutateAsync: updateOrganization, isPending: createPartyIsPending } =
     useSmbdoUpdateClient();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
@@ -66,7 +66,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
     const dataParty = fromFormToOrgParty(form.getValues());
 
     try {
-      await updateController({
+      await updateOrganization({
         id: clientId ?? '',
         data: {
           addParties: [

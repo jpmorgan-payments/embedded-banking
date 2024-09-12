@@ -41,14 +41,15 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
     organizationDetails: {
       organizationType: organizationSwitch(form?.legalStructure),
       organizationName: business?.businessName,
-      organizationDescription: business?.businessDescription,
+      organizationDescription: business?.organizationDescription,
       industryCategory: business?.industryCategory,
       industryType: business?.industryType,
       yearOfFormation: business?.yearOfFormation,
       countryOfFormation: 'US',
-      significantOwnership:
-        form?.questionsAnswers?.significantOwnership === 'no',
-      entitiesInOwnership: form?.questionsAnswers?.entitiesInOwnership === 'no',
+      // significantOwnership:
+      //   form?.questionsAnswers?.significantOwnership === 'no',
+      entitiesInOwnership:
+        form?.questionsAnswers?.entitiesInOwnership === 'yes',
       addresses: [
         {
           addressType: business?.addressType,
@@ -73,7 +74,7 @@ export const makeBusiness = (business: any, form: OnboardingForm) => {
             },
           ]
         : [],
-      websiteAvailable: !business?.websiteNotAvailable,
+      websiteAvailable: !business?.websiteAvailable,
       ...(business?.website ? { website: business?.website } : {}),
     },
   };

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-useless-path-segments */
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { OnboardingWizardBasicWithProvider } from './OnboardingWizardBasic.story';
 
 const meta: Meta<typeof OnboardingWizardBasicWithProvider> = {

@@ -1,9 +1,9 @@
-import * as yup from 'yup';
+// import * as yup from 'yup';
 
-export const businessOwnersValidation: any = (getContentToken: any) => {
+export const businessOwnersValidation: any = () => {
   return {
-    significantOwnership: yup
-      .boolean()
-      .required(getContentToken ?? 'Required field'),
+    // entitiesInOwnership: yup
+    //   .boolean()
+    //   .required(getContentToken ?? 'Required field'),
   };
 };
