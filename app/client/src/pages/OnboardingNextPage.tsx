@@ -32,8 +32,6 @@ export const OnboardingNextPage = () => {
     });
   }, [form.values.clientId, form.values.baseURL, form.values.gatewayID]);
 
-  console.log('@@form', form.values);
-  
   return (
     <PageWrapper
       title="[Next] Onboarding"
