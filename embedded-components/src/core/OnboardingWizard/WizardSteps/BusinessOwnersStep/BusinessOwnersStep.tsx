@@ -47,12 +47,8 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
   }, [yupSchema]);
 
   useEffect(() => {}, [data]);
-  console.log('@@data', data, businessOwnerForm);
 
   const onSubmit = async () => {
-    const valid = await form.trigger();
-    console.log('@@form', form.getValues().entitiesInOwnership);
-
     try {
       await updateOrganization({
         id: clientId ?? '',
@@ -73,10 +69,6 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
       setCurrentStep(activeStep + 1);
     } catch (error: any) {
       setError(true);
-    }
-
-    if (valid) {
-      setCurrentStep(activeStep + 1);
     }
   };
 
