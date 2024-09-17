@@ -33,9 +33,9 @@ export const fromFormToOrgParty = (form: any) => {
   orgParty = {
     countryOfFormation: 'US',
     // significantOwnership: form?.significantOwnership === 'no',
-    // entitiesInOwnership: form?.entitiesInOwnership === 'no',
+    entitiesInOwnership: form?.entitiesInOwnership === 'yes',
     organizationName: form?.businessName,
-    organizationDescription: form?.businessDescription,
+    organizationDescription: form?.organizationDescription,
     industryCategory: form?.industryCategory,
     industryType: form?.industryType,
     yearOfFormation: `${form?.yearOfFormation}`,
@@ -64,7 +64,7 @@ export const fromFormToOrgParty = (form: any) => {
           },
         ]
       : [],
-    websiteAvailable: !form?.websiteNotAvailable,
+    websiteAvailable: !form?.websiteAvailable,
     ...(form?.website ? { website: form?.website } : {}),
   };
 

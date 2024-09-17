@@ -90,11 +90,12 @@ export const organizationValidation: any = (getContentToken: any) => {
         new Date().getFullYear(),
         getContentToken?.(`yearOfFormationMax`) ?? ''
       ),
+    websiteAvailable: yup.boolean().default(false),
     website: yup
       .string()
       .default('')
       .when('websiteAvailable', {
-        is: false,
+        is: true,
         then: (schema) =>
           schema
             .url()
@@ -112,7 +113,7 @@ export const organizationValidation: any = (getContentToken: any) => {
               );
             }),
       }),
-    websiteAvailable: yup.boolean().default(false),
+
     organizationDescription: yup
       .string()
       .default('')

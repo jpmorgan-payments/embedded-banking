@@ -2,12 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { useFormContext } from 'react-hook-form';
 
+import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import { Dialog } from '@/components/ui/dialog';
 import { Title } from '@/components/ui/title';
-import { Box, Button, Stack } from '@/components/ui';
+import { Button, Stack } from '@/components/ui';
+import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
+import { useError } from '../../context/error.context';
 import { useFormSchema } from '../../context/formProvider.context';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
@@ -15,61 +18,65 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/Stepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
-import { useContentData } from '../../utils/useContentData';
+// import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 import { businessOwnersSchema } from '../StepsSchema';
 import { getOrg } from '../utils/getOrgDetails';
-import { RenderForms } from '../utils/RenderForms';
-import { updateFormValues } from '../utils/updateFormValues';
 
-const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
+const BusinessOwnersStep = ({ yupSchema }: any) => {
   const form = useFormContext();
-  const { getContentToken } = useContentData('steps.BusinessOwnersStep');
+  // const { getContentToken } = useContentData('steps.BusinessOwnersStep');
   const { updateSchema } = useFormSchema();
   const [open, setOpen] = useState(false);
 
-  const [additionalBusinessOwners, setAdditionalBusinessOwners] =
-    useState(false);
   const { activeStep, setCurrentStep } = useStepper();
-
+  const { setError } = useError();
+  const { clientId } = useRootConfig();
   const { data, refetch } = useGetDataByClientId();
 
+  const { mutateAsync: updateOrganization, isPending: createPartyIsPending } =
+    useSmbdoUpdateClient();
   const businessOwnerForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
 
-  const handleToggleButton = (val: string) => {
-    if (val === 'false') setAdditionalBusinessOwners(false);
-    if (val === 'true') setAdditionalBusinessOwners(true);
-  };
-
   const orgData = getOrg(businessOwnerForm);
-  useEffect(() => {
-    if (businessOwnerForm) {
-      updateFormValues(orgData.orgDetails, form.setValue);
-      setAdditionalBusinessOwners(
-        orgData.orgDetails.significantOwnership === 'true' || false
-      );
-    }
-  }, [orgData?.orgDetails?.significantOwnership]);
 
   useEffect(() => {
     updateSchema(yupSchema);
   }, [yupSchema]);
 
-  const onSubmit = async () => {
-    const valid = await form.trigger();
+  useEffect(() => {}, [data]);
 
-    if (valid) {
+  const onSubmit = async () => {
+    try {
+      await updateOrganization({
+        id: clientId ?? '',
+        data: {
+          addParties: [
+            {
+              id: orgData?.id ?? '',
+              partyType: 'ORGANIZATION',
+              email: orgData.email,
+              organizationDetails: {
+                entitiesInOwnership: form.getValues().entitiesInOwnership,
+              },
+            },
+          ],
+        },
+      });
+
       setCurrentStep(activeStep + 1);
+    } catch (error: any) {
+      setError(true);
     }
   };
 
   return (
     <Stack className="eb-component eb-w-full eb-gap-2">
-      <Title as="h3">Enter business owner details</Title>
+      <Title as="h3">Enter business owners details</Title>
 
-      <form noValidate>
+      {/* <form noValidate>
         <Box className="eb-w-full">
           <RenderForms
             {...{
@@ -83,13 +90,13 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
             }}
           />
         </Box>
-      </form>
+      </form> */}
 
-      {additionalBusinessOwners && businessOwnerForm?.individualDetails && (
+      {businessOwnerForm?.individualDetails && (
         <>
-          <Title as="h4" className="eb-my-5">
+          {/* <Title as="h4" className="eb-my-5">
             Listed business owners
-          </Title>
+          </Title> */}
 
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
             {Object.keys(businessOwnerForm?.individualDetails)
@@ -169,6 +176,7 @@ const BusinessOwnersStep = ({ formSchema, yupSchema }: any) => {
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
         onSubmit={onSubmit}
+        disabled={createPartyIsPending}
       />
     </Stack>
   );

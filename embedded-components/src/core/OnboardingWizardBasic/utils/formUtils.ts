@@ -27,7 +27,8 @@ export function translateApiErrorsToFormErrors(
   return errors.map((error) => {
     const matchedKey = fieldMapKeys.find(
       (key) =>
-        `${arrayName}.${partyIndex}.${partyFieldMap[key]}` === error.field
+        `${arrayName}.${partyIndex}.${partyFieldMap[key]}` === error.field ||
+        `${arrayName}[${partyIndex}].${partyFieldMap[key]}` === error.field
     );
     if (!matchedKey && error.field && error.field in partyFieldMap) {
       return {
@@ -97,7 +98,9 @@ export function generateRequestBody(
     const path = `${arrayName}.${partyIndex}.${partyFieldMap[key]}`;
     const value = formValues[key];
 
-    setValueByPath(obj, path, value);
+    if (value !== '') {
+      setValueByPath(obj, path, value);
+    }
   });
 
   return obj;

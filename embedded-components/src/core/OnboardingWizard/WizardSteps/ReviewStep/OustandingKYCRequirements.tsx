@@ -49,16 +49,19 @@ const OutstandingKYCRequirements = ({
       <AlertDescription>
         <p>Please complete the following before initiating KYC:</p>
 
-        {!!outstanding?.attestationDocumentIds?.length && (
+        {/* {!!outstanding?.attestationDocumentIds?.length && (
           <div className="eb-mt-2">
-            <h4 className="eb-font-semibold">Missing Attestations</h4>
+            <h4 className="eb-font-semibold">Attestation Incomplete</h4>
+            <ul className="eb-list-inside eb-list-disc">
+              <li>Submit Onboarding</li>
+            </ul>
             <ul className="eb-list-inside eb-list-disc">
               {outstanding.attestationDocumentIds.map((id) => (
                 <li key={id}>Attestation Document ID: {id}</li>
               ))}
             </ul>
           </div>
-        )}
+        )} */}
 
         {!!outstanding?.documentRequestIds?.length && (
           <div className="eb-mt-2">

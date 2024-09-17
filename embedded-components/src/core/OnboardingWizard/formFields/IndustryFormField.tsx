@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import {
   FormControl,
   FormField,
@@ -22,9 +24,11 @@ const IndustryFormField = ({
   // labelToken,
   // placeholderToken,
 }: any) => {
+  const { watch } = useFormContext();
+
   const { getContentToken } = useContentData('steps.valuesMap');
   const industryCategories: any = useGetCategories();
-
+  watch();
   const industryTypes =
     industryCategories?.items
       ?.find?.(
@@ -45,6 +49,8 @@ const IndustryFormField = ({
               onValueChange={(value) => {
                 field.onChange(value);
                 // handleAccountTypeChange(value);
+                form.setValue('industryType', '');
+                form.setValue('industryCategory', value);
               }}
               value={field.value}
             >

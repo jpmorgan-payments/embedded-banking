@@ -31,7 +31,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
   const form = useFormContext();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
-  const { setError } = useError();
+  const { setError, error: isError } = useError();
 
   const { data } = useGetDataByClientId();
 
@@ -147,7 +147,7 @@ const IndividualDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={createPartyIsPending}
+          disabled={createPartyIsPending || isError}
         />
       </form>
     </Stack>

@@ -249,15 +249,15 @@ const questionsSchema = {
 
 const businessOwnersSchema = {
   stepName: 'Business Owners',
-  form: [
-    {
-      name: 'significantOwnership',
-      labelToken:
-        'Want to add any individual who own 25% or more of the company?',
-      fieldType: 'yesNo',
-      required: true,
-    },
-  ],
+  // form: [
+  // {
+  //   name: 'entitiesInOwnership',
+  //   labelToken:
+  //     'Want to add any individual who own 25% or more of the company?',
+  //   fieldType: 'yesNo',
+  //   required: true,
+  // },
+  // ],
 };
 
 const decisionMaker = {

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const titleVariants = cva(
-  'eb-font-bold eb-leading-7 eb-text-gray-900 sm:eb-truncate sm:eb-tracking-tight',
+  'eb-font-bold eb-leading-7 eb-text-gray-900 dark:eb-text-white sm:eb-truncate sm:eb-tracking-tight',
   {
     variants: {
       as: {

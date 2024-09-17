@@ -30,11 +30,11 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { data } = useGetDataByClientId();
   const clientDataForm = data && fromApiToForm(data);
 
-  const { mutateAsync: updateController, isPending: createPartyIsPending } =
+  const { mutateAsync: updateOrganization, isPending: createPartyIsPending } =
     useSmbdoUpdateClient();
   const { updateSchema } = useFormSchema();
   const { activeStep, setCurrentStep } = useStepper();
-  const { setError } = useError();
+  const { setError, error: isError } = useError();
 
   const orgData = getOrg(clientDataForm);
   useEffect(() => {
@@ -42,16 +42,18 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   }, [yupSchema]);
 
   useEffect(() => {
-    if (clientDataForm) {
+    if (clientDataForm && clientId) {
       const orgDetail = getOrgDetails(clientDataForm);
 
       updateFormValues(orgDetail, form.setValue);
+      form.setValue('industryCategory', orgDetail.industryCategory);
+      form.setValue('industryType', orgDetail.industryType);
       setOrgCatType({
         orgCategory: orgDetail?.industryCategory,
         orgType: orgDetail?.industryType,
       });
     }
-  }, [JSON.stringify(orgData)]);
+  }, [JSON.stringify(orgData), clientId]);
 
   useEffect(() => {
     if (orgCat.orgCategory) {
@@ -60,13 +62,13 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
     if (orgCat.orgType) {
       form.setValue('industryType', orgCat.orgType);
     }
-  }, [JSON.stringify(orgCat)]);
+  }, [JSON.stringify(orgCat), JSON.stringify(orgCat)]);
 
   const onSubmit = useCallback(async () => {
     const dataParty = fromFormToOrgParty(form.getValues());
 
     try {
-      await updateController({
+      await updateOrganization({
         id: clientId ?? '',
         data: {
           addParties: [
@@ -112,7 +114,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
         <NavigationButtons
           setActiveStep={setCurrentStep}
           activeStep={activeStep}
-          disabled={createPartyIsPending}
+          disabled={createPartyIsPending || isError}
         />
       </form>
     </Stack>

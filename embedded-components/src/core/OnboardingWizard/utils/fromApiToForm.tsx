@@ -54,7 +54,7 @@ const fromApiToForm = (client: ClientResponse) => {
         ? 'true'
         : 'false';
 
-      orgDetails.websiteNotAvailable = orgD.websiteAvailable;
+      orgDetails.websiteAvailable = orgD.websiteAvailable;
       orgDetails.website = orgD?.website;
       orgDetails.businessEmail = party.email;
       // PHONE

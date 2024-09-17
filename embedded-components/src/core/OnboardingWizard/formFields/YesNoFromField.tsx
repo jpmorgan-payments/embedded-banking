@@ -31,6 +31,7 @@ const YesNoFromField = ({
               <RadioGroup
                 onValueChange={(val) => {
                   field.onChange(val, name);
+                  form.setValue(name, val);
                   if (onChange) {
                     onChange(val, name);
                   }
