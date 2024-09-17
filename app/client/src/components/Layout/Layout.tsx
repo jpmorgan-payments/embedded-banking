@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   AppShell,
+  Box,
   Burger,
+  Divider,
   Group,
   Header,
   MediaQuery,
   Navbar,
   RemoveScroll,
+  Tabs,
   Text,
   useMantineTheme,
 } from '@mantine/core';
@@ -66,7 +69,25 @@ export const Layout = ({
           {location?.pathname === '/embedded-components' ? (
             <NavbarLinksComponentShowcase />
           ) : (
-            <NavbarLinks />
+            <Tabs defaultValue="EP" variant="pills">
+              <Text fw="bold" size="sm" mb="xs">
+                Select product
+              </Text>
+              <Tabs.List grow>
+                <Tabs.Tab value="EB">Embedded Banking</Tabs.Tab>
+                <Tabs.Tab value="EP">Embedded Finance</Tabs.Tab>
+              </Tabs.List>
+
+              <Divider my="sm" />
+
+              <Tabs.Panel value="EB">
+                <NavbarLinks product="EB" />
+              </Tabs.Panel>
+
+              <Tabs.Panel value="EP">
+                <NavbarLinks product="EP" />
+              </Tabs.Panel>
+            </Tabs>
           )}
         </Navbar>
       }

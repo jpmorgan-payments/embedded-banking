@@ -16,7 +16,7 @@ export const OnboardingNextPage = () => {
 
   return (
     <PageWrapper
-      title="[Next] Onboarding"
+      title="[Embedded Payments] Onboarding"
       apiEndpoint="@jpmorgan-payments/embedded-banking-components"
       githubLink={`${GITHUB_REPO}/tree/main/embedded-components`}
     >
@@ -34,9 +34,10 @@ export const OnboardingNextPage = () => {
         </Text>
       </div>
       <TextInput label="Client ID" {...form.getInputProps('clientId')} />
-      <EBComponentsProvider apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/">
+      <EBComponentsProvider apiBaseUrl="https://api-mock.payments.jpmorgan.com/tsapi/ef/do/v1/">
         <OnboardingWizard
-          title="[Next] Onboarding Wizard"
+          key={form.values.clientId}
+          title="Onboarding Wizard"
           clientId={form.values.clientId}
           onPostClientsVerification={({ clientId }) => {
             console.log('@@clientId POST', clientId);
