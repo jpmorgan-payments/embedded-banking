@@ -83,6 +83,7 @@ const IndividualOrgIndModal = ({
         });
 
         if (res?.id) {
+          form.reset();
           onOpenChange(res?.id);
         }
       } else {
@@ -102,6 +103,7 @@ const IndividualOrgIndModal = ({
         });
 
         if (res?.id) {
+          form.reset();
           onOpenChange(res?.id);
         }
       }
