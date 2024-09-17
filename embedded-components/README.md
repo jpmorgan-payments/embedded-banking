@@ -58,7 +58,7 @@ const EmbeddedFinanceSection = () => {
 
 ### 1. OnboardingWizard
 
-The `OnboardingWizard` component implements the client onboarding process as described in the [Embedded Payments API documentation](https://developer.payments.jpmorgan.com/docs/embedded-banking-solutions/embedded-payments/how-to/onboard).
+The `OnboardingWizard` component implements the client onboarding process as described in the [Embedded Payments API documentation](https://developer.payments.jpmorgan.com/docs/embedded-banking-solutions/embedded-payments/how-to/onboard-a-client/onboard).
 
 #### Main Features:
 - Create a client profile
