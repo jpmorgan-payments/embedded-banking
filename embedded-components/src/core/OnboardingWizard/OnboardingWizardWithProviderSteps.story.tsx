@@ -97,10 +97,13 @@ export const Primary: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientSolProp);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.post('/clients/0030000130', () => {
+          return HttpResponse.json(efClientSolProp);
+        }),
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
 
@@ -112,11 +115,11 @@ export const Primary: Story = {
           });
         }),
 
-        http.get('/ef/do/v1/documents/:id', () => {
+        http.get('/documents/:id', () => {
           return HttpResponse.json(efDocumentClientDetail);
         }),
 
-        http.get('/ef/do/v1/documents/:id/file', async () => {
+        http.get('/documents/:id/file', async () => {
           const bufferBlob = await fetch(termsPDF).then((res) =>
             res.arrayBuffer()
           );
@@ -129,7 +132,7 @@ export const Primary: Story = {
           });
         }),
 
-        http.post('/ef/do/v1/clients/:id/verifications', () => {
+        http.post('/clients/:id/verifications', () => {
           return HttpResponse.json({ success: 'TRUE' });
         }),
       ],
@@ -160,13 +163,13 @@ export const IndividualStep: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('/ef/do/v1/clients', () => {
+        http.post('/clients', () => {
           return HttpResponse.json(efClientPost);
         }),
-        http.get('/ef/do/v1/clients/0030000132', () => {
+        http.get('/clients/0030000132', () => {
           return HttpResponse.json(efClientCorpMock);
         }),
-        http.get('/ef/do/v1/questions', (req) => {
+        http.get('/questions', (req) => {
           const url = new URL(req.request.url);
           const questionIds = url.searchParams.get('questionIds');
 
