@@ -42,7 +42,7 @@ export const Layout = ({
   const appTitle =
     location?.pathname === '/embedded-components'
       ? 'Embedded Components'
-      : 'Embedded Banking Showcase';
+      : 'Embedded Finance Showcase';
 
   return (
     <AppShell

@@ -23,14 +23,14 @@ export const OnboardingNextPage = () => {
       <div>
         <Text>
           Use the <Badge color="dark">POST /clients</Badge> call to begin the
-          enrollment of a new Client to Embedded Banking.
+          enrollment of a new Client to Embedded Finance.
         </Text>
         <Text>
           Once the request has been successfully made, it initiates the J.P.
           Morgan onboarding process, including the
           <b> Customer Identification Program (CIP)</b>. Standard background
           checks are run on your client and their related parties while the
-          Embedded Banking profile and account is made ready.
+          Embedded Finance profile and account is made ready.
         </Text>
       </div>
       <TextInput label="Client ID" {...form.getInputProps('clientId')} />
