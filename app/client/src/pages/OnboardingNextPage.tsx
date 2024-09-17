@@ -64,7 +64,7 @@ export const OnboardingNextPage = () => {
       >
         <OnboardingWizard
           key={props.clientId + props.baseURL + props.gatewayID}
-          title={`[Next] Onboarding Wizard"`}
+          title={`Onboarding Wizard`}
           clientId={props.clientId}
           onPostClientsVerification={({ clientId }) => {
             console.log('@@clientId POST', clientId);
