@@ -2,7 +2,7 @@
   "name": "embedded-banking",
   "version": "0.1.0",
   "private": true,
-  "description": "Our goal is to demonstrate how embedded banking APIs could be integrated",
+  "description": "Our goal is to demonstrate how Embedded Finance APIs could be integrated",
   "scripts": {},
   "repository": {
     "type": "git",

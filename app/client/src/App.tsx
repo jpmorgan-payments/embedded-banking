@@ -26,6 +26,7 @@ import {
 } from 'features/Authentication';
 import { EmbeddedComponentsPage } from 'pages/EmbeddedComponentsPage';
 import { OnboardingNextPage } from 'pages/OnboardingNextPage';
+import { EPLinkedAccountPage } from 'pages/EPLinkedAccountsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,10 +66,6 @@ const App = () => {
                 </Route>
                 <Route path="overview" element={<OverviewPage />} />
                 <Route path="onboarding" element={<OnboardingPage />} />
-                <Route
-                  path="onboarding-next"
-                  element={<OnboardingNextPage />}
-                />
                 <Route path="accounts" element={<AccountsPage />} />
                 <Route path="recipients" element={<RecipientsPage />} />
                 <Route path="transactions" element={<TransactionsPage />} />
@@ -77,6 +74,11 @@ const App = () => {
                 <Route
                   path="embedded-components"
                   element={<EmbeddedComponentsPage />}
+                />
+                <Route path="ep/onboarding" element={<OnboardingNextPage />} />
+                <Route
+                  path="ep/linked-accounts"
+                  element={<EPLinkedAccountPage />}
                 />
                 <Route path="/" element={<Navigate replace to="/overview" />} />
               </Routes>

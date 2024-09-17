@@ -4,9 +4,9 @@ import { GITHUB_REPO } from 'data/constants';
 
 export const OverviewPage = () => {
   return (
-    <PageWrapper title="Embedded Banking Showcase">
+    <PageWrapper title="Embedded Finance Showcase">
       <Text>
-        Embedded Banking gives you financial tools from J.P. Morgan — such as
+        Embedded Finance gives you financial tools from J.P. Morgan — such as
         money movement, real-time payments, and account services — and lets you
         place them directly into your own platform.
       </Text>
@@ -16,7 +16,7 @@ export const OverviewPage = () => {
       <div>
         <Text>
           This showcase application demonstrates the main use cases for each
-          endpoint of the Embedded Banking API.
+          endpoint of the Embedded Finance API.
         </Text>
         <Text>
           Explore this app to get a general sense of the experiences you can
@@ -26,7 +26,7 @@ export const OverviewPage = () => {
       <List withPadding>
         <List.Item>
           <b>Onboard clients</b> - see an example flow for onboarding a client
-          to Embedded Banking, including the data points you need to collect.
+          to Embedded Finance, including the data points you need to collect.
         </List.Item>
         <List.Item>
           <b>Manage accounts</b> - walk through the managing an account from a
@@ -38,7 +38,7 @@ export const OverviewPage = () => {
         </List.Item>
         <List.Item>
           <b>Move money</b> - make payments and add recipients, as your clients
-          would in Embedded Banking.
+          would in Embedded Finance.
         </List.Item>
       </List>
       <Text>
@@ -61,7 +61,7 @@ export const OverviewPage = () => {
       </Title>
       <div>
         <Text>
-          Learn more about Embedded Banking at:{' '}
+          Learn more about Embedded Finance at:{' '}
           <Anchor
             href="https://www.jpmorgan.com/solutions/treasury-payments/embedded-banking"
             target="_blank"
@@ -71,7 +71,7 @@ export const OverviewPage = () => {
           </Anchor>
         </Text>
         {/* <Text>
-          Register and explore the full Embedded Banking APIs at:{' '}
+          Register and explore the full Embedded Finance APIs at:{' '}
           <Anchor
             href="https://developer-console.prod.aws.jpmchase.net/docs/embedded-banking"
             target="_blank"

@@ -12,12 +12,12 @@ export const RecipientsPage = () => {
     >
       <Box>
         <Text>
-          In Embedded Banking, a payment recipient must be created and saved
+          In Embedded Finance, a payment recipient must be created and saved
           before a payment can be made.
         </Text>
         <Text>
-          You can use the recipients API to allow users to create and manage their
-          recipients.
+          You can use the recipients API to allow users to create and manage
+          their recipients.
         </Text>
       </Box>
       <CreateRecipientForm />

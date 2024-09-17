@@ -13,7 +13,7 @@ import {
 
 import useStyles from './NavbarLinks.styles';
 
-const links = [
+const ebLinks = [
   { link: 'login', label: 'Authentication', icon: IconLock },
   { link: 'overview', label: 'Overview', icon: IconHome },
   { link: 'onboarding', label: 'Onboarding Clients', icon: IconUserPlus },
@@ -22,7 +22,11 @@ const links = [
   { link: 'transactions', label: 'Moving Money', icon: IconExchange },
   { link: 'debit-cards', label: 'Managing Debit Cards', icon: IconCreditCard },
   { link: 'cases', label: 'Getting Support', icon: IconHelp },
-  { link: 'onboarding-next', label: '[Next] Onboarding', icon: IconUserPlus },
+];
+
+const epLinks = [
+  { link: 'ep/onboarding', label: 'Onboarding', icon: IconUserPlus },
+  { link: 'ep/linked-accounts', label: 'Linked Accounts', icon: IconUsers },
 ];
 
 const NavbarLink = ({ children, to, ...props }: LinkProps) => {
@@ -45,12 +49,16 @@ const NavbarLink = ({ children, to, ...props }: LinkProps) => {
   );
 };
 
-export const NavbarLinks = () => {
+type NavbarLinksProps = {
+  product: 'EB' | 'EP';
+};
+
+export const NavbarLinks = ({ product }: NavbarLinksProps) => {
   const { classes } = useStyles();
 
   return (
     <>
-      {links.map((item) => (
+      {(product === 'EB' ? ebLinks : epLinks).map((item) => (
         <NavbarLink to={item.link} key={item.label}>
           <item.icon className={classes.linkIcon} />
           <span>{item.label}</span>

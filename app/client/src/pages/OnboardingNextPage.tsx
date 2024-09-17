@@ -23,7 +23,6 @@ export const OnboardingNextPage = () => {
     },
   });
 
-  
   useEffect(() => {
     setProps({
       clientId: form.values.clientId,
@@ -34,38 +33,38 @@ export const OnboardingNextPage = () => {
 
   return (
     <PageWrapper
-      title="[Next] Onboarding"
+      title="[Embedded Payments] Onboarding"
       apiEndpoint="@jpmorgan-payments/embedded-banking-components"
       githubLink={`${GITHUB_REPO}/tree/main/embedded-components`}
     >
       <div>
         <Text>
           Use the <Badge color="dark">POST /clients</Badge> call to begin the
-          enrollment of a new Client to Embedded Banking.
+          enrollment of a new Client to Embedded Finance.
         </Text>
         <Text>
           Once the request has been successfully made, it initiates the J.P.
           Morgan onboarding process, including the
           <b> Customer Identification Program (CIP)</b>. Standard background
           checks are run on your client and their related parties while the
-          Embedded Banking profile and account is made ready.
+          Embedded Finance profile and account is made ready.
         </Text>
       </div>
       <Group>
-
-      <TextInput label="Client ID" {...form.getInputProps('clientId')} />
-      <TextInput label="Base URL" {...form.getInputProps('baseURL')}  />
-      <TextInput label="gateway" {...form.getInputProps('gatewayID')}  />
-
+        <TextInput label="Client ID" {...form.getInputProps('clientId')} />
+        <TextInput label="Base URL" {...form.getInputProps('baseURL')} />
+        <TextInput label="gateway" {...form.getInputProps('gatewayID')} />
       </Group>
       <EBComponentsProvider
-      key={props.clientId}
-      apiBaseUrl={props.baseURL} headers={{
-        api_gateway_client_id: props.gatewayID,
-      }}>
+        key={props.clientId}
+        apiBaseUrl={props.baseURL}
+        headers={{
+          api_gateway_client_id: props.gatewayID,
+        }}
+      >
         <OnboardingWizard
-           key={props.clientId + props.baseURL + props.gatewayID}
-          title={`[Next] Onboarding Wizard"`}
+          key={props.clientId + props.baseURL + props.gatewayID}
+          title={`Onboarding Wizard`}
           clientId={props.clientId}
           onPostClientsVerification={({ clientId }) => {
             console.log('@@clientId POST', clientId);
