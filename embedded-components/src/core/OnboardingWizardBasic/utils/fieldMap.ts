@@ -29,6 +29,8 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   jurisdiction: 'jurisdiction',
   organizationIds: 'organizationDetails.organizationIds',
   phone: 'organizationDetails.phone',
+  // @ts-ignore
+  'phone.phoneType': 'organizationDetails.phone.phoneType',
   tradeOverInternet: 'organizationDetails.tradeOverInternet',
   website: 'organizationDetails.website',
   websiteAvailable: 'organizationDetails.websiteAvailable',

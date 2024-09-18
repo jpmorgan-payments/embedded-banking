@@ -442,7 +442,7 @@ export const OrganizationStepForm = () => {
                     onValueChange={(value) => {
                       field.onChange(value);
                       form.setValue('phone', {
-                        ...form.getValues().phone,
+                        ...form.getValues('phone'),
                         phoneType: value as PhoneSmbdoPhoneType,
                       });
                     }}
@@ -597,6 +597,7 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
+                  {...field}
                   onValueChange={(value) => field.onChange(value === 'yes')}
                   value={
                     field.value === undefined
