@@ -5,7 +5,7 @@ export interface TransformedTransaction extends TransactionGetResponseV2 {
   counterpartName?: string;
 }
 
-export const transformTransactionsData = (
+export const modifyTransactionsData = (
   transactions: TransactionGetResponseV2[],
   accountId: string
 ): TransformedTransaction[] => {

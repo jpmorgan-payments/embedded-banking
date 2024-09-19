@@ -1,31 +1,69 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { ChevronRightIcon } from 'lucide-react';
 
-import { formatNumberToUSD } from './utils/formatNumberToUSD';
-import { TransformedTransaction } from './utils/transformTransactionsData';
+import { Button } from '@/components/ui';
+
+import { formatNumberToCurrency } from './utils/formatNumberToCurrency';
+import { TransformedTransaction } from './utils/modifyTransactionsData';
 
 export const columns: ColumnDef<TransformedTransaction>[] = [
+  {
+    accessorKey: 'paymentDate',
+    header: 'Payment Date',
+    accessorFn: (row) => {
+      if (row.paymentDate === undefined) {
+        return 'N/A';
+      }
+      return new Date(row.paymentDate).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    },
+  },
   {
     accessorKey: 'status',
     header: 'Status',
   },
+  { accessorKey: 'type', header: 'Type' },
   {
-    id: 'amount',
+    accessorKey: 'counterpartName',
+    header: 'Counterpart Name',
+  },
+  {
+    accessorKey: 'amount',
     accessorFn: (row) => {
       if (row.amount === undefined) {
         return 'N/A';
       }
-      const formattedAmount = formatNumberToUSD(row.amount);
+      const formattedAmount = formatNumberToCurrency(
+        row.amount,
+        row.currency ?? 'USD'
+      );
       return row.payinOrPayout === 'PAYIN'
         ? formattedAmount
         : `-${formattedAmount}`;
     },
-    header: 'Amount',
-    meta: {
-      cellClassName: 'text-right',
+    header: () => <div className="eb-text-right">Amount</div>,
+    cell: ({ row }) => {
+      return (
+        <div className="eb-text-right eb-font-medium">
+          {row.getValue('amount')}
+        </div>
+      );
     },
   },
   {
-    accessorKey: 'counterpartName',
-    header: 'Counterpart Name',
+    id: 'actions',
+    cell: ({ row }) => {
+      const transaction = row.original;
+
+      return (
+        <Button variant="ghost" className="eb-h-8 eb-w-8 eb-p-0">
+          <span className="eb-sr-only">View transaction details</span>
+          <ChevronRightIcon className="eb-h-4 eb-w-4" />
+        </Button>
+      );
+    },
   },
 ];
