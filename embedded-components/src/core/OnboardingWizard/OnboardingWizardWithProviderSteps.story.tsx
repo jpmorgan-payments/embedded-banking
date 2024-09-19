@@ -144,7 +144,7 @@ export const IndividualStep: Story = {
   name: 'Individual Step',
   args: {
     apiBaseUrl: '/',
-    clientId: '',
+    clientId: '0030000132',
     title: 'Onboarding Wizard Simple',
     theme: {
       variables: {
@@ -152,7 +152,7 @@ export const IndividualStep: Story = {
         borderRadius: '15px',
       },
     },
-    currentStep: 1,
+    currentStep: 0,
     onGetClientsConfirmation: ({ clientId }: onRegistrationProp) => {
       console.log('@@clientId', clientId);
     },

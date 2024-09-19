@@ -14,21 +14,10 @@ export const fromFormToOrgParty = (form: any) => {
   const addressLines = [
     form?.businessAddressLine1,
     form?.businessAddressLine2,
-    // TODO: correct 3rd line
-    // form?.businessAddressLine3,
+    form?.businessAddressLine3,
   ]
     .filter((val) => val)
     .join(' ');
-
-  // const organizationSwitch = (businessType: string | undefined) => {
-  //   const map: any = {
-  //     Corporation: 'C_CORPORATION',
-  //     'Limited Partnership': 'LIMITED_PARTNERSHIP',
-  //     'Limited Liability Company': 'LIMITED_LIABILITY_COMPANY',
-  //     'Sole Proprietorship': 'SOLE_PROPRIETORSHIP',
-  //   };
-  //   return businessType ? map[businessType] : '';
-  // };
 
   orgParty = {
     countryOfFormation: 'US',
@@ -41,17 +30,17 @@ export const fromFormToOrgParty = (form: any) => {
     yearOfFormation: `${form?.yearOfFormation}`,
     addresses: [
       {
-        addressType: form.addressType,
+        addressType: form.businessAddressType,
         addressLines: [addressLines],
         city: form.businessCity,
         state: form.businessState,
         postalCode: form.businessPostalCode,
-        country: 'US',
+        country: form.country,
       },
     ],
     ...(form.businessAliasName ? { dbaName: form.businessAliasName } : {}),
     phone: {
-      phoneType: 'BUSINESS_PHONE',
+      phoneType: form.businessPhoneType,
       countryCode: '+1',
       phoneNumber: form?.businessPhone,
     },

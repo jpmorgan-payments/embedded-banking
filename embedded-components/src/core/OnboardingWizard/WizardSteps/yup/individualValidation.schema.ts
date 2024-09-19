@@ -1,3 +1,4 @@
+import { add } from 'date-fns';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import * as yup from 'yup';
 
@@ -97,6 +98,19 @@ export const individualValidation: any = (getContentToken: any) => {
       .default('')
       .matches(/^\d{9}$/, getContentToken?.(`controllerSsn9Match`) ?? '')
       .required(getContentToken?.(`controllerSsn9Req`) ?? ''),
+    addressType: yup
+      .mixed()
+      .oneOf(
+        [
+          'LEGAL_ADDRESS',
+          'MAILING_ADDRESS',
+          'BUSINESS_ADDRESS',
+          'RESIDENTIAL_ADDRESS',
+        ],
+        'Address Type required'
+      )
+      .default('')
+      .required('Address Type required'),
     addressLine1: yup
       .string()
       .default('')
@@ -194,6 +208,14 @@ export const individualValidation: any = (getContentToken: any) => {
         getContentToken?.(`controllerZipCodeMatch`) ?? ''
       )
       .required(getContentToken?.(`controllerZipReq`) ?? ''),
+    phoneType: yup
+      .mixed()
+      .oneOf(
+        ['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE'],
+        'Phone Type required'
+      )
+      .default('')
+      .required('Phone Type required'),
     phone: yup
       .string()
       .default('')
@@ -204,7 +226,7 @@ export const individualValidation: any = (getContentToken: any) => {
         (value) => {
           return (
             !getContentToken?.('isPhoneUSValid') ||
-            isValidPhoneNumber(value, 'US') === true
+            isValidPhoneNumber(value, 'US')
           );
         }
       )

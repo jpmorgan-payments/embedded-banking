@@ -58,19 +58,19 @@ const fromApiToForm = (client: ClientResponse) => {
       orgDetails.website = orgD?.website;
       orgDetails.businessEmail = party.email;
       // PHONE
-      orgDetails.phoneType = orgD?.phone?.phoneType || '';
+      orgDetails.businessPhoneType = orgD?.phone?.phoneType || '';
       orgDetails.countryCode = orgD?.phone?.countryCode || '';
       orgDetails.businessPhone = orgD?.phone?.phoneNumber || '';
 
       orgD?.addresses?.forEach((address: AddressDto) => {
-        orgDetails.addressType = address.addressType;
+        orgDetails.businessAddressType = address.addressType;
         address.addressLines.forEach((addLine: any, idx: number) => {
           orgDetails[`businessAddressLine${idx + 1}`] = addLine;
         });
         orgDetails.businessCity = address.city;
         orgDetails.businessState = address.state;
         orgDetails.businessPostalCode = address.postalCode;
-        orgDetails.country = address.country;
+        orgDetails.businessCountry = address.country;
       });
 
       orgD?.organizationIds?.forEach((orgId: OrganizationIdentityDto) => {

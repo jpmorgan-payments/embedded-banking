@@ -20,7 +20,6 @@ const IntroStep = ({ formSchema, yupSchema }: any) => {
     jurisdictions,
     entityType,
     onGetClientsConfirmation,
-
     setClientId,
     setPartyId,
   } = useRootConfig();

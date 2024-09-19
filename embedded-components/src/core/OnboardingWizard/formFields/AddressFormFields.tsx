@@ -67,7 +67,7 @@ const orgAddress = [
     fieldType: 'separator',
   },
   {
-    name: 'addressType',
+    name: 'businessAddressType',
     fieldType: 'addressType',
     labelToken: 'Address Type',
     placeholderToken: 'Select Address',
@@ -108,6 +108,13 @@ const orgAddress = [
     name: 'businessPostalCode',
     fieldType: 'input',
     labelToken: 'Zip Code',
+    required: true,
+  },
+  {
+    name: 'businessCountry',
+    fieldType: 'country',
+    labelToken: 'Country',
+    placeholderToken: 'Select country',
     required: true,
   },
 ];
