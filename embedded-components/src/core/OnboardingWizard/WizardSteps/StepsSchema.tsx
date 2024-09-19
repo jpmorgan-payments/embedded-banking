@@ -108,6 +108,11 @@ const businessSchema = {
       fieldType: null,
     },
     {
+      name: 'businessPhoneType',
+      fieldType: null,
+      type: 'organization',
+    },
+    {
       name: 'businessPhone',
       fieldType: 'phone',
       labelToken: 'businessPhone.label',
@@ -118,6 +123,10 @@ const businessSchema = {
       labelToken: 'What is your address?',
       fieldType: 'address',
       type: 'organization',
+    },
+    {
+      name: 'businessAddressType',
+      fieldType: null,
     },
     {
       name: 'businessAddressLine1',
@@ -141,6 +150,10 @@ const businessSchema = {
     },
     {
       name: 'businessPostalCode',
+      fieldType: null,
+    },
+    {
+      name: 'businessCountry',
       fieldType: null,
     },
   ],
@@ -188,6 +201,7 @@ const individualSchema = {
       name: 'jobTitleDescription',
       fieldType: null,
     },
+    { name: 'phoneType', fieldType: null },
     {
       name: 'phone',
       fieldType: 'phone',
@@ -211,6 +225,7 @@ const individualSchema = {
       fieldType: 'address',
       type: 'individual',
     },
+    { name: 'addressType', fieldType: null },
     {
       name: 'addressLine1',
       fieldType: null,

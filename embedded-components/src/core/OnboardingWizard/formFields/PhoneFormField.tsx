@@ -10,13 +10,13 @@ import { PhoneInput } from '@/components/ux/PhoneInput';
 
 import { PhoneTypeFormField } from './PhoneTypeFormField';
 
-const PhoneFormField = ({ name, form, labelToken, required }: any) => {
+const PhoneFormField = ({ name, form, labelToken, required, type }: any) => {
   return (
     <Group className="eb-justify-between eb-gap-6">
       <PhoneTypeFormField
         {...{
           form,
-          name: 'phoneType',
+          name: type === 'individual' ? 'phoneType' : 'businessPhoneType',
           labelToken: 'Phone Type',
           required,
           className: 'eb-w-full',

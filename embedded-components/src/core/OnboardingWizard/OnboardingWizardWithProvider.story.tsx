@@ -241,6 +241,9 @@ export const NoThemeWithMocksSolePropAnsweredQuestions: Story = {
       handlers: [
         // eslint-disable-next-line no-unsafe-optional-chaining
         ...Primary?.parameters?.msw?.handlers,
+        http.post('/clients/0030000139', () => {
+          return HttpResponse.json(efClientSolPropAnsweredQuestions);
+        }),
         http.get('/clients/0030000139', () => {
           return HttpResponse.json(efClientSolPropAnsweredQuestions);
         }),

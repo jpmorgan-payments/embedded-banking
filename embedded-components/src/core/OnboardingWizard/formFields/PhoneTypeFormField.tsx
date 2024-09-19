@@ -42,7 +42,7 @@ const PhoneTypeFormField = ({
   type,
   className,
 }: any) => {
-  const setAddress =
+  const setPhone =
     type === 'individual' ? addressIndividualTypes : addressORganizationTypes;
 
   return (
@@ -69,7 +69,7 @@ const PhoneTypeFormField = ({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {setAddress.map(({ value, label }: any) => {
+                {setPhone.map(({ value, label }: any) => {
                   return (
                     <SelectItem key={value} value={value}>
                       {label}

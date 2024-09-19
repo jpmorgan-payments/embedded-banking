@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
+import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import { Box, Separator, Stack, Title } from '@/components/ui';
+import { ServerAlertMessage } from '@/components/ux/ServerAlerts';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 import { useFormSchema } from '@/core/OnboardingWizard/context/formProvider.context';
 import NavigationButtons from '@/core/OnboardingWizard/Stepper/NavigationButtons';
@@ -12,7 +13,6 @@ import { useContentData } from '@/core/OnboardingWizard/utils/useContentData';
 import { useError } from '../../context/error.context';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 import { fromFormToOrgParty } from '../../utils/fromFormToApi';
-import { useGetDataByClientId } from '../hooks';
 import { businessSchema } from '../StepsSchema';
 import { getOrg, getOrgDetails } from '../utils/getOrgDetails';
 // eslint-disable-next-line
@@ -27,7 +27,17 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   });
   const { getContentToken } = useContentData('steps.BusinessDetailsStep');
   const { clientId } = useRootConfig();
-  const { data } = useGetDataByClientId();
+  const {
+    data,
+    isError: clientIsError,
+    refetch: refetchClient,
+  } = useSmbdoGetClient(clientId ?? '', {
+    query: {
+      enabled: !!clientId,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+  });
   const clientDataForm = data && fromApiToForm(data);
 
   const { mutateAsync: updateOrganization, isPending: createPartyIsPending } =
@@ -90,6 +100,8 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
 
   return (
     <Stack className="eb-w-full">
+      {clientIsError && <ServerAlertMessage tryAgainAction={refetchClient} />}
+
       <Title as="h2" className="eb-mb-4">
         Tell us about your organization
       </Title>

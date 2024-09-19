@@ -51,6 +51,11 @@ export const organizationValidation: any = (getContentToken: any) => {
       )
       .default('')
       .optional(),
+    ein: yup
+      .string()
+      .default('')
+      .matches(/^\d{9}$/, getContentToken?.(`ein`) ?? '')
+      .required(getContentToken?.(`einReq`) ?? ''),
     organizationType: yup
       .mixed<organizationType>()
       .oneOf(
@@ -138,7 +143,20 @@ export const organizationValidation: any = (getContentToken: any) => {
         (value) => !value.includes('\n')
       )
       .required(getContentToken?.(`businessDescriptionReq`) ?? ''),
-    // businessAddressSameAsController: yup.boolean().default(false),
+
+    businessAddressType: yup
+      .mixed()
+      .oneOf(
+        [
+          'LEGAL_ADDRESS',
+          'MAILING_ADDRESS',
+          'BUSINESS_ADDRESS',
+          'RESIDENTIAL_ADDRESS',
+        ],
+        'Address Type required'
+      )
+      .default('')
+      .required('Address Type required'),
     businessAddressLine1: yup
       .string()
       .default('')
@@ -222,7 +240,6 @@ export const organizationValidation: any = (getContentToken: any) => {
             ),
       })
       .max(34, getContentToken?.(`maxStringLengthAlert`, [34]) ?? ''),
-
     businessCity: yup
       .string()
       .default('')
@@ -265,6 +282,19 @@ export const organizationValidation: any = (getContentToken: any) => {
             )
             .required(getContentToken?.(`businessZipCodeReq`) ?? ''),
       }),
+    businessCountry: yup
+      .mixed()
+      .oneOf(['US', 'Canada', 'UK'], 'Country required')
+      .default('')
+      .required('Country required'),
+    businessPhoneType: yup
+      .mixed()
+      .oneOf(
+        ['BUSINESS_PHONE', 'MOBILE_PHONE', 'ALTERNATE_PHONE'],
+        'Phone Type required'
+      )
+      .default('')
+      .required('Phone Type required'),
     businessPhone: yup
       .string()
       .default('')

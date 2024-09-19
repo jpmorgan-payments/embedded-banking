@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { useSmbdoGetClient } from '@/api/generated/smbdo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Toaster } from '@/components/ui/toaster';
 import { Box, Button, Text } from '@/components/ui';
@@ -18,7 +19,6 @@ import StepperHeader from './Stepper/StepperHeader';
 import { fromApiToForm } from './utils/fromApiToForm';
 import { useContentData } from './utils/useContentData';
 import { ClientStateStep } from './WizardSteps/ClientStateStep/ClientStateStep';
-import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
 
@@ -33,13 +33,30 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
     currentFormSchema,
   } = useStepper();
 
-  const { data: clientData, isPending: isPendingClient } =
-    useGetDataByClientId();
+  const { error: isError, refetch, setError } = useError();
+  const {
+    data: clientData,
+    isError: clientIsError,
+    error,
+    isLoading,
+    refetch: refetchClient,
+  } = useSmbdoGetClient(clientId ?? '', {
+    query: {
+      enabled: !!clientId,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+  });
+
+  useEffect(() => {
+    if (error) {
+      setError(error);
+    }
+  }, [error]);
+
   const clientDataForm = useMemo(() => {
     return clientData && fromApiToForm(clientData);
   }, [clientData]);
-
-  const { error: isError, refetch } = useError();
 
   // TODO: IMPROVE STEPPER, when logic dictates for more robust STEP
   useEffect(() => {
@@ -82,6 +99,23 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
       })
     : ({} as any);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: {
+      preventDefault: () => void;
+      returnValue: boolean;
+    }) => {
+      event.preventDefault();
+      // Included for legacy support, e.g. Chrome/Edge < 119
+      event.returnValue = true;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   return (
     <>
       <QueryErrorResetBoundary>
@@ -94,28 +128,30 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
                   <CardTitle>{title}</CardTitle>
                 </CardHeader>
               )}
-              {!!clientId && isPendingClient && !isError ? (
+              {isLoading ? (
                 <>
                   <LoadingState message="Fetching client data..." />
                 </>
-              ) : isError && !clientId ? (
+              ) : isError || clientIsError ? (
                 <>
-                  <ServerAlertMessage tryAgainAction={refetch} />
+                  <ServerAlertMessage
+                    tryAgainAction={refetchClient || refetch}
+                  />
                 </>
               ) : (
                 <>
                   <ErrorBoundary
                     onReset={reset}
-                    fallbackRender={({ resetErrorBoundary, error }) => (
+                    fallbackRender={({ resetErrorBoundary, error: err }) => (
                       <>
                         <Text>
                           {/* TODO: should it be tokenized? */}
                           There was an error while trying to load this page.
                         </Text>
                         <Text className="eb-text-gray-600" size="lg">
-                          {error.name}
+                          {err.name}
                         </Text>
-                        <Text className="eb-text-red-600">{error.message}</Text>
+                        <Text className="eb-text-red-600">{err.message}</Text>
                         <Button onClick={() => resetErrorBoundary()}>
                           Try again
                         </Button>
@@ -134,8 +170,10 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
                             ></StepperHeader>
                           )}
 
-                        {isError && (
-                          <ServerAlertMessage tryAgainAction={refetch} />
+                        {(isError || clientIsError) && (
+                          <ServerAlertMessage
+                            tryAgainAction={refetchClient || refetch}
+                          />
                         )}
 
                         <CardContent>
