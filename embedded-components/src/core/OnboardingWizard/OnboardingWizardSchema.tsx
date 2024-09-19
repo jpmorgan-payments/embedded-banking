@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
-import { use } from 'chai';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { useSmbdoGetClient } from '@/api/generated/smbdo';
@@ -20,7 +19,6 @@ import StepperHeader from './Stepper/StepperHeader';
 import { fromApiToForm } from './utils/fromApiToForm';
 import { useContentData } from './utils/useContentData';
 import { ClientStateStep } from './WizardSteps/ClientStateStep/ClientStateStep';
-import { useGetDataByClientId } from './WizardSteps/hooks';
 import { createYupSchema } from './WizardSteps/utils/createYupSchema';
 import { getOrgDetails } from './WizardSteps/utils/getOrgDetails';
 
@@ -144,16 +142,16 @@ export const OnboardingWizardSchema = ({ title, currentStep }: any) => {
                 <>
                   <ErrorBoundary
                     onReset={reset}
-                    fallbackRender={({ resetErrorBoundary, error }) => (
+                    fallbackRender={({ resetErrorBoundary, error: err }) => (
                       <>
                         <Text>
                           {/* TODO: should it be tokenized? */}
                           There was an error while trying to load this page.
                         </Text>
                         <Text className="eb-text-gray-600" size="lg">
-                          {error.name}
+                          {err.name}
                         </Text>
-                        <Text className="eb-text-red-600">{error.message}</Text>
+                        <Text className="eb-text-red-600">{err.message}</Text>
                         <Button onClick={() => resetErrorBoundary()}>
                           Try again
                         </Button>

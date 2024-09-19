@@ -1,5 +1,3 @@
-import { b } from 'vitest/dist/chunks/suite.CcK46U-P';
-
 const introSchema = {
   stepName: 'Intro',
   title: 'Lets get you started',

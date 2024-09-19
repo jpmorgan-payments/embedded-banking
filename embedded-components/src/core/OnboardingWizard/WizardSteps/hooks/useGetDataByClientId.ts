@@ -21,9 +21,9 @@ const useGetDataByClientId = () => {
   } = useSmbdoGetClient(clientId ?? '', {
     query: {
       enabled: !!clientId,
-      retry: (failureCount, error) => {
-        // If the error status is 404, don't retry
-        if (error.response && error.response.status === 404) {
+      retry: (failureCount, err) => {
+        // If the err status is 404, don't retry
+        if (err.response && err.response.status === 404) {
           return false;
         }
 

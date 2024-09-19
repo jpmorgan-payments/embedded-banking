@@ -29,11 +29,7 @@ const OrganizationDetailsStep = ({ formSchema, yupSchema }: any) => {
   const { clientId } = useRootConfig();
   const {
     data,
-    isPending: isPendingClient,
     isError: clientIsError,
-    error,
-    isLoading,
-    status,
     refetch: refetchClient,
   } = useSmbdoGetClient(clientId ?? '', {
     query: {
