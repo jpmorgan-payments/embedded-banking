@@ -9,8 +9,6 @@ const useGetDataByClientId = () => {
   const { setError, setPending, setRefetch } = useError();
   const { clientId } = useRootConfig();
 
-  console.log('@@clientId', clientId, '@@d', !!clientId);
-
   const {
     data,
     refetch,
