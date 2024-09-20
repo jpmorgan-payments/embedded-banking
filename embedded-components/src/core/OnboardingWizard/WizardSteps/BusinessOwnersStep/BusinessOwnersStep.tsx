@@ -27,8 +27,8 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
   const form = useFormContext();
   // const { getContentToken } = useContentData('steps.BusinessOwnersStep');
   const { updateSchema } = useFormSchema();
-  const [open, setOpen] = useState(false);
-
+  const [openDialog, setDialogOpen] = useState(false);
+  const [, setUpdating] = useState(0);
   const { activeStep, setCurrentStep } = useStepper();
   const { setError } = useError();
   const { clientId } = useRootConfig();
@@ -49,27 +49,7 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
   useEffect(() => {}, [data]);
 
   const onSubmit = async () => {
-    try {
-      await updateOrganization({
-        id: clientId ?? '',
-        data: {
-          addParties: [
-            {
-              id: orgData?.id ?? '',
-              partyType: 'ORGANIZATION',
-              email: orgData.email,
-              organizationDetails: {
-                entitiesInOwnership: form.getValues().entitiesInOwnership,
-              },
-            },
-          ],
-        },
-      });
-
-      setCurrentStep(activeStep + 1);
-    } catch (error: any) {
-      setError(true);
-    }
+    setCurrentStep(activeStep + 1);
   };
 
   return (
@@ -149,25 +129,32 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
                   </div>
                 );
               })}
+            <Button
+              type="button"
+              variant="outline"
+              className="eb-max-w-56"
+              onClick={() => {
+                setDialogOpen((s) => !s);
+              }}
+            >
+              Click to add a business owner
+            </Button>
 
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button type="button" variant="outline" className="eb-max-w-56">
-                  Click to add a business owner
-                </Button>
-              </DialogTrigger>
+            {openDialog && (
               <IndividualOrgIndModal
-                onOpenChange={(id: string) => {
-                  setOpen((s) => !s);
+                onOpenChange={(id?: string) => {
+                  setDialogOpen((s) => !s);
                   if (id) {
                     refetch();
                   }
                 }}
                 title="Enter business owner details"
                 parentPartyId={data?.partyId}
+                key={data?.partyId}
                 type="owner"
+                openDialog={openDialog}
               />
-            </Dialog>
+            )}
           </div>
         </>
       )}

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 
 import { createRegExpAndMessage } from '@/lib/utils';
 
-export const individualValidation: any = (getContentToken: any) => {
+export const individualValidation = (getContentToken: any) => {
   return {
     firstName: yup
       .string()
@@ -249,9 +249,9 @@ export const individualValidation: any = (getContentToken: any) => {
         }
       ),
     countryOfResidence: yup
-      .mixed()
+      .string()
       .oneOf(['US', 'Canada', 'UK'])
-      .default('')
+      .default('US')
       .required('Country required'),
   };
 };
