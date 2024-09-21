@@ -11,7 +11,7 @@ import { PhoneInput } from '@/components/ux/PhoneInput';
 import { PhoneTypeFormField } from './PhoneTypeFormField';
 
 const PhoneFormField = ({ name, form, labelToken, required, type }: any) => {
-  return (
+    return (
     <Group className="eb-justify-between eb-gap-6">
       <PhoneTypeFormField
         {...{

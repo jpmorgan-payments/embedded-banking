@@ -113,6 +113,7 @@ const RenderForms = ({
                     required,
                     form,
                     defaultValue,
+                    type,
                   }}
                 />
               );

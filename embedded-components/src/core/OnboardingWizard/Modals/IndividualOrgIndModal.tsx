@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { o } from 'vitest/dist/chunks/reporters.C_zwCd4j';
 import * as yup from 'yup';
 import { InferType } from 'yup';
 
@@ -49,7 +48,7 @@ const IndividualOrgIndModal = ({
   const { getContentToken: getUserToken } = useContentData(
     'steps.ControllerDetailsStep'
   );
-  const [dialogOpen, setDialogOpen] = useState(openDialog);
+
   const [, setUpdating] = useState(0);
   const { clientId } = useRootConfig();
   const { mutateAsync: updateParty, isPending: createPartyisPending } =
@@ -68,10 +67,10 @@ const IndividualOrgIndModal = ({
 
   const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
-
+   
     if (!Object.values(errors).length) {
       const dataInd = fromFormToIndParty(form.getValues());
-
+   
       if (partyId) {
         const res = await updateParty({
           id: clientId ?? '',
@@ -106,7 +105,7 @@ const IndividualOrgIndModal = ({
             ],
           },
         });
-
+       
         if (res?.id) {
           form.reset({});
           onOpenChange(res?.id);
@@ -131,10 +130,19 @@ const IndividualOrgIndModal = ({
   //     onOpenChange(res?.id);
   //   }
   // };
-
+  try {
+    schema.validateSync(form.getValues(), { abortEarly: false });
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      console.log(`Validation failed at ${error.path}: ${error.message}`);
+    } else {
+      // Some other error happened
+      console.error(error);
+    }
+  }
   return (
     <Dialog
-      open={dialogOpen}
+      open={openDialog}
       onOpenChange={() => {
         if (onOpenChange) {
           onOpenChange();
