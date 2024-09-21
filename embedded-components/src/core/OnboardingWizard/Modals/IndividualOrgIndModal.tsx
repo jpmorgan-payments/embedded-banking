@@ -67,10 +67,10 @@ const IndividualOrgIndModal = ({
 
   const onSave: SubmitHandler<any> = async () => {
     const errors = form?.formState?.errors;
-   
+
     if (!Object.values(errors).length) {
       const dataInd = fromFormToIndParty(form.getValues());
-   
+
       if (partyId) {
         const res = await updateParty({
           id: clientId ?? '',
@@ -105,7 +105,7 @@ const IndividualOrgIndModal = ({
             ],
           },
         });
-       
+
         if (res?.id) {
           form.reset({});
           onOpenChange(res?.id);
