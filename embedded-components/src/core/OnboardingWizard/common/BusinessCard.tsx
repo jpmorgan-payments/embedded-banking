@@ -105,8 +105,8 @@ const BusinessCard = ({
                       data={individual}
                       title={
                         type === 'owner'
-                          ? 'Enter business owner details'
-                          : 'Enter decision maker details'
+                          ? 'Edit business owner details'
+                          : 'Edit decision maker details'
                       }
                       onOpenChange={(id: string) => {
                         setOpen((s) => !s);
@@ -117,6 +117,7 @@ const BusinessCard = ({
                       parentPartyId={parentPartyId}
                       partyId={partyId}
                       type={type}
+                      key={individual?.id}
                     />
                   </Dialog>
                 )}

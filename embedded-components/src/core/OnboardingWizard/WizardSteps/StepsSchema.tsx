@@ -207,6 +207,7 @@ const individualSchema = {
       fieldType: 'phone',
       labelToken: 'Phone',
       required: true,
+      type: 'individual',
     },
     {
       name: 'birthDate',

@@ -1,16 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { DialogTrigger } from '@radix-ui/react-dialog';
-import { useFormContext } from 'react-hook-form';
 
-import { useSmbdoUpdateClient } from '@/api/generated/smbdo';
-import { Dialog } from '@/components/ui/dialog';
+import { useSmbdoGetClient } from '@/api/generated/smbdo';
 import { Title } from '@/components/ui/title';
 import { Button, Stack } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
 // eslint-disable-next-line
 import { BusinessCard } from '../../common/BusinessCard';
-import { useError } from '../../context/error.context';
+// import { useError } from '../../context/error.context';
 import { useFormSchema } from '../../context/formProvider.context';
 // eslint-disable-next-line
 import { IndividualOrgIndModal } from '../../Modals/IndividualOrgIndModal';
@@ -19,28 +16,27 @@ import NavigationButtons from '../../Stepper/NavigationButtons';
 import { useStepper } from '../../Stepper/Stepper';
 import { fromApiToForm } from '../../utils/fromApiToForm';
 // import { useContentData } from '../../utils/useContentData';
-import { useGetDataByClientId } from '../hooks';
+
 import { businessOwnersSchema } from '../StepsSchema';
-import { getOrg } from '../utils/getOrgDetails';
 
 const BusinessOwnersStep = ({ yupSchema }: any) => {
-  const form = useFormContext();
   // const { getContentToken } = useContentData('steps.BusinessOwnersStep');
   const { updateSchema } = useFormSchema();
-  const [open, setOpen] = useState(false);
-
+  const [openDialog, setDialogOpen] = useState(false);
   const { activeStep, setCurrentStep } = useStepper();
-  const { setError } = useError();
-  const { clientId } = useRootConfig();
-  const { data, refetch } = useGetDataByClientId();
 
-  const { mutateAsync: updateOrganization, isPending: createPartyIsPending } =
-    useSmbdoUpdateClient();
+  const { clientId } = useRootConfig();
+  const { data, refetch } = useSmbdoGetClient(clientId ?? '', {
+    query: {
+      enabled: !!clientId,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+  });
+
   const businessOwnerForm = useMemo(() => {
     return data && fromApiToForm(data);
   }, [data]);
-
-  const orgData = getOrg(businessOwnerForm);
 
   useEffect(() => {
     updateSchema(yupSchema);
@@ -49,27 +45,7 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
   useEffect(() => {}, [data]);
 
   const onSubmit = async () => {
-    try {
-      await updateOrganization({
-        id: clientId ?? '',
-        data: {
-          addParties: [
-            {
-              id: orgData?.id ?? '',
-              partyType: 'ORGANIZATION',
-              email: orgData.email,
-              organizationDetails: {
-                entitiesInOwnership: form.getValues().entitiesInOwnership,
-              },
-            },
-          ],
-        },
-      });
-
-      setCurrentStep(activeStep + 1);
-    } catch (error: any) {
-      setError(true);
-    }
+    setCurrentStep(activeStep + 1);
   };
 
   return (
@@ -94,10 +70,6 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
 
       {businessOwnerForm?.individualDetails && (
         <>
-          {/* <Title as="h4" className="eb-my-5">
-            Listed business owners
-          </Title> */}
-
           <div className="eb-grid eb-gap-5 md:eb-grid-cols-2 lg:eb-grid-cols-3">
             {Object.keys(businessOwnerForm?.individualDetails)
               .filter((indID) => {
@@ -149,25 +121,32 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
                   </div>
                 );
               })}
+            <Button
+              type="button"
+              variant="outline"
+              className="eb-max-w-56"
+              onClick={() => {
+                setDialogOpen((s) => !s);
+              }}
+            >
+              Click to add a business owner
+            </Button>
 
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button type="button" variant="outline" className="eb-max-w-56">
-                  Click to add a business owner
-                </Button>
-              </DialogTrigger>
+            {openDialog && (
               <IndividualOrgIndModal
-                onOpenChange={(id: string) => {
-                  setOpen((s) => !s);
+                onOpenChange={(id?: string) => {
+                  setDialogOpen((s) => !s);
                   if (id) {
                     refetch();
                   }
                 }}
                 title="Enter business owner details"
                 parentPartyId={data?.partyId}
+                key={data?.partyId}
                 type="owner"
+                openDialog={openDialog}
               />
-            </Dialog>
+            )}
           </div>
         </>
       )}
@@ -176,7 +155,6 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
         onSubmit={onSubmit}
-        disabled={createPartyIsPending}
       />
     </Stack>
   );
