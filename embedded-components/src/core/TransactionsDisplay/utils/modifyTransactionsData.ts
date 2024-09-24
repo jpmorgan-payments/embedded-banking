@@ -1,6 +1,6 @@
 import { TransactionGetResponseV2 } from '@/api/generated/ef-v2.schemas';
 
-export interface TransformedTransaction extends TransactionGetResponseV2 {
+export interface ModifiedTransaction extends TransactionGetResponseV2 {
   payinOrPayout?: 'PAYIN' | 'PAYOUT';
   counterpartName?: string;
 }
@@ -8,7 +8,7 @@ export interface TransformedTransaction extends TransactionGetResponseV2 {
 export const modifyTransactionsData = (
   transactions: TransactionGetResponseV2[],
   accountId: string
-): TransformedTransaction[] => {
+): ModifiedTransaction[] => {
   const sortedTransactions = transactions.sort(
     (a, b) =>
       new Date(b.effectiveDate ?? '').getTime() -

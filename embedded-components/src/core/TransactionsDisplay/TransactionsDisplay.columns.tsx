@@ -3,10 +3,11 @@ import { ChevronRightIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui';
 
+import { TransactionDetailsSheetTrigger } from './TransactionDetailsSheet/TransactionDetailsSheet';
 import { formatNumberToCurrency } from './utils/formatNumberToCurrency';
-import { TransformedTransaction } from './utils/modifyTransactionsData';
+import { ModifiedTransaction } from './utils/modifyTransactionsData';
 
-export const columns: ColumnDef<TransformedTransaction>[] = [
+export const columns: ColumnDef<ModifiedTransaction>[] = [
   {
     accessorKey: 'paymentDate',
     header: 'Payment Date',
@@ -59,10 +60,12 @@ export const columns: ColumnDef<TransformedTransaction>[] = [
       const transaction = row.original;
 
       return (
-        <Button variant="ghost" className="eb-h-8 eb-w-8 eb-p-0">
-          <span className="eb-sr-only">View transaction details</span>
-          <ChevronRightIcon className="eb-h-4 eb-w-4" />
-        </Button>
+        <TransactionDetailsSheetTrigger transaction={transaction}>
+          <Button variant="ghost" className="eb-h-8 eb-w-8 eb-p-0">
+            <span className="eb-sr-only">View transaction details</span>
+            <ChevronRightIcon className="eb-h-4 eb-w-4" />
+          </Button>
+        </TransactionDetailsSheetTrigger>
       );
     },
   },
