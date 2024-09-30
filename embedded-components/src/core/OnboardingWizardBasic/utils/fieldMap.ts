@@ -1,4 +1,7 @@
+import { parsePhoneNumber } from 'react-phone-number-input';
 import { z } from 'zod';
+
+import { PhoneSmbdo } from '@/api/generated/smbdo.schemas';
 
 import { IndividualStepFormSchema } from '../IndividualStepForm/IndividualStepForm.schema';
 import { InitialFormSchema } from '../InitialForm/InitialForm.schema';
@@ -8,11 +11,20 @@ import { OrganizationStepFormSchema } from '../OrganizationStepForm/Organization
 export type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema> &
   z.infer<typeof OrganizationStepFormSchema> &
   z.infer<typeof IndividualStepFormSchema>;
-export type OnboardingWizardFormFieldNames = keyof OnboardingWizardFormValues;
+
+type PartyFieldMap = {
+  [K in keyof OnboardingWizardFormValues]:
+    | string
+    | {
+        path: string;
+        fromResponseFn: (val: any) => OnboardingWizardFormValues[K];
+        toRequestFn: (val: OnboardingWizardFormValues[K]) => any;
+      };
+};
 
 // Source of truth for mapping form fields to API fields
 // Used for handling server errors and creating request bodies
-export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
+export const partyFieldMap: PartyFieldMap = {
   organizationName: 'organizationDetails.organizationName',
   organizationType: 'organizationDetails.organizationType',
   countryOfFormation: 'organizationDetails.countryOfFormation',
@@ -22,14 +34,36 @@ export const partyFieldMap: Record<OnboardingWizardFormFieldNames, string> = {
   organizationDescription: 'organizationDetails.organizationDescription',
   industryCategory: 'organizationDetails.industryCategory',
   industryType: 'organizationDetails.industryType',
-  entitiesInOwnership: 'organizationDetails.entitiesInOwnership',
+  entitiesInOwnership: {
+    path: 'organizationDetails.entitiesInOwnership',
+    fromResponseFn: (val: boolean) => (val ? 'yes' : 'no'),
+    toRequestFn: (val): boolean => val === 'yes',
+  },
   mcc: 'organizationDetails.mcc',
   addresses: 'organizationDetails.addresses',
   associatedCountries: 'organizationDetails.associatedCountries',
   jurisdiction: 'jurisdiction',
   organizationIds: 'organizationDetails.organizationIds',
-  phone: 'organizationDetails.phone',
-  tradeOverInternet: 'organizationDetails.tradeOverInternet',
+  organizationPhone: {
+    path: 'organizationDetails.phone',
+    fromResponseFn: (val: PhoneSmbdo) => ({
+      phoneType: val.phoneType,
+      phoneNumber: `${val.countryCode}${val.phoneNumber}`,
+    }),
+    toRequestFn: (val: any): PhoneSmbdo => {
+      const phone = parsePhoneNumber(val.phoneNumber);
+      return {
+        phoneType: val.phoneType,
+        countryCode: phone?.countryCallingCode ?? '',
+        phoneNumber: phone?.nationalNumber ?? '',
+      };
+    },
+  },
+  tradeOverInternet: {
+    path: 'organizationDetails.tradeOverInternet',
+    fromResponseFn: (val: boolean) => (val ? 'yes' : 'no'),
+    toRequestFn: (val): boolean => val === 'yes',
+  },
   website: 'organizationDetails.website',
   websiteAvailable: 'organizationDetails.websiteAvailable',
   secondaryMccList: 'organizationDetails.secondaryMccList',

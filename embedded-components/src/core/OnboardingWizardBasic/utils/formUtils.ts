@@ -95,11 +95,21 @@ export function generateRequestBody(
     if (!partyFieldMap[key]) {
       throw new Error(`${key} is not mapped in fieldMap`);
     }
-    const path = `${arrayName}.${partyIndex}.${partyFieldMap[key]}`;
+    const pathEnd =
+      typeof partyFieldMap[key] === 'string'
+        ? partyFieldMap[key]
+        : partyFieldMap[key].path;
+    const path = `${arrayName}.${partyIndex}.${pathEnd}`;
     const value = formValues[key];
 
-    if (value !== '') {
-      setValueByPath(obj, path, value);
+    if (value !== '' && value !== undefined) {
+      const modifiedValue =
+        typeof partyFieldMap[key] === 'string'
+          ? value
+          : (
+              partyFieldMap[key] as { toRequestFn: (val: any) => any }
+            ).toRequestFn(value);
+      setValueByPath(obj, path, modifiedValue);
     }
   });
 
@@ -119,16 +129,20 @@ export function convertClientResponseToFormValues(
   response: ClientResponse,
   partyId?: string
 ): Partial<OnboardingWizardFormValues> {
-  const formValues: Record<string, any> = {};
+  const formValues: Partial<OnboardingWizardFormValues> = {};
 
-  Object.entries(partyFieldMap).forEach(([fieldName, path]) => {
+  Object.entries(partyFieldMap).forEach(([fieldName, config]) => {
     const partyIndex =
       response.parties?.findIndex((party) => party.id === partyId) ?? -1;
+
+    const path = typeof config === 'string' ? config : config.path;
 
     const pathTemplate = `parties.${partyIndex}.${path}`;
     const value = getValueByPath(response, pathTemplate);
     if (value !== undefined) {
-      formValues[fieldName] = value;
+      const modifiedValue =
+        typeof config === 'string' ? value : config.fromResponseFn(value);
+      formValues[fieldName as keyof OnboardingWizardFormValues] = modifiedValue;
     } else {
       console.log(fieldName, value);
     }

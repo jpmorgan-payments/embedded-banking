@@ -9,10 +9,7 @@ const Table = React.forwardRef<
   <div className="eb-relative eb-w-full eb-overflow-auto">
     <table
       ref={ref}
-      className={cn(
-        'eb-w-full eb-caption-bottom eb-text-sm eb-text-foreground',
-        className
-      )}
+      className={cn('eb-w-full eb-caption-bottom eb-text-sm', className)}
       {...props}
     />
   </div>
@@ -46,7 +43,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      'eb-foreground eb-border-t eb-bg-muted/50 eb-font-medium [&>tr]:last:eb-border-b-0',
+      'eb-border-t eb-bg-muted/50 eb-font-medium [&>tr]:last:eb-border-b-0',
       className
     )}
     {...props}
@@ -76,7 +73,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'eb-h-12 eb-px-4 eb-text-left eb-align-middle eb-font-medium eb-text-muted-foreground [&:has([role=checkbox])]:eb-pr-0',
+      'eb-h-10 eb-px-2 eb-text-left eb-align-middle eb-font-medium eb-text-muted-foreground [&:has([role=checkbox])]:eb-pr-0 [&>[role=checkbox]]:eb-translate-y-[2px]',
       className
     )}
     {...props}
@@ -91,7 +88,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'eb-p-4 eb-align-middle [&:has([role=checkbox])]:eb-pr-0',
+      'eb-p-2 eb-align-middle [&:has([role=checkbox])]:eb-pr-0 [&>[role=checkbox]]:eb-translate-y-[2px]',
       className
     )}
     {...props}
