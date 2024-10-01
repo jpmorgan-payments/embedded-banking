@@ -372,7 +372,7 @@ export const OrganizationStepForm = () => {
         <div className="eb-flex eb-flex-wrap eb-gap-6 md:eb-flex-nowrap">
           <FormField
             control={form.control}
-            name="entitiesInOwnership"
+            name="jurisdiction"
             render={({ field }) => (
               <FormItem className="eb-grow md:eb-grow-0">
                 <div className="eb-flex eb-items-center eb-space-x-2">
@@ -547,6 +547,7 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
+                  {...field}
                   value={field.value}
                   onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
@@ -580,6 +581,7 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
+                  {...field}
                   value={field.value}
                   onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
