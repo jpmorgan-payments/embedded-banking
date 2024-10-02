@@ -133,7 +133,7 @@ export const efClientCorpMock: ClientResponse = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '001-01-0001',
+            value: '001010001',
           },
         ],
         phone: {

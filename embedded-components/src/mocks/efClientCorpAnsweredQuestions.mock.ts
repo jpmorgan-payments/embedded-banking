@@ -134,7 +134,7 @@ export const efClientCorpAnsweredQuestions: ClientResponse = {
           {
             idType: 'SSN',
             issuer: 'US',
-            value: '394-94-3213',
+            value: '394943213',
           },
         ],
         phone: {
