@@ -20,6 +20,7 @@ import { AdditionalQuestionsStepForm } from './AdditionalQuestionsStepForm/Addit
 import { BusinessOwnerStepForm } from './BusinessOwnerStepForm/BusinessOwnerStepForm';
 import { ClientOnboardingStateView } from './ClientOnboardingStateView/ClientOnboardingStateView';
 import { DecisionMakerStepForm } from './DecisionMakerStepForm/DecisionMakerStepForm';
+import { DocumentUploadStepForm } from './DocumentUploadStepForm/DocumentUploadStepForm';
 import { FormLoadingState } from './FormLoadingState/FormLoadingState';
 import { IndividualStepForm } from './IndividualStepForm/IndividualStepForm';
 import { InitialForm } from './InitialForm/InitialForm';
@@ -49,6 +50,7 @@ const stepsInitial = [
   },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
   { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
+  { label: 'Upload Documents', children: <DocumentUploadStepForm /> },
 ];
 
 interface StepProps {
@@ -68,6 +70,7 @@ type OnboardingWizardBasicProps = {
   ) => void;
   initialStep?: number;
   variant?: 'circle' | 'circle-alt' | 'line';
+  product?: 'EF' | 'CanadaMS';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
