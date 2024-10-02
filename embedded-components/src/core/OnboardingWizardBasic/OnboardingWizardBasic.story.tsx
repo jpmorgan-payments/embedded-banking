@@ -178,6 +178,15 @@ export const ReviewAndAttest: Story = {
   },
 };
 
+export const DocumentUpload: Story = {
+  name: 'Document Upload step',
+  ...WithClientId,
+  args: {
+    ...WithClientId.args,
+    initialStep: 5,
+  },
+};
+
 export const ReviewAndAttestNoOustanding: Story = {
   name: 'Review and Attest step with No outstanding',
   ...WithClientId,

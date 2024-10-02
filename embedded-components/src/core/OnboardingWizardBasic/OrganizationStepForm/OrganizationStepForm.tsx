@@ -223,28 +223,7 @@ export const OrganizationStepForm = () => {
     mutate: updateClient,
     error: updateClientError,
     status: updateClientStatus,
-  } = useSmbdoUpdateClient({
-    mutation: {
-      onSettled: (data, error) => {
-        onPostClientResponse?.(data, error?.response?.data);
-      },
-      onSuccess: () => {
-        nextStep();
-        toast.success("Client's organization details updated successfully");
-      },
-      onError: (error) => {
-        if (error.response?.data?.context) {
-          const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(
-            context,
-            0,
-            'addParties'
-          );
-          setApiFormErrors(form, apiFormErrors);
-        }
-      },
-    },
-  });
+  } = useSmbdoUpdateClient();
 
   const onSubmit = form.handleSubmit((values) => {
     console.log(values);
@@ -257,10 +236,32 @@ export const OrganizationStepForm = () => {
         ],
       }) as UpdateClientRequestSmbdo;
 
-      updateClient({
-        id: clientId,
-        data: requestBody,
-      });
+      updateClient(
+        {
+          id: clientId,
+          data: requestBody,
+        },
+        {
+          onSettled: (data, error) => {
+            onPostClientResponse?.(data, error?.response?.data);
+          },
+          onSuccess: () => {
+            nextStep();
+            toast.success("Client's organization details updated successfully");
+          },
+          onError: (error) => {
+            if (error.response?.data?.context) {
+              const { context } = error.response.data;
+              const apiFormErrors = translateApiErrorsToFormErrors(
+                context,
+                0,
+                'addParties'
+              );
+              setApiFormErrors(form, apiFormErrors);
+            }
+          },
+        }
+      );
     }
   });
 
@@ -272,7 +273,7 @@ export const OrganizationStepForm = () => {
     <Form {...form}>
       <form
         onSubmit={onSubmit}
-        className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-4 eb-pt-0"
+        className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-1"
       >
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
           <FormField
@@ -372,7 +373,7 @@ export const OrganizationStepForm = () => {
         <div className="eb-flex eb-flex-wrap eb-gap-6 md:eb-flex-nowrap">
           <FormField
             control={form.control}
-            name="entitiesInOwnership"
+            name="jurisdiction"
             render={({ field }) => (
               <FormItem className="eb-grow md:eb-grow-0">
                 <div className="eb-flex eb-items-center eb-space-x-2">
@@ -547,6 +548,7 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
+                  {...field}
                   value={field.value}
                   onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
@@ -580,6 +582,7 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
+                  {...field}
                   value={field.value}
                   onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
