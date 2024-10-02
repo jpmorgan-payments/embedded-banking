@@ -118,6 +118,7 @@ const BusinessCard = ({
                       partyId={partyId}
                       type={type}
                       key={individual?.id}
+                      openDialog={open}
                     />
                   </Dialog>
                 )}
