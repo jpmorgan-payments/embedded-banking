@@ -20,7 +20,6 @@ import {
 
 import { FormActions } from '../FormActions/FormActions';
 import { DOCUMENT_TYPE_MAPPING } from '../utils/documentTypeMapping';
-import { DocumentUploadStepFormSchema } from './DocumentUploadStepForm.schema';
 
 export const DocumentUploadStepForm = () => {
   const { nextStep } = useStepper();
@@ -38,11 +37,12 @@ export const DocumentUploadStepForm = () => {
   }, [SAMPLE_DOCUMENTS]);
 
   const form = useForm<z.infer<typeof DocumentUploadSchema>>({
-    resolver: zodResolver(DocumentUploadStepFormSchema),
+    resolver: zodResolver(DocumentUploadSchema),
   });
 
   const onSubmit = form.handleSubmit((values) => {
     console.log(values);
+    nextStep();
   });
 
   return (
