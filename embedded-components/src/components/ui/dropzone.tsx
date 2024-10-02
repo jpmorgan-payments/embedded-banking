@@ -17,6 +17,7 @@ export interface DropzoneProps extends Omit<_DropzoneProps, 'children'> {
   children?: (dropzone: DropzoneState) => React.ReactNode;
   showFilesList?: boolean;
   showErrorMessage?: boolean;
+  onChange?: (files: File[]) => void;
 }
 
 // Functions:
@@ -105,24 +106,28 @@ const Dropzone = ({
   children,
   showFilesList = true,
   showErrorMessage = true,
+  onChange,
   ...props
 }: DropzoneProps) => {
   // Constants:
   const dropzone = useDropzone({
     ...props,
     onDrop(acceptedFiles, fileRejections, event) {
-      props.onDrop?.(acceptedFiles, fileRejections, event);
-      setFilesUploaded((_filesUploaded) => [
-        ..._filesUploaded,
-        ...acceptedFiles,
-      ]);
-      if (fileRejections.length > 0) {
-        let _errorMessage = `Could not upload ${fileRejections[0].file.name}`;
-        if (fileRejections.length > 1)
-          _errorMessage += `, and ${fileRejections.length - 1} other files.`;
-        setErrorMessage(_errorMessage);
-      } else {
-        setErrorMessage('');
+      if (props.onDrop) props.onDrop(acceptedFiles, fileRejections, event);
+      else {
+        onChange?.([...filesUploaded, ...acceptedFiles]);
+        setFilesUploaded((_filesUploaded) => [
+          ..._filesUploaded,
+          ...acceptedFiles,
+        ]);
+        if (fileRejections.length > 0) {
+          let _errorMessage = `Could not upload ${fileRejections[0].file.name}`;
+          if (fileRejections.length > 1)
+            _errorMessage += `, and ${fileRejections.length - 1} other files.`;
+          setErrorMessage(_errorMessage);
+        } else {
+          setErrorMessage('');
+        }
       }
     },
   });
@@ -133,6 +138,10 @@ const Dropzone = ({
 
   // Functions:
   const deleteUploadedFile = (index: number) => {
+    onChange?.([
+      ...filesUploaded.slice(0, index),
+      ...filesUploaded.slice(index + 1),
+    ]);
     setFilesUploaded((_uploadedFiles) => [
       ..._uploadedFiles.slice(0, index),
       ..._uploadedFiles.slice(index + 1),

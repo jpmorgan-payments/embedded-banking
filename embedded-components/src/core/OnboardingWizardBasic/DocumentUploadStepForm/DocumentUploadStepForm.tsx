@@ -30,7 +30,9 @@ export const DocumentUploadStepForm = () => {
     const schema: Record<string, z.ZodType<any>> = {};
 
     SAMPLE_DOCUMENTS.forEach((documentType) => {
-      schema[documentType] = z.instanceof(Array<File>);
+      schema[documentType] = z
+        .array(z.instanceof(File))
+        .nonempty('Document is required');
     });
 
     return z.object(schema);
@@ -61,7 +63,7 @@ export const DocumentUploadStepForm = () => {
               return (
                 <>
                   <FormItem>
-                    <FormLabel>
+                    <FormLabel asterisk>
                       {DOCUMENT_TYPE_MAPPING[documentType].label}
                     </FormLabel>
                     <FormDescription>
@@ -75,9 +77,7 @@ export const DocumentUploadStepForm = () => {
                         accept={{
                           'application/pdf': ['.pdf'],
                         }}
-                        onDrop={(acceptedFiles) => {
-                          onChange(acceptedFiles);
-                        }}
+                        onChange={onChange}
                       />
                     </FormControl>
                     <FormMessage />
