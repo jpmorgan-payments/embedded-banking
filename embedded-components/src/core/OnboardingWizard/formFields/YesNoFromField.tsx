@@ -39,14 +39,19 @@ const YesNoFromField = ({
                 defaultValue={field?.value}
                 // defaultValue={field.value}
                 className="eb-flex eb-flex-row eb-space-y-1"
-
               >
-                <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0" id={`${name}-yes`}>
+                <FormItem
+                  className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0"
+                  id={`${name}-yes`}
+                >
                   <RadioGroupItem value="true" />
 
                   <FormLabel className="eb-font-normal">Yes</FormLabel>
                 </FormItem>
-                <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0" id={`${name}-no`}>
+                <FormItem
+                  className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0"
+                  id={`${name}-no`}
+                >
                   <RadioGroupItem value="false" />
 
                   <FormLabel className="eb-font-normal">No</FormLabel>
