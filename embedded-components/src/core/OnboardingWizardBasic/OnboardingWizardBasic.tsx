@@ -50,6 +50,29 @@ const stepsInitial = [
   },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
   { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
+];
+
+const stepsCanadaMS = [
+  { label: 'Organization details', children: <OrganizationStepForm /> },
+  { label: 'Individual details', children: <IndividualStepForm /> },
+  {
+    label: 'Decision Makers',
+    children: <DecisionMakerStepForm />,
+    onlyVisibleFor: {
+      organizationType: ['LIMITED_LIABILITY_COMPANY'],
+      product: ['MERCHANT_SERVICES'] as ClientProductList,
+    },
+  },
+  {
+    label: 'Business Owners',
+    children: <BusinessOwnerStepForm />,
+    onlyVisibleFor: {
+      organizationType: ['LIMITED_LIABILITY_COMPANY'],
+      product: ['EMBEDDED_PAYMENTS', 'MERCHANT_SERVICES'] as ClientProductList,
+    },
+  },
+  { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
+  { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
   { label: 'Upload Documents', children: <DocumentUploadStepForm /> },
 ];
 
@@ -59,7 +82,7 @@ interface StepProps {
   onlyVisibleFor?: { product?: string[]; organizationType?: string[] };
 }
 
-type OnboardingWizardBasicProps = {
+export type OnboardingWizardBasicProps = {
   clientId?: string;
   title?: string;
   setClientId?: (clientId: string) => void;
@@ -70,15 +93,18 @@ type OnboardingWizardBasicProps = {
   ) => void;
   initialStep?: number;
   variant?: 'circle' | 'circle-alt' | 'line';
-  product?: 'EF' | 'CanadaMS';
+  useCase?: 'EF' | 'CanadaMS';
 };
 
 export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
   title = 'Client Onboarding',
   initialStep = 0,
   variant = 'circle',
+  useCase = 'EF',
   ...props
 }) => {
+  const stepsToUse = useCase === 'EF' ? stepsInitial : stepsCanadaMS;
+
   const {
     data: clientData,
     status: clientGetStatus,
@@ -111,7 +137,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
 
   useEffect(() => {
     setSteps(
-      stepsInitial.filter(
+      stepsToUse.filter(
         (step) =>
           !step.onlyVisibleFor ||
           (step.onlyVisibleFor?.organizationType.some(
@@ -125,7 +151,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
             ))
       )
     );
-  }, [clientData]);
+  }, [clientData, stepsToUse]);
 
   return (
     <OnboardingContextProvider {...props}>

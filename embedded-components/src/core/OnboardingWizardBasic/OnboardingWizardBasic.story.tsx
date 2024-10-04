@@ -18,6 +18,7 @@ export const OnboardingWizardBasicWithProvider = ({
   apiBaseUrl,
   headers,
   title,
+  useCase,
   theme,
   onPostClientResponse,
   onPostClientVerificationsResponse,
@@ -29,6 +30,7 @@ export const OnboardingWizardBasicWithProvider = ({
   apiBaseUrl: string;
   headers: Record<string, string>;
   title: string;
+  useCase: 'EF' | 'CanadaMS';
   theme: Record<string, unknown>;
   onPostClientResponse: (response?: ClientResponse, error?: ApiError) => void;
   onPostClientVerificationsResponse?: (
@@ -49,6 +51,7 @@ export const OnboardingWizardBasicWithProvider = ({
       >
         <OnboardingWizardBasic
           title={title}
+          useCase={useCase}
           onPostClientResponse={onPostClientResponse}
           onPostClientVerificationsResponse={onPostClientVerificationsResponse}
           setClientId={setClientId}
@@ -74,6 +77,7 @@ export const Primary: Story = {
   args: {
     clientId: '',
     apiBaseUrl: '/',
+    useCase: 'EF',
     title: 'Onboarding Wizard Basic',
     onPostClientResponse: (data, error) => {
       if (data) {
