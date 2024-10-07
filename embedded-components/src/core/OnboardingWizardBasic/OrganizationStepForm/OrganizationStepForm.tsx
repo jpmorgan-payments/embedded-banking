@@ -6,10 +6,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
-import {
-  PhoneSmbdoPhoneType,
-  UpdateClientRequestSmbdo,
-} from '@/api/generated/smbdo.schemas';
+import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -154,9 +151,8 @@ export const OrganizationStepForm = () => {
         },
       ],
       organizationIds: [],
-      phone: {
-        phoneType: undefined,
-        countryCode: '',
+      organizationPhone: {
+        phoneType: 'BUSINESS_PHONE',
         phoneNumber: '',
       },
       entitiesInOwnership: undefined,
@@ -221,36 +217,16 @@ export const OrganizationStepForm = () => {
       console.log('formValues', formValues);
       form.reset(formValues);
     }
-  }, [clientData, getClientStatus, form, partyId]);
+  }, [clientData, getClientStatus, form.reset, partyId]);
 
   const {
     mutate: updateClient,
     error: updateClientError,
     status: updateClientStatus,
-  } = useSmbdoUpdateClient({
-    mutation: {
-      onSettled: (data, error) => {
-        onPostClientResponse?.(data, error?.response?.data);
-      },
-      onSuccess: () => {
-        nextStep();
-        toast.success("Client's organization details updated successfully");
-      },
-      onError: (error) => {
-        if (error.response?.data?.context) {
-          const { context } = error.response.data;
-          const apiFormErrors = translateApiErrorsToFormErrors(
-            context,
-            0,
-            'addParties'
-          );
-          setApiFormErrors(form, apiFormErrors);
-        }
-      },
-    },
-  });
+  } = useSmbdoUpdateClient();
 
   const onSubmit = form.handleSubmit((values) => {
+    console.log(values);
     if (clientId) {
       const requestBody = generateRequestBody(values, 0, 'addParties', {
         addParties: [
@@ -260,10 +236,32 @@ export const OrganizationStepForm = () => {
         ],
       }) as UpdateClientRequestSmbdo;
 
-      updateClient({
-        id: clientId,
-        data: requestBody,
-      });
+      updateClient(
+        {
+          id: clientId,
+          data: requestBody,
+        },
+        {
+          onSettled: (data, error) => {
+            onPostClientResponse?.(data, error?.response?.data);
+          },
+          onSuccess: () => {
+            nextStep();
+            toast.success("Client's organization details updated successfully");
+          },
+          onError: (error) => {
+            if (error.response?.data?.context) {
+              const { context } = error.response.data;
+              const apiFormErrors = translateApiErrorsToFormErrors(
+                context,
+                0,
+                'addParties'
+              );
+              setApiFormErrors(form, apiFormErrors);
+            }
+          },
+        }
+      );
     }
   });
 
@@ -275,7 +273,7 @@ export const OrganizationStepForm = () => {
     <Form {...form}>
       <form
         onSubmit={onSubmit}
-        className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-4 eb-pt-0"
+        className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-1"
       >
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
           <FormField
@@ -433,20 +431,11 @@ export const OrganizationStepForm = () => {
           <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2">
             <FormField
               control={form.control}
-              name="phone.phoneType"
+              name="organizationPhone.phoneType"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Type</FormLabel>
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      form.setValue('phone', {
-                        ...form.getValues().phone,
-                        phoneType: value as PhoneSmbdoPhoneType,
-                      });
-                    }}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select phone type" />
@@ -469,7 +458,7 @@ export const OrganizationStepForm = () => {
 
             <FormField
               control={form.control}
-              name="phone"
+              name="organizationPhone.phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
@@ -559,14 +548,9 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
-                  onValueChange={(value) => field.onChange(value === 'yes')}
-                  value={
-                    field.value === undefined
-                      ? undefined
-                      : field.value
-                        ? 'yes'
-                        : 'no'
-                  }
+                  {...field}
+                  value={field.value}
+                  onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
                 >
                   <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
@@ -583,6 +567,7 @@ export const OrganizationStepForm = () => {
                   </FormItem>
                 </RadioGroup>
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -597,14 +582,9 @@ export const OrganizationStepForm = () => {
               </FormLabel>
               <FormControl>
                 <RadioGroup
-                  onValueChange={(value) => field.onChange(value === 'yes')}
-                  value={
-                    field.value === undefined
-                      ? undefined
-                      : field.value
-                        ? 'yes'
-                        : 'no'
-                  }
+                  {...field}
+                  value={field.value}
+                  onValueChange={field.onChange}
                   className="eb-flex eb-flex-col eb-space-y-1"
                 >
                   <FormItem className="eb-flex eb-items-center eb-space-x-3 eb-space-y-0">
@@ -621,6 +601,7 @@ export const OrganizationStepForm = () => {
                   </FormItem>
                 </RadioGroup>
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

@@ -3,21 +3,20 @@ import { z } from 'zod';
 
 import { PhoneSmbdoPhoneType } from '@/api/generated/smbdo.schemas';
 
-export const PhoneTypeSchema: z.ZodType<PhoneSmbdoPhoneType> = z.enum([
+const PhoneTypeSchema: z.ZodType<PhoneSmbdoPhoneType> = z.enum([
   'BUSINESS_PHONE',
   'MOBILE_PHONE',
   'ALTERNATE_PHONE',
 ]);
 
-export const PhoneSchema = z
-  .object({
-    phoneType: PhoneTypeSchema,
-    countryCode: z.string(),
-    phoneNumber: z.string(),
-  })
-  .refine((val) => isValidPhoneNumber(val.countryCode + val.phoneNumber), {
-    message: 'Invalid phone number',
-  });
+const PhoneNumberSchema = z.string().refine(isValidPhoneNumber, {
+  message: 'Invalid phone number',
+});
+
+export const PhoneSchema = z.object({
+  phoneType: PhoneTypeSchema,
+  phoneNumber: PhoneNumberSchema,
+});
 
 const AddressLineSchema = z
   .string()

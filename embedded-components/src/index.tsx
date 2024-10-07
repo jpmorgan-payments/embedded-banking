@@ -4,6 +4,10 @@ export { LinkedAccountWidget } from './core/LinkedAccountWidget/LinkedAccountWid
 export { OnboardingWizard } from './core/OnboardingWizard/OnboardingWizard';
 
 export * from './core/EBComponentsProvider';
-export * from './components/ui';
+
 export { StepperProvider } from './core/OnboardingWizard/Stepper/Stepper';
 export { initEBComponentsManager } from './vanilla/EBComponentsManager';
+
+export * from './core/TransactionsDisplay/TransactionsDisplay';
+
+export * from './core/OnboardingWizardBasic/OnboardingWizardBasic';

@@ -81,7 +81,7 @@ export const OrganizationStepFormSchema = z.object({
     .max(100, 'Maximum 100 associated countries allowed')
     .optional()
     .default([]),
-  entitiesInOwnership: z.boolean(),
+  entitiesInOwnership: z.enum(['yes', 'no']),
   industryCategory: z
     .string()
     .max(100, 'Industry category must be 100 characters or less')
@@ -102,8 +102,8 @@ export const OrganizationStepFormSchema = z.object({
   organizationIds: z
     .array(OrganizationIdSchema)
     .max(6, 'Maximum 6 organization IDs allowed'),
-  phone: PhoneSchema,
-  tradeOverInternet: z.boolean(),
+  organizationPhone: PhoneSchema,
+  tradeOverInternet: z.enum(['yes', 'no']),
   website: z
     .string()
     .url('Invalid URL')
