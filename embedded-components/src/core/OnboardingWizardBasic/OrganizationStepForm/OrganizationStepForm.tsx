@@ -207,7 +207,7 @@ export const OrganizationStepForm = () => {
 
   // Get organization's partyId
   const partyId = clientData?.parties?.find(
-    (party) => party.partyType === 'ORGANIZATION'
+    (party) => party?.partyType === 'ORGANIZATION'
   )?.id;
 
   // Populate form with client data

@@ -63,8 +63,8 @@ export const DecisionMakerStepForm = () => {
   const decisionMakers =
     clientData?.parties?.filter(
       (party) =>
-        party.partyType === 'INDIVIDUAL' &&
-        party.roles?.includes('DECISION_MAKER')
+        party?.partyType === 'INDIVIDUAL' &&
+        party?.roles?.includes('DECISION_MAKER')
     ) || [];
 
   const {

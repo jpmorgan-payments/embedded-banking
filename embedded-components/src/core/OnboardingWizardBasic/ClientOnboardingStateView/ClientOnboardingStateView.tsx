@@ -60,7 +60,7 @@ export const ClientOnboardingStateView = () => {
   }
 
   const businessDetails = clientData?.parties?.find(
-    (party) => party.partyType === 'ORGANIZATION'
+    (party) => party?.partyType === 'ORGANIZATION'
   );
 
   const status = clientData.status as ClientStatus;
