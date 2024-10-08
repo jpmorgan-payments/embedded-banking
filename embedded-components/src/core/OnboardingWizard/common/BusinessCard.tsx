@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { f } from 'msw/lib/core/HttpResponse-B58aIqZM';
 import { User } from 'tabler-icons-react';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -62,13 +63,16 @@ const BusinessCard = ({
                 <User key="userIcon" size={20} color="black"></User>
               </div>
               <div>
-                {fields?.map((fieldVal) => (
-                  <div key={fieldVal.des}>
-                    <Text className="eb-text-sm eb-font-bold">
+                <div>
+                  {fields?.map((fieldVal) => (
+                    <Text
+                      className="eb-text-sm eb-font-bold"
+                      key={fieldVal?.des + fieldVal?.var}
+                    >
                       {fieldVal?.des}
                     </Text>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
             <div className="eb-content-center eb-gap-2">
@@ -77,13 +81,16 @@ const BusinessCard = ({
               </div>
 
               <div>
-                {fields?.map((fieldVal) => (
-                  <div key={fieldVal.var}>
-                    <Text className="eb-text-sm">
+                <div>
+                  {fields?.map((fieldVal) => (
+                    <Text
+                      className="eb-text-sm"
+                      key={fieldVal?.var + individual?.email}
+                    >
                       {fieldVal?.var ? fieldVal?.var : 'N/A'}
                     </Text>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
               <div>
                 {controller ? (
