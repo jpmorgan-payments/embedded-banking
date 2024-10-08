@@ -143,7 +143,7 @@ export const OnboardingWizardBasic: FC<OnboardingWizardBasicProps> = ({
           (step.onlyVisibleFor?.organizationType.some(
             (orgType) =>
               clientData?.parties?.find(
-                (party) => party.partyType === 'ORGANIZATION'
+                (party) => party?.partyType === 'ORGANIZATION'
               )?.organizationDetails?.organizationType === orgType
           ) &&
             step.onlyVisibleFor?.product.some((product) =>

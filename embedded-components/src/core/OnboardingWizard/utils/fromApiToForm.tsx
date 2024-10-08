@@ -24,20 +24,20 @@ const fromApiToForm = (client: ClientResponse) => {
   };
 
   client?.parties?.forEach((party: PartyResponse) => {
-    if (party.organizationDetails) {
+    if (party?.organizationDetails) {
       const org = flattened.organizationDetails;
 
-      org.id = party.id;
-      org.partyType = party.partyType;
-      org.externalId = party.externalId;
-      org.email = party.email;
-      org.roles = party.roles;
-      org.profileStatus = party.profileStatus;
-      org.createdAt = party.createdAt;
+      org.id = party?.id;
+      org.partyType = party?.partyType;
+      org.externalId = party?.externalId;
+      org.email = party?.email;
+      org.roles = party?.roles;
+      org.profileStatus = party?.profileStatus;
+      org.createdAt = party?.createdAt;
 
       org.orgDetails = {};
       const { orgDetails } = org;
-      const orgD: OrganizationDetails = party.organizationDetails;
+      const orgD: OrganizationDetails = party?.organizationDetails;
 
       orgDetails.organizationType = orgD.organizationType;
       orgDetails.organizationName = orgD.organizationName;
@@ -56,7 +56,7 @@ const fromApiToForm = (client: ClientResponse) => {
 
       orgDetails.websiteAvailable = orgD.websiteAvailable;
       orgDetails.website = orgD?.website;
-      orgDetails.businessEmail = party.email;
+      orgDetails.businessEmail = party?.email;
       // PHONE
       orgDetails.businessPhoneType = orgD?.phone?.phoneType || '';
       orgDetails.countryCode = orgD?.phone?.countryCode || '';
@@ -79,27 +79,27 @@ const fromApiToForm = (client: ClientResponse) => {
       });
     }
 
-    if (party.individualDetails) {
+    if (party?.individualDetails) {
       const ind = flattened.individualDetails;
-      ind[`${party.id}`] = {};
-      const actInd = ind[`${party.id}`];
+      ind[`${party?.id}`] = {};
+      const actInd = ind[`${party?.id}`];
 
-      actInd.id = party.id;
-      actInd.partyType = party.partyType;
-      actInd.externalId = party.externalId;
-      actInd.email = party.email;
-      actInd.roles = party.roles;
-      actInd.profileStatus = party.profileStatus;
-      actInd.status = party.status;
-      actInd.createdAt = party.createdAt;
+      actInd.id = party?.id;
+      actInd.partyType = party?.partyType;
+      actInd.externalId = party?.externalId;
+      actInd.email = party?.email;
+      actInd.roles = party?.roles;
+      actInd.profileStatus = party?.profileStatus;
+      actInd.status = party?.status;
+      actInd.createdAt = party?.createdAt;
       actInd.parentPartyId = party?.parentPartyId;
       actInd.parentExternalId = party?.parentExternalId;
 
       actInd.indDetails = {};
       const { indDetails } = actInd;
-      const indD: IndividualDetails = party.individualDetails;
+      const indD: IndividualDetails = party?.individualDetails;
 
-      indDetails.email = party.email;
+      indDetails.email = party?.email;
       indDetails.firstName = indD.firstName;
       indDetails.lastName = indD.lastName;
       indDetails.countryOfResidence = indD.countryOfResidence;

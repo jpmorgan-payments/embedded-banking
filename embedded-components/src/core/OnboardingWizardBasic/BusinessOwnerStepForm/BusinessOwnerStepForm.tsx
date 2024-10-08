@@ -63,8 +63,8 @@ export const BusinessOwnerStepForm = () => {
   const businessOwners =
     clientData?.parties?.filter(
       (party) =>
-        party.partyType === 'INDIVIDUAL' &&
-        party.roles?.includes('BENEFICIAL_OWNER')
+        party?.partyType === 'INDIVIDUAL' &&
+        party?.roles?.includes('BENEFICIAL_OWNER')
     ) || [];
 
   const {

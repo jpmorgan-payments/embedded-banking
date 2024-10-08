@@ -114,7 +114,7 @@ export const ReviewAndAttestStepForm = () => {
           ...clientData?.attestations?.concat({
             attestationTime: new Date().toISOString(),
             attesterFullName: clientData?.parties?.find(
-              (party) => party.partyType === 'INDIVIDUAL'
+              (party) => party?.partyType === 'INDIVIDUAL'
             )?.individualDetails?.firstName,
             ipAddress: '', // TODO: get IP address
             documentId: '', // TODO: get document id
@@ -135,8 +135,11 @@ export const ReviewAndAttestStepForm = () => {
     party: PartyResponse,
     fields: { label: any; path: any; transformFunc?: any }[]
   ) => (
-    <div key={party.id + (party?.partyType ?? '')} className="eb-mb-4 eb-p-4">
-      <h2 className="eb-mb-4 eb-text-xl eb-font-bold">{party.partyType}</h2>
+    <div
+      key={(party?.id ?? '') + (party?.partyType ?? '')}
+      className="eb-mb-4 eb-p-4"
+    >
+      <h2 className="eb-mb-4 eb-text-xl eb-font-bold">{party?.partyType}</h2>
       <dl className="eb-ml-2 eb-space-y-2">
         {fields.map(({ label, path, transformFunc }) => {
           const value = get(party, path);
@@ -177,7 +180,7 @@ export const ReviewAndAttestStepForm = () => {
         )}
         <div className="eb-w-xl eb-px-4">
           {clientData?.parties?.map((party) =>
-            party.partyType === 'ORGANIZATION'
+            party?.partyType === 'ORGANIZATION'
               ? renderParty(party, organizationFields)
               : renderParty(party, individualFields)
           )}

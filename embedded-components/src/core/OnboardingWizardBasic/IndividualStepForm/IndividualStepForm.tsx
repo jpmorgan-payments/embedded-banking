@@ -92,7 +92,7 @@ export const IndividualStepForm = () => {
 
   // Get INDIVIDUAL's partyId
   const partyId = clientData?.parties?.find(
-    (party) => party.partyType === 'INDIVIDUAL'
+    (party) => party?.partyType === 'INDIVIDUAL'
   )?.id;
 
   // Populate form with client data
