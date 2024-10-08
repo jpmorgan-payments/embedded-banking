@@ -133,7 +133,7 @@ export function convertClientResponseToFormValues(
 
   Object.entries(partyFieldMap).forEach(([fieldName, config]) => {
     const partyIndex =
-      response.parties?.findIndex((party) => party.id === partyId) ?? -1;
+      response.parties?.findIndex((party) => party?.id === partyId) ?? -1;
 
     const path = typeof config === 'string' ? config : config.path;
 
