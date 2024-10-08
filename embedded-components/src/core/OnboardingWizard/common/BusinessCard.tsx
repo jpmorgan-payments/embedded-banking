@@ -83,7 +83,10 @@ const BusinessCard = ({
               <div>
                 <div>
                   {fields?.map((fieldVal) => (
-                    <Text className="eb-text-sm" key={fieldVal?.var + individual?.email}>
+                    <Text
+                      className="eb-text-sm"
+                      key={fieldVal?.var + individual?.email}
+                    >
                       {fieldVal?.var ? fieldVal?.var : 'N/A'}
                     </Text>
                   ))}

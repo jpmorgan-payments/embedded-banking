@@ -82,7 +82,10 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
                   businessOwnerForm.individualDetails[controllerID];
 
                 return (
-                  <div key={controller.indDetails.email} className="eb-grid-cols-subgrid">
+                  <div
+                    key={controller.indDetails.email}
+                    className="eb-grid-cols-subgrid"
+                  >
                     <BusinessCard
                       controller
                       individual={controller.indDetails}
@@ -111,7 +114,10 @@ const BusinessOwnersStep = ({ yupSchema }: any) => {
                   businessOwnerForm.individualDetails[controllerID];
 
                 return (
-                  <div key={controller.indDetails.email} className="eb-grid-cols-subgrid">
+                  <div
+                    key={controller.indDetails.email}
+                    className="eb-grid-cols-subgrid"
+                  >
                     <BusinessCard
                       individual={controller.indDetails}
                       parentPartyId={controller.parentPartyId}
