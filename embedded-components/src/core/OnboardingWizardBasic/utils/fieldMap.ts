@@ -54,7 +54,9 @@ export const partyFieldMap: PartyFieldMap = {
       const phone = parsePhoneNumber(val.phoneNumber);
       return {
         phoneType: val.phoneType,
-        countryCode: phone?.countryCallingCode ?? '',
+        countryCode: phone?.countryCallingCode
+          ? `+${phone.countryCallingCode}`
+          : '',
         phoneNumber: phone?.nationalNumber ?? '',
       };
     },
