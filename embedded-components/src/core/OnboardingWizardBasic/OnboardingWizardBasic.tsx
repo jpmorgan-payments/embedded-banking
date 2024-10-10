@@ -72,8 +72,8 @@ const stepsCanadaMS = [
     },
   },
   { label: 'Additional Questions', children: <AdditionalQuestionsStepForm /> },
-  { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
   { label: 'Upload Documents', children: <DocumentUploadStepForm /> },
+  { label: 'Review and Attest', children: <ReviewAndAttestStepForm /> },
 ];
 
 interface StepProps {
