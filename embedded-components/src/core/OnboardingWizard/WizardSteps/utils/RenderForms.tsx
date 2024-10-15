@@ -53,23 +53,26 @@ const RenderForms = ({
   return (
     <Box className={className}>
       {formSchema.map(
-        ({
-          name,
-          fieldType,
-          labelToken,
-          placeholderToken,
-          required,
-          disabled,
-          optionsList,
-          defaultValue,
-          type,
-          hidden,
-        }: FormScham) => {
+        (
+          {
+            name,
+            fieldType,
+            labelToken,
+            placeholderToken,
+            required,
+            disabled,
+            optionsList,
+            defaultValue,
+            type,
+            hidden,
+          }: FormScham,
+          idx: number
+        ) => {
           switch (fieldType) {
             case 'input':
               return (
                 <InputFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -86,7 +89,7 @@ const RenderForms = ({
             case 'select':
               return (
                 <SelectFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -104,7 +107,7 @@ const RenderForms = ({
             case 'phone':
               return (
                 <PhoneFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -121,7 +124,7 @@ const RenderForms = ({
             case 'birthdate':
               return (
                 <DobFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -137,7 +140,7 @@ const RenderForms = ({
             case 'ssn':
               return (
                 <SsnFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -153,7 +156,7 @@ const RenderForms = ({
             case 'state':
               return (
                 <UsStatesFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -169,7 +172,7 @@ const RenderForms = ({
             case 'country':
               return (
                 <CountryFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -187,7 +190,7 @@ const RenderForms = ({
             case 'orgType':
               return (
                 <OrgTypeFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -204,7 +207,7 @@ const RenderForms = ({
             case 'jobTitle':
               return (
                 <JobTitlesFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -232,7 +235,7 @@ const RenderForms = ({
             case 'ein':
               return (
                 <EinFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -249,7 +252,7 @@ const RenderForms = ({
               return (
                 <Box
                   className={`eb-col-span-3 ${hidden && 'eb-collapse'}`}
-                  key={name}
+                  key={name + idx}
                 >
                   <TextareaFormField
                     {...{
@@ -267,7 +270,7 @@ const RenderForms = ({
 
             case 'website':
               return (
-                <Box className="eb-col-span-3" key={name}>
+                <Box className="eb-col-span-3" key={name + idx}>
                   <WebsiteFromField
                     {...{
                       name,
@@ -284,7 +287,7 @@ const RenderForms = ({
 
             case 'industryType':
               return (
-                <Box className="eb-col-span-3" key={name}>
+                <Box className="eb-col-span-3" key={name + idx}>
                   <IndustryFormField
                     {...{
                       name,
@@ -301,7 +304,7 @@ const RenderForms = ({
 
             case 'address':
               return (
-                <Box className="eb-col-span-3" key={name}>
+                <Box className="eb-col-span-3" key={name + idx}>
                   <AddressFormFields
                     {...{
                       name,
@@ -320,7 +323,7 @@ const RenderForms = ({
             case 'addressType':
               return (
                 <AdressTypeFormField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
@@ -339,7 +342,7 @@ const RenderForms = ({
             case 'yesNo':
               return (
                 <YesNoFromField
-                  key={name}
+                  key={name + idx}
                   {...{
                     name,
                     labelToken: getContentToken(labelToken) ?? labelToken,
