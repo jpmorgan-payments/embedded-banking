@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { f } from 'msw/lib/core/HttpResponse-B58aIqZM';
 import { User } from 'tabler-icons-react';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -67,7 +66,7 @@ const BusinessCard = ({
                   {fields?.map((fieldVal) => (
                     <Text
                       className="eb-text-sm eb-font-bold"
-                      key={fieldVal?.des + fieldVal?.var}
+                      key={fieldVal.des + individual.email}
                     >
                       {fieldVal?.des}
                     </Text>
@@ -85,7 +84,7 @@ const BusinessCard = ({
                   {fields?.map((fieldVal) => (
                     <Text
                       className="eb-text-sm"
-                      key={fieldVal?.var + individual?.email}
+                      key={`${fieldVal?.var ?? '' }${individual.email}`}
                     >
                       {fieldVal?.var ? fieldVal?.var : 'N/A'}
                     </Text>
