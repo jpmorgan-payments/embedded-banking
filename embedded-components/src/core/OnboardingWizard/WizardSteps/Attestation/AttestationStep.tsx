@@ -41,7 +41,13 @@ const AttestationStep = () => {
     (term: keyof typeof termsAgreed) => (checked: boolean) => {
       setTermsAgreed((prev) => ({ ...prev, [term]: checked }));
     };
-  const { mutate: updateClientAttestation } = useSmbdoUpdateClient();
+  const { mutate: updateClientAttestation, status: clientStatus } =
+    useSmbdoUpdateClient({
+      mutation: {
+        onSuccess: () => {},
+        onError: () => {},
+      },
+    });
   const {
     mutate: postVerification,
     isError,
@@ -100,11 +106,10 @@ const AttestationStep = () => {
 
   useEffect(() => {
     if (TAC) {
-      console.log('@@clientData', clientData);
       const { firstName, lastName } =
         clientData?.parties?.find((party) => party?.partyType === 'INDIVIDUAL')
           ?.individualDetails ?? {};
-          
+
       updateClientAttestation({
         id: clientId ?? '',
         data: {
@@ -207,7 +212,7 @@ const AttestationStep = () => {
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
-        disabled={!canSubmit || isPending}
+        disabled={!canSubmit || isPending || clientStatus !== 'success'}
         onSubmit={() => {
           onSubmit();
         }}
