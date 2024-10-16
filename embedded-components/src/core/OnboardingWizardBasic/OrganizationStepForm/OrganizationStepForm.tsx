@@ -609,7 +609,7 @@ export const OrganizationStepForm = () => {
         {/* Addresses */}
         <div className="eb-space-y-4">
           <h3 className="eb-text-lg eb-font-medium">Addresses</h3>
-          <div className="eb-grid eb-grid-cols-1 eb-items-start eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3 xl:eb-grid-cols-4">
+          <div className="eb-space-y-4 eb-rounded-md eb-border eb-p-4">
             {addressFields.map((fieldItem, index) => (
               <fieldset
                 key={fieldItem.id}
