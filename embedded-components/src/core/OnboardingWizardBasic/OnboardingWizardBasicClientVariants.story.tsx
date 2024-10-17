@@ -1,3 +1,5 @@
+;
+
 /* eslint-disable import/no-useless-path-segments */
 import { efClientCorpMock } from '@/mocks/efClientCorp.mock';
 import { efClientCorpEBMock } from '@/mocks/efClientCorpEB.mock';
@@ -6,7 +8,24 @@ import { efClientSolPropWithMoreData } from '@/mocks/efClientSolPropWithMoreData
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
+
+
 import { OnboardingWizardBasicWithProvider } from './OnboardingWizardBasic.story';
+
+
+;
+
+
+
+
+
+
+
+
+
+
+
+
 
 const meta: Meta<typeof OnboardingWizardBasicWithProvider> = {
   title: 'Onboarding Wizard Basic / Client Variants',
@@ -96,6 +115,28 @@ export const EMBEDDED_BANKING_LLC: Story = {
     msw: {
       handlers: [
         http.get('/clients/0030000133', async () => {
+          return HttpResponse.json(efClientCorpEBMock);
+        }),
+      ],
+    },
+  },
+};
+
+export const CANADA_MS_LLC: Story = {
+  name: 'Canada MS LLC',
+  ...Primary,
+  args: {
+    ...Primary.args,
+    clientId: '0030000133',
+    useCase: 'CanadaMS',
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/clients/0030000133', async () => {
+          return HttpResponse.json(efClientCorpEBMock);
+        }),
+        http.post('/clients/0030000133', () => {
           return HttpResponse.json(efClientCorpEBMock);
         }),
       ],

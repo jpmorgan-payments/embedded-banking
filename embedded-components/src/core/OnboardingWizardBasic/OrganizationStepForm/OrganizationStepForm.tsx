@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { useSmbdoGetClient, useSmbdoUpdateClient } from '@/api/generated/smbdo';
 import { UpdateClientRequestSmbdo } from '@/api/generated/smbdo.schemas';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -219,7 +220,6 @@ export const OrganizationStepForm = () => {
   useEffect(() => {
     if (getClientStatus === 'success' && clientData) {
       const formValues = convertClientResponseToFormValues(clientData, partyId);
-      console.log('formValues', formValues);
       form.reset(formValues);
     }
   }, [clientData, getClientStatus, form.reset, partyId]);
@@ -231,7 +231,6 @@ export const OrganizationStepForm = () => {
   } = useSmbdoUpdateClient();
 
   const onSubmit = form.handleSubmit((values) => {
-    console.log(values);
     if (clientId) {
       const requestBody = generateRequestBody(values, 0, 'addParties', {
         addParties: [
@@ -540,28 +539,30 @@ export const OrganizationStepForm = () => {
           </div>
 
           <div className="eb-flex">
-            <FormField
-              control={form.control}
-              name="mcc"
-              render={({ field }) => (
-                <FormItem className="eb-grow sm:eb-grow-0">
-                  <div className="eb-flex eb-items-center eb-space-x-2">
-                    <FormLabel>Merchant Category Code (MCC)</FormLabel>
-                    <InfoPopover>
-                      Leave empty or enter exactly 4 digits for the MCC.
-                    </InfoPopover>
-                  </div>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      maxLength={4}
-                      placeholder="Enter 4-digit MCC (optional)"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {isFieldVisible('mcc') && (
+              <FormField
+                control={form.control}
+                name="mcc"
+                render={({ field }) => (
+                  <FormItem className="eb-grow sm:eb-grow-0">
+                    <div className="eb-flex eb-items-center eb-space-x-2">
+                      <FormLabel>Merchant Category Code (MCC)</FormLabel>
+                      <InfoPopover>
+                        Leave empty or enter exactly 4 digits for the MCC.
+                      </InfoPopover>
+                    </div>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        maxLength={4}
+                        placeholder="Enter 4-digit MCC (optional)"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
           </div>
         </fieldset>
         <FormField
@@ -634,9 +635,13 @@ export const OrganizationStepForm = () => {
         />
 
         {/* Addresses */}
-        <div className="eb-space-y-4">
-          <h3 className="eb-text-lg eb-font-medium">Addresses</h3>
-          <div className="eb-grid eb-grid-cols-1 eb-items-start eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3 xl:eb-grid-cols-4">
+        <Card className="eb-mt-6">
+          <CardHeader>
+            <CardTitle className="eb-text-lg eb-font-medium">
+              Addresses
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="eb-space-y-4">
             {addressFields.map((fieldItem, index) => (
               <fieldset
                 key={fieldItem.id}
@@ -773,8 +778,8 @@ export const OrganizationStepForm = () => {
             >
               Add Address
             </Button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Organization IDs */}
         <div className="eb-space-y-4">

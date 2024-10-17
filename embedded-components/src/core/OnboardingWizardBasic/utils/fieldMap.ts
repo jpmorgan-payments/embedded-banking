@@ -41,7 +41,7 @@ export const partyFieldMap: PartyFieldMap = {
     fromResponseFn: (val: boolean) => (val ? 'yes' : 'no'),
     toRequestFn: (val): boolean => val === 'yes',
   },
-  mcc: 'organizationDetails.mcc',
+  mcc: { path: 'organizationDetails.mcc', useCases: [] },
   addresses: 'organizationDetails.addresses',
   associatedCountries: 'organizationDetails.associatedCountries',
   jurisdiction: 'jurisdiction',
