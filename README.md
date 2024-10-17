@@ -1,8 +1,10 @@
-[Link to deployed version of this app](https://www.embedded-banking-dev.com)
+[Link to deployed version of this app](https://www.embedded-finance-dev.com)
 
-# Embedded Banking showcase app
+# Embedded Finance Showcase App
 
-Embedded Banking allows you to add a full range of banking features to your online experience. This means making payments, running balances in a J.P. Morgan business bank account, and a range of other banking actions. This showcase is a collection of code samples highlighting how to connect and use Embedded Banking APIs.
+[Embedded Finance](https://www.jpmorgan.com/payments/solutions/embedded-finance) allows you to add a full range of finance features to your online experience.  This showcase is a collection of code samples highlighting how to connect and use Embedded Finance APIs.
+
+![](https://www.jpmorgan.com/content/dam/jpmorgan/images/payments/embedded-finance-payments/img-eb-infographics-1440px.svg)
 
 You can:
 
@@ -17,6 +19,7 @@ There are three main directories for you to access:
 - `/app` for the showcase UI and server experience.
 - `/postman` for the Postman Collection.
 - `/embedded-finance-sdk` for the Embedded Finance SDK
+- `/emddeded-components` for the Embedded UI Components 
 
 ### Application (App)
 
@@ -27,7 +30,7 @@ All your actions on this application are served by mock data included in the app
 ### Postman Collection
 
 Get straight to the API endpoints in action, make calls and see responses.
-To use the Postman collection, import the collection file to Postman and follow the included setup instructions to access all possible calls to the Embedded Banking API. You will need certificates to run these calls.
+To use the Postman collection, import the collection file to Postman and follow the included setup instructions to access all possible calls to the Embedded Finance API. You will need certificates to run these calls.
 
 ### [Embedded Finance SDK](./embedded-finance-sdk/)
 
@@ -37,7 +40,7 @@ Embedded Finance SDK provides a set of tools to validate payment data based on t
 
 ### [Client](./app/client/)
 
-This is the core UI application written in TS/JS with the React framework. This application illustrates the various capabilities of Embedded Banking, using mocked responses stored within the codebase.
+This is the core UI application written in TS/JS with the React framework. This application illustrates the various capabilities of Embedded Finance, using mocked responses stored within the codebase.
 
 Such capabilities include:
 
@@ -82,11 +85,11 @@ yarn start
 
 4. Open a browser and navigate to the locally deployed app using the URL provided in the command line. Usually `localhost:3000`.
 
-You have deployed the showcase Embedded Banking app. Follow the onscreen instructions to explore the banking functionality available.
+You have deployed the showcase Embedded Finance app. Follow the onscreen instructions to explore the finance functionality available.
 
 ## Register as a developer for access to UAT
 
-If you are interested in going further with Embedded Banking APIs, you can join the developer community at J.P. Morgan, and get access to the UAT environment.
+If you are interested in going further with Embedded Finance APIs, you can join the developer community at J.P. Morgan, and get access to the UAT environment.
 
 This process can take a few days, and in order to make calls to the UAT, you must provide some SSL certificates.
 
@@ -112,7 +115,7 @@ Do not commit certificate files to your codebase. They must be stored on your se
 
 3. If your SSL certs have a passphrase create a `.env.local` file and include it
    here, otherwise delete this line.
-4. Inside your Embedded Banking project, run:
+4. Inside your Embedded Finance project, run:
 
 ```console
 cd server
@@ -120,4 +123,4 @@ yarn install
 yarn start
 ```
 
-You can now send API calls to the Embedded Banking UAT environment.
+You can now send API calls to the Embedded Finance CAT environment.
