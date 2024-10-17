@@ -6,6 +6,8 @@ import {
   ClientVerificationResponse,
 } from '@/api/generated/smbdo.schemas';
 
+import { OnboardingUseCase } from '../utils/types';
+
 export type OnboardingContextType = {
   clientId?: string;
   setClientId?: (clientId: string) => void;
@@ -14,6 +16,7 @@ export type OnboardingContextType = {
     response?: ClientVerificationResponse,
     error?: ApiError
   ) => void;
+  useCase: OnboardingUseCase;
 };
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(

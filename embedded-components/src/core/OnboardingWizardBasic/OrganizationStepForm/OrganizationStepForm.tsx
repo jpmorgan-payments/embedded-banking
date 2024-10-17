@@ -36,9 +36,11 @@ import { useOnboardingContext } from '../OnboardingContextProvider/OnboardingCon
 import { ServerErrorAlert } from '../ServerErrorAlert/ServerErrorAlert';
 import {
   convertClientResponseToFormValues,
+  filterSchemaByUseCase,
   generateRequestBody,
   setApiFormErrors,
   translateApiErrorsToFormErrors,
+  useIsFieldVisible,
 } from '../utils/formUtils';
 import { OrganizationStepFormSchema } from './OrganizationStepForm.schema';
 
@@ -129,11 +131,14 @@ const AddressLines: FC<AddressLinesProps> = ({ control, addressIndex }) => {
 
 export const OrganizationStepForm = () => {
   const { nextStep } = useStepper();
-  const { clientId, onPostClientResponse } = useOnboardingContext();
+  const { clientId, onPostClientResponse, useCase } = useOnboardingContext();
+  const isFieldVisible = useIsFieldVisible(useCase);
 
   const form = useForm<z.infer<typeof OrganizationStepFormSchema>>({
     mode: 'onBlur',
-    resolver: zodResolver(OrganizationStepFormSchema),
+    resolver: zodResolver(
+      filterSchemaByUseCase(OrganizationStepFormSchema, useCase)
+    ),
     defaultValues: {
       organizationName: '',
       dbaName: '',
@@ -276,43 +281,65 @@ export const OrganizationStepForm = () => {
         className="eb-grid eb-w-full eb-items-start eb-gap-6 eb-overflow-auto eb-p-1"
       >
         <div className="eb-grid eb-grid-cols-1 eb-gap-6 md:eb-grid-cols-2 lg:eb-grid-cols-3">
-          <FormField
-            control={form.control}
-            name="organizationName"
-            render={({ field }) => (
-              <FormItem>
-                <div className="eb-flex eb-items-center eb-space-x-2">
-                  <FormLabel asterisk>Organization name</FormLabel>
-                  <InfoPopover>
-                    The organization's legal name. It is the official name of
-                    the person or entity that owns a company. Must be the name
-                    used on the legal party's government forms and business
-                    paperwork.
-                  </InfoPopover>
-                </div>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {isFieldVisible('organizationName') && (
+            <FormField
+              control={form.control}
+              name="organizationName"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="eb-flex eb-items-center eb-space-x-2">
+                    <FormLabel asterisk>Organization name</FormLabel>
+                    <InfoPopover>
+                      The organization's legal name. It is the official name of
+                      the person or entity that owns a company. Must be the name
+                      used on the legal party's government forms and business
+                      paperwork.
+                    </InfoPopover>
+                  </div>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
-          <FormField
-            control={form.control}
-            name="dbaName"
-            render={({ field }) => (
-              <FormItem>
-                <div className="eb-items-center eb-space-x-2">
-                  <FormLabel>DBA (Doing Business As) name (optional)</FormLabel>
-                </div>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {isFieldVisible('organizationDescription') && (
+            <FormField
+              control={form.control}
+              name="organizationDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Organization description</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+          {isFieldVisible('dbaName') && (
+            <FormField
+              control={form.control}
+              name="dbaName"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="eb-items-center eb-space-x-2">
+                    <FormLabel>
+                      DBA (Doing Business As) name (optional)
+                    </FormLabel>
+                  </div>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <FormField
             control={form.control}
