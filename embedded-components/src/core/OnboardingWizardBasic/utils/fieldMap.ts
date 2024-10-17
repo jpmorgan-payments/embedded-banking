@@ -67,10 +67,20 @@ export const partyFieldMap: PartyFieldMap = {
     path: 'organizationDetails.tradeOverInternet',
     fromResponseFn: (val: boolean) => (val ? 'yes' : 'no'),
     toRequestFn: (val): boolean => val === 'yes',
+    useCases: [],
   },
-  website: 'organizationDetails.website',
-  websiteAvailable: 'organizationDetails.websiteAvailable',
-  secondaryMccList: 'organizationDetails.secondaryMccList',
+  website: {
+    path: 'organizationDetails.website',
+    useCases: [],
+  },
+  websiteAvailable: {
+    path: 'organizationDetails.websiteAvailable',
+    useCases: [],
+  },
+  secondaryMccList: {
+    path: 'organizationDetails.secondaryMccList',
+    useCases: [],
+  },
   birthDate: 'individualDetails.birthDate',
   countryOfResidence: 'individualDetails.countryOfResidence',
   firstName: 'individualDetails.firstName',
