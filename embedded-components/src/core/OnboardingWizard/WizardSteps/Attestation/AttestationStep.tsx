@@ -7,8 +7,12 @@ import {
   useSmbdoDownloadDocument,
   useSmbdoGetDocumentDetail,
   useSmbdoPostClientVerifications,
+  useSmbdoUpdateClient,
 } from '@/api/generated/smbdo';
-import { DocumentResponse } from '@/api/generated/smbdo.schemas';
+import {
+  DocumentResponse,
+  UpdateClientRequestSmbdo,
+} from '@/api/generated/smbdo.schemas';
 import { useToast } from '@/components/ui/use-toast';
 import { Checkbox, Group, Label, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
@@ -37,7 +41,13 @@ const AttestationStep = () => {
     (term: keyof typeof termsAgreed) => (checked: boolean) => {
       setTermsAgreed((prev) => ({ ...prev, [term]: checked }));
     };
-
+  const { mutate: updateClientAttestation, status: clientStatus } =
+    useSmbdoUpdateClient({
+      mutation: {
+        onSuccess: () => {},
+        onError: () => {},
+      },
+    });
   const {
     mutate: postVerification,
     isError,
@@ -93,6 +103,28 @@ const AttestationStep = () => {
       setDocs(urlBlob);
     }
   }, [disclosureAndConsentDoc]);
+
+  useEffect(() => {
+    if (TAC) {
+      const { firstName, lastName } =
+        clientData?.parties?.find((party) => party?.partyType === 'INDIVIDUAL')
+          ?.individualDetails ?? {};
+
+      updateClientAttestation({
+        id: clientId ?? '',
+        data: {
+          addAttestations: {
+            ...clientData?.attestations?.concat({
+              attestationTime: new Date().toISOString(),
+              attesterFullName: `${firstName} ${lastName}`,
+              ipAddress: '', // TODO: get IP address
+              documentId: termsAndConditionsDocId, // TODO: get document id
+            }),
+          },
+        } as UpdateClientRequestSmbdo,
+      });
+    }
+  }, [TAC]);
 
   const onSubmit = () => {
     postVerification({ id: clientId ?? '' });
@@ -180,7 +212,7 @@ const AttestationStep = () => {
       <NavigationButtons
         setActiveStep={setCurrentStep}
         activeStep={activeStep}
-        disabled={!canSubmit || isPending}
+        disabled={!canSubmit || isPending || clientStatus !== 'success'}
         onSubmit={() => {
           onSubmit();
         }}

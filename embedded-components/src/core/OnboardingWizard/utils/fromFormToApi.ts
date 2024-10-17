@@ -35,7 +35,7 @@ export const fromFormToOrgParty = (form: any) => {
         city: form.businessCity,
         state: form.businessState,
         postalCode: form.businessPostalCode,
-        country: form.country,
+        country: form.businessCountry,
       },
     ],
     ...(form.businessAliasName ? { dbaName: form.businessAliasName } : {}),

@@ -29,14 +29,6 @@ export const OverviewPage = () => {
           to Embedded Finance, including the data points you need to collect.
         </List.Item>
         <List.Item>
-          <b>Manage accounts</b> - walk through the managing an account from a
-          client's perspective.
-        </List.Item>
-        <List.Item>
-          <b>Manage debit cards</b> - see the steps for adding and managing
-          debit cards.
-        </List.Item>
-        <List.Item>
           <b>Move money</b> - make payments and add recipients, as your clients
           would in Embedded Finance.
         </List.Item>
