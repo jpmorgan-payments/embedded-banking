@@ -73,108 +73,176 @@ export const efClientQuestionsMock = {
       },
       subQuestions: [],
     },
+    // {
+    //   content: [
+    //     {
+    //       description: 'Is the customer licensed and/or registered?',
+    //       label: 'Is the customer licensed and/or registered?',
+    //       locale: 'en-US',
+    //     },
+    //   ],
+    //   defaultLocale: 'en-US',
+    //   description: 'Is the customer licensed and/or registered?',
+    //   id: '30069',
+    //   responseSchema: {
+    //     type: 'ARRAY',
+    //     minItems: 1,
+    //     maxItems: 2,
+    //     items: { type: 'STRING', enum: ['Licensed', 'Registered', 'None'] },
+    //   },
+    //   subQuestions: [
+    //     {
+    //       anyValuesMatch: 'Licensed',
+    //       questionIds: ['30071', '30070'],
+    //     },
+    //     { anyValuesMatch: 'Registered', questionIds: ['30073', '30072'] },
+    //   ],
+    // },
+    // {
+    //   content: [
+    //     {
+    //       description: 'What is the country of License?',
+    //       label: 'What is the country of License?',
+    //       locale: 'en-US',
+    //     },
+    //   ],
+    //   defaultLocale: 'en-US',
+    //   description: 'What is the country of License?',
+    //   id: '30070',
+    //   parentQuestionId: '30069',
+    //   responseSchema: {
+    //     type: 'ARRAY',
+    //     minItems: 1,
+    //     maxItems: 1,
+    //     items: { type: 'STRING' },
+    //   },
+    //   subQuestions: [],
+    // },
+    // {
+    //   content: [
+    //     {
+    //       description: 'What is the date of License?',
+    //       label: 'What is the date of License?',
+    //       locale: 'en-US',
+    //     },
+    //   ],
+    //   defaultLocale: 'en-US',
+    //   description: 'What is the date of License?',
+    //   id: '30071',
+    //   parentQuestionId: '30069',
+    //   responseSchema: {
+    //     type: 'ARRAY',
+    //     minItems: 1,
+    //     maxItems: 1,
+    //     items: { type: 'STRING' },
+    //   },
+    //   subQuestions: [],
+    // },
+    // {
+    //   content: [
+    //     {
+    //       description: 'What is the country of registration?',
+    //       label: 'What is the country of registration?',
+    //       locale: 'en-US',
+    //     },
+    //   ],
+    //   defaultLocale: 'en-US',
+    //   description: 'What is the country of registration?',
+    //   id: '30072',
+    //   parentQuestionId: '30069',
+    //   responseSchema: {
+    //     type: 'ARRAY',
+    //     minItems: 1,
+    //     maxItems: 1,
+    //     items: { type: 'STRING' },
+    //   },
+    //   subQuestions: [],
+    // },
+    // {
+    //   content: [
+    //     {
+    //       description: 'What is the date of registration?',
+    //       label: 'What is the date of registration?',
+    //       locale: 'en-US',
+    //     },
+    //   ],
+    //   defaultLocale: 'en-US',
+    //   description: 'What is the date of registration?',
+    //   id: '30073',
+    //   parentQuestionId: '30069',
+    //   responseSchema: {
+    //     type: 'ARRAY',
+    //     minItems: 1,
+    //     maxItems: 1,
+    //     items: { type: 'STRING' },
+    //   },
+    //   subQuestions: [],
+    // },
     {
       content: [
         {
-          description: 'Is the customer licensed and/or registered?',
-          label: 'Is the customer licensed and/or registered?',
+          description: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
+          label: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
           locale: 'en-US',
         },
       ],
       defaultLocale: 'en-US',
-      description: 'Is the customer licensed and/or registered?',
-      id: '30069',
-      responseSchema: {
-        type: 'ARRAY',
-        minItems: 1,
-        maxItems: 2,
-        items: { type: 'STRING', enum: ['Licensed', 'Registered', 'None'] },
-      },
-      subQuestions: [
-        {
-          anyValuesMatch: 'Licensed',
-          questionIds: ['30071', '30070'],
-        },
-        { anyValuesMatch: 'Registered', questionIds: ['30073', '30072'] },
-      ],
-    },
-    {
-      content: [
-        {
-          description: 'What is the country of License?',
-          label: 'What is the country of License?',
-          locale: 'en-US',
-        },
-      ],
-      defaultLocale: 'en-US',
-      description: 'What is the country of License?',
-      id: '30070',
-      parentQuestionId: '30069',
+      description: `Have you both purchased and sold more than $50,000 in “covered goods” 
+          (Precious Metals, Precious Stones, Jewels, and Finished Goods) in the past year?`,
+      id: '30088',
       responseSchema: {
         type: 'ARRAY',
         minItems: 1,
         maxItems: 1,
-        items: { type: 'STRING' },
+        items: { type: 'BOOLEAN' },
       },
-      subQuestions: [],
+      subQuestions: [{ anyValuesMatch: 'true', questionIds: ['30089'] }],
     },
     {
       content: [
         {
-          description: 'What is the date of License?',
-          label: 'What is the date of License?',
+          description: `Do you primarily sell covered goods to the public?`,
+          label: `Do you primarily sell covered goods to the public?`,
           locale: 'en-US',
         },
       ],
       defaultLocale: 'en-US',
-      description: 'What is the date of License?',
-      id: '30071',
-      parentQuestionId: '30069',
+      description: `Do you primarily sell covered goods to the public?`,
+      id: '30089',
+      parentQuestionId: '30088',
       responseSchema: {
         type: 'ARRAY',
         minItems: 1,
         maxItems: 1,
-        items: { type: 'STRING' },
+        items: { type: 'BOOLEAN' },
       },
-      subQuestions: [],
+      subQuestions: [{ anyValuesMatch: 'true', questionIds: ['30090'] }],
     },
     {
       content: [
         {
-          description: 'What is the country of registration?',
-          label: 'What is the country of registration?',
+          description: `In the prior calendar year, did you purchase at 
+          least $50,000 in covered goods from sources other than U.S. dealers or 
+          other retailers?`,
+          label: `In the prior calendar year, did you purchase at 
+          least $50,000 in covered goods from sources other than U.S. dealers or 
+          other retailers?`,
           locale: 'en-US',
         },
       ],
       defaultLocale: 'en-US',
-      description: 'What is the country of registration?',
-      id: '30072',
-      parentQuestionId: '30069',
+      description: `In the prior calendar year, did you purchase at 
+      least $50,000 in covered goods from sources other than U.S. dealers or 
+      other retailers?`,
+      id: '30090',
+      parentQuestionId: '30089',
       responseSchema: {
         type: 'ARRAY',
         minItems: 1,
         maxItems: 1,
-        items: { type: 'STRING' },
-      },
-      subQuestions: [],
-    },
-    {
-      content: [
-        {
-          description: 'What is the date of registration?',
-          label: 'What is the date of registration?',
-          locale: 'en-US',
-        },
-      ],
-      defaultLocale: 'en-US',
-      description: 'What is the date of registration?',
-      id: '30073',
-      parentQuestionId: '30069',
-      responseSchema: {
-        type: 'ARRAY',
-        minItems: 1,
-        maxItems: 1,
-        items: { type: 'STRING' },
+        items: { type: 'BOOLEAN' },
       },
       subQuestions: [],
     },

@@ -169,17 +169,21 @@ export const makeQuestionsAPIBody = (
   const responses: any = [];
   for (const [key, value] of Object.entries(questionRes)) {
     if (!questionList) {
-      responses.push({
-        questionId: key,
-        values: [value],
-      });
+      if (value) {
+        responses.push({
+          questionId: key,
+          values: [value],
+        });
+      }
     }
 
     if (questionList?.includes(key) && value) {
-      responses.push({
-        questionId: key,
-        values: [value],
-      });
+      if (value) {
+        responses.push({
+          questionId: key,
+          values: [value],
+        });
+      }
     }
   }
   return { questionResponses: responses };

@@ -55,18 +55,21 @@ const RenderQuestions = ({
   return (
     <Box className={className}>
       {formSchema.map(
-        ({
-          name,
-          fieldType,
-          labelToken,
-          placeholderToken,
-          required,
-          optionsList,
-          defaultValue,
-          type,
-          parentId,
-          questions,
-        }: QuestionSchema) => {
+        (
+          {
+            name,
+            fieldType,
+            labelToken,
+            placeholderToken,
+            required,
+            optionsList,
+            defaultValue,
+            type,
+            parentId,
+            questions,
+          }: QuestionSchema,
+          idx: number
+        ) => {
           const parentQuestion: QuestionResponse | undefined = questions?.find(
             (q) => q.id === parentId
           );
@@ -90,6 +93,10 @@ const RenderQuestions = ({
               (parentId && !form.getValues(parentId)))
               ? 'eb-hidden'
               : 'eb-visible';
+
+          if (hiddenElement === 'eb-hidden' && form.getValues(name)) {
+            form.setValue(name, undefined);
+          }
 
           switch (fieldType) {
             case 'input':
@@ -286,20 +293,26 @@ const RenderQuestions = ({
 
             case 'yesNo':
               return (
-                <YesNoFromField
-                  key={name}
-                  {...{
-                    name,
-                    labelToken: getContentToken(labelToken) ?? labelToken,
-                    placeholderToken:
-                      getContentToken(placeholderToken) || placeholderToken,
-                    required,
-                    form,
-                    defaultValue,
-                    type,
-                    className: `${hiddenElement}`,
-                  }}
-                />
+                <>
+                  {!parentQuestion?.parentQuestionId &&
+                    parentQuestion?.parentQuestionId === parentId && (
+                      <Separator />
+                    )}
+                  <YesNoFromField
+                    key={name}
+                    {...{
+                      name,
+                      labelToken: getContentToken(labelToken) ?? labelToken,
+                      placeholderToken:
+                        getContentToken(placeholderToken) || placeholderToken,
+                      required,
+                      form,
+                      defaultValue,
+                      type,
+                      className: `${hiddenElement}`,
+                    }}
+                  />
+                </>
               );
 
             case 'checklist':
