@@ -91,6 +91,10 @@ const RenderQuestions = ({
               ? 'eb-hidden'
               : 'eb-visible';
 
+          if (hiddenElement === 'eb-hidden' && form.getValues(name)) {
+            form.setValue(name, undefined);
+          }
+
           switch (fieldType) {
             case 'input':
               return (
@@ -286,20 +290,26 @@ const RenderQuestions = ({
 
             case 'yesNo':
               return (
-                <YesNoFromField
-                  key={name}
-                  {...{
-                    name,
-                    labelToken: getContentToken(labelToken) ?? labelToken,
-                    placeholderToken:
-                      getContentToken(placeholderToken) || placeholderToken,
-                    required,
-                    form,
-                    defaultValue,
-                    type,
-                    className: `${hiddenElement}`,
-                  }}
-                />
+                <>
+                  {!parentQuestion?.parentQuestionId &&
+                    parentQuestion?.parentQuestionId === parentId && (
+                      <Separator />
+                    )}
+                  <YesNoFromField
+                    key={name}
+                    {...{
+                      name,
+                      labelToken: getContentToken(labelToken) ?? labelToken,
+                      placeholderToken:
+                        getContentToken(placeholderToken) || placeholderToken,
+                      required,
+                      form,
+                      defaultValue,
+                      type,
+                      className: `${hiddenElement}`,
+                    }}
+                  />
+                </>
               );
 
             case 'checklist':
