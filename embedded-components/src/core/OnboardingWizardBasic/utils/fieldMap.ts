@@ -6,6 +6,7 @@ import { PhoneSmbdo } from '@/api/generated/smbdo.schemas';
 import { IndividualStepFormSchema } from '../IndividualStepForm/IndividualStepForm.schema';
 import { InitialFormSchema } from '../InitialForm/InitialForm.schema';
 import { OrganizationStepFormSchema } from '../OrganizationStepForm/OrganizationStepForm.schema';
+import { OnboardingUseCase } from './types';
 
 // TODO: add more form schemas here
 export type OnboardingWizardFormValues = z.infer<typeof InitialFormSchema> &
@@ -17,8 +18,9 @@ type PartyFieldMap = {
     | string
     | {
         path: string;
-        fromResponseFn: (val: any) => OnboardingWizardFormValues[K];
-        toRequestFn: (val: OnboardingWizardFormValues[K]) => any;
+        useCases?: Array<OnboardingUseCase>;
+        fromResponseFn?: (val: any) => OnboardingWizardFormValues[K];
+        toRequestFn?: (val: OnboardingWizardFormValues[K]) => any;
       };
 };
 
@@ -30,7 +32,7 @@ export const partyFieldMap: PartyFieldMap = {
   countryOfFormation: 'organizationDetails.countryOfFormation',
   email: 'email',
   yearOfFormation: 'organizationDetails.yearOfFormation',
-  dbaName: 'organizationDetails.dbaName',
+  dbaName: { path: 'organizationDetails.dbaName', useCases: ['EF'] },
   organizationDescription: 'organizationDetails.organizationDescription',
   industryCategory: 'organizationDetails.industryCategory',
   industryType: 'organizationDetails.industryType',
@@ -54,7 +56,9 @@ export const partyFieldMap: PartyFieldMap = {
       const phone = parsePhoneNumber(val.phoneNumber);
       return {
         phoneType: val.phoneType,
-        countryCode: phone?.countryCallingCode ?? '',
+        countryCode: phone?.countryCallingCode
+          ? `+${phone.countryCallingCode}`
+          : '',
         phoneNumber: phone?.nationalNumber ?? '',
       };
     },
@@ -72,12 +76,18 @@ export const partyFieldMap: PartyFieldMap = {
   firstName: 'individualDetails.firstName',
   middleName: 'individualDetails.middleName',
   lastName: 'individualDetails.lastName',
-  nameSuffix: 'individualDetails.nameSuffix',
-  individualIds: 'individualDetails.individualIds',
-  jobTitle: 'individualDetails.jobTitle',
-  jobTitleDescription: 'individualDetails.jobTitleDescription',
+  nameSuffix: { path: 'individualDetails.nameSuffix', useCases: ['EF'] },
+  individualIds: { path: 'individualDetails.individualIds', useCases: ['EF'] },
+  jobTitle: { path: 'individualDetails.jobTitle', useCases: ['EF'] },
+  jobTitleDescription: {
+    path: 'individualDetails.jobTitleDescription',
+    useCases: ['EF'],
+  },
   natureOfOwnership: 'individualDetails.natureOfOwnership',
   soleOwner: 'individualDetails.soleOwner',
-  individualAddresses: 'individualDetails.addresses',
+  individualAddresses: {
+    path: 'individualDetails.addresses',
+    useCases: ['EF', 'CanadaMS'],
+  },
   individualPhone: 'individualDetails.phone',
 };

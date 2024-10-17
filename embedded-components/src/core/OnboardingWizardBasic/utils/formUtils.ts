@@ -1,5 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
 import { toast } from 'sonner';
+import { z, ZodObject } from 'zod';
 
 import {
   ApiErrorReasonV2,
@@ -9,6 +10,7 @@ import {
 } from '@/api/generated/smbdo.schemas';
 
 import { OnboardingWizardFormValues, partyFieldMap } from './fieldMap';
+import { OnboardingUseCase } from './types';
 
 type FormError = {
   field?: keyof typeof partyFieldMap;
@@ -106,9 +108,12 @@ export function generateRequestBody(
       const modifiedValue =
         typeof partyFieldMap[key] === 'string'
           ? value
-          : (
-              partyFieldMap[key] as { toRequestFn: (val: any) => any }
-            ).toRequestFn(value);
+          : partyFieldMap[key].toRequestFn
+            ? (
+                partyFieldMap[key] as { toRequestFn: (val: any) => any }
+              ).toRequestFn(value)
+            : value;
+
       setValueByPath(obj, path, modifiedValue);
     }
   });
@@ -141,7 +146,11 @@ export function convertClientResponseToFormValues(
     const value = getValueByPath(response, pathTemplate);
     if (value !== undefined) {
       const modifiedValue =
-        typeof config === 'string' ? value : config.fromResponseFn(value);
+        typeof config === 'string'
+          ? value
+          : config.fromResponseFn
+            ? config.fromResponseFn(value)
+            : value;
       formValues[fieldName as keyof OnboardingWizardFormValues] = modifiedValue;
     } else {
       console.log(fieldName, value);
@@ -149,4 +158,36 @@ export function convertClientResponseToFormValues(
   });
 
   return formValues;
+}
+
+export const useIsFieldVisible = (useCase: OnboardingUseCase) => {
+  return (fieldName: keyof OnboardingWizardFormValues) => {
+    const fieldConfig = partyFieldMap[fieldName];
+
+    if (typeof fieldConfig === 'string') {
+      return true;
+    }
+    return !fieldConfig?.useCases || fieldConfig.useCases.includes(useCase);
+  };
+};
+
+export function filterSchemaByUseCase(
+  schema: ZodObject<Record<string, z.ZodType<any>>>,
+  useCase: OnboardingUseCase
+): ZodObject<Record<string, z.ZodType<any>>> {
+  const { shape } = schema;
+
+  const filteredSchema: Record<string, z.ZodType<any>> = {};
+  Object.entries(shape).forEach(([key, value]) => {
+    const fieldConfig = partyFieldMap[key as keyof OnboardingWizardFormValues];
+    if (typeof fieldConfig === 'string') {
+      filteredSchema[key] = value;
+    } else if (
+      !fieldConfig?.useCases ||
+      fieldConfig.useCases.includes(useCase)
+    ) {
+      filteredSchema[key] = value;
+    }
+  });
+  return z.object(filteredSchema);
 }

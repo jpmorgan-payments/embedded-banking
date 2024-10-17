@@ -49,9 +49,10 @@ const createDynamicZodSchema = (questionsData: QuestionResponse[]) => {
     const itemType = question?.responseSchema?.items?.type ?? 'string';
     // @ts-expect-error
     const itemEnum = question?.responseSchema?.items?.enum;
+    const itemPattern = question?.responseSchema?.items?.pattern;
     const isOptional = !!question.parentQuestionId;
 
-    let valueSchema;
+    let valueSchema: z.ZodTypeAny;
 
     if (question.id && DATE_QUESTION_IDS.includes(question.id)) {
       valueSchema = z
@@ -59,20 +60,23 @@ const createDynamicZodSchema = (questionsData: QuestionResponse[]) => {
         .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format');
     } else if (itemType) {
       switch (itemType) {
-        // @ts-expect-error
-        case 'BOOLEAN':
+        case 'boolean':
           valueSchema = z.enum(['true', 'false']);
           break;
-        // @ts-expect-error
-        case 'STRING':
+        case 'string':
           if (itemEnum) {
             valueSchema = z.enum(itemEnum);
           } else {
             valueSchema = z.string().min(1, 'Required');
+            if (itemPattern) {
+              valueSchema = (valueSchema as z.ZodString).regex(
+                new RegExp(itemPattern),
+                'Invalid format'
+              );
+            }
           }
           break;
-        // @ts-expect-error
-        case 'INTEGER':
+        case 'integer':
           valueSchema = z
             .string()
             .min(1, 'Required')
@@ -87,17 +91,27 @@ const createDynamicZodSchema = (questionsData: QuestionResponse[]) => {
     }
 
     // If the question allows multiple values, wrap it in an array
-    // @ts-expect-error
-    if (question?.responseSchema?.type === 'ARRAY') {
-      valueSchema = z.array(valueSchema);
+    if (question?.responseSchema?.type === 'array') {
+      const childSchema = valueSchema;
+      valueSchema = z.array(childSchema);
 
       if (!isOptional) {
-        valueSchema = valueSchema
+        valueSchema = (valueSchema as z.ZodArray<z.ZodTypeAny>)
           .min(question?.responseSchema?.minItems ?? 1, 'Required')
           .max(
             question?.responseSchema?.maxItems ?? 1,
             `Cannot exceed ${question?.responseSchema?.maxItems} items`
-          );
+          )
+          // Extract error from child schema
+          .superRefine((values, context) => {
+            values.forEach((value: any) => {
+              const result = childSchema.safeParse(value);
+              if (result.error) {
+                context.addIssue(result.error.issues[0]);
+              }
+            });
+            return true;
+          });
       }
     }
 
@@ -125,8 +139,7 @@ const createDynamicZodSchema = (questionsData: QuestionResponse[]) => {
                   subQuestion.anyValuesMatch?.includes(value)
                 ))
             ) {
-              // @ts-expect-error
-              if (question?.responseSchema?.type === 'ARRAY') {
+              if (question?.responseSchema?.type === 'array') {
                 if (question?.responseSchema?.minItems) {
                   if (
                     !values?.[`question_${question.id}`] ||
@@ -255,8 +268,7 @@ export const AdditionalQuestionsStepForm = () => {
     }
 
     switch (itemType) {
-      // @ts-expect-error
-      case 'BOOLEAN':
+      case 'boolean':
         return (
           <FormField
             control={form.control}
@@ -290,8 +302,7 @@ export const AdditionalQuestionsStepForm = () => {
           />
         );
 
-      // @ts-expect-error
-      case 'STRING':
+      case 'string':
         if (itemEnum) {
           if (
             question?.responseSchema?.maxItems &&
@@ -392,8 +403,7 @@ export const AdditionalQuestionsStepForm = () => {
           />
         );
 
-      // @ts-expect-error
-      case 'INTEGER':
+      case 'integer':
         return (
           <FormField
             control={form.control}
