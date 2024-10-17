@@ -55,21 +55,18 @@ const RenderQuestions = ({
   return (
     <Box className={className}>
       {formSchema.map(
-        (
-          {
-            name,
-            fieldType,
-            labelToken,
-            placeholderToken,
-            required,
-            optionsList,
-            defaultValue,
-            type,
-            parentId,
-            questions,
-          }: QuestionSchema,
-          idx: number
-        ) => {
+        ({
+          name,
+          fieldType,
+          labelToken,
+          placeholderToken,
+          required,
+          optionsList,
+          defaultValue,
+          type,
+          parentId,
+          questions,
+        }: QuestionSchema) => {
           const parentQuestion: QuestionResponse | undefined = questions?.find(
             (q) => q.id === parentId
           );
