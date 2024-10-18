@@ -118,7 +118,7 @@ const AttestationStep = () => {
           addAttestations: clientData?.attestations?.concat({
             attestationTime: new Date().toISOString(),
             attesterFullName: `${firstName} ${lastName}`,
-            ipAddress: ip || '1.1.1.1', // TODO: get IP address
+            ipAddress: `${ip}` || '1.1.1.1', // TODO: get IP address
             documentId: termsAndConditionsDocId, // TODO: get document id
           }),
         } as UpdateClientRequestSmbdo,
