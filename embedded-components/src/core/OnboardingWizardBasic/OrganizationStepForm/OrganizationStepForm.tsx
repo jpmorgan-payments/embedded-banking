@@ -688,7 +688,9 @@ export const OrganizationStepForm = () => {
                                 type === field.value &&
                                   'eb-bg-accent eb-text-accent-foreground'
                               )}
-                              onClick={() => form.setValue('industryType', type)}
+                              onClick={() =>
+                                form.setValue('industryType', type)
+                              }
                             >
                               <Check
                                 className={cn(
