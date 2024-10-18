@@ -17,6 +17,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Checkbox, Group, Label, Stack, Text, Title } from '@/components/ui';
 import { useRootConfig } from '@/core/EBComponentsProvider/RootConfigProvider';
 
+import { useIPAddress } from '../../hooks/getIPAddress';
 import NavigationButtons from '../../Stepper/NavigationButtons';
 // eslint-disable-next-line
 import { useStepper } from '../../Stepper/useStepper';
@@ -24,6 +25,7 @@ import { useContentData } from '../../utils/useContentData';
 import { useGetDataByClientId } from '../hooks';
 
 const AttestationStep = () => {
+  const { data: ip } = useIPAddress();
   const { toast } = useToast();
   const form = useFormContext();
   const [TAC, setTAC] = useState(false);
@@ -113,14 +115,12 @@ const AttestationStep = () => {
       updateClientAttestation({
         id: clientId ?? '',
         data: {
-          addAttestations: {
-            ...clientData?.attestations?.concat({
-              attestationTime: new Date().toISOString(),
-              attesterFullName: `${firstName} ${lastName}`,
-              ipAddress: '', // TODO: get IP address
-              documentId: termsAndConditionsDocId, // TODO: get document id
-            }),
-          },
+          addAttestations: clientData?.attestations?.concat({
+            attestationTime: new Date().toISOString(),
+            attesterFullName: `${firstName} ${lastName}`,
+            ipAddress: `${ip}` || '1.1.1.1', // TODO: get IP address
+            documentId: termsAndConditionsDocId, // TODO: get document id
+          }),
         } as UpdateClientRequestSmbdo,
       });
     }
